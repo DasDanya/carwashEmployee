@@ -25,9 +25,10 @@ import java.util.stream.Collectors;
 public class CategoriesAndServicesController implements Initializable {
 
     @FXML
-    private TextField searchField;
+    private CheckBox searchCategoryCheckBox;
     @FXML
-    private CheckBox searchCriteriaCheckbox;
+    private TextField searchField;
+
     @FXML
     private Button searchButton;
     @FXML
@@ -84,24 +85,27 @@ public class CategoriesAndServicesController implements Initializable {
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::bindWithCategory, this::doRefresh));
         categoriesSelectedModelListener();
 
-        searchCriteriaCheckbox.setSelected(true);
+        searchCategoryCheckBox.setSelected(true);
     }
 
     private void initFillingObservableLists(){
         try {
-            categoriesWithServices = categoriesOfServicesRepository.getCategoriesWithServices();
-            fillingCategoriesAndServicesTables();
-//            categoriesNames = categoriesOfServicesRepository.getCategoriesName();
-//            for(int i = 0; i < categoriesNames.size(); i++){
-//                categoriesOfServices.add(new CategoryOfServicesFX(categoriesNames.get(i)));
-//                if(i == 0){
-//                    fillingServicesObservableList(categoriesNames.get(i));
-//                }
-//            }
+//            categoriesWithServices = categoriesOfServicesRepository.getCategoriesWithServices();
+//            fillingCategoriesAndServicesTables();
+            categoriesNames = categoriesOfServicesRepository.getCategoriesName();
+            for(int i = 0; i < categoriesNames.size(); i++){
+                categoriesOfServices.add(new CategoryOfServicesFX(categoriesNames.get(i)));
+                if(i == 0){
+                    fillingServicesObservableList(categoriesNames.get(i));
+                }
+            }
 
         } catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());
         }
+
+        categoriesTable.setItems(categoriesOfServices);
+        servicesTable.setItems(services);
     }
 
     private void fillingCategoriesAndServicesTables(){
@@ -133,18 +137,18 @@ public class CategoriesAndServicesController implements Initializable {
         categoriesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 services.clear();
-                Optional<CategoryOfServices> categoryWithServices = categoriesWithServices.stream()
-                        .filter(cs-> cs.getCatName().equals(newSelection.getName())).findFirst();
-                if(categoryWithServices.isPresent()){
-                        fillingServicesObservableList(categoryWithServices.get().getServices());
-                        servicesTable.setItems(services);
-                }
-//                try {
-//                    fillingServicesObservableList(newSelection.getName());
-//                    servicesTable.setItems(services);
-//                } catch (Exception e) {
-//                    FXHelper.showErrorAlert(e.getMessage());
+//                Optional<CategoryOfServices> categoryWithServices = categoriesWithServices.stream()
+//                        .filter(cs-> cs.getCatName().equals(newSelection.getName())).findFirst();
+//                if(categoryWithServices.isPresent()){
+//                        fillingServicesObservableList(categoryWithServices.get().getServices());
+//                        servicesTable.setItems(services);
 //                }
+                try {
+                    fillingServicesObservableList(newSelection.getName());
+                    servicesTable.setItems(services);
+                } catch (Exception e) {
+                    FXHelper.showErrorAlert(e.getMessage());
+                }
             }
         });
     }
@@ -181,7 +185,7 @@ public class CategoriesAndServicesController implements Initializable {
             refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
         });
         searchButton.setOnMouseEntered(event->{
-            searchButton.setTooltip(searchCriteriaCheckbox.isSelected() ? new Tooltip(rb.getString("SEARCH_CATEGORY")) : new Tooltip(rb.getString("SEARCH_SERVICE")));
+            searchButton.setTooltip(searchCategoryCheckBox.isSelected() ? new Tooltip(rb.getString("SEARCH_CATEGORY")) : new Tooltip(rb.getString("SEARCH_SERVICE")));
         });
 
 
@@ -204,16 +208,27 @@ public class CategoriesAndServicesController implements Initializable {
 
     private void doOperation(FXOperationMode mode){
       if(lastSelectedTable == categoriesTable){
-          CategoryOfServices categoryOfServices = switch (mode) {
-              case CREATE -> new CategoryOfServices();
-              case EDIT, DELETE ->
-                  categoriesWithServices.stream().filter(c-> c.getCatName().equals(categoriesTable.getSelectionModel().getSelectedItem().getName())).findFirst().get();
-                      //new CategoryOfServices(categoriesTable.getSelectionModel().getSelectedItem().getName(), null);
-              default -> null;
-          };
+          CategoryOfServicesFX selectedCategoryOfServicesFX = null;
+          //int selectedItemIndex = -1;
+          CategoryOfServices categoryOfServices = null;
+          switch (mode) {
+              case CREATE:
+                  categoryOfServices =new CategoryOfServices();
+                  break;
+              case EDIT:
+              case DELETE:
+                  if(categoriesTable.getSelectionModel().getSelectedItem() != null){
+                      categoryOfServices = new CategoryOfServices();
+                      categoryOfServices.setCatName(categoriesTable.getSelectionModel().getSelectedItem().getName());
+                      selectedCategoryOfServicesFX = categoriesTable.getSelectionModel().getSelectedItem();
+                      //selectedItemIndex = categoriesTable.getSelectionModel().getSelectedIndex();
+                  }
+                  break;
+          }
 
           if(categoryOfServices == null){
               FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+              categoriesTable.requestFocus();
           }else{
               try {
                   Locale locale = Locale.getDefault();
@@ -232,20 +247,71 @@ public class CategoriesAndServicesController implements Initializable {
                   categoryOfServicesController.setParameters(categoryOfServices, mode, modalStage);
 
                   modalStage.showAndWait();
-                  doResultCategoryOfServices(mode, categoryOfServicesController.getExitMode(), categoryOfServices);
+                  doResultCategoryOfServices(mode, categoryOfServicesController.getExitMode(), categoryOfServices,selectedCategoryOfServicesFX);
 
               }catch (Exception e){
                   FXHelper.showErrorAlert(e.getMessage());
-                  e.printStackTrace();
+                  categoriesTable.requestFocus();
+              }
+          }
+      }else{
+          ServiceDTO serviceDTO = null;
+          if(categoriesTable.getSelectionModel().getSelectedItem() == null){
+              FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+              servicesTable.requestFocus();
+          }else {
+              String catName = categoriesTable.getSelectionModel().getSelectedItem().getName();
+              ServiceFX selectedServiceFX = null;
+              switch (mode) {
+                  case CREATE:
+                      serviceDTO = new ServiceDTO();
+                      serviceDTO.setCatName(catName);
+                      break;
+                  case DELETE:
+                      if(servicesTable.getSelectionModel().getSelectedItem() != null){
+                          serviceDTO = new ServiceDTO();
+                          serviceDTO.setCatName(catName);
+                          serviceDTO.setServName(servicesTable.getSelectionModel().getSelectedItem().getName());
+                          selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+                      }
+                      break;
+              }
+              if (serviceDTO == null) {
+                  FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                  servicesTable.requestFocus();
+              } else {
+                  try {
+                      Locale locale = Locale.getDefault();
+                      ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditService", locale);
+                      FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/EditService.fxml"), bundle);
+                      Parent root = loader.load();
+
+                      Scene modalScene = new Scene(root);
+                      Stage modalStage = new Stage();
+                      modalStage.setScene(modalScene);
+                      modalStage.initModality(Modality.WINDOW_MODAL);
+                      modalStage.initOwner(getActualScene().getWindow());
+                      modalStage.getIcons().add(AppHelper.getMainIcon());
+
+                      EditServiceController serviceController = loader.getController();
+                      serviceController.setParameters(serviceDTO, mode, modalStage);
+
+                      modalStage.showAndWait();
+                      doResultService(mode, serviceController.getExitMode(), serviceDTO, selectedServiceFX);
+                  } catch (Exception e) {
+                      FXHelper.showErrorAlert(e.getMessage());
+                      servicesTable.requestFocus();
+                  }
               }
           }
       }
     }
 
-    private void doResultCategoryOfServices(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfServices categoryOfServices){
+    private void doResultCategoryOfServices(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfServices categoryOfServices, CategoryOfServicesFX selectedCategoryOfServicesFX){
         if(exitMode == FXFormExitMode.OK) {
             switch (operationMode) {
                 case CREATE:
+                    categoryOfServices.setServices(new ArrayList<>()); // чтобы не ругался на пустой список
                     categoriesOfServices.add(new CategoryOfServicesFX(categoryOfServices.getCatName()));
                     // сортировка элементов в таблице
                     ObservableList<CategoryOfServicesFX> sortedCategories = FXCollections.observableArrayList(categoriesOfServices);
@@ -253,29 +319,59 @@ public class CategoriesAndServicesController implements Initializable {
                     categoriesOfServices.setAll(sortedCategories);
                     categoriesTable.setItems(categoriesOfServices);
 
-                    categoryOfServices.setServices(new ArrayList<>()); // чтобы не ругался на пустой список
-                    categoriesWithServices.add(categoryOfServices);
                     break;
-                case EDIT:
-                    break;
+//                case EDIT:
+//                        categoriesOfServices.remove(selectedCategoryOfServicesFX);
+//                        categoriesOfServices.add(new CategoryOfServicesFX(categoryOfServices.getCatName()));
+//                        ObservableList<CategoryOfServicesFX> sortedCategoriesEd = FXCollections.observableArrayList(categoriesOfServices);
+//                        sortedCategoriesEd.sort(Comparator.comparing(CategoryOfServicesFX::getName, String::compareToIgnoreCase));
+//                        categoriesOfServices.setAll(sortedCategoriesEd);
+//                        categoriesTable.setItems(categoriesOfServices);
+//                    break;
+                case DELETE:
+                    categoriesOfServices.remove(selectedCategoryOfServicesFX);
             }
         }
 
         categoriesTable.requestFocus();
     }
 
+    private void doResultService(FXOperationMode operationMode, FXFormExitMode exitMode, ServiceDTO serviceDTO, ServiceFX selectedServiceFX){
+        if(exitMode == FXFormExitMode.OK){
+            switch (operationMode){
+                case CREATE:
+                    services.add(new ServiceFX(serviceDTO.getServName()));
+                    ObservableList<ServiceFX> sortedServices = FXCollections.observableArrayList(services);
+                    sortedServices.sort(Comparator.comparing(ServiceFX::getName, String::compareToIgnoreCase));
+                    services.setAll(sortedServices);
+                    servicesTable.setItems(services);
+                    break;
+                case EDIT:
+                    break;
+                case DELETE:
+                    services.remove(selectedServiceFX);
+            }
+        }
+
+        servicesTable.requestFocus();
+    }
+
+
+
     private void bindWithCategory(){
         if(!categoriesTable.getItems().isEmpty()) {
             if(!servicesTable.getItems().isEmpty()) {
                 if(categoriesTable.getSelectionModel().getSelectedItem() != null) {
-                    List<String> categoriesForBind = new ArrayList<>();
+                    //List<String> categoriesForBind = new ArrayList<>();
+
+                    ServiceFX selectedServiceFX = null;
                     String selectedCatName = categoriesTable.getSelectionModel().getSelectedItem().getName();
                     int indexSelectedCategory = categoriesTable.getSelectionModel().getSelectedIndex();
-                    for (CategoryOfServices categoryOfServices : categoriesWithServices) {
-                        if (!selectedCatName.equals(categoryOfServices.getCatName())) {
-                            categoriesForBind.add(categoryOfServices.getCatName());
-                        }
-                    }
+//                    for (CategoryOfServices categoryOfServices : categoriesWithServices) {
+//                        if (!selectedCatName.equals(categoryOfServices.getCatName())) {
+//                            categoriesForBind.add(categoryOfServices.getCatName());
+//                        }
+//                    }
 //                for(String categoryOfServices: categoriesNames){
 //                    if(!selectedCatName.equals(categoryOfServices)){
 //                        categoriesForBind.add(categoryOfServices);
@@ -297,24 +393,36 @@ public class CategoriesAndServicesController implements Initializable {
 
                         BindWithCategoryController controller = loader.getController();
                         if (lastSelectedTable == categoriesTable) {
-                            controller.setParameters(modalStage, categoriesForBind, BindWithCategoryMode.CATEGORY, selectedCatName);
+                            controller.setParameters(modalStage, BindWithCategoryMode.CATEGORY, selectedCatName,selectedCatName);
                             modalStage.showAndWait();
                         } else {
                             if(servicesTable.getSelectionModel().getSelectedItem() != null) {
-                                controller.setParameters(modalStage, categoriesForBind, BindWithCategoryMode.SERVICE, servicesTable.getSelectionModel().getSelectedItem().getName());
+                                selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+                                controller.setParameters(modalStage,BindWithCategoryMode.SERVICE, selectedCatName, servicesTable.getSelectionModel().getSelectedItem().getName());
                                 modalStage.showAndWait();
                             }else{
                                 FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
                             }
                         }
 
+//                        if (controller.getExitMode() == FXFormExitMode.OK) {
+//                            doRefresh();
+//                            categoriesTable.getSelectionModel().select(indexSelectedCategory);
+//                        }
                         if (controller.getExitMode() == FXFormExitMode.OK) {
-                            doRefresh();
+                            if(lastSelectedTable == categoriesTable){
+                                services.clear();
+                            }else{
+                                if(selectedServiceFX != null){
+                                    services.remove(selectedServiceFX);
+                                }
+                            }
                             categoriesTable.getSelectionModel().select(indexSelectedCategory);
                         }
 
                     } catch (Exception e) {
                         FXHelper.showErrorAlert(e.getMessage());
+                        categoriesTable.requestFocus();
                     }
                 }else{
                     FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
@@ -325,6 +433,8 @@ public class CategoriesAndServicesController implements Initializable {
         }else{
             FXHelper.showErrorAlert(rb.getString("NOT_EXISTS_CATEGORY_FOR_BIND"));
         }
+
+        categoriesTable.requestFocus();
     }
 
     public void bindButtonAction(ActionEvent actionEvent) {
@@ -332,8 +442,8 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     private void doClearData(){
-        categoriesTable.setItems(null);
-        servicesTable.setItems(null);
+        //categoriesTable.setItems(null);
+        //servicesTable.setItems(null);
         categoriesOfServices.clear();
         services.clear();
     }
@@ -366,7 +476,7 @@ public class CategoriesAndServicesController implements Initializable {
         }else{
             String searchParameter = searchField.getText().trim().toLowerCase();
             doClearData();
-            if(searchCriteriaCheckbox.isSelected()){
+            if(searchCategoryCheckBox.isSelected()){
 
                 categoriesWithServices = categoriesWithServices.stream()
                         .filter(c-> c.getCatName().toLowerCase().contains(searchParameter))

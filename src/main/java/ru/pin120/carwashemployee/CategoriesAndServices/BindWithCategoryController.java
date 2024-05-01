@@ -32,21 +32,26 @@ public class BindWithCategoryController implements Initializable {
     private ResourceBundle rb;
 
     private ServiceRepository serviceRepository = new ServiceRepository();
+    private CategoriesOfServicesRepository categoriesOfServicesRepository = new CategoriesOfServicesRepository();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
     }
 
-    public void setParameters(Stage stage,List<String> categories, BindWithCategoryMode bindMode, String parameter){
+    public void setParameters(Stage stage, BindWithCategoryMode bindMode, String currentCategory,String parameter){
         parentStage = stage;
         this.bindMode = bindMode;
         this.parameter = parameter;
 
-        for(String category: categories){
-            categoriesCombobox.getItems().add(category);
+        try {
+            List<String> categories = categoriesOfServicesRepository.getCategoriesName();
+            categories.remove(currentCategory);
+            categoriesCombobox.getItems().setAll(categories);
+            categoriesCombobox.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
         }
-        categoriesCombobox.getSelectionModel().selectFirst();
 
         if(bindMode == BindWithCategoryMode.CATEGORY){
             parentStage.setTitle(parameter + rb.getString("CATEGORY_BIND_TITLE"));

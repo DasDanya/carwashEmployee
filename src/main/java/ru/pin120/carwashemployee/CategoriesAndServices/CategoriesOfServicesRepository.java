@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
 import java.util.ArrayList;
@@ -86,8 +87,9 @@ public class CategoriesOfServicesRepository {
         return successCreate;
     }
 
-    public boolean editCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception{
-        String jsonData = gson.toJson(categoryOfServices);
+    public boolean editCategoryOfServices(EditCategoryOrServiceDTO editCategoryOrServiceDTO) throws Exception{
+        boolean successEdit;
+        String jsonData = gson.toJson(editCategoryOrServiceDTO);
         RequestBody body = RequestBody.create(JSON, jsonData);
 
         Request request = new Request.Builder()
@@ -96,7 +98,42 @@ public class CategoriesOfServicesRepository {
                 .build();
 
         Response response = client.newCall(request).execute();
+        switch (response.code()){
+            case 200:
+                successEdit = true;
+                break;
+            case 409:
+                throw new HttpRetryException(editCategoryOrServiceDTO.getNewName() + " " + AppHelper.getExistsEntityTextEnd(), 409);
+            default:
+                throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
 
-        return true;
+        return successEdit;
     }
+
+    public boolean deleteCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception {
+        boolean successDelete;
+        String jsonData = gson.toJson(categoryOfServices);
+        System.out.println(jsonData);
+        RequestBody body = RequestBody.create(JSON, jsonData);
+
+        Request request = new Request.Builder()
+                .url(url + "/delete")
+                .delete(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        switch (response.code()){
+            case 204:
+                successDelete = true;
+                break;
+            case 400:
+                throw new HttpRetryException(response.body().string(), 400);
+            default:
+                throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+
+        return successDelete;
+    }
+
 }

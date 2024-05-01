@@ -82,6 +82,7 @@ public class FXHelper {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.setTitle(AppHelper.getErrorText());
         alert.setHeaderText(null);
+        alert.setWidth(800);
         alert.showAndWait();
     }
     public static void setContextMenuForTextField(TextField textField){

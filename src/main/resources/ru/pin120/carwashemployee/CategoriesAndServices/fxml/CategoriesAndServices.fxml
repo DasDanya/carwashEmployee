@@ -67,7 +67,7 @@
       </ToolBar>
       <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
          <children>
-            <CheckBox fx:id="searchСriteriaCheckbox" mnemonicParsing="false" text="%CATEGORY">
+            <CheckBox fx:id="searchCategoryCheckBox" mnemonicParsing="false" text="%CATEGORY">
                <HBox.margin>
                   <Insets left="2.0" />
                </HBox.margin>

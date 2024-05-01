@@ -17,9 +17,24 @@ public class CategoriesOfServicesRepository {
 
     private OkHttpClient client = new OkHttpClient();
     private Gson gson = new Gson();
-    public List<CategoriesWithServicesDTO> getCategoriesWithServices() throws Exception {
+//    public List<CategoriesWithServicesDTO> getCategoriesWithServices() throws Exception {
+//        Request request = new Request.Builder()
+//                .url(url + "/getCategoriesWithServices")
+//                .build();
+//
+//        Response response = client.newCall(request).execute();
+//        if(response.code() != 200){
+//            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+//        }
+//        String jsonData = response.body().string();
+//        Type type = new TypeToken<List<CategoriesWithServicesDTO>>(){}.getType();
+//
+//        return gson.fromJson(jsonData, type);
+//    }
+
+    public List<CategoryOfServices> getCategoriesWithServices() throws Exception {
         Request request = new Request.Builder()
-                .url(url + "/getCategoriesWithServices")
+                .url(url)
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -27,7 +42,22 @@ public class CategoriesOfServicesRepository {
             throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
         }
         String jsonData = response.body().string();
-        Type type = new TypeToken<List<CategoriesWithServicesDTO>>(){}.getType();
+        Type type = new TypeToken<List<CategoryOfServices>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public List<String> getCategoriesName() throws Exception{
+        Request request = new Request.Builder()
+                .url(url + "/getAllCatNames")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<String>>(){}.getType();
 
         return gson.fromJson(jsonData, type);
     }
@@ -54,5 +84,19 @@ public class CategoriesOfServicesRepository {
         }
 
         return successCreate;
+    }
+
+    public boolean editCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception{
+        String jsonData = gson.toJson(categoryOfServices);
+        RequestBody body = RequestBody.create(JSON, jsonData);
+
+        Request request = new Request.Builder()
+                .url(url + "/edit")
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        return true;
     }
 }

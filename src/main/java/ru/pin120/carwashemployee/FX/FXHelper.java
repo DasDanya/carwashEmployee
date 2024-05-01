@@ -43,6 +43,41 @@ public class FXHelper {
             }
         });
     }
+
+    public static void bindHotKeysToDoOperation(Scene scene, Consumer<FXOperationMode> doOperation, Runnable bind, Runnable refresh){
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            final KeyCombination keyCombDelete = new KeyCodeCombination(KeyCode.F6, KeyCombination.SHIFT_DOWN);
+            final KeyCombination keyCombBind = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                switch (keyEvent.getCode()){
+                    case F3:
+                        doOperation.accept(FXOperationMode.SHOW);
+                        break;
+                    case F4:
+                        doOperation.accept(FXOperationMode.EDIT);
+                        break;
+                    case F5:
+                        refresh.run();
+                        break;
+                    case F6:
+                        if(keyCombDelete.match(keyEvent)){
+                            doOperation.accept(FXOperationMode.DELETE);
+                        }else{
+                            doOperation.accept(FXOperationMode.CREATE);
+                        }
+                        break;
+                    case B:
+                        if(keyCombBind.match(keyEvent)){
+                            bind.run();
+                        }
+                        break;
+                    default:
+                        keyEvent.consume();
+                }
+            }
+        });
+    }
     public static void showErrorAlert(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.setTitle(AppHelper.getErrorText());

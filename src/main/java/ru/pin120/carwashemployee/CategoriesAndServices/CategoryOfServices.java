@@ -14,6 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryOfServices {
     private String catName;
-    private List<String> services;
-
+    private List<Service> services;
 }

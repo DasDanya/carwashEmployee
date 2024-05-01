@@ -87,6 +87,8 @@ public class EditCategoryOfServicesController implements Initializable {
                         categoryOfServices.setCatName(categoryNameField.getText().trim());
                         canExit = categoriesOfServicesRepository.createCategoryOfServices(categoryOfServices);
                         break;
+                    case EDIT:
+                        break;
                 }
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());

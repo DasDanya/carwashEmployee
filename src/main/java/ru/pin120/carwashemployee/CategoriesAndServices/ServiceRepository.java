@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.CategoriesAndServices.BindWithCategoryDTO;
+import ru.pin120.carwashemployee.CategoriesAndServices.Service;
+import ru.pin120.carwashemployee.CategoriesAndServices.ServiceDTO;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
 import java.util.List;
@@ -33,6 +35,37 @@ public class ServiceRepository {
 
         return gson.fromJson(jsonData, type);
     }
+
+    public List<ServiceDTO> getAllServices() throws Exception{
+        Request request = new Request.Builder()
+                .url(url + "/all")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<ServiceDTO>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public ServiceDTO getServiceDTOByServName(String servName) throws Exception{
+        Request request = new Request.Builder()
+                .url(url + "/getByServName?servName=" + servName)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<ServiceDTO>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
 
     public boolean createService(ServiceDTO serviceDTO) throws Exception {
         boolean successCreate;

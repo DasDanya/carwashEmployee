@@ -9,6 +9,15 @@ import lombok.NoArgsConstructor;
 public class ServiceFX {
 
     private StringProperty name;
+    private StringProperty catName;
+
+    public String getCatName() {
+        return catName.get();
+    }
+
+    public StringProperty catNameProperty() {
+        return catName;
+    }
 
     public String getName() {
         return name.get();
@@ -21,4 +30,9 @@ public class ServiceFX {
     public ServiceFX(String name) {
         this.name = new SimpleStringProperty(name);
     }
+
+//    public ServiceFX(String servName, String catName) {
+//        this.servName = new SimpleStringProperty(servName);
+//        this.catName = new SimpleStringProperty(catName);
+//    }
 }

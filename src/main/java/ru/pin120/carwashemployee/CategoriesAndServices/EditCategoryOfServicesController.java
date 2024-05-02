@@ -111,8 +111,6 @@ public class EditCategoryOfServicesController implements Initializable {
                 btCancel.requestFocus();
             }
         }
-
-
     }
 
     @FXML

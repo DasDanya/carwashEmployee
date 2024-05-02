@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 public class BindWithCategoryController implements Initializable {
 
     @FXML
+    private Button btOK;
+    @FXML
     private Button btCancel;
     @FXML
     private ComboBox<String> categoriesCombobox;
@@ -47,8 +49,12 @@ public class BindWithCategoryController implements Initializable {
         try {
             List<String> categories = categoriesOfServicesRepository.getCategoriesName();
             categories.remove(currentCategory);
-            categoriesCombobox.getItems().setAll(categories);
-            categoriesCombobox.getSelectionModel().selectFirst();
+            if(categories.isEmpty()){
+                btOK.setDisable(true);
+            }else{
+                categoriesCombobox.getItems().setAll(categories);
+                categoriesCombobox.getSelectionModel().selectFirst();
+            }
         } catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());
         }

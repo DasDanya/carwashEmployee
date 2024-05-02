@@ -8,7 +8,6 @@ import ru.pin120.carwashemployee.AppHelper;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesOfServicesRepository {
@@ -51,6 +50,21 @@ public class CategoriesOfServicesRepository {
     public List<String> getCategoriesName() throws Exception{
         Request request = new Request.Builder()
                 .url(url + "/getAllCatNames")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<String>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public List<String> getCategoriesNameByParameter(String parameter) throws Exception {
+        Request request = new Request.Builder()
+                .url(url + "/getCatNamesByParameter?parameter="+parameter)
                 .build();
 
         Response response = client.newCall(request).execute();

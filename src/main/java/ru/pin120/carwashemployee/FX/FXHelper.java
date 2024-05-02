@@ -85,6 +85,15 @@ public class FXHelper {
         alert.setWidth(800);
         alert.showAndWait();
     }
+
+    public static void showInfoAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(AppHelper.getErrorText());
+        alert.setHeaderText(null);
+        alert.setWidth(800);
+        alert.showAndWait();
+    }
+
     public static void setContextMenuForTextField(TextField textField){
         MenuItem cutItem = new MenuItem(AppHelper.getCut());
         MenuItem copyItem = new MenuItem(AppHelper.getCopy());

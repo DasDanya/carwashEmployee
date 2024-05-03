@@ -17,6 +17,7 @@ import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
+import ru.pin120.carwashemployee.FX.FXWindowData;
 
 import java.net.URL;
 import java.util.*;
@@ -183,9 +184,9 @@ public class CategoriesAndServicesController implements Initializable {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(lastSelectedTable == categoriesTable ? new Tooltip(rb.getString("CREATE_CATEGORY")) : new Tooltip(rb.getString("CREATE_SERVICE")));
         });
-        editButton.setOnMouseEntered(event -> {
-            editButton.setTooltip(lastSelectedTable == categoriesTable ? new Tooltip(rb.getString("EDIT_CATEGORY")) : new Tooltip(rb.getString("EDIT_SERVICE")));
-        });
+//        editButton.setOnMouseEntered(event -> {
+//            editButton.setTooltip(lastSelectedTable == categoriesTable ? new Tooltip(rb.getString("EDIT_CATEGORY")) : new Tooltip(rb.getString("EDIT_SERVICE")));
+//        });
         deleteButton.setOnMouseEntered(event -> {
             deleteButton.setTooltip(lastSelectedTable == categoriesTable ? new Tooltip(rb.getString("DELETE_CATEGORY")) : new Tooltip(rb.getString("DELETE_SERVICE")));
         });
@@ -243,22 +244,13 @@ public class CategoriesAndServicesController implements Initializable {
                     categoriesTable.requestFocus();
                 } else {
                     try {
-                        Locale locale = Locale.getDefault();
-                        ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditCategoryOfServices", locale);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/EditCategoryOfServices.fxml"), bundle);
-                        Parent root = loader.load();
 
-                        Scene modalScene = new Scene(root);
-                        Stage modalStage = new Stage();
-                        modalStage.setScene(modalScene);
-                        modalStage.initModality(Modality.WINDOW_MODAL);
-                        modalStage.initOwner(getActualScene().getWindow());
-                        modalStage.getIcons().add(AppHelper.getMainIcon());
+                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditCategoryOfServices", "CategoriesAndServices/fxml/EditCategoryOfServices.fxml", getActualScene());
 
-                        EditCategoryOfServicesController categoryOfServicesController = loader.getController();
-                        categoryOfServicesController.setParameters(categoryOfServices, mode, modalStage);
+                        EditCategoryOfServicesController categoryOfServicesController = fxWindowData.getLoader().getController();
+                        categoryOfServicesController.setParameters(categoryOfServices, mode, fxWindowData.getModalStage());
 
-                        modalStage.showAndWait();
+                        fxWindowData.getModalStage().showAndWait();
                         doResultCategoryOfServices(mode, categoryOfServicesController.getExitMode(), categoryOfServices, selectedCategoryOfServicesFX);
 
                     } catch (Exception e) {
@@ -293,22 +285,12 @@ public class CategoriesAndServicesController implements Initializable {
                         servicesTable.requestFocus();
                     } else {
                         try {
-                            Locale locale = Locale.getDefault();
-                            ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditService", locale);
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/EditService.fxml"), bundle);
-                            Parent root = loader.load();
+                            FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditService", "CategoriesAndServices/fxml/EditService.fxml", getActualScene());
 
-                            Scene modalScene = new Scene(root);
-                            Stage modalStage = new Stage();
-                            modalStage.setScene(modalScene);
-                            modalStage.initModality(Modality.WINDOW_MODAL);
-                            modalStage.initOwner(getActualScene().getWindow());
-                            modalStage.getIcons().add(AppHelper.getMainIcon());
+                            EditServiceController serviceController = fxWindowData.getLoader().getController();
+                            serviceController.setParameters(serviceDTO, mode, fxWindowData.getModalStage());
 
-                            EditServiceController serviceController = loader.getController();
-                            serviceController.setParameters(serviceDTO, mode, modalStage);
-
-                            modalStage.showAndWait();
+                            fxWindowData.getModalStage().showAndWait();
                             doResultService(mode, serviceController.getExitMode(), serviceDTO, selectedServiceFX);
                         } catch (Exception e) {
                             FXHelper.showErrorAlert(e.getMessage());
@@ -396,27 +378,18 @@ public class CategoriesAndServicesController implements Initializable {
 //                }
 
                     try {
-                        Locale locale = Locale.getDefault();
-                        ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.CategoriesAndServices.resources.BindWithCategory", locale);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/BindWithCategory.fxml"), bundle);
-                        Parent root = loader.load();
+                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.BindWithCategory", "CategoriesAndServices/fxml/BindWithCategory.fxml", getActualScene());
 
-                        Scene modalScene = new Scene(root);
-                        Stage modalStage = new Stage();
-                        modalStage.setScene(modalScene);
-                        modalStage.initModality(Modality.WINDOW_MODAL);
-                        modalStage.initOwner(getActualScene().getWindow());
-                        modalStage.getIcons().add(AppHelper.getMainIcon());
 
-                        BindWithCategoryController controller = loader.getController();
+                        BindWithCategoryController controller = fxWindowData.getLoader().getController();
                         if (lastSelectedTable == categoriesTable) {
-                            controller.setParameters(modalStage, BindWithCategoryMode.CATEGORY, selectedCatName,selectedCatName);
-                            modalStage.showAndWait();
+                            controller.setParameters(fxWindowData.getModalStage(), BindWithCategoryMode.CATEGORY, selectedCatName,selectedCatName);
+                            fxWindowData.getModalStage().showAndWait();
                         } else {
                             if(servicesTable.getSelectionModel().getSelectedItem() != null) {
                                 selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
-                                controller.setParameters(modalStage,BindWithCategoryMode.SERVICE, selectedCatName, servicesTable.getSelectionModel().getSelectedItem().getName());
-                                modalStage.showAndWait();
+                                controller.setParameters(fxWindowData.getModalStage(),BindWithCategoryMode.SERVICE, selectedCatName, servicesTable.getSelectionModel().getSelectedItem().getName());
+                                fxWindowData.getModalStage().showAndWait();
                             }else{
                                 FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
                             }
@@ -477,6 +450,10 @@ public class CategoriesAndServicesController implements Initializable {
         searchField.clear();
         lastSearchedCategory = "";
         lastSearchedService = "";
+
+        categoryNameColumn.setSortType(TableColumn.SortType.ASCENDING);
+        serviceNameColumn.setSortType(TableColumn.SortType.ASCENDING);
+
     }
 
     public void refreshAction(ActionEvent actionEvent) {
@@ -512,10 +489,13 @@ public class CategoriesAndServicesController implements Initializable {
                         categoriesTable.requestFocus();
                         categoriesTable.getSelectionModel().selectFirst();
                         //lastSearchedCategory = searchParameter;
+                    }else{
+                        searchField.requestFocus();
                     }
 
                 } catch (Exception e) {
                     FXHelper.showErrorAlert(e.getMessage());
+                    categoriesTable.requestFocus();
                 }
             }else{
                 try{
@@ -542,6 +522,7 @@ public class CategoriesAndServicesController implements Initializable {
                     }
                 }catch (Exception e){
                     FXHelper.showErrorAlert(e.getMessage());
+                    servicesTable.requestFocus();
                 }
             }
 //            String searchParameter = searchField.getText().trim().toLowerCase();

@@ -142,13 +142,13 @@ public class ServiceRepository {
 
     public boolean deleteService(ServiceDTO serviceDTO) throws Exception {
         boolean successDelete;
-        String jsonData = gson.toJson(serviceDTO);
-        System.out.println(jsonData);
-        RequestBody body = RequestBody.create(JSON, jsonData);
+        //String jsonData = gson.toJson(serviceDTO);
+        //System.out.println(jsonData);
+        //RequestBody body = RequestBody.create(JSON, jsonData);
 
         Request request = new Request.Builder()
-                .url(url + "/delete")
-                .delete(body)
+                .url(url + "/delete/"+serviceDTO.getServName())
+                .delete()
                 .build();
 
         Response response = client.newCall(request).execute();

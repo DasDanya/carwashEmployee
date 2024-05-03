@@ -127,13 +127,13 @@ public class CategoriesOfServicesRepository {
 
     public boolean deleteCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception {
         boolean successDelete;
-        String jsonData = gson.toJson(categoryOfServices);
-        System.out.println(jsonData);
-        RequestBody body = RequestBody.create(JSON, jsonData);
+        //String jsonData = gson.toJson(categoryOfServices);
+        //System.out.println(jsonData);
+        //RequestBody body = RequestBody.create(JSON, jsonData);
 
         Request request = new Request.Builder()
-                .url(url + "/delete")
-                .delete(body)
+                .url(url + "/delete/"+categoryOfServices.getCatName())
+                .delete()
                 .build();
 
         Response response = client.newCall(request).execute();

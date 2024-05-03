@@ -69,7 +69,7 @@ public class EditServiceController implements Initializable {
         }
         serviceNameField.setText(serviceDTO.getServName());
 
-        stage.setMaxHeight(130);
+        this.stage.setMaxHeight(130);
         closeWindowAction();
     }
 

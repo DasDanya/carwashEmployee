@@ -1,4 +1,4 @@
-package ru.pin120.carwashemployee.CategoriesAndServices;
+package ru.pin120.carwashemployee.CategoriesOfCars;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,24 +14,24 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditCategoryOfServicesController implements Initializable {
-
-    private static final int MAX_LENGTH_CATEGORY_NAME = 30;
-
+public class EditCategoryOfCarsController implements Initializable {
+    private static final int MAX_LENGTH_CATEGORY_NAME = 50;
     @FXML
     private Button btCancel;
     @FXML
     private TextField categoryNameField;
+    private ResourceBundle rb;
     @FXML
     private Stage stage;
-    private FXOperationMode mode;
-    private ResourceBundle rb;
-    private CategoryOfServices categoryOfServices;
+
+    private FXOperationMode operationMode;
+
+    private CategoryOfCars categoryOfCars;
 
     @Getter
     private FXFormExitMode exitMode;
 
-    private CategoriesOfServicesRepository categoriesOfServicesRepository = new CategoriesOfServicesRepository();
+    private CategoryOfCarsRepository categoryOfCarsRepository = new CategoryOfCarsRepository();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,7 +40,7 @@ public class EditCategoryOfServicesController implements Initializable {
         categoryNameFieldTextListener();
     }
 
-    private void categoryNameFieldTextListener(){
+    private void categoryNameFieldTextListener() {
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
                 if (newValue.length() > MAX_LENGTH_CATEGORY_NAME) {
@@ -50,11 +50,12 @@ public class EditCategoryOfServicesController implements Initializable {
         });
     }
 
-    public void setParameters(CategoryOfServices categoryOfServices, FXOperationMode mode, Stage stage){
-        this.categoryOfServices = categoryOfServices;
-        this.mode = mode;
+    public void setParameters(CategoryOfCars categoryOfCars, FXOperationMode operationMode, Stage stage){
+        this.categoryOfCars = categoryOfCars;
+        this.operationMode = operationMode;
         this.stage = stage;
-        switch (mode){
+
+        switch (operationMode){
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_FORM_TITLE"));
                 break;
@@ -67,36 +68,32 @@ public class EditCategoryOfServicesController implements Initializable {
                 break;
 
         }
-        categoryNameField.setText(categoryOfServices.getCatName());
-
+        categoryNameField.setText(categoryOfCars.getCatCarsName());
         this.stage.setMaxHeight(130);
         closeWindowAction();
     }
 
+    private void closeWindowAction() {
+        stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
+    }
 
-    @FXML
-    private void btOKAction(ActionEvent actionEvent) {
+    public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(categoryNameField.getText() == null || categoryNameField.getText().isBlank()) {
             FXHelper.showErrorAlert(rb.getString("EMPTY_CATEGORY_NAME"));
             categoryNameField.clear();
             categoryNameField.requestFocus();
         }else{
-            try {
-                switch (mode) {
-                    case CREATE:
-                        categoryOfServices.setCatName(categoryNameField.getText().trim());
-                        canExit = categoriesOfServicesRepository.createCategoryOfServices(categoryOfServices);
-                        break;
-                    case EDIT:
-                        EditCategoryOrServiceDTO editCategoryOrServiceDTO = new EditCategoryOrServiceDTO(categoryOfServices.getCatName(), categoryNameField.getText().trim());
-                        canExit = categoriesOfServicesRepository.editCategoryOfServices(editCategoryOrServiceDTO);
-                        categoryOfServices.setCatName(categoryNameField.getText().trim());
-                        break;
-                    case DELETE:
-                        canExit = categoriesOfServicesRepository.deleteCategoryOfServices(categoryOfServices);
-                        break;
-                }
+            try{
+               switch (operationMode){
+                   case CREATE:
+                       categoryOfCars.setCatCarsName(categoryNameField.getText().trim());
+                       canExit = categoryOfCarsRepository.createCategoryOfCars(categoryOfCars);
+                       break;
+                   case DELETE:
+                       canExit = categoryOfCarsRepository.deleteCategoryOfCars(categoryNameField.getText().trim());
+                       break;
+               }
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
             }
@@ -105,7 +102,7 @@ public class EditCategoryOfServicesController implements Initializable {
             exitMode = FXFormExitMode.OK;
             stage.close();
         }else{
-            if(mode == FXOperationMode.CREATE || mode == FXOperationMode.EDIT){
+            if(operationMode == FXOperationMode.CREATE || operationMode == FXOperationMode.EDIT){
                 categoryNameField.requestFocus();
             }else{
                 btCancel.requestFocus();
@@ -113,14 +110,8 @@ public class EditCategoryOfServicesController implements Initializable {
         }
     }
 
-    @FXML
-    private void btCancelAction(ActionEvent actionEvent) {
+    public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
-
-    private void closeWindowAction(){
-        stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
-    }
-
 }

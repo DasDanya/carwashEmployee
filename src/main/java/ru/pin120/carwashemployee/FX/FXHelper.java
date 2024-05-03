@@ -1,6 +1,8 @@
 package ru.pin120.carwashemployee.FX;
 
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -11,24 +13,29 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.StartApplication;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class FXHelper {
 
-    public static void bindHotKeysToDoOperation(Scene scene, Consumer<FXOperationMode> doOperation){
+    public static void bindHotKeysToDoOperation(Scene scene, Consumer<FXOperationMode> doOperation, Runnable refresh){
         scene.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             final KeyCombination keyCombDelete = new KeyCodeCombination(KeyCode.F6, KeyCombination.SHIFT_DOWN);
 
             @Override
             public void handle(KeyEvent keyEvent) {
                 switch (keyEvent.getCode()){
-                    case F3:
-                        doOperation.accept(FXOperationMode.SHOW);
-                        break;
                     case F4:
                         doOperation.accept(FXOperationMode.EDIT);
+                        break;
+                    case F5:
+                        refresh.run();
                         break;
                     case F6:
                         if(keyCombDelete.match(keyEvent)){
@@ -51,9 +58,6 @@ public class FXHelper {
             @Override
             public void handle(KeyEvent keyEvent) {
                 switch (keyEvent.getCode()){
-                    case F3:
-                        doOperation.accept(FXOperationMode.SHOW);
-                        break;
                     case F4:
                         doOperation.accept(FXOperationMode.EDIT);
                         break;
@@ -106,4 +110,21 @@ public class FXHelper {
         ContextMenu contextMenu = new ContextMenu(cutItem, copyItem, pasteItem);
         textField.setContextMenu(contextMenu);
     }
+
+    public  static FXWindowData createModalWindow(String pathToBundle, String pathToFXML, Scene actualScene) throws Exception {
+        Locale locale = Locale.getDefault();
+        ResourceBundle bundle = ResourceBundle.getBundle(pathToBundle, locale);
+        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource(pathToFXML), bundle);
+        Parent root = loader.load();
+
+        Scene modalScene = new Scene(root);
+        Stage modalStage = new Stage();
+        modalStage.setScene(modalScene);
+        modalStage.initModality(Modality.WINDOW_MODAL);
+        modalStage.initOwner(actualScene.getWindow());
+        modalStage.getIcons().add(AppHelper.getMainIcon());
+
+        return new FXWindowData(loader, modalStage);
+    }
+
 }

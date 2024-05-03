@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -23,15 +24,6 @@
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/createButton.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="20.0" prefWidth="20.0">
-               <graphic>
-                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/editButton.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -94,18 +86,23 @@
             <Insets left="5.0" right="5.0" />
          </VBox.margin>
       </HBox>
-      <SplitPane dividerPositions="0.31030997304582203" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+      <SplitPane dividerPositions="0.33931133428981336" orientation="VERTICAL" VBox.vgrow="ALWAYS">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <Label alignment="CENTER_RIGHT" style="-fx-font-weight: bold; -fx-font-style: italic;" text="%CATEGORIES">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
                         <TableView fx:id="categoriesTable">
                           <columns>
                             <TableColumn fx:id="categoryNameColumn" prefWidth="388.0" text="%CATEGORY_NAME" />
                           </columns>
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </TableView>
                      </children>
@@ -114,14 +111,19 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <Label alignment="CENTER_RIGHT" style="-fx-font-weight: bold; -fx-font-style: italic;" text="%SERVICES">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
                         <TableView fx:id="servicesTable" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="serviceNameColumn" prefWidth="388.0" text="%SERVICE_NAME" />
                           </columns>
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </TableView>
                      </children>

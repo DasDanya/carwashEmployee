@@ -11,6 +11,6 @@ module ru.pin120.carwashemployee {
     opens ru.pin120.carwashemployee.CategoriesAndServices to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.CategoriesAndServices;
 
-    opens ru.pin120.carwashemployee.CategoriesOfCars to javafx.fxml, com.google.gson;
-    exports ru.pin120.carwashemployee.CategoriesOfCars;
+    opens ru.pin120.carwashemployee.CategoriesOfTransport to javafx.fxml, com.google.gson;
+    exports ru.pin120.carwashemployee.CategoriesOfTransport;
 }

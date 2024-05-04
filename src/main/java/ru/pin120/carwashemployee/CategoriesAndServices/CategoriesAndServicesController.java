@@ -308,14 +308,16 @@ public class CategoriesAndServicesController implements Initializable {
                 case CREATE:
                     //if(lastSearchedCategory.isEmpty() || categoryOfServices.getCatName().toLowerCase().contains(lastSearchedCategory.toLowerCase())) {
                         categoryOfServices.setServices(new ArrayList<>()); // чтобы не ругался на пустой список
-                        categoriesOfServices.add(new CategoryOfServicesFX(categoryOfServices.getCatName()));
+                        CategoryOfServicesFX categoryOfServicesFX = new CategoryOfServicesFX(categoryOfServices.getCatName());
+                        categoriesOfServices.add(categoryOfServicesFX);
                         // сортировка элементов в таблице
                         ObservableList<CategoryOfServicesFX> sortedCategories = FXCollections.observableArrayList(categoriesOfServices);
                         sortedCategories.sort(Comparator.comparing(CategoryOfServicesFX::getName, String::compareToIgnoreCase));
                         categoriesOfServices.setAll(sortedCategories);
                         categoriesTable.setItems(categoriesOfServices);
                     //}
-
+                        categoriesTable.getSelectionModel().select(categoryOfServicesFX);
+                        categoryNameColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
 //                case EDIT:
 //                        categoriesOfServices.remove(selectedCategoryOfServicesFX);
@@ -338,11 +340,16 @@ public class CategoriesAndServicesController implements Initializable {
             switch (operationMode){
                 case CREATE:
                     //if(lastSearchedService.isEmpty()) {
-                        services.add(new ServiceFX(serviceDTO.getServName()));
+                        ServiceFX serviceFX = new ServiceFX(serviceDTO.getServName());
+                        services.add(serviceFX);
                         ObservableList<ServiceFX> sortedServices = FXCollections.observableArrayList(services);
                         sortedServices.sort(Comparator.comparing(ServiceFX::getName, String::compareToIgnoreCase));
                         services.setAll(sortedServices);
                         servicesTable.setItems(services);
+
+                        //servicesTable.getSelectionModel().selectFirst();
+                        serviceNameColumn.setSortType(TableColumn.SortType.ASCENDING);
+                        servicesTable.getSelectionModel().select(serviceFX);
                     //}
                     break;
                 case EDIT:

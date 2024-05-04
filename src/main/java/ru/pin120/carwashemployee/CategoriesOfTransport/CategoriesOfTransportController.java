@@ -1,20 +1,13 @@
-package ru.pin120.carwashemployee.CategoriesOfCars;
+package ru.pin120.carwashemployee.CategoriesOfTransport;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.CategoriesAndServices.CategoryOfServicesFX;
-import ru.pin120.carwashemployee.CategoriesAndServices.EditCategoryOfServicesController;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -23,15 +16,16 @@ import ru.pin120.carwashemployee.FX.FXWindowData;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class CategoriesOfCarsController implements Initializable {
+public class CategoriesOfTransportController implements Initializable {
 
     @FXML
-    private TableView<CategoryOfCarsFX> categoriesTable;
+    private TableView<CategoryOfTransportFX> categoriesTable;
     @FXML
-    private TableColumn<CategoryOfCarsFX, String> categoryNameColumn;
+    private TableColumn<CategoryOfTransportFX, String> categoryNameColumn;
+    @FXML
+    private TableColumn<CategoryOfTransportFX, Long> categoryIdColumn;
     @FXML
     private Button searchButton;
     @FXML
@@ -42,39 +36,43 @@ public class CategoriesOfCarsController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button createButton;
+    @FXML
+    private Button editButton;
     private ResourceBundle rb;
 
-    private ObservableList<CategoryOfCarsFX> categoryOfCarsFXES = FXCollections.observableArrayList();
-    private CategoryOfCarsRepository categoryOfCarsRepository = new CategoryOfCarsRepository();
+    private ObservableList<CategoryOfTransportFX> categoryOfTransportFXES = FXCollections.observableArrayList();
+    private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
 
         categoryNameColumn.prefWidthProperty().bind(categoriesTable.widthProperty());
-        categoryNameColumn.setCellValueFactory(c -> c.getValue().catCarsNameProperty());
+        categoryNameColumn.setCellValueFactory(c -> c.getValue().catTrNameProperty());
+        categoryIdColumn.setCellValueFactory(c->c.getValue().catTrIdProperty().asObject());
         fillingAll();
 
         categoriesTable.getSelectionModel().selectFirst();
         Platform.runLater(() -> categoriesTable.requestFocus());
 
         settingTooltipForButtons();
+        Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
     }
 
     private void fillingAll(){
         try {
-            List<CategoryOfCars> categoryOfCars = categoryOfCarsRepository.getAll();
+            List<CategoryOfTransport> categoryOfCars = categoryOfTransportRepository.getAll();
             fillingObservableList(categoryOfCars);
-            categoriesTable.setItems(categoryOfCarsFXES);
+            categoriesTable.setItems(categoryOfTransportFXES);
         } catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());
         }
     }
 
-    private void fillingObservableList(List<CategoryOfCars> categoryOfCars){
-        for(CategoryOfCars category: categoryOfCars){
-            CategoryOfCarsFX categoryOfCarsFX = new CategoryOfCarsFX(category.getCatCarsName());
-            categoryOfCarsFXES.add(categoryOfCarsFX);
+    private void fillingObservableList(List<CategoryOfTransport> categoryOfCars){
+        for(CategoryOfTransport category: categoryOfCars){
+            CategoryOfTransportFX categoryOfTransportFX = new CategoryOfTransportFX(category.getCatTrName(),category.getCatTrId());
+            categoryOfTransportFXES.add(categoryOfTransportFX);
         }
     }
 
@@ -85,12 +83,12 @@ public class CategoriesOfCarsController implements Initializable {
         deleteButton.setOnMouseEntered(event -> {
             deleteButton.setTooltip(new Tooltip(rb.getString("DELETE_CATEGORY")));
         });
+        editButton.setOnMouseEntered(event -> {
+            editButton.setTooltip(new Tooltip(rb.getString("EDIT_CATEGORY")));
+        });
         refreshButton.setOnMouseEntered(event -> {
             refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
         });
-//        bindButton.setOnMouseEntered(event -> {
-//            bindButton.setTooltip(new Tooltip(rb.getString("BIND_CATEGORY")));
-//        });
         searchButton.setOnMouseEntered(event->{
             searchButton.setTooltip(new Tooltip(rb.getString("SEARCH_CATEGORY")));
         });
@@ -100,32 +98,34 @@ public class CategoriesOfCarsController implements Initializable {
 
 
     private void doOperation(FXOperationMode operationMode){
-        CategoryOfCars categoryOfCars = null;
-        CategoryOfCarsFX categoryOfCarsFX = null;
+        CategoryOfTransport categoryOfTransport = null;
+        CategoryOfTransportFX categoryOfTransportFX = null;
 
         switch (operationMode){
             case CREATE:
-                categoryOfCars = new CategoryOfCars();
+                categoryOfTransport = new CategoryOfTransport();
                 break;
+            case EDIT:
             case DELETE:
                 if(categoriesTable.getSelectionModel().getSelectedItem() != null){
-                    categoryOfCars = new CategoryOfCars();
-                    categoryOfCarsFX = categoriesTable.getSelectionModel().getSelectedItem();
-                    categoryOfCars.setCatCarsName(categoryOfCarsFX.getCatCarsName());
+                    categoryOfTransport = new CategoryOfTransport();
+                    categoryOfTransportFX = categoriesTable.getSelectionModel().getSelectedItem();
+                    categoryOfTransport.setCatTrName(categoryOfTransportFX.getCatTrName());
+                    categoryOfTransport.setCatTrId(categoryOfTransportFX.getCatTrId());
                 }
                 break;
         }
-        if (categoryOfCars == null) {
+        if (categoryOfTransport == null) {
             FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
             categoriesTable.requestFocus();
         }else{
             try{
-                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfCars.resources.EditCategoryOfCars", "CategoriesOfCars/fxml/EditCategoryOfCars.fxml", getActualScene());
-                EditCategoryOfCarsController editCategoryOfCarsController = fxWindowData.getLoader().getController();
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfTransport.resources.EditCategoryOfTransport", "CategoriesOfTransport/fxml/EditCategoryOfTransport.fxml", getActualScene());
+                EditCategoryOfTransportController editCategoryOfTransportController = fxWindowData.getLoader().getController();
 
-                editCategoryOfCarsController.setParameters(categoryOfCars, operationMode, fxWindowData.getModalStage());
+                editCategoryOfTransportController.setParameters(categoryOfTransport, operationMode, fxWindowData.getModalStage());
                 fxWindowData.getModalStage().showAndWait();
-                doResult(operationMode, editCategoryOfCarsController.getExitMode(), categoryOfCars, categoryOfCarsFX);
+                doResult(operationMode, editCategoryOfTransportController.getExitMode(), categoryOfTransport, categoryOfTransportFX);
 
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
@@ -136,18 +136,28 @@ public class CategoriesOfCarsController implements Initializable {
 
     }
 
-    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfCars categoryOfCars, CategoryOfCarsFX categoryOfCarsFX) {
+    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfTransport categoryOfTransport, CategoryOfTransportFX categoryOfTransportFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
                 case CREATE:
-                    categoryOfCarsFXES.add(new CategoryOfCarsFX(categoryOfCars.getCatCarsName()));
-                    ObservableList<CategoryOfCarsFX> sortedCategories = FXCollections.observableArrayList(categoryOfCarsFXES);
-                    sortedCategories.sort(Comparator.comparing(CategoryOfCarsFX::getCatCarsName, String::compareToIgnoreCase));
-                    categoryOfCarsFXES.setAll(sortedCategories);
-                    categoriesTable.setItems(categoryOfCarsFXES);
+                    CategoryOfTransportFX category = new CategoryOfTransportFX(categoryOfTransport.getCatTrName(), categoryOfTransport.getCatTrId());
+                    categoryOfTransportFXES.add(category);
+                    categoryOfTransportFXES.sort(Comparator.comparing(CategoryOfTransportFX::getCatTrName, String::compareToIgnoreCase));
+
+                    categoriesTable.getSelectionModel().select(category);
+                    categoryNameColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case DELETE:
-                    categoryOfCarsFXES.remove(categoryOfCarsFX);
+                    categoryOfTransportFXES.remove(categoryOfTransportFX);
+                    break;
+                case EDIT:
+                    categoryOfTransportFX.setCatTrId(categoryOfTransport.getCatTrId());
+                    categoryOfTransportFX.setCatTrName(categoryOfTransport.getCatTrName());
+
+                    categoryOfTransportFXES.sort(Comparator.comparing(CategoryOfTransportFX::getCatTrName, String::compareToIgnoreCase));
+                    categoriesTable.getSelectionModel().select(categoryOfTransportFX);
+                    categoryNameColumn.setSortType(TableColumn.SortType.ASCENDING);
+                    break;
             }
         }
 
@@ -162,11 +172,12 @@ public class CategoriesOfCarsController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
-    public void bindButtonAction(ActionEvent actionEvent) {
+    public void editButtonAction(ActionEvent actionEvent) {
+        doOperation(FXOperationMode.EDIT);
     }
 
     private void doRefresh(){
-        categoryOfCarsFXES.clear();
+        categoryOfTransportFXES.clear();
         searchField.clear();
         fillingAll();
 
@@ -188,13 +199,13 @@ public class CategoriesOfCarsController implements Initializable {
             FXHelper.showErrorAlert(rb.getString("SEARCH_FIELD_IS_EMPTY"));
             searchField.requestFocus();
         }else{
-            categoryOfCarsFXES.clear();
+            categoryOfTransportFXES.clear();
             String parameter = searchField.getText().trim();
             try{
-                List<CategoryOfCars> categoryOfCars = categoryOfCarsRepository.getCategoriesOfCarsByCarCarsName(parameter);
+                List<CategoryOfTransport> categoryOfCars = categoryOfTransportRepository.getCategoriesOfTransportByCatTrName(parameter);
                 fillingObservableList(categoryOfCars);
 
-                if(!categoryOfCarsFXES.isEmpty()){
+                if(!categoryOfTransportFXES.isEmpty()){
                     categoriesTable.requestFocus();
                     categoriesTable.getSelectionModel().selectFirst();
                 }else{
@@ -206,4 +217,5 @@ public class CategoriesOfCarsController implements Initializable {
             }
         }
     }
+
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="314.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.CategoriesOfCars.CategoriesOfCarsController">
+<VBox prefHeight="314.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.CategoriesOfTransport.CategoriesOfTransportController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
@@ -20,6 +20,15 @@
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/createButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/editButton.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -71,6 +80,7 @@
       <TableView fx:id="categoriesTable" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="categoryNameColumn" prefWidth="388.0" text="%CATEGORY_NAME" />
+            <TableColumn fx:id="categoryIdColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
         </columns>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" />

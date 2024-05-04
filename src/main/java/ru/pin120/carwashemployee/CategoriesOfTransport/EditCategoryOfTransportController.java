@@ -1,4 +1,4 @@
-package ru.pin120.carwashemployee.CategoriesOfCars;
+package ru.pin120.carwashemployee.CategoriesOfTransport;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditCategoryOfCarsController implements Initializable {
+public class EditCategoryOfTransportController implements Initializable {
     private static final int MAX_LENGTH_CATEGORY_NAME = 50;
     @FXML
     private Button btCancel;
@@ -26,12 +26,12 @@ public class EditCategoryOfCarsController implements Initializable {
 
     private FXOperationMode operationMode;
 
-    private CategoryOfCars categoryOfCars;
+    private CategoryOfTransport categoryOfTransport;
 
     @Getter
     private FXFormExitMode exitMode;
 
-    private CategoryOfCarsRepository categoryOfCarsRepository = new CategoryOfCarsRepository();
+    private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,8 +50,8 @@ public class EditCategoryOfCarsController implements Initializable {
         });
     }
 
-    public void setParameters(CategoryOfCars categoryOfCars, FXOperationMode operationMode, Stage stage){
-        this.categoryOfCars = categoryOfCars;
+    public void setParameters(CategoryOfTransport categoryOfTransport, FXOperationMode operationMode, Stage stage){
+        this.categoryOfTransport = categoryOfTransport;
         this.operationMode = operationMode;
         this.stage = stage;
 
@@ -68,7 +68,7 @@ public class EditCategoryOfCarsController implements Initializable {
                 break;
 
         }
-        categoryNameField.setText(categoryOfCars.getCatCarsName());
+        categoryNameField.setText(categoryOfTransport.getCatTrName());
         this.stage.setMaxHeight(130);
         closeWindowAction();
     }
@@ -87,11 +87,29 @@ public class EditCategoryOfCarsController implements Initializable {
             try{
                switch (operationMode){
                    case CREATE:
-                       categoryOfCars.setCatCarsName(categoryNameField.getText().trim());
-                       canExit = categoryOfCarsRepository.createCategoryOfCars(categoryOfCars);
+                       categoryOfTransport.setCatTrName(categoryNameField.getText().trim());
+                       CategoryOfTransport createdCategoryOfTransport = categoryOfTransportRepository.createCategoryOfTransport(categoryOfTransport);
+                       if(createdCategoryOfTransport != null) {
+                           canExit = true;
+                           categoryOfTransport.setCatTrId(createdCategoryOfTransport.getCatTrId());
+                           categoryOfTransport.setCatTrName(createdCategoryOfTransport.getCatTrName());
+                       }
+                       break;
+                   case EDIT:
+                       if(categoryOfTransport.getCatTrName().equals(categoryNameField.getText().trim())){
+                           canExit = true;
+                       }else{
+                           categoryOfTransport.setCatTrName(categoryNameField.getText().trim());
+                           CategoryOfTransport editedCategoryOfTransport = categoryOfTransportRepository.editCategoryOfTransport(categoryOfTransport);
+                           if(editedCategoryOfTransport != null){
+                               canExit = true;
+                               categoryOfTransport.setCatTrId(editedCategoryOfTransport.getCatTrId());
+                               categoryOfTransport.setCatTrName(editedCategoryOfTransport.getCatTrName());
+                           }
+                       }
                        break;
                    case DELETE:
-                       canExit = categoryOfCarsRepository.deleteCategoryOfCars(categoryNameField.getText().trim());
+                       canExit = categoryOfTransportRepository.deleteCategoryOfTransport(categoryOfTransport.getCatTrId());
                        break;
                }
             }catch (Exception e){

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryOfTransportFX {
 
+    public static final int MAX_LENGTH_CATEGORY_NAME = 50;
     private LongProperty catTrId;
 
 

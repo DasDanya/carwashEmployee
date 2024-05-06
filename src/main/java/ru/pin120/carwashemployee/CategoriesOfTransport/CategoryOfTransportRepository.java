@@ -36,6 +36,22 @@ public class CategoryOfTransportRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    public List<CategoryOfTransport> getCategoriesOfTransportWithoutPriceAndTime(String servName) throws Exception {
+        Request request = new Request.Builder()
+                .url(url+"/emptyCategoryTransport/" + servName)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<CategoryOfTransport>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+
     public CategoryOfTransport createCategoryOfTransport(CategoryOfTransport categoryOfTransport) throws Exception {
         CategoryOfTransport createdCategory = null;
         String jsonData = gson.toJson(categoryOfTransport);
@@ -115,7 +131,7 @@ public class CategoryOfTransportRepository {
 
     public List<CategoryOfTransport> getCategoriesOfTransportByCatTrName(String parameter) throws Exception {
         Request request = new Request.Builder()
-                .url(url + "?catTrName=" + parameter)
+                .url(url + "/" + parameter)
                 .build();
 
         Response response = client.newCall(request).execute();

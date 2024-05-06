@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class CategoryOfServicesFX {
+
+    public static final int MAX_LENGTH_CATEGORY_NAME = 30;
     private StringProperty name;
 
     public String getName() {

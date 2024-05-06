@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ServiceFX {
 
+    public static final int MAX_LENGTH_SERVICE_NAME = 30;
+
     private StringProperty name;
     private StringProperty catName;
 

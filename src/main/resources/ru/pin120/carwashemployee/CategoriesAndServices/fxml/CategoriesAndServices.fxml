@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -55,21 +56,31 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Separator orientation="VERTICAL" prefHeight="10.0" />
+            <Button fx:id="setServicePriceAndTimeButton" mnemonicParsing="false" onAction="#setServicePriceAndTimeButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/moneyButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
-      <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+      <HBox alignment="CENTER_LEFT" maxWidth="5000.0" prefHeight="30.0" prefWidth="200.0">
          <children>
-            <CheckBox fx:id="searchCategoryCheckBox" mnemonicParsing="false" text="%CATEGORY">
+            <CheckBox fx:id="searchCategoryCheckBox" mnemonicParsing="false" text="%CATEGORY" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="2.0" />
                </HBox.margin>
             </CheckBox>
-            <TextField fx:id="searchField" prefHeight="26.0" prefWidth="253.0">
+            <TextField fx:id="searchField" prefHeight="26.0" prefWidth="253.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction" prefHeight="20.0" prefWidth="20.0">
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>

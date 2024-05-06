@@ -8,14 +8,17 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="314.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.CategoriesOfTransport.CategoriesOfTransportController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.PriceListPosition.PriceListPositionController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="20.0" prefWidth="20.0">
+      <ToolBar prefHeight="40.0" prefWidth="600.0">
+         <items>
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="20.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,16 +54,19 @@
                   </ImageView>
                </graphic>
             </Button>
-        </items>
+         </items>
       </ToolBar>
-      <HBox alignment="CENTER_LEFT" maxWidth="5000.0" prefHeight="26.0" prefWidth="352.0">
+      <HBox prefHeight="26.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="searchField" prefHeight="26.0" prefWidth="447.0" HBox.hgrow="ALWAYS">
+            <TextField fx:id="searchField" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
+            <Button fx:id="searchButton" mnemonicParsing="false">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -68,23 +74,32 @@
                      </image>
                   </ImageView>
                </graphic>
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
             </Button>
          </children>
          <VBox.margin>
-            <Insets />
+            <Insets top="5.0" />
          </VBox.margin>
       </HBox>
-      <TableView fx:id="categoriesTable" VBox.vgrow="ALWAYS">
-        <columns>
-          <TableColumn fx:id="categoryNameColumn" prefWidth="388.0" text="%CATEGORY_NAME" />
-            <TableColumn fx:id="categoryIdColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
-        </columns>
+      <GridPane VBox.vgrow="ALWAYS">
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
-      </TableView>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TableView fx:id="priceListTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="categoryTransportColumn" prefWidth="343.0" text="%CATEGORY_TR_NAME" />
+                  <TableColumn fx:id="priceColumn" prefWidth="123.0" style="-fx-alignment: CENTER;" text="%PRICE" />
+                  <TableColumn fx:id="timeColumn" prefWidth="123.0" style="-fx-alignment: CENTER;" text="%TIME" />
+                  <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
+              </columns>
+            </TableView>
+         </children>
+      </GridPane>
    </children>
 </VBox>

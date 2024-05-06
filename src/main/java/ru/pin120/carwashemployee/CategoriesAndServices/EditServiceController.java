@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditServiceController implements Initializable {
-    private static final int MAX_LENGTH_SERVICE_NAME = 30;
 
     @FXML
     private Button btCancel;
@@ -43,7 +42,7 @@ public class EditServiceController implements Initializable {
     private void serviceNameFieldTextListener(){
         serviceNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
-                if (newValue.length() > MAX_LENGTH_SERVICE_NAME) {
+                if (newValue.length() > ServiceFX.MAX_LENGTH_SERVICE_NAME) {
                     serviceNameField.setText(oldValue);
                 }
             }

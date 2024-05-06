@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 public class EditCategoryOfServicesController implements Initializable {
 
-    private static final int MAX_LENGTH_CATEGORY_NAME = 30;
 
     @FXML
     private Button btCancel;
@@ -43,7 +42,7 @@ public class EditCategoryOfServicesController implements Initializable {
     private void categoryNameFieldTextListener(){
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
-                if (newValue.length() > MAX_LENGTH_CATEGORY_NAME) {
+                if (newValue.length() > CategoryOfServicesFX.MAX_LENGTH_CATEGORY_NAME) {
                     categoryNameField.setText(oldValue);
                 }
             }

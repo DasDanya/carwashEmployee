@@ -8,6 +8,8 @@ import ru.pin120.carwashemployee.AppHelper;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class CategoriesOfServicesRepository {
@@ -64,7 +66,7 @@ public class CategoriesOfServicesRepository {
 
     public List<String> getCategoriesNameByParameter(String parameter) throws Exception {
         Request request = new Request.Builder()
-                .url(url + "/getCatNamesByParameter?parameter="+parameter)
+                .url(url + "/getCatNamesByParameter/"+parameter)
                 .build();
 
         Response response = client.newCall(request).execute();

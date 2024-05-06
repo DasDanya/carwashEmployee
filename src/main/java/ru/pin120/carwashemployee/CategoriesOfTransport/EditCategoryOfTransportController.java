@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditCategoryOfTransportController implements Initializable {
-    private static final int MAX_LENGTH_CATEGORY_NAME = 50;
+
     @FXML
     private Button btCancel;
     @FXML
@@ -43,7 +43,7 @@ public class EditCategoryOfTransportController implements Initializable {
     private void categoryNameFieldTextListener() {
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
-                if (newValue.length() > MAX_LENGTH_CATEGORY_NAME) {
+                if (newValue.length() > CategoryOfTransportFX.MAX_LENGTH_CATEGORY_NAME) {
                     categoryNameField.setText(oldValue);
                 }
             }

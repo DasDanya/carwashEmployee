@@ -5,23 +5,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.PriceListPosition.PriceListPositionController;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CategoriesAndServicesController implements Initializable {
 
@@ -29,13 +24,12 @@ public class CategoriesAndServicesController implements Initializable {
     private CheckBox searchCategoryCheckBox;
     @FXML
     private TextField searchField;
-
+    @FXML
+    private Button setServicePriceAndTimeButton;
     @FXML
     private Button searchButton;
     @FXML
     private Button createButton;
-    @FXML
-    private Button editButton;
     @FXML
     private Button deleteButton;
     @FXML
@@ -199,8 +193,9 @@ public class CategoriesAndServicesController implements Initializable {
         searchButton.setOnMouseEntered(event->{
             searchButton.setTooltip(searchCategoryCheckBox.isSelected() ? new Tooltip(rb.getString("SEARCH_CATEGORY")) : new Tooltip(rb.getString("SEARCH_SERVICE")));
         });
-
-
+        setServicePriceAndTimeButton.setOnMouseEntered(event->{
+            setServicePriceAndTimeButton.setTooltip(new Tooltip(rb.getString("SET_PRICE_AND_TIME_SERVICE")));
+        });
     }
 
     @FXML
@@ -548,6 +543,25 @@ public class CategoriesAndServicesController implements Initializable {
 //
 //            }
 
+        }
+    }
+
+    public void setServicePriceAndTimeButtonAction(ActionEvent actionEvent) {
+        try {
+            ServiceFX selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+            if (selectedServiceFX == null) {
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                servicesTable.requestFocus();
+            } else {
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.PriceListPosition.resources.PriceListPosition", "PriceListPosition/fxml/PriceListPosition.fxml", getActualScene());
+                PriceListPositionController priceListPositionController = fxWindowData.getLoader().getController();
+                priceListPositionController.setParameters(selectedServiceFX.getName(), fxWindowData.getModalStage());
+
+                fxWindowData.getModalStage().showAndWait();
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            servicesTable.requestFocus();
         }
     }
 }

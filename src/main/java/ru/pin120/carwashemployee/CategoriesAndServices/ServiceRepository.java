@@ -10,6 +10,8 @@ import ru.pin120.carwashemployee.CategoriesAndServices.ServiceDTO;
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ServiceRepository {
@@ -23,7 +25,7 @@ public class ServiceRepository {
 
     public List<Service> getServicesByCatName(String catName) throws Exception{
         Request request = new Request.Builder()
-                .url(url + "?categoryName=" + catName)
+                .url(url + "/" + catName)
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -53,7 +55,7 @@ public class ServiceRepository {
 
     public ServiceDTO getServiceDTOByServName(String servName) throws Exception{
         Request request = new Request.Builder()
-                .url(url + "/getByServName?servName=" + servName)
+                .url(url + "/getByServName/" + servName)
                 .build();
 
         Response response = client.newCall(request).execute();

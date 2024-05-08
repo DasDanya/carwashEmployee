@@ -44,6 +44,8 @@ public class EditServiceController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > ServiceFX.MAX_LENGTH_SERVICE_NAME) {
                     serviceNameField.setText(oldValue);
+                }else if (!newValue.matches("^[a-zA-Zа-яА-ЯёЁ0-9 -]+$")) {
+                    serviceNameField.setText(oldValue);
                 }
             }
         });

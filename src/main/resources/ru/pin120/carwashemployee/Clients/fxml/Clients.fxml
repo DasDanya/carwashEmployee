@@ -3,8 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -16,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.PriceListPosition.PriceListPositionController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Clients.ClientsController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
@@ -60,17 +58,32 @@
       </ToolBar>
       <SplitPane dividerPositions="0.28218390804597704" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
         <items>
-          <AnchorPane maxHeight="95.0" minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="599.0">
+          <AnchorPane maxHeight="40.0" minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="599.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <HBox prefHeight="26.0" prefWidth="600.0">
                            <children>
-                              <TextField fx:id="filterCategoryField" promptText="%CATEGORY_TR_NAME" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="filterSurnameField" prefHeight="26.0" prefWidth="206.0" promptText="%CLIENT_SURNAME" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
+                              <TextField fx:id="filterNameField" maxWidth="5000.0" promptText="%CLIENT_NAME" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="filterPhoneField" maxWidth="5000.0" promptText="%PHONE" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <ComboBox fx:id="filterSaleComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%SALE" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
                               <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction">
                                  <HBox.margin>
                                     <Insets left="5.0" right="5.0" />
@@ -88,61 +101,18 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                           <children>
-                              <Label prefWidth="110.0" text="%PRICE">
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <ComboBox fx:id="operationPriceComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%COMPARING_OPERATOR" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </ComboBox>
-                              <Spinner fx:id="filterPriceSpinner" editable="true" maxWidth="5000.0" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </Spinner>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
-                           <children>
-                              <Label prefWidth="110.0" text="%TIME">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <ComboBox fx:id="operationTimeComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%COMPARING_OPERATOR" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </ComboBox>
-                              <Spinner fx:id="filterTimeSpinner" editable="true" maxWidth="5000.0" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </Spinner>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" top="5.0" />
-                           </VBox.margin>
-                        </HBox>
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView fx:id="priceListTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                     <columns>
-                      <TableColumn fx:id="categoryTransportColumn" prefWidth="343.0" text="%CATEGORY_TR_NAME" />
-                        <TableColumn fx:id="priceColumn" prefWidth="145.0" style="-fx-alignment: CENTER;" text="%PRICE" />
-                        <TableColumn fx:id="timeColumn" prefWidth="150.0" style="-fx-alignment: CENTER;" text="%TIME" />
+                        <TableColumn fx:id="surnameColumn" prefWidth="275.0" text="%CLIENT_SURNAME" />
+                      <TableColumn fx:id="nameColumn" prefWidth="200.0" text="%CLIENT_NAME" />
+                        <TableColumn fx:id="phoneColumn" prefWidth="145.0" style="-fx-alignment: CENTER;" text="%PHONE" />
+                        <TableColumn fx:id="saleColumn" prefWidth="150.0" style="-fx-alignment: CENTER;" text="%SALE" />
                         <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
                     </columns>
                   </TableView>

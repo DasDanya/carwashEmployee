@@ -8,6 +8,7 @@ import ru.pin120.carwashemployee.AppHelper;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class CategoryOfTransportRepository {
@@ -37,6 +38,7 @@ public class CategoryOfTransportRepository {
     }
 
     public List<CategoryOfTransport> getCategoriesOfTransportWithoutPriceAndTime(String servName) throws Exception {
+        //servName = URLEncoder.encode(servName, "UTF-8");
         Request request = new Request.Builder()
                 .url(url+"/emptyCategoryTransport/" + servName)
                 .build();
@@ -130,6 +132,7 @@ public class CategoryOfTransportRepository {
     }
 
     public List<CategoryOfTransport> getCategoriesOfTransportByCatTrName(String parameter) throws Exception {
+        //parameter = URLEncoder.encode(parameter, "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/" + parameter)
                 .build();

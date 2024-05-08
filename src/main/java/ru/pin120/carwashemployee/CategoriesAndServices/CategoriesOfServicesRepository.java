@@ -65,6 +65,7 @@ public class CategoriesOfServicesRepository {
     }
 
     public List<String> getCategoriesNameByParameter(String parameter) throws Exception {
+        //parameter = URLEncoder.encode(parameter, "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/getCatNamesByParameter/"+parameter)
                 .build();
@@ -133,6 +134,7 @@ public class CategoriesOfServicesRepository {
         //System.out.println(jsonData);
         //RequestBody body = RequestBody.create(JSON, jsonData);
 
+        //String catName = URLEncoder.encode(categoryOfServices.getCatName(), "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/delete/"+categoryOfServices.getCatName())
                 .delete()

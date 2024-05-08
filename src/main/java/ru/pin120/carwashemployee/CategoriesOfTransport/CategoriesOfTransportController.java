@@ -179,6 +179,7 @@ public class CategoriesOfTransportController implements Initializable {
     private void doRefresh(){
         categoryOfTransportFXES.clear();
         searchField.clear();
+
         fillingAll();
 
         categoriesTable.getSelectionModel().selectFirst();
@@ -199,10 +200,10 @@ public class CategoriesOfTransportController implements Initializable {
             FXHelper.showErrorAlert(rb.getString("SEARCH_FIELD_IS_EMPTY"));
             searchField.requestFocus();
         }else{
-            categoryOfTransportFXES.clear();
             String parameter = searchField.getText().trim();
             try{
                 List<CategoryOfTransport> categoryOfCars = categoryOfTransportRepository.getCategoriesOfTransportByCatTrName(parameter);
+                categoryOfTransportFXES.clear();
                 fillingObservableList(categoryOfCars);
 
                 if(!categoryOfTransportFXES.isEmpty()){

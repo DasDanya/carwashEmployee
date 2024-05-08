@@ -45,6 +45,8 @@ public class EditCategoryOfTransportController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > CategoryOfTransportFX.MAX_LENGTH_CATEGORY_NAME) {
                     categoryNameField.setText(oldValue);
+                }else if (!newValue.matches("^[a-zA-Zа-яА-ЯёЁ0-9 -]+$")) {
+                    categoryNameField.setText(oldValue);
                 }
             }
         });

@@ -19,12 +19,20 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PriceListPositionController implements Initializable {
 
+    @FXML
+    private TextField filterCategoryField;
+    @FXML
+    private Spinner<Integer> filterPriceSpinner;
+    @FXML
+    private ComboBox<String> operationPriceComboBox;
+    @FXML
+    private Spinner<Integer> filterTimeSpinner;
+    @FXML
+    private ComboBox<String> operationTimeComboBox;
     @FXML
     private Stage stage;
     @FXML
@@ -39,9 +47,6 @@ public class PriceListPositionController implements Initializable {
     private Button searchButton;
     @Getter
     private FXFormExitMode exitMode;
-
-    @FXML
-    private TextField searchField;
 
     @FXML
     private TableView<PriceListPositionFX> priceListTable;
@@ -74,9 +79,53 @@ public class PriceListPositionController implements Initializable {
         timeColumn.setCellValueFactory(st->st.getValue().timeProperty().asObject());
         idColumn.setCellValueFactory(st->st.getValue().idProperty().asObject());
 
+        initFilterPanel();
         setTooltipForButton();
         Platform.runLater(this::fillingAll);
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
+
+
+    }
+
+    private void initFilterPanel(){
+        setSpinnersFormatters();
+
+        List<String> operators = new ArrayList<>(Arrays.asList(" ","<", ">", "="));
+        operationPriceComboBox.getItems().setAll(operators);
+        operationTimeComboBox.getItems().setAll(operators);
+
+        FXHelper.setContextMenuForTextField(filterTimeSpinner.getEditor());
+        FXHelper.setContextMenuForTextField(filterPriceSpinner.getEditor());
+        FXHelper.setContextMenuForTextField(filterCategoryField);
+    }
+
+    private void setSpinnersFormatters(){
+        filterPriceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,PriceListPositionFX.MAX_PRICE,0,50));
+        filterTimeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,PriceListPositionFX.MAX_TIME,1,1));
+
+        TextFormatter<Integer> priceFormatter = new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                int newValue = Integer.parseInt(change.getControlNewText());
+                if (newValue <= PriceListPositionFX.MAX_PRICE) {
+                    return change;
+                }
+            }
+            return null;
+        });
+
+        filterPriceSpinner.getEditor().setTextFormatter(priceFormatter);
+
+        TextFormatter<Integer> timeFormatter = new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                int newValue = Integer.parseInt(change.getControlNewText());
+                if (newValue <= PriceListPositionFX.MAX_TIME) {
+                    return change;
+                }
+            }
+            return null;
+        });
+
+        filterTimeSpinner.getEditor().setTextFormatter(timeFormatter);
     }
 
     private void fillingAll(){
@@ -221,7 +270,13 @@ public class PriceListPositionController implements Initializable {
 
     private void doRefresh(){
         priceListPositionFXES.clear();
-        searchField.clear();
+        
+        filterCategoryField.clear();
+        filterPriceSpinner.getValueFactory().setValue(0);
+        filterTimeSpinner.getValueFactory().setValue(1);
+        operationPriceComboBox.getSelectionModel().selectFirst();
+        operationTimeComboBox.getSelectionModel().selectFirst();
+
         fillingAll();
 
         priceListTable.getSelectionModel().selectFirst();
@@ -236,5 +291,30 @@ public class PriceListPositionController implements Initializable {
 
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
+    }
+
+    public void searchButtonAction(ActionEvent actionEvent) {
+        doSearch();
+    }
+
+    private void doSearch(){
+        try {
+            if((filterCategoryField.getText() != null && !filterCategoryField.getText().isBlank()) || (operationTimeComboBox.getSelectionModel().getSelectedItem() != null && !operationTimeComboBox.getSelectionModel().getSelectedItem().isBlank()) || (operationPriceComboBox.getSelectionModel().getSelectedItem() != null && !operationPriceComboBox.getSelectionModel().getSelectedItem().isBlank())) {
+               List<PriceListPosition> priceListPositions = priceListPositionRepository.searchPriceListPosition(serviceName, filterCategoryField.getText().trim(), operationPriceComboBox.getSelectionModel().getSelectedItem(), filterPriceSpinner.getValue(), operationTimeComboBox.getSelectionModel().getSelectedItem(), filterTimeSpinner.getValue());
+
+               priceListPositionFXES.clear();
+               fillingObservableList(priceListPositions);
+
+               if(!priceListPositionFXES.isEmpty()){
+                   priceListTable.requestFocus();
+                   priceListTable.getSelectionModel().selectFirst();
+               }
+            }else{
+                priceListTable.requestFocus();
+            }
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+            priceListTable.requestFocus();
+        }
     }
 }

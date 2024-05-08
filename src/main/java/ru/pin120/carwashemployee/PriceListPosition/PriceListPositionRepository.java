@@ -7,8 +7,10 @@ import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class PriceListPositionRepository {
@@ -106,5 +108,43 @@ public class PriceListPositionRepository {
         }
 
         return successDelete;
+    }
+
+
+    public List<PriceListPosition> searchPriceListPosition(String servName, String catTrName, String priceOperator, Integer price, String timeOperator, Integer time) throws Exception {
+        String parameter = "?servName=" + servName;
+        if(catTrName != null && !catTrName.isBlank()){
+            catTrName = URLEncoder.encode(catTrName, "UTF-8");
+            parameter += "&catTrName=" + catTrName;
+        }
+        if(priceOperator != null && !priceOperator.isBlank()){
+            priceOperator = URLEncoder.encode(priceOperator, "UTF-8");
+//            if(parameter.contains("?")){
+                parameter += String.format("&priceOperator=%s&price=%d", priceOperator, price);
+//            }else{
+//                parameter += String.format("?priceOperator=%s&price=%d", priceOperator, price);
+//            }
+        }
+        if(timeOperator != null && !timeOperator.isBlank()){
+            timeOperator = URLEncoder.encode(timeOperator, "UTF-8");
+            //if(parameter.contains("?")){
+                parameter += String.format("&timeOperator=%s&time=%d", timeOperator, time);
+            //}else{
+                //parameter += String.format("?timeOperator=%s&time=%d", timeOperator, time);
+            //}
+        }
+
+        Request request = new Request.Builder()
+                .url(url+parameter)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<PriceListPosition>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
     }
 }

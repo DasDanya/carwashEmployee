@@ -24,6 +24,7 @@ public class ServiceRepository {
 
 
     public List<Service> getServicesByCatName(String catName) throws Exception{
+        //catName = URLEncoder.encode(catName, "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/" + catName)
                 .build();
@@ -54,6 +55,7 @@ public class ServiceRepository {
     }
 
     public ServiceDTO getServiceDTOByServName(String servName) throws Exception{
+        //servName = URLEncoder.encode(servName, "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/getByServName/" + servName)
                 .build();
@@ -148,6 +150,7 @@ public class ServiceRepository {
         //System.out.println(jsonData);
         //RequestBody body = RequestBody.create(JSON, jsonData);
 
+        //String servName = URLEncoder.encode(serviceDTO.getServName(), "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/delete/"+serviceDTO.getServName())
                 .delete()

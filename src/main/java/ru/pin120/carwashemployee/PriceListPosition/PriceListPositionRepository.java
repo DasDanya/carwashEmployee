@@ -88,7 +88,7 @@ public class PriceListPositionRepository {
         return editedPriceListPosition;
     }
 
-    public boolean deletePriceListPosition(Long plId) throws IOException {
+    public boolean deletePriceListPosition(Long plId) throws Exception {
         boolean successDelete;
 
         Request request = new Request.Builder()

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class CategoryOfTransportFX {
 
     public static final int MAX_LENGTH_CATEGORY_NAME = 50;
+    public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
     private LongProperty catTrId;
 
 

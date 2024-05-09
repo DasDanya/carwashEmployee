@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class CategoryOfServicesFX {
 
     public static final int MAX_LENGTH_CATEGORY_NAME = 30;
+    public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
     private StringProperty name;
 
     public String getName() {

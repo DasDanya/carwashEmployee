@@ -15,5 +15,5 @@ public class Client {
     private String clSurname;
     private String clName;
     private String clPhone;
-    private Integer clSale;
+    private Integer clDiscount;
 }

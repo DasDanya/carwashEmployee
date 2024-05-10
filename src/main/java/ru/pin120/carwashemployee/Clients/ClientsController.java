@@ -1,19 +1,35 @@
 package ru.pin120.carwashemployee.Clients;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
+import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Transport.EditTransportController;
+import ru.pin120.carwashemployee.Transport.Transport;
+import ru.pin120.carwashemployee.Transport.TransportFX;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ClientsController implements Initializable {
 
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private CheckBox discountAccountingComboBox;
+    @FXML
+    private Spinner<Integer> discountSpinner;
     @FXML
     private TableColumn<ClientFX, String> surnameColumn;
     @FXML
@@ -27,13 +43,13 @@ public class ClientsController implements Initializable {
     @FXML
     private TableView<ClientFX> clientsTable;
     @FXML
-    private ComboBox<Integer> filterSaleComboBox;
-    @FXML
     private TextField filterPhoneField;
     @FXML
     private TextField filterNameField;
     @FXML
     private TextField filterSurnameField;
+    @FXML
+    public Button showFilterParametersButton;
     @FXML
     private Button refreshButton;
     @FXML
@@ -45,6 +61,15 @@ public class ClientsController implements Initializable {
     @FXML
     private Button searchButton;
     private ResourceBundle rb;
+
+    private ObservableList<ClientFX> clientFXES = FXCollections.observableArrayList();
+    private ClientsRepository clientsRepository = new ClientsRepository();
+
+    private String filterSurname = "";
+    private String filterName = "";
+    private String filterPhone = "";
+    private Integer filterDiscount = null;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -53,14 +78,69 @@ public class ClientsController implements Initializable {
         surnameColumn.setCellValueFactory(c->c.getValue().clSurnameProperty());
         nameColumn.setCellValueFactory(c->c.getValue().clNameProperty());
         phoneColumn.setCellValueFactory(c->c.getValue().clPhoneProperty());
-        saleColumn.setCellValueFactory(c->c.getValue().clSaleProperty().asObject());
+        saleColumn.setCellValueFactory(c->c.getValue().clDiscountProperty().asObject());
+        discountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, ClientFX.MAX_DISCOUNT,0,1));
+        try {
+            setSpinnerFormatter();
+        }catch (Exception e){
+        }
 
         FXHelper.setContextMenuForTextField(filterSurnameField);
         FXHelper.setContextMenuForTextField(filterNameField);
         FXHelper.setContextMenuForTextField(filterPhoneField);
 
+
         setTooltipForButton();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
+
+        fillingTable(0);
+        pageIndexListener();
+    }
+
+    private void setSpinnerFormatter() {
+        TextFormatter<Integer> discountFormatter = new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                int newValue = Integer.parseInt(change.getControlNewText());
+                if (newValue <= ClientFX.MAX_DISCOUNT) {
+                    return change;
+                }
+            }
+            return null;
+        });
+
+        discountSpinner.getEditor().setTextFormatter(discountFormatter);
+    }
+
+    private void fillingTable(int pageIndex){
+        try{
+            clientFXES.clear();
+            List<Client> clients = new ArrayList<>();
+            if(filterSurname.isBlank() && filterName.isBlank() && filterPhone.isBlank() && filterDiscount == null){
+                clients = clientsRepository.getByPage(pageIndex);
+            }else{
+                //transports = transportRepository.search(pageIndex, filterCategory,filterMark,filterModel);
+            }
+            fillingObservableList(clients);
+            clientsTable.setItems(clientFXES);
+            clientsTable.getSelectionModel().selectFirst();
+            Platform.runLater(()->clientsTable.requestFocus());
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            clientsTable.requestFocus();
+        }
+    }
+
+    private void fillingObservableList(List<Client> clients) {
+        for(Client client: clients){
+            ClientFX clientFX = new ClientFX(client.getClId(), client.getClSurname(), client.getClName(), client.getClPhone(), client.getClDiscount());
+            clientFXES.add(clientFX);
+        }
+    }
+
+    private void pageIndexListener(){
+        pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            fillingTable(newIndex.intValue());
+        });
     }
 
     private void setTooltipForButton() {
@@ -78,6 +158,9 @@ public class ClientsController implements Initializable {
         });
         searchButton.setOnMouseEntered(event->{
             searchButton.setTooltip(new Tooltip(rb.getString("SEARCH_CLIENT")));
+        });
+        showFilterParametersButton.setOnMouseEntered(event->{
+            showFilterParametersButton.setTooltip(new Tooltip(rb.getString("SHOW_LAST_FILTER")));
         });
     }
 
@@ -98,7 +181,69 @@ public class ClientsController implements Initializable {
     }
 
     private void doOperation(FXOperationMode operationMode){
+        Client client = null;
+        switch (operationMode){
+            case CREATE:
+                client = new Client();
+                break;
+            case EDIT:
+            case DELETE:
+                if(clientsTable.getSelectionModel().getSelectedItem() != null){
+                    ClientFX clientFX = clientsTable.getSelectionModel().getSelectedItem();
 
+                    client = new Client();
+                    client.setClId(clientFX.getClId());
+                    client.setClSurname(clientFX.getClSurname());
+                    client.setClName(clientFX.getClName());
+                    client.setClPhone(clientFX.getClPhone());
+                    client.setClDiscount(clientFX.getClDiscount());
+                }
+                break;
+        }
+        if(client == null){
+            FXHelper.showErrorAlert(rb.getString("NOT_SELECT_CLIENT"));
+            clientsTable.requestFocus();
+        }else{
+            try{
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Clients.resources.EditClient", "Clients/fxml/EditClient.fxml", getActualScene());
+                EditClientController editClientController = fxWindowData.getLoader().getController();
+
+                editClientController.setParameters(client, operationMode, fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+                
+                doResult(editClientController.getExitMode(), operationMode, client);
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+                clientsTable.requestFocus();
+            }
+        }
+    }
+
+    private void doResult(FXFormExitMode exitMode, FXOperationMode operationMode, Client client) {
+        if(exitMode == FXFormExitMode.OK){
+            switch (operationMode){
+                case CREATE:
+                    int indexPage = clientFXES.isEmpty() ? 0 : pagination.getCurrentPageIndex();
+                    fillingTable(indexPage);
+                    Optional<ClientFX> clientFX = clientFXES.stream()
+                            .filter(t->t.getClId() == client.getClId())
+                            .findFirst();
+
+                    clientFX.ifPresent(fx -> clientsTable.getSelectionModel().select(fx));
+                    break;
+                case EDIT:
+                    fillingTable(pagination.getCurrentPageIndex());
+                    Optional<ClientFX> clientFXEd = clientFXES.stream()
+                            .filter(t->t.getClId() == client.getClId())
+                            .findFirst();
+
+                    clientFXEd.ifPresent(fx -> clientsTable.getSelectionModel().select(fx));
+                    break;
+                case DELETE:
+                    fillingTable(pagination.getCurrentPageIndex());
+                    break;
+            }
+        }
     }
 
 
@@ -110,11 +255,24 @@ public class ClientsController implements Initializable {
         filterSurnameField.clear();
         filterNameField.clear();
         filterPhoneField.clear();
-        filterSaleComboBox.getSelectionModel().selectFirst();
+        discountAccountingComboBox.setSelected(false);
+        discountSpinner.getValueFactory().setValue(0);
+        discountSpinner.setDisable(true);
 
+        filterSurname = "";
+        filterName = "";
+        filterPhone = "";
+        filterDiscount = null;
+
+        fillingTable(0);
+        pagination.setCurrentPageIndex(0);
         clientsTable.requestFocus();
     }
 
     public void searchButtonAction(ActionEvent actionEvent) {
+        
+    }
+
+    public void showFilterParametersButtonAction(ActionEvent actionEvent) {
     }
 }

@@ -69,8 +69,6 @@ public class EditTransportController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > TransportFX.MAX_LENGTH_MARK) {
                     markField.setText(oldValue);
-                }else if (!newValue.matches(TransportFX.MARK_REGEX)) {
-                    markField.setText(oldValue);
                 }
             }
         });
@@ -82,8 +80,6 @@ public class EditTransportController implements Initializable {
             btOK.setDisable(false);
             if(newValue != null) {
                 if (newValue.length() > TransportFX.MAX_LENGTH_MODEL) {
-                    modelField.setText(oldValue);
-                }else if (!newValue.matches(TransportFX.MODEL_REGEX)) {
                     modelField.setText(oldValue);
                 }
             }
@@ -147,15 +143,23 @@ public class EditTransportController implements Initializable {
         boolean canExit = false;
 
         if(markField.getText() == null || markField.getText().isBlank()){
+            markField.clear();
             FXHelper.showErrorAlert(rb.getString("MARK_NOT_EMPTY"));
-            markField.requestFocus();
+            markField.requestFocus();;
         }else if(modelField.getText() == null || modelField.getText().isBlank()){
+            modelField.clear();
             FXHelper.showErrorAlert(rb.getString("MODEL_NOT_EMPTY"));
             modelField.requestFocus();
         }else if(transportCategoryComboBox.getSelectionModel().getSelectedItem() == null){
             FXHelper.showErrorAlert(rb.getString("CATEGORY_NOT_EMPTY"));
             getAvailableCategoriesButton.requestFocus();
-        }else{
+        }else if(!markField.getText().matches(TransportFX.MARK_REGEX)){
+            FXHelper.showErrorAlert(rb.getString("MARK_VALID_CHARACTERS"));
+            markField.requestFocus();
+        }else if(!modelField.getText().matches(TransportFX.MODEL_REGEX)){
+            FXHelper.showErrorAlert(rb.getString("MODEL_VALID_CHARACTERS"));
+            modelField.requestFocus();
+        } else{
             try {
                 switch (operationMode) {
                     case CREATE:
@@ -170,17 +174,16 @@ public class EditTransportController implements Initializable {
                         }
                         break;
                     case EDIT:
-//                        Transport editTransport = new Transport();
-//                        editTransport.setTrId(transport.getTrId());
-//                        editTransport.setTrMark(markField.getText().trim());
-//                        editTransport.setTrModel(modelField.getText().trim());
-//                        editTransport.setCategoryOfTransport(transportCategoryComboBox.getSelectionModel().getSelectedItem());
-
-                        transport.setTrMark(markField.getText().trim());
-                        transport.setTrModel(modelField.getText().trim());
-                        transport.setCategoryOfTransport(transportCategoryComboBox.getSelectionModel().getSelectedItem());
-                        if(transportRepository.edit(transport) != null){
+                        if(transport.getTrMark().equals(markField.getText().trim()) && transport.getTrModel().equals(modelField.getText().trim()) &&
+                        transport.getCategoryOfTransport().getCatTrName().equals(transportCategoryComboBox.getSelectionModel().getSelectedItem().getCatTrName())){
                             canExit = true;
+                        }else {
+                            transport.setTrMark(markField.getText().trim());
+                            transport.setTrModel(modelField.getText().trim());
+                            transport.setCategoryOfTransport(transportCategoryComboBox.getSelectionModel().getSelectedItem());
+                            if (transportRepository.edit(transport) != null) {
+                                canExit = true;
+                            }
                         }
                         break;
                     case DELETE:

@@ -121,6 +121,10 @@ public class TransportRepository {
 
 
     public List<Transport> search(int pageIndex, String category, String mark, String model) throws Exception {
+        if (pageIndex < 0){
+            return new ArrayList<>();
+        }
+
         String partUrl = "?pageIndex=" + pageIndex;
         if(category != null && !category.isBlank()){
             category = URLEncoder.encode(category, "UTF-8");

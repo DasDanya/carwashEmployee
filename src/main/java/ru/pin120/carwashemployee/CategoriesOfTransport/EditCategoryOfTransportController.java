@@ -45,8 +45,6 @@ public class EditCategoryOfTransportController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > CategoryOfTransportFX.MAX_LENGTH_CATEGORY_NAME) {
                     categoryNameField.setText(oldValue);
-                }else if (!newValue.matches(CategoryOfTransportFX.REGEX)) {
-                    categoryNameField.setText(oldValue);
                 }
             }
         });
@@ -85,7 +83,10 @@ public class EditCategoryOfTransportController implements Initializable {
             FXHelper.showErrorAlert(rb.getString("EMPTY_CATEGORY_NAME"));
             categoryNameField.clear();
             categoryNameField.requestFocus();
-        }else{
+        }else if(!categoryNameField.getText().matches(CategoryOfTransportFX.REGEX)){
+            FXHelper.showErrorAlert(rb.getString("CATEGORY_NAME_VALID_CHARACTERS"));
+            categoryNameField.requestFocus();
+        } else{
             try{
                switch (operationMode){
                    case CREATE:

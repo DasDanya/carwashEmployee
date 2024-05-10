@@ -171,7 +171,7 @@ public class TransportController implements Initializable {
 
     private void doOperation(FXOperationMode operationMode){
         Transport transport = null;
-        TransportFX selectedTransportFX = null;
+        //TransportFX selectedTransportFX = null;
         switch (operationMode){
             case CREATE:
                 transport = new Transport();
@@ -179,7 +179,7 @@ public class TransportController implements Initializable {
             case EDIT:
             case DELETE:
                 if(transportsTable.getSelectionModel().getSelectedItem() != null){
-                    selectedTransportFX = transportsTable.getSelectionModel().getSelectedItem();
+                    TransportFX selectedTransportFX = transportsTable.getSelectionModel().getSelectedItem();
 
                     transport = new Transport();
                     transport.setTrId(selectedTransportFX.getTrId());

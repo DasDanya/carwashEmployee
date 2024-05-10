@@ -44,8 +44,6 @@ public class EditCategoryOfServicesController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > CategoryOfServicesFX.MAX_LENGTH_CATEGORY_NAME) {
                     categoryNameField.setText(oldValue);
-                }else if (!newValue.matches(CategoryOfServicesFX.REGEX)) {
-                    categoryNameField.setText(oldValue);
                 }
             }
         });
@@ -81,6 +79,9 @@ public class EditCategoryOfServicesController implements Initializable {
         if(categoryNameField.getText() == null || categoryNameField.getText().isBlank()) {
             FXHelper.showErrorAlert(rb.getString("EMPTY_CATEGORY_NAME"));
             categoryNameField.clear();
+            categoryNameField.requestFocus();
+        }else if(!categoryNameField.getText().matches(CategoryOfServicesFX.REGEX)){
+            FXHelper.showErrorAlert(rb.getString("CATEGORY_NAME_VALID_CHARACTERS"));
             categoryNameField.requestFocus();
         }else{
             try {

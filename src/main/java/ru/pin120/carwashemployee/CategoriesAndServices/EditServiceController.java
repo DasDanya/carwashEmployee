@@ -44,8 +44,6 @@ public class EditServiceController implements Initializable {
             if(newValue != null) {
                 if (newValue.length() > ServiceFX.MAX_LENGTH_SERVICE_NAME) {
                     serviceNameField.setText(oldValue);
-                }else if (!newValue.matches(ServiceFX.REGEX)) {
-                    serviceNameField.setText(oldValue);
                 }
             }
         });
@@ -80,6 +78,9 @@ public class EditServiceController implements Initializable {
         if(serviceNameField.getText() == null || serviceNameField.getText().isBlank()){
             FXHelper.showErrorAlert(rb.getString("EMPTY_SERVICE_NAME"));
             serviceNameField.clear();
+            serviceNameField.requestFocus();
+        } else if(!serviceNameField.getText().matches(ServiceFX.REGEX)){
+            FXHelper.showErrorAlert(rb.getString("SERVICE_NAME_VALID_CHARACTERS"));
             serviceNameField.requestFocus();
         }else{
             try{

@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.StartApplication;
 
@@ -87,12 +88,17 @@ public class FXHelper {
         alert.setTitle(AppHelper.getErrorText());
         alert.setHeaderText(null);
         alert.setWidth(800);
+
+        Window window = alert.getDialogPane().getScene().getWindow();
+        window.centerOnScreen();
+
         alert.showAndWait();
     }
 
     public static void showInfoAlert(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setTitle(AppHelper.getErrorText());
+        alert.setTitle(AppHelper.getInfoText());
+        alert.initModality(Modality.NONE);
         alert.setHeaderText(null);
         alert.setWidth(800);
         alert.showAndWait();

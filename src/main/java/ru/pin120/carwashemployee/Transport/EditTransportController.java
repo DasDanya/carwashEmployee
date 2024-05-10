@@ -182,6 +182,7 @@ public class EditTransportController implements Initializable {
                         if(transportRepository.edit(transport) != null){
                             canExit = true;
                         }
+                        break;
                     case DELETE:
                             canExit = transportRepository.delete(transport.getTrId());
                         break;

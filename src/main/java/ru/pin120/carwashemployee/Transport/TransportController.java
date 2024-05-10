@@ -16,11 +16,13 @@ import ru.pin120.carwashemployee.FX.FXWindowData;
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TransportController implements Initializable {
+
 
     @FXML
     private Pagination pagination;
@@ -40,7 +42,8 @@ public class TransportController implements Initializable {
     private TextField filterMarkField;
     @FXML
     private TextField filterCategoryField;
-
+    @FXML
+    private Button showFilterButton;
     @FXML
     private Button searchButton;
     @FXML
@@ -52,6 +55,10 @@ public class TransportController implements Initializable {
     @FXML
     private Button createButton;
     private ResourceBundle rb;
+
+    String filterCategory = "";
+    String filterModel = "";
+    String filterMark = "";
 
     private ObservableList<TransportFX> transportFXES = FXCollections.observableArrayList();
 
@@ -78,10 +85,28 @@ public class TransportController implements Initializable {
 
     }
 
+//    private void fillingTable(int pageIndex){
+//        try{
+//            transportFXES.clear();
+//            List<Transport> transports = transportRepository.getByPage(pageIndex);
+//            fillingObservableList(transports);
+//            transportsTable.setItems(transportFXES);
+//            transportsTable.getSelectionModel().selectFirst();
+//            Platform.runLater(()->transportsTable.requestFocus());
+//        }catch (Exception e){
+//            FXHelper.showErrorAlert(e.getMessage());
+//            transportsTable.requestFocus();
+//        }
+//    }
     private void fillingTable(int pageIndex){
         try{
             transportFXES.clear();
-            List<Transport> transports = transportRepository.getByPage(pageIndex);
+            List<Transport> transports;
+            if(filterCategory.isBlank() && filterMark.isBlank() && filterModel.isBlank()){
+             transports = transportRepository.getByPage(pageIndex);
+            }else{
+                transports = transportRepository.search(pageIndex, filterCategory,filterMark,filterModel);
+            }
             fillingObservableList(transports);
             transportsTable.setItems(transportFXES);
             transportsTable.getSelectionModel().selectFirst();
@@ -126,6 +151,9 @@ public class TransportController implements Initializable {
         });
         searchButton.setOnMouseEntered(event->{
             searchButton.setTooltip(new Tooltip(rb.getString("SEARCH_TRANSPORT")));
+        });
+        showFilterButton.setOnMouseEntered(event->{
+            showFilterButton.setTooltip(new Tooltip(rb.getString("SHOW_LAST_FILTER")));
         });
     }
 
@@ -221,10 +249,38 @@ public class TransportController implements Initializable {
         filterModelField.clear();
         filterCategoryField.clear();
 
+        filterCategory = "";
+        filterModel = "";
+        filterMark = "";
+
+        //pagination.setCurrentPageIndex(0);
+        fillingTable(0);
         pagination.setCurrentPageIndex(0);
         transportsTable.requestFocus();
     }
 
     public void searchButtonAction(ActionEvent actionEvent) {
+        //if((filterCategoryField.getText() != null && !filterCategoryField.getText().isBlank()) || (filterMarkField.getText() != null && !filterMarkField.getText().isBlank()) || (filterModelField.getText() != null && !filterModelField.getText().isBlank())){
+            try{
+                filterCategory = filterCategoryField.getText().trim();
+                filterMark = filterMarkField.getText().trim();
+                filterModel = filterModelField.getText().trim();
+
+                System.out.println(filterCategory + "\n" + filterMark + "\n" + filterModel);
+                fillingTable(0);
+                pagination.setCurrentPageIndex(0);
+
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+                transportsTable.requestFocus();
+            }
+        //}else{
+            transportsTable.requestFocus();
+        //}
+    }
+
+    public void showFilterButtonAction(ActionEvent actionEvent) {
+        String message = String.format("%s:%s\n%s:%s\n%s:%s",rb.getString("TRANSPORT_CATEGORY"), filterCategory, rb.getString("MARK"),filterMark, rb.getString("MODEL"),filterModel);
+        FXHelper.showInfoAlert(message);
     }
 }

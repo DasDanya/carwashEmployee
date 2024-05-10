@@ -7,8 +7,10 @@ import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.PriceListPosition.PriceListPosition;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,5 +117,36 @@ public class TransportRepository {
         }
 
         return successDelete;
+    }
+
+
+    public List<Transport> search(int pageIndex, String category, String mark, String model) throws Exception {
+        String partUrl = "?pageIndex=" + pageIndex;
+        if(category != null && !category.isBlank()){
+            category = URLEncoder.encode(category, "UTF-8");
+            partUrl+="&category=" + category;
+        }
+        if(mark != null && !mark.isBlank()){
+            mark = URLEncoder.encode(mark, "UTF-8");
+            partUrl+="&mark=" + mark;
+        }
+        if(model != null && !model.isBlank()){
+            model = URLEncoder.encode(model, "UTF-8");
+            partUrl+="&model=" + model;
+        }
+
+        Request request = new Request.Builder()
+                .url(url+partUrl)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<Transport>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+
     }
 }

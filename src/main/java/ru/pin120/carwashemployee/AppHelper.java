@@ -21,5 +21,7 @@ public class AppHelper {
     public static String getCopy(){return rb.getString("COPY");}
     public static String getPaste(){return rb.getString("PASTE");}
 
+    public static String getInfoText(){return rb.getString("INFO_TEXT");}
+
     public static String getExistsEntityTextEnd(){return rb.getString("EXISTS_ENTITY_TEXT_END");}
 }

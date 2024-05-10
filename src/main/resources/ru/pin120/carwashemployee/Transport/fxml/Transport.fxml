@@ -79,10 +79,19 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction">
+                              <Button fx:id="showFilterButton" mnemonicParsing="false" onAction="#showFilterButtonAction">
                                  <HBox.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/showButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -90,6 +99,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
                               </Button>
                            </children>
                            <VBox.margin>

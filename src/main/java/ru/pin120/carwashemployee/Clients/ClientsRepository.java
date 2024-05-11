@@ -9,6 +9,7 @@ import ru.pin120.carwashemployee.Transport.Transport;
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,44 @@ public class ClientsRepository {
         Type type = new TypeToken<List<Client>>(){}.getType();
 
         return gson.fromJson(jsonData, type);
+    }
+
+    public List<Client> search(int pageIndex, String surname, String name, String phone, Integer discount, String filterDiscountOperator) throws Exception {
+        if (pageIndex < 0){
+            return new ArrayList<>();
+        }
+
+        String partUrl = "?pageIndex=" + pageIndex;
+        if(surname != null && !surname.isBlank()){
+            surname = URLEncoder.encode(surname, "UTF-8");
+            partUrl+="&surname=" + surname;
+        }
+        if(name != null && !name.isBlank()){
+            name = URLEncoder.encode(name, "UTF-8");
+            partUrl+="&name=" + name;
+        }
+        if(phone != null && !phone.isBlank()){
+            phone = URLEncoder.encode(phone, "UTF-8");
+            partUrl+="&phone=" + phone;
+        }
+        if(discount != null && filterDiscountOperator != null && !filterDiscountOperator.isBlank()){
+            filterDiscountOperator = URLEncoder.encode(filterDiscountOperator, "UTF-8");
+            partUrl+=String.format("&discount=%d&filterDiscountOperator=%s",discount,filterDiscountOperator);
+        }
+
+        Request request = new Request.Builder()
+                .url(url+partUrl)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<Client>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+
     }
 
     public Client create(Client clientData) throws Exception {
@@ -105,4 +144,5 @@ public class ClientsRepository {
 
         return successDelete;
     }
+
 }

@@ -266,7 +266,7 @@ public class TransportController implements Initializable {
                 filterMark = filterMarkField.getText().trim();
                 filterModel = filterModelField.getText().trim();
 
-                System.out.println(filterCategory + "\n" + filterMark + "\n" + filterModel);
+                //System.out.println(filterCategory + "\n" + filterMark + "\n" + filterModel);
                 fillingTable(0);
                 pagination.setCurrentPageIndex(0);
 
@@ -275,7 +275,7 @@ public class TransportController implements Initializable {
                 transportsTable.requestFocus();
             }
         //}else{
-            transportsTable.requestFocus();
+            //transportsTable.requestFocus();
         //}
     }
 

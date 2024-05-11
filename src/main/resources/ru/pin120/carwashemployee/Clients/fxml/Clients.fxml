@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Clients.ClientsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Clients.ClientsController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
@@ -81,12 +81,12 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <CheckBox fx:id="discountAccountingComboBox" mnemonicParsing="false" text="%DISCOUNT_CHECK" HBox.hgrow="ALWAYS">
+                              <ComboBox fx:id="operationDiscountComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%COMPARING_OPERATOR" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </CheckBox>
-                              <Spinner fx:id="discountSpinner" disable="true" maxWidth="5000.0" prefWidth="75.0" HBox.hgrow="ALWAYS">
+                              </ComboBox>
+                              <Spinner fx:id="discountSpinner" editable="true" maxWidth="5000.0" prefWidth="75.0" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -131,9 +131,9 @@
                         <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="surnameColumn" prefWidth="275.0" text="%CLIENT_SURNAME" />
-                            <TableColumn fx:id="nameColumn" prefWidth="200.0" text="%CLIENT_NAME" />
-                              <TableColumn fx:id="phoneColumn" prefWidth="145.0" style="-fx-alignment: CENTER;" text="%PHONE" />
-                              <TableColumn fx:id="saleColumn" prefWidth="150.0" style="-fx-alignment: CENTER;" text="%DISCOUNT" />
+                            <TableColumn fx:id="nameColumn" prefWidth="235.0" text="%CLIENT_NAME" />
+                              <TableColumn fx:id="phoneColumn" prefWidth="180.0" style="-fx-alignment: CENTER;" text="%PHONE" />
+                              <TableColumn fx:id="saleColumn" prefWidth="140.0" style="-fx-alignment: CENTER;" text="%DISCOUNT" />
                               <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
                           </columns>
                         </TableView>

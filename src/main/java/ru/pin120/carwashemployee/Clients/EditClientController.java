@@ -159,7 +159,7 @@ public class EditClientController implements Initializable {
                         client.setClSurname(surnameField.getText().trim());
                         client.setClName(nameField.getText().trim());
                         client.setClPhone("+7"+phoneField.getText().trim());
-                        client.setClDiscount(discountSpinner.getValue() == 0 ? null : discountSpinner.getValue());
+                        client.setClDiscount(discountSpinner.getValue());
 
                         Client createdClient = clientsRepository.create(client);
                         if(createdClient != null){
@@ -176,7 +176,7 @@ public class EditClientController implements Initializable {
                             client.setClSurname(surnameField.getText().trim());
                             client.setClName(nameField.getText().trim());
                             client.setClPhone("+7" + phoneField.getText().trim());
-                            client.setClDiscount(discountSpinner.getValue() == 0 ? null : discountSpinner.getValue());
+                            client.setClDiscount(discountSpinner.getValue());
                             if(clientsRepository.edit(client) != null){
                                 canExit = true;
                             }

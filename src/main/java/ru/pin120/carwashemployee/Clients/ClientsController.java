@@ -12,22 +12,16 @@ import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
-import ru.pin120.carwashemployee.Transport.EditTransportController;
-import ru.pin120.carwashemployee.Transport.Transport;
-import ru.pin120.carwashemployee.Transport.TransportFX;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ClientsController implements Initializable {
 
     @FXML
-    private Pagination pagination;
+    private ComboBox<String> operationDiscountComboBox;
     @FXML
-    private CheckBox discountAccountingComboBox;
+    private Pagination pagination;
     @FXML
     private Spinner<Integer> discountSpinner;
     @FXML
@@ -69,6 +63,7 @@ public class ClientsController implements Initializable {
     private String filterName = "";
     private String filterPhone = "";
     private Integer filterDiscount = null;
+    private String filterDiscountOperator = "";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,12 +84,29 @@ public class ClientsController implements Initializable {
         FXHelper.setContextMenuForTextField(filterNameField);
         FXHelper.setContextMenuForTextField(filterPhoneField);
 
+        List<String> operators = new ArrayList<>(Arrays.asList(" ","<", ">", "="));
+        operationDiscountComboBox.getItems().setAll(operators);
 
         setTooltipForButton();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
 
         fillingTable(0);
         pageIndexListener();
+        filterPhoneListener();
+    }
+
+    private void filterPhoneListener(){
+        filterPhoneField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                String digitsOnly = newValue.replaceAll("\\D", "");
+
+                if (digitsOnly.length() > ClientFX.MAX_PHONE_FILLING) {
+                    digitsOnly = digitsOnly.substring(0, ClientFX.MAX_PHONE_FILLING);
+                }
+
+                filterPhoneField.setText(digitsOnly);
+            }
+        });
     }
 
     private void setSpinnerFormatter() {
@@ -115,10 +127,10 @@ public class ClientsController implements Initializable {
         try{
             clientFXES.clear();
             List<Client> clients = new ArrayList<>();
-            if(filterSurname.isBlank() && filterName.isBlank() && filterPhone.isBlank() && filterDiscount == null){
+            if(filterSurname.isBlank() && filterName.isBlank() && filterPhone.isBlank() && filterDiscountOperator.isBlank() && filterDiscount == null){
                 clients = clientsRepository.getByPage(pageIndex);
             }else{
-                //transports = transportRepository.search(pageIndex, filterCategory,filterMark,filterModel);
+                clients = clientsRepository.search(pageIndex, filterSurname, filterName, filterPhone, filterDiscount, filterDiscountOperator);
             }
             fillingObservableList(clients);
             clientsTable.setItems(clientFXES);
@@ -255,13 +267,13 @@ public class ClientsController implements Initializable {
         filterSurnameField.clear();
         filterNameField.clear();
         filterPhoneField.clear();
-        discountAccountingComboBox.setSelected(false);
         discountSpinner.getValueFactory().setValue(0);
-        discountSpinner.setDisable(true);
+        operationDiscountComboBox.getSelectionModel().selectFirst();
 
         filterSurname = "";
         filterName = "";
         filterPhone = "";
+        filterDiscountOperator = "";
         filterDiscount = null;
 
         fillingTable(0);
@@ -270,9 +282,27 @@ public class ClientsController implements Initializable {
     }
 
     public void searchButtonAction(ActionEvent actionEvent) {
-        
+        try{
+            filterSurname = filterSurnameField.getText().trim();
+            filterName = filterNameField.getText().trim();
+            filterPhone = filterPhoneField.getText().trim();
+
+            if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null) {
+                filterDiscount = discountSpinner.getValue();
+                filterDiscountOperator = operationDiscountComboBox.getSelectionModel().getSelectedItem();
+            }
+
+            fillingTable(0);
+            pagination.setCurrentPageIndex(0);
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            clientsTable.requestFocus();
+        }
     }
 
     public void showFilterParametersButtonAction(ActionEvent actionEvent) {
+        String message = String.format("%s:%s\n%s:%s\n%s:%s\n%s:%s\n%s:%s",rb.getString("CLIENT_SURNAME"), filterSurname, rb.getString("CLIENT_NAME"),filterName, rb.getString("PHONE"),filterPhone, rb.getString("COMPARING_OPERATOR"),
+                filterDiscountOperator, rb.getString("DISCOUNT"), filterDiscount == null || filterDiscountOperator.isBlank() ? "" : filterDiscount.toString());
+        FXHelper.showInfoAlert(message);
     }
 }

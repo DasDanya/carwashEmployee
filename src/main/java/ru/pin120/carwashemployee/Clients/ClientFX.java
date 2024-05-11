@@ -63,6 +63,6 @@ public class ClientFX {
         this.clSurname = new SimpleStringProperty(clSurname);
         this.clName = new SimpleStringProperty(clName);
         this.clPhone = new SimpleStringProperty(clPhone);
-        this.clDiscount = new SimpleIntegerProperty(clDiscount != null ? clDiscount : 0);
+        this.clDiscount = new SimpleIntegerProperty(clDiscount);
     }
 }

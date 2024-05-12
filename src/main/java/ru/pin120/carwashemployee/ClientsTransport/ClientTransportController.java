@@ -10,14 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.Clients.Client;
-import ru.pin120.carwashemployee.Clients.ClientFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
-import ru.pin120.carwashemployee.PriceListPosition.EditPriceListPositionController;
 import ru.pin120.carwashemployee.Transport.Transport;
 
 import java.net.URL;
@@ -82,7 +79,20 @@ public class ClientTransportController implements Initializable {
         setTooltipForButtons();
         Platform.runLater(this::fillingAll);
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
+
+        filterStateNumberFieldListener();
     }
+
+    private void filterStateNumberFieldListener() {
+        filterStateNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                if (newValue.length() > ClientsTransportFX.MAX_STATE_NUMBER_LENGTH) {
+                    filterStateNumberField.setText(oldValue);
+                }
+            }
+        });
+    }
+
 
     private void fillingAll() {
         try{
@@ -250,9 +260,17 @@ public class ClientTransportController implements Initializable {
         markColumn.setSortType(TableColumn.SortType.ASCENDING);
     }
 
-    public void showFilterParametersButtonAction(ActionEvent actionEvent) {
-    }
 
     public void searchButtonAction(ActionEvent actionEvent) {
+        try{
+            clientsTransportFXES.clear();
+            List<ClientsTransport> clientTransport = clientsTransportRepository.search(client.getClId(), filterMarkField.getText().trim(), filterModelField.getText().trim(), filterCategoryField.getText().trim(), filterStateNumberField.getText().trim());
+            fillingObservableList(clientTransport);
+            clientTransportTable.setItems(clientsTransportFXES);
+            clientTransportTable.requestFocus();
+            clientTransportTable.getSelectionModel().selectFirst();
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+        }
     }
 }

@@ -558,6 +558,8 @@ public class CategoriesAndServicesController implements Initializable {
                 priceListPositionController.setParameters(selectedServiceFX.getName(), fxWindowData.getModalStage());
 
                 fxWindowData.getModalStage().showAndWait();
+
+                servicesTable.requestFocus();
             }
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());

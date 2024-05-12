@@ -222,6 +222,7 @@ public class TransportController implements Initializable {
                             .findFirst();
 
                     transportFX.ifPresent(fx -> transportsTable.getSelectionModel().select(fx));
+                    modelColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case EDIT:
                     fillingTable(pagination.getCurrentPageIndex());
@@ -230,6 +231,7 @@ public class TransportController implements Initializable {
                             .findFirst();
 
                     transportFXEd.ifPresent(fx -> transportsTable.getSelectionModel().select(fx));
+                    modelColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case DELETE:
                     fillingTable(pagination.getCurrentPageIndex());

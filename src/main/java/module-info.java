@@ -22,4 +22,7 @@ module ru.pin120.carwashemployee {
     opens ru.pin120.carwashemployee.Clients to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.Clients;
 
+    opens ru.pin120.carwashemployee.ClientsTransport to javafx.fxml, com.google.gson;
+    exports ru.pin120.carwashemployee.ClientsTransport;
+
 }

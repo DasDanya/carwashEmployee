@@ -47,7 +47,6 @@ public class PriceListPositionController implements Initializable {
     private Button searchButton;
     @Getter
     private FXFormExitMode exitMode;
-
     @FXML
     private TableView<PriceListPositionFX> priceListTable;
 

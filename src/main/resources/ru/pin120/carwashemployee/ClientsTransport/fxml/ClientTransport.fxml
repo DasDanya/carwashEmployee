@@ -2,10 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -17,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Clients.ClientsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.ClientsTransport.ClientTransportController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
@@ -57,16 +53,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator orientation="VERTICAL" prefHeight="10.0" />
-            <Button fx:id="showTransportButton" mnemonicParsing="false" onAction="#showTransportButtonAction" prefHeight="20.0" prefWidth="20.0">
-               <graphic>
-                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/carButton.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </items>
       </ToolBar>
       <SplitPane dividerPositions="0.1222" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
@@ -77,31 +63,26 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0">
                            <children>
-                              <TextField fx:id="filterSurnameField" maxWidth="5000.0" prefHeight="26.0" prefWidth="206.0" promptText="%CLIENT_SURNAME" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="filterMarkField" maxWidth="5000.0" prefWidth="206.0" promptText="%MARK" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="filterNameField" maxWidth="5000.0" prefWidth="206.0" promptText="%CLIENT_NAME" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="filterModelField" maxWidth="5000.0" prefWidth="206.0" promptText="%MODEL" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="filterPhoneField" maxWidth="5000.0" prefWidth="120.0" promptText="%PHONE" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="filterCategoryField" maxWidth="5000.0" prefHeight="26.0" prefWidth="206.0" promptText="%CATEGORY" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <ComboBox fx:id="operationDiscountComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%COMPARING_OPERATOR" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="filterStateNumberField" maxWidth="5000.0" prefWidth="110.0" promptText="%STATENUMBER" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </ComboBox>
-                              <Spinner fx:id="discountSpinner" editable="true" maxWidth="5000.0" prefWidth="75.0" HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Spinner>
+                              </TextField>
                               <Button fx:id="showFilterParametersButton" mnemonicParsing="false" onAction="#showFilterParametersButtonAction" HBox.hgrow="ALWAYS">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -139,20 +120,15 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="clientTransportTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                              <TableColumn fx:id="surnameColumn" prefWidth="275.0" text="%CLIENT_SURNAME" />
-                            <TableColumn fx:id="nameColumn" prefWidth="235.0" text="%CLIENT_NAME" />
-                              <TableColumn fx:id="phoneColumn" prefWidth="180.0" style="-fx-alignment: CENTER;" text="%PHONE" />
-                              <TableColumn fx:id="saleColumn" prefWidth="140.0" style="-fx-alignment: CENTER;" text="%DISCOUNT" />
+                            <TableColumn fx:id="markColumn" prefWidth="235.0" text="%MARK" />
+                              <TableColumn fx:id="modelColumn" prefWidth="260.79998779296875" style="-fx-alignment: CENTER;" text="%MODEL" />
+                              <TableColumn fx:id="categoryColumn" prefWidth="275.0" text="%CATEGORY" />
+                              <TableColumn fx:id="stageNumberColumn" prefWidth="120.0" style="-fx-alignment: CENTER;" text="%STATENUMBER" />
                               <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
                           </columns>
                         </TableView>
-                        <Pagination fx:id="pagination" prefHeight="10.0" prefWidth="200.0" VBox.vgrow="NEVER">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Pagination>
                      </children>
                   </VBox>
                </children>

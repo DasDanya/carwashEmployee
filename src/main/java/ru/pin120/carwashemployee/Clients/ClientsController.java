@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.ClientsTransport.ClientTransportController;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -42,6 +43,8 @@ public class ClientsController implements Initializable {
     private TextField filterNameField;
     @FXML
     private TextField filterSurnameField;
+    @FXML
+    private Button showTransportButton;
     @FXML
     public Button showFilterParametersButton;
     @FXML
@@ -174,6 +177,9 @@ public class ClientsController implements Initializable {
         showFilterParametersButton.setOnMouseEntered(event->{
             showFilterParametersButton.setTooltip(new Tooltip(rb.getString("SHOW_LAST_FILTER")));
         });
+        showTransportButton.setOnMouseEntered(event->{
+            showTransportButton.setTooltip(new Tooltip(rb.getString("SHOW_TRANSPORT")));
+        });
     }
 
     private Scene getActualScene(){
@@ -242,6 +248,7 @@ public class ClientsController implements Initializable {
                             .findFirst();
 
                     clientFX.ifPresent(fx -> clientsTable.getSelectionModel().select(fx));
+                    surnameColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case EDIT:
                     fillingTable(pagination.getCurrentPageIndex());
@@ -250,12 +257,15 @@ public class ClientsController implements Initializable {
                             .findFirst();
 
                     clientFXEd.ifPresent(fx -> clientsTable.getSelectionModel().select(fx));
+                    surnameColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case DELETE:
                     fillingTable(pagination.getCurrentPageIndex());
                     break;
             }
         }
+
+        clientsTable.requestFocus();
     }
 
 
@@ -304,5 +314,26 @@ public class ClientsController implements Initializable {
         String message = String.format("%s:%s\n%s:%s\n%s:%s\n%s:%s\n%s:%s",rb.getString("CLIENT_SURNAME"), filterSurname, rb.getString("CLIENT_NAME"),filterName, rb.getString("PHONE"),filterPhone, rb.getString("COMPARING_OPERATOR"),
                 filterDiscountOperator, rb.getString("DISCOUNT"), filterDiscount == null || filterDiscountOperator.isBlank() ? "" : filterDiscount.toString());
         FXHelper.showInfoAlert(message);
+    }
+
+    public void showTransportButtonAction(ActionEvent actionEvent) {
+        try{
+            ClientFX clientFX = clientsTable.getSelectionModel().getSelectedItem();
+            if(clientFX == null){
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECT_CLIENT"));
+                clientsTable.requestFocus();
+            }else{
+                Client client = new Client(clientFX.getClId(), clientFX.getClSurname(), clientFX.getClName(),clientFX.getClPhone(),clientFX.getClDiscount());
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.ClientsTransport.resources.ClientTransport", "ClientsTransport/fxml/ClientTransport.fxml", getActualScene());
+                ClientTransportController clientTransportController = fxWindowData.getLoader().getController();
+                clientTransportController.setParameters(client, fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+
+                clientsTable.requestFocus();
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            clientsTable.requestFocus();
+        }
     }
 }

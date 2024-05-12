@@ -143,7 +143,7 @@ public class EditClientController implements Initializable {
             nameField.clear();
             FXHelper.showErrorAlert(rb.getString("NOT_EMPTY_NAME"));
             nameField.requestFocus();
-        }else if(phoneField.getText() == null || phoneField.getText().isBlank() || phoneField.getText().length() < ClientFX.MAX_PHONE_FILLING){
+        }else if(phoneField.getText() == null || phoneField.getText().isBlank() || phoneField.getText().trim().length() < ClientFX.MAX_PHONE_FILLING){
             FXHelper.showErrorAlert(rb.getString("NOT_EMPTY_PHONE"));
             phoneField.requestFocus();
         }else if(!surnameField.getText().matches(ClientFX.SURNAME_REGEX)){

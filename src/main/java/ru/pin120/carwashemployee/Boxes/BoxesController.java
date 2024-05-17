@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.CategoriesOfTransport.EditCategoryOfTransportController;
 import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
@@ -19,6 +20,7 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -138,10 +140,22 @@ public class BoxesController implements Initializable {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
                 case CREATE:
+                    BoxFX boxFX = new BoxFX(box.getBoxId(), box.getBoxStatus());
+                    boxFXES.add(boxFX);
+                    boxFXES.sort(Comparator.comparing(BoxFX::getBoxId));
+
+                    boxesTable.getSelectionModel().select(boxFX);
+                    numberColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case EDIT:
+                    selectedBoxFX.setBoxStatus(box.getBoxStatus().getDisplayValue());
+
+                    boxFXES.sort(Comparator.comparing(BoxFX::getBoxId));
+                    boxesTable.getSelectionModel().select(selectedBoxFX);
+                    numberColumn.setSortType(TableColumn.SortType.ASCENDING);
                     break;
                 case DELETE:
+                    boxFXES.remove(selectedBoxFX);
                     break;
             }
         }

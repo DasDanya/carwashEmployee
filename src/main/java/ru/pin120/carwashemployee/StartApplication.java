@@ -14,8 +14,8 @@ public class StartApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Locale locale = Locale.getDefault();
-        ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.Boxes.resources.Boxes", locale);
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("Boxes/fxml/Boxes.fxml"),bundle);
+        ResourceBundle bundle = ResourceBundle.getBundle("ru.pin120.carwashemployee.Main.resources.Main", locale);
+        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("Main/fxml/Main.fxml"),bundle);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(bundle.getString("FORM_TITLE"));
         stage.setScene(scene);

@@ -68,10 +68,10 @@ public class EditClientTransportController implements Initializable {
         modelColumn.setCellValueFactory(t->t.getValue().trModelProperty());
         categoryColumn.setCellValueFactory(t->t.getValue().trCategoryProperty());
 
-        FXHelper.setContextMenuForTextField(filterCategoryField);
-        FXHelper.setContextMenuForTextField(filterMarkField);
-        FXHelper.setContextMenuForTextField(filterMarkField);
-        FXHelper.setContextMenuForTextField(stateNumberField);
+        FXHelper.setContextMenuForEditableTextField(filterCategoryField);
+        FXHelper.setContextMenuForEditableTextField(filterMarkField);
+        FXHelper.setContextMenuForEditableTextField(filterMarkField);
+        FXHelper.setContextMenuForEditableTextField(stateNumberField);
 
         stateNumberFieldListener();
         pageIndexListener();

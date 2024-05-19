@@ -83,9 +83,9 @@ public class ClientsController implements Initializable {
         }catch (Exception e){
         }
 
-        FXHelper.setContextMenuForTextField(filterSurnameField);
-        FXHelper.setContextMenuForTextField(filterNameField);
-        FXHelper.setContextMenuForTextField(filterPhoneField);
+        FXHelper.setContextMenuForEditableTextField(filterSurnameField);
+        FXHelper.setContextMenuForEditableTextField(filterNameField);
+        FXHelper.setContextMenuForEditableTextField(filterPhoneField);
 
         List<String> operators = new ArrayList<>(Arrays.asList(" ","<", ">", "="));
         operationDiscountComboBox.getItems().setAll(operators);

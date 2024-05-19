@@ -35,7 +35,7 @@ public class EditServiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
-        FXHelper.setContextMenuForTextField(serviceNameField);
+        FXHelper.setContextMenuForEditableTextField(serviceNameField);
         serviceNameFieldTextListener();
     }
 

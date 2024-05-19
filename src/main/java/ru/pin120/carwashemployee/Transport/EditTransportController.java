@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import lombok.Getter;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportRepository;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
@@ -52,8 +51,8 @@ public class EditTransportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
-        FXHelper.setContextMenuForTextField(modelField);
-        FXHelper.setContextMenuForTextField(markField);
+        FXHelper.setContextMenuForEditableTextField(modelField);
+        FXHelper.setContextMenuForEditableTextField(markField);
 
         markFieldTextListener();
         modelFieldTextListener();

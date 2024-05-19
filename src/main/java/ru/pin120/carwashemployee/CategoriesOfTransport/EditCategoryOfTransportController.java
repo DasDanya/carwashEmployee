@@ -36,7 +36,7 @@ public class EditCategoryOfTransportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
-        FXHelper.setContextMenuForTextField(categoryNameField);
+        FXHelper.setContextMenuForEditableTextField(categoryNameField);
         categoryNameFieldTextListener();
     }
 

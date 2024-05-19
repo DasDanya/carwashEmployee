@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import ru.pin120.carwashemployee.CategoriesAndServices.Service;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -93,9 +92,9 @@ public class PriceListPositionController implements Initializable {
         operationPriceComboBox.getItems().setAll(operators);
         operationTimeComboBox.getItems().setAll(operators);
 
-        FXHelper.setContextMenuForTextField(filterTimeSpinner.getEditor());
-        FXHelper.setContextMenuForTextField(filterPriceSpinner.getEditor());
-        FXHelper.setContextMenuForTextField(filterCategoryField);
+        FXHelper.setContextMenuForEditableTextField(filterTimeSpinner.getEditor());
+        FXHelper.setContextMenuForEditableTextField(filterPriceSpinner.getEditor());
+        FXHelper.setContextMenuForEditableTextField(filterCategoryField);
     }
 
     private void setSpinnersFormatters(){

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.stage.Stage;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.CategoriesOfTransport.EditCategoryOfTransportController;
 import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;

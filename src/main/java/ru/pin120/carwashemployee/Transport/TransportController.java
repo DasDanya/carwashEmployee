@@ -16,7 +16,6 @@ import ru.pin120.carwashemployee.FX.FXWindowData;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -73,9 +72,9 @@ public class TransportController implements Initializable {
         modelColumn.setCellValueFactory(t->t.getValue().trModelProperty());
         categoryColumn.setCellValueFactory(t->t.getValue().trCategoryProperty());
 
-        FXHelper.setContextMenuForTextField(filterMarkField);
-        FXHelper.setContextMenuForTextField(filterModelField);
-        FXHelper.setContextMenuForTextField(filterCategoryField);
+        FXHelper.setContextMenuForEditableTextField(filterMarkField);
+        FXHelper.setContextMenuForEditableTextField(filterModelField);
+        FXHelper.setContextMenuForEditableTextField(filterCategoryField);
 
         setTooltipForButton();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));

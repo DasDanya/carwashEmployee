@@ -71,10 +71,10 @@ public class ClientTransportController implements Initializable {
         categoryColumn.setCellValueFactory(ct->ct.getValue().clTrCategoryProperty());
         stageNumberColumn.setCellValueFactory(ct->ct.getValue().clTrStateNumberProperty());
 
-        FXHelper.setContextMenuForTextField(filterMarkField);
-        FXHelper.setContextMenuForTextField(filterModelField);
-        FXHelper.setContextMenuForTextField(filterCategoryField);
-        FXHelper.setContextMenuForTextField(filterStateNumberField);
+        FXHelper.setContextMenuForEditableTextField(filterMarkField);
+        FXHelper.setContextMenuForEditableTextField(filterModelField);
+        FXHelper.setContextMenuForEditableTextField(filterCategoryField);
+        FXHelper.setContextMenuForEditableTextField(filterStateNumberField);
 
         setTooltipForButtons();
         Platform.runLater(this::fillingAll);

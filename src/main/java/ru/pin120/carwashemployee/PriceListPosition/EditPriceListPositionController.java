@@ -52,8 +52,8 @@ public class EditPriceListPositionController implements Initializable {
         priceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,PriceListPositionFX.MAX_PRICE,0,50));
         timeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,PriceListPositionFX.MAX_TIME,1,1));
 
-        FXHelper.setContextMenuForTextField(priceSpinner.getEditor());
-        FXHelper.setContextMenuForTextField(timeSpinner.getEditor());
+        FXHelper.setContextMenuForEditableTextField(priceSpinner.getEditor());
+        FXHelper.setContextMenuForEditableTextField(timeSpinner.getEditor());
 
         try {
             setSpinnersFormatters();

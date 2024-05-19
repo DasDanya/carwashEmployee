@@ -10,8 +10,6 @@ import lombok.Getter;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
-import ru.pin120.carwashemployee.PriceListPosition.PriceListPositionFX;
-import ru.pin120.carwashemployee.Transport.TransportFX;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,9 +41,9 @@ public class EditClientController implements Initializable {
         rb = resourceBundle;
 
         discountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, ClientFX.MAX_DISCOUNT,0,1));
-        FXHelper.setContextMenuForTextField(surnameField);
-        FXHelper.setContextMenuForTextField(nameField);
-        FXHelper.setContextMenuForTextField(phoneField);
+        FXHelper.setContextMenuForEditableTextField(surnameField);
+        FXHelper.setContextMenuForEditableTextField(nameField);
+        FXHelper.setContextMenuForEditableTextField(phoneField);
 
         textListeners();
         try {
@@ -148,7 +146,7 @@ public class EditClientController implements Initializable {
             phoneField.requestFocus();
         }else if(!surnameField.getText().matches(ClientFX.SURNAME_REGEX)){
             FXHelper.showErrorAlert(rb.getString("SURNAME_VALID_CHARACTERS"));
-            nameField.requestFocus();
+            surnameField.requestFocus();
         }else if(!nameField.getText().matches(ClientFX.NAME_REGEX)){
             FXHelper.showErrorAlert(rb.getString("NAME_VALID_CHARACTERS"));
             nameField.requestFocus();

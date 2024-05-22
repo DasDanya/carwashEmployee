@@ -4,6 +4,7 @@ module ru.pin120.carwashemployee {
     requires lombok;
     requires okhttp3;
     requires com.google.gson;
+    requires se.alipsa.ymp;
 
 
     opens ru.pin120.carwashemployee to javafx.fxml;
@@ -33,5 +34,8 @@ module ru.pin120.carwashemployee {
 
     opens ru.pin120.carwashemployee.Main to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.Main;
+
+    opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson;
+    exports ru.pin120.carwashemployee.WorkSchedule;
 
 }

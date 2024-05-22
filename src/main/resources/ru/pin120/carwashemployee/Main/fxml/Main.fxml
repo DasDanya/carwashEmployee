@@ -27,6 +27,7 @@
             <Menu mnemonicParsing="false" text="%CLEANERS">
               <items>
                 <MenuItem fx:id="showCleanersMenuItem" mnemonicParsing="false" onAction="#showCleanersMenuItemAction" text="%SHOW_CLEANERS" />
+                  <MenuItem fx:id="showWorkScheduleMenuItem" mnemonicParsing="false" onAction="#showWorkScheduleMenuItemAction" text="%SHOW_WORKSCHEDULE" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%TRANSPORT">

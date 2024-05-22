@@ -1,10 +1,9 @@
 package ru.pin120.carwashemployee.Cleaners;
 
 import lombok.Getter;
-import ru.pin120.carwashemployee.Boxes.BoxStatus;
 
 public enum CleanerStatus {
-    WORKING("Работает"),
+    ACT("Работает"),
     DISMISSED("Уволен");
 
     @Getter

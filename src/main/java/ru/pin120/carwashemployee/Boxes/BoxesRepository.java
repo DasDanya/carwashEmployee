@@ -37,6 +37,22 @@ public class BoxesRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    public List<Box> getAvailable() throws Exception {
+
+        Request request = new Request.Builder()
+                .url(url+"/available")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<Box>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
     public Box create(Box box) throws Exception{
         Box createdBox = null;
         String jsonData = gson.toJson(box);

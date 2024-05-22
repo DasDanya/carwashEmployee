@@ -1,9 +1,12 @@
 package ru.pin120.carwashemployee.Cleaners;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import javafx.scene.image.Image;
+import lombok.NonNull;
 import okhttp3.*;
+import ru.pin120.carwashemployee.Adapters.LocalDateAdapter;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.Boxes.BoxStatus;
 import ru.pin120.carwashemployee.Clients.Client;
@@ -16,6 +19,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
@@ -24,7 +28,29 @@ public class CleanersRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/cleaners";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private OkHttpClient client = new OkHttpClient();
-    private Gson gson = new Gson();
+    private Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .create();
+
+
+    public List<CleanerDTO> getWithWorkSchedule( @NonNull LocalDate startInterval,  @NonNull LocalDate endInterval, boolean currentMonth) throws Exception{
+        System.out.println(startInterval + " " + endInterval + " " + currentMonth);
+        String partUrl = "?startInterval=" + startInterval;
+        partUrl+="&endInterval="+endInterval;
+        partUrl+="&currentMonth="+currentMonth;
+        Request request = new Request.Builder()
+                .url(url+ "/workSchedule" + partUrl)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<CleanerDTO>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
 
     public List<Cleaner> get(String surname, String name, String patronymic, String phone, CleanerStatus status, Long boxId) throws Exception{
         String partUrl = "";

@@ -8,11 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.util.StringConverter;
 import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Boxes.BoxesRepository;
-import ru.pin120.carwashemployee.ClientsTransport.ClientsTransportFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -113,7 +111,7 @@ public class CleanersController implements Initializable {
 
     private void fillingAll() {
         try{
-            List<Cleaner> cleaners = cleanersRepository.get(null,null,null,null,CleanerStatus.WORKING, null);
+            List<Cleaner> cleaners = cleanersRepository.get(null,null,null,null,CleanerStatus.ACT, null);
             fillingObservableList(cleaners);
             cleanersTable.setItems(cleanerFXES);
             cleanersTable.getSelectionModel().selectFirst();
@@ -128,7 +126,7 @@ public class CleanersController implements Initializable {
 
     private void fillingObservableList(List<Cleaner> cleaners){
         for(Cleaner cleaner:cleaners){
-            CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic(), cleaner.getClrPhone(), cleaner.getClrPhotoName(), cleaner.getClrStatus(),  cleaner.getBox().getBoxId());
+            CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic(), cleaner.getClrPhone(), cleaner.getClrPhotoName(), cleaner.getClrStatus(),  cleaner.getBox() == null ? null : cleaner.getBox().getBoxId());
             cleanerFXES.add(cleanerFX);
         }
     }
@@ -171,18 +169,15 @@ public class CleanersController implements Initializable {
     private void fillingStatusComboBox(){
         filterStatusComboBox.getItems().setAll(CleanerStatus.values());
         filterStatusComboBox.getItems().add(0,null);
-        filterStatusComboBox.getSelectionModel().select(CleanerStatus.WORKING);
+        filterStatusComboBox.getSelectionModel().select(CleanerStatus.ACT);
 
     }
     private void fillingBoxNumberComboBox() throws Exception{
         filterBoxNumberComboBox.getItems().clear();
 
         boxes = boxesRepository.getAll();
-        List<Box> check = new ArrayList<>();
-        check.add(new Box());
-        check.addAll(boxes);
         //filterBoxNumberComboBox.getItems().add(null);
-        filterBoxNumberComboBox.getItems().addAll(check);
+        filterBoxNumberComboBox.getItems().addAll(boxes);
         //Platform.runLater(()->filterBoxNumberComboBox.getSelectionModel().select(0));
 
     }
@@ -243,9 +238,9 @@ public class CleanersController implements Initializable {
                     cleaner.setClrPhotoName(selectedCleanerFX.getClrPhotoName());
                     cleaner.setClrStatus(CleanerStatus.valueOfDisplayValue(selectedCleanerFX.getClrStatus()));
 
-                    long selectedCleanerFXBoxId = selectedCleanerFX.getBoxId();
+                    Long selectedCleanerFXBoxId = selectedCleanerFX.getBoxId();
                     Box box = boxes.stream()
-                            .filter(b -> b.getBoxId() == selectedCleanerFXBoxId)
+                            .filter(b -> Objects.equals(b.getBoxId(), selectedCleanerFXBoxId))
                             .findFirst()
                             .orElse(null);
                     cleaner.setBox(box);
@@ -292,6 +287,7 @@ public class CleanersController implements Initializable {
                     selectedCleanerFX.setClrName(cleaner.getClrName());
                     selectedCleanerFX.setClrPatronymic(cleaner.getClrPatronymic());
                     selectedCleanerFX.setClrPhone(cleaner.getClrPhone());
+
                     selectedCleanerFX.setBoxId(cleaner.getBox().getBoxId());
                     selectedCleanerFX.setClrStatus(cleaner.getClrStatus().getDisplayValue());
                     selectedCleanerFX.setClrPhotoName(cleaner.getClrPhotoName());

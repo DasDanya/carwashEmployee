@@ -117,8 +117,11 @@ public class EditCleanerController implements Initializable {
         statusComboBox.getItems().setAll(CleanerStatus.values());
 
         try {
-            boxes = boxesRepository.getAll();
+            boxes = boxesRepository.getAll(); // getAvailable()
             boxNumberComboBox.getItems().addAll(boxes);
+            if(boxNumberComboBox.getItems().isEmpty() && operationMode == FXOperationMode.CREATE){
+                btOK.setDisable(true);
+            }
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());
         }
@@ -177,7 +180,7 @@ public class EditCleanerController implements Initializable {
         switch (operationMode){
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_TITLE"));
-                statusComboBox.getSelectionModel().select(CleanerStatus.WORKING);
+                statusComboBox.getSelectionModel().select(CleanerStatus.ACT);
                 boxNumberComboBox.getSelectionModel().selectFirst();
                 photoInfoField.setText(rb.getString("DEFAULT_PHOTO"));
                 statusComboBox.setDisable(true);
@@ -272,6 +275,7 @@ public class EditCleanerController implements Initializable {
                             if(editedCleaner != null){
                                 canExit = true;
                                 cleaner.setClrPhotoName(editedCleaner.getClrPhotoName());
+                                cleaner.setBox(editedCleaner.getBox());
                             }
                         }
                         break;
@@ -280,7 +284,6 @@ public class EditCleanerController implements Initializable {
                         break;
                 }
             }catch (Exception e){
-                e.printStackTrace();
                 FXHelper.showErrorAlert(e.getMessage());
             }
             if(canExit){

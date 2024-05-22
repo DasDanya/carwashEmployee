@@ -56,4 +56,22 @@ public class AppHelper {
     public static String getInfoText(){return rb.getString("INFO_TEXT");}
 
     public static String getExistsEntityTextEnd(){return rb.getString("EXISTS_ENTITY_TEXT_END");}
+
+    private static String[] getDaysOfWeek(){
+        return new String[]{rb.getString("MONDAY"), rb.getString("TUESDAY"), rb.getString("WEDNESDAY"), rb.getString("THURSDAY"),
+                rb.getString("FRIDAY"), rb.getString("SATURDAY"), rb.getString("SUNDAY")};
+    }
+    public static String convertDayToString(int day){
+        String[] daysOfWeek = getDaysOfWeek();
+        return switch (day) {
+            case 1 -> daysOfWeek[0];
+            case 2 -> daysOfWeek[1];
+            case 3 -> daysOfWeek[2];
+            case 4 -> daysOfWeek[3];
+            case 5 -> daysOfWeek[4];
+            case 6 -> daysOfWeek[5];
+            case 7 -> daysOfWeek[6];
+            default -> null;
+        };
+    }
 }

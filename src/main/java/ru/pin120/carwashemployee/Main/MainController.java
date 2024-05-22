@@ -62,6 +62,16 @@ public class MainController implements Initializable {
         }
     }
 
+    public void showWorkScheduleMenuItemAction(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.WorkSchedule.resources.WorkSchedule", "WorkSchedule/fxml/WorkSchedule.fxml");
+            fxWindowData.getModalStage().setTitle(rb.getString("WORKSCHEDULE_FORM_TITLE"));
+            fxWindowData.getModalStage().show();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+        }
+    }
+
     public void showCategoryTransportMenuItemAction(ActionEvent actionEvent) {
         try {
             FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.CategoriesOfTransport.resources.CategoriesOfTransport", "CategoriesOfTransport/fxml/CategoriesOfTransport.fxml");

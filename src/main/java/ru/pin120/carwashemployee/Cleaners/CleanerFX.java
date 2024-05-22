@@ -73,7 +73,7 @@ public class CleanerFX {
 
     public Long getBoxId() {
         //return boxIdValue;
-       return boxIdProperty().get();
+        return boxIdProperty().get();
     }
 
     public String getClrPhotoName() {

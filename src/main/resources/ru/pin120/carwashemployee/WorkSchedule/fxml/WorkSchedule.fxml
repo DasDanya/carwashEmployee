@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.WorkSchedule.WorkScheduleController">
+   <children>
+      <DatePicker fx:id="datePicker" editable="false" VBox.vgrow="NEVER">
+         <VBox.margin>
+            <Insets left="5.0" top="5.0" />
+         </VBox.margin>
+      </DatePicker>
+      <TableView fx:id="workScheduleTable" prefHeight="390.0" prefWidth="1410.0" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="cleanerIdColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="id" visible="false" />
+          <TableColumn fx:id="fioColumn" prefWidth="300.0" text="%FIO" />
+            <TableColumn fx:id="numberBoxColumn" prefWidth="100.0" text="%NUMBER_BOX" />
+            <TableColumn fx:id="statusColumn" prefWidth="120.0" text="%STATUS" />
+            <TableColumn fx:id="day1Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="1" />
+            <TableColumn fx:id="day2Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="2" />
+            <TableColumn fx:id="day3Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="3" />
+            <TableColumn fx:id="day4Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="4" />
+            <TableColumn fx:id="day5Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="5" />
+            <TableColumn fx:id="day6Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="6" />
+            <TableColumn fx:id="day7Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="7" />
+            <TableColumn fx:id="day8Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="8" />
+            <TableColumn fx:id="day9Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="9" />
+            <TableColumn fx:id="day10Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="10" />
+            <TableColumn fx:id="day11Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="11" />
+            <TableColumn fx:id="day12Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="12" />
+            <TableColumn fx:id="day13Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="13" />
+            <TableColumn fx:id="day14Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="14" />
+            <TableColumn fx:id="day15Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="15" />
+            <TableColumn fx:id="day16Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="16" />
+            <TableColumn fx:id="day17Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="17" />
+            <TableColumn fx:id="day18Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="18" />
+            <TableColumn fx:id="day19Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="19" />
+            <TableColumn fx:id="day20Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="20" />
+            <TableColumn fx:id="day21Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="21" />
+            <TableColumn fx:id="day22Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="22" />
+            <TableColumn fx:id="day23Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="23" />
+            <TableColumn fx:id="day24Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="24" />
+            <TableColumn fx:id="day25Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="25" />
+            <TableColumn fx:id="day26Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="26" />
+            <TableColumn fx:id="day27Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="27" />
+            <TableColumn fx:id="day28Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="28" />
+            <TableColumn fx:id="day29Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="29" />
+            <TableColumn fx:id="day30Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="30" />
+            <TableColumn fx:id="day31Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="31" />
+        </columns>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </TableView>
+      <ButtonBar prefHeight="20.0" prefWidth="200.0">
+         <buttons>
+            <Button fx:id="btSave" mnemonicParsing="false" onAction="#btSaveAction" text="%BT_SAVE" />
+         </buttons>
+         <VBox.margin>
+            <Insets bottom="5.0" right="5.0" />
+         </VBox.margin>
+      </ButtonBar>
+   </children>
+</VBox>

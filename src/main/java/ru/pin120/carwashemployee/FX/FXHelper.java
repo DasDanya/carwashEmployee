@@ -85,6 +85,18 @@ public class FXHelper {
             }
         });
     }
+
+    public static void bindHotKeysToDoOperation(Scene scene, Runnable refresh){
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if(keyEvent.getCode() == KeyCode.F5){
+                    refresh.run();
+                }
+            }
+        });
+    }
+
     public static void showErrorAlert(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.setTitle(AppHelper.getErrorText());

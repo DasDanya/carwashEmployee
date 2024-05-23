@@ -14,15 +14,19 @@ import ru.pin120.carwashemployee.Cleaners.CleanerStatus;
 import ru.pin120.carwashemployee.Cleaners.CleanersRepository;
 import ru.pin120.carwashemployee.FX.FXHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 import javafx.util.Callback;
 
 public class WorkScheduleController implements Initializable {
+    @FXML
+    private Button refreshButton;
     @FXML
     private Button btSave;
     @FXML
@@ -105,10 +109,9 @@ public class WorkScheduleController implements Initializable {
     private LocalDate startInterval, endInterval;
 
     private CleanersRepository cleanersRepository = new CleanersRepository();
+    private WorkScheduleRepository workScheduleRepository = new WorkScheduleRepository();
     private List<CleanerDTO> cleanerDTOList;
     private ObservableList<WorkScheduleFX> workScheduleFXES = FXCollections.observableArrayList();
-
-    private int lastSelectedDay;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -153,6 +156,11 @@ public class WorkScheduleController implements Initializable {
 
         settingDatePicker();
         fillingTable(true);
+
+        refreshButton.setOnMouseEntered(event -> {
+            refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
+        });
+        Platform.runLater(()->FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
     }
 
 
@@ -187,6 +195,7 @@ public class WorkScheduleController implements Initializable {
                 int finalDay = day;
                 LocalDate date = LocalDate.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(), finalDay);
                 //boolean disabled = dismissed || date.isBefore(LocalDate.now()) || date.lengthOfMonth() < day;
+
                 boolean disabled = dismissed || date.isBefore(LocalDate.now());
                 boolean selected = cleanerDTO.getWorkSchedules().stream().anyMatch(ws -> ws.getWsWorkDay().getDayOfMonth() == finalDay);
                 settingUpDisplayOfDays(workScheduleFX, finalDay, disabled, selected);
@@ -378,7 +387,6 @@ public class WorkScheduleController implements Initializable {
             if(oldValue.getMonth() != newValue.getMonth() || oldValue.getYear() != newValue.getYear()){
                 workScheduleFXES.clear();
                 //setInterval(newValue);
-                FXHelper.showInfoAlert(startInterval + " " + endInterval);
                 LocalDate now = LocalDate.now();
                 if(now.getYear() == newValue.getYear() && now.getMonth() == newValue.getMonth()) {
                     fillingTable(true);
@@ -392,6 +400,146 @@ public class WorkScheduleController implements Initializable {
     }
 
 
-    public void btSaveAction(ActionEvent actionEvent) {
+    public void btSaveAction(ActionEvent actionEvent) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        List<CleanerDTO> created = new ArrayList<>();
+        List<WorkSchedule> deleted = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for(int i = 0; i < workScheduleFXES.size(); i++) {
+
+            WorkScheduleFX workScheduleFX = workScheduleFXES.get(i);
+            CleanerDTO cleanerDTO = cleanerDTOList.get(i);
+            Class<?> clazz = workScheduleFX.getClass();
+
+            for (int day = today.getDayOfMonth(); day <= 31; day++) {
+                int finalDay = day;
+                String getterName = "getDay" + finalDay;
+                Method method = clazz.getMethod(getterName);
+                CheckBox check = (CheckBox) method.invoke(workScheduleFX);
+
+                WorkSchedule workSchedule = cleanerDTO.getWorkSchedules().stream()
+                        .filter(ws->ws.getWsWorkDay().getDayOfMonth() == finalDay)
+                        .findFirst()
+                        .orElse(null);
+
+                if(!check.isSelected() && workSchedule != null){ // Если день отжали (при инициализации была галка)
+                   deleted.add(workSchedule);
+                }
+
+            }
+            //res += "\n";
+        }
+
+        for(int i = 0; i < workScheduleFXES.size(); i++) {
+            WorkScheduleFX workScheduleFX = workScheduleFXES.get(i);
+            CleanerDTO cleanerDTO = cleanerDTOList.get(i);
+            Class<?> clazz = workScheduleFX.getClass();
+
+            List<WorkSchedule> createdWorkSchedules = new ArrayList<>();
+
+            for (int day = today.getDayOfMonth(); day <= 31; day++) {
+                int finalDay = day;
+                String getterName = "getDay" + finalDay;
+                Method method = clazz.getMethod(getterName);
+                CheckBox check = (CheckBox) method.invoke(workScheduleFX);
+
+                WorkSchedule workSchedule = cleanerDTO.getWorkSchedules().stream()
+                        .filter(ws -> ws.getWsWorkDay().getDayOfMonth() == finalDay)
+                        .findFirst()
+                        .orElse(null);
+
+                LocalDate date = LocalDate.of(today.getYear(), today.getMonth(), finalDay);
+                if(check.isSelected() && workSchedule == null) { // Если день выбрали (при инициализации не было галки)
+                    CleanerDTO cleanerInCreatedList = getByBoxIdAndDayInWorkSchedule(created, deleted, cleanerDTO, finalDay);
+                    if (checkExistingWorkingDay(cleanerInCreatedList, date)) {
+                        return;
+                    } else {
+                        CleanerDTO cleanerInBaseList = getByBoxIdAndDayInWorkSchedule(cleanerDTOList, deleted, cleanerDTO, finalDay);
+                        if (checkExistingWorkingDay(cleanerInBaseList, date)) {
+                            return;
+                        }
+
+                    }
+
+                    WorkSchedule createdWorkSchedule = new WorkSchedule();
+                    createdWorkSchedule.setWsWorkDay(date);
+                    createdWorkSchedules.add(createdWorkSchedule);
+                }
+            }
+
+            if(!createdWorkSchedules.isEmpty()){
+                CleanerDTO newCleaner = new CleanerDTO(cleanerDTO.getClrId(), cleanerDTO.getClrSurname(), cleanerDTO.getClrName(), cleanerDTO.getClrPatronymic(), cleanerDTO.getClrStatus(), cleanerDTO.getBox(), createdWorkSchedules);
+                created.add(newCleaner);
+            }
+        }
+
+        boolean success = true;
+        try {
+            if (!created.isEmpty()) {
+                List<WorkSchedule> workSchedules = workScheduleRepository.create(created);
+                if(workSchedules == null){
+                    success = false;
+                }
+            }
+            if(!deleted.isEmpty()){
+                success = workScheduleRepository.delete(deleted);
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            workScheduleTable.requestFocus();
+        }
+
+        if(success) {
+            FXHelper.showInfoAlert(rb.getString("SUCCESS_SAVE"));
+            workScheduleFXES.clear();
+            fillingTable(true);
+        }
+
+
+
+        //System.out.println(created + "\n" + deleted);
+        //System.out.println(res);
+    }
+
+
+    private boolean checkExistingWorkingDay(CleanerDTO cleaner, LocalDate date){
+        if(cleaner != null){
+            FXHelper.showErrorAlert(String.format(rb.getString("EXIST_WORKSCHEDULE_MESSAGE"), cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic() == null ? "" : cleaner.getClrPatronymic(), date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            return true;
+        }
+        return false;
+    }
+
+    private CleanerDTO getByBoxIdAndDayInWorkSchedule(List<CleanerDTO> cleanerDTOList, List<WorkSchedule> deleted, CleanerDTO cleanerDTO, int day){
+        return  cleanerDTOList.stream()
+                .filter(c-> Objects.equals(c.getBox().getBoxId(), cleanerDTO.getBox().getBoxId()) && c.getWorkSchedules().stream().anyMatch(ws->ws.getWsWorkDay().getDayOfMonth() == day && deleted.stream().noneMatch(w->w.getWsId().equals(ws.getWsId()))))
+                .findFirst()
+                .orElse(null);
+
+//        LocalDate now = LocalDate.now();
+//        for(CleanerDTO cleanerDTO1: cleanerDTOList){
+//            if(cleanerDTO1.getBox().getBoxId().longValue() == cleanerDTO.getBox().getBoxId().longValue() && cleanerDTO1.getClrId().longValue() != cleanerDTO.getClrId().longValue()){
+//                for(WorkSchedule workSchedule: cleanerDTO1.getWorkSchedules()){
+//                    if(workSchedule.getWsWorkDay().getDayOfMonth() == day){
+//                        return cleanerDTO1;
+//                    }
+//                }
+//            }
+//        }
+
+        //return null;
+    }
+
+    public void refreshAction(ActionEvent actionEvent) {
+        doRefresh();
+    }
+
+    private void doRefresh(){
+        workScheduleFXES.clear();
+        LocalDate pastDate = datePicker.getValue();
+        LocalDate now = LocalDate.now();
+        datePicker.setValue(now);
+        if(pastDate.getMonth() == now.getMonth() && pastDate.getYear() == now.getYear()) {
+            fillingTable(true);
+        }
     }
 }

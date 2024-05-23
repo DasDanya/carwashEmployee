@@ -19,4 +19,5 @@ public class CleanerDTO {
     private CleanerStatus clrStatus;
     private Box box;
     private List<WorkSchedule> workSchedules;
+
 }

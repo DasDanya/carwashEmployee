@@ -9,6 +9,12 @@
    <children>
       <MenuBar fx:id="menuBar">
         <menus>
+            <Menu mnemonicParsing="false" text="%SUPPLIES">
+              <items>
+                  <MenuItem fx:id="showSuppliesMenuItem" mnemonicParsing="false" onAction="#showSuppliesMenuItemAction" text="%SHOW_SUPPLIES" />
+                <MenuItem fx:id="showCategoriesOfSuppliesMenuItem" mnemonicParsing="false" onAction="#showCategoriesOfSuppliesMenuItemAction" text="%SHOW_CATERORIES_OF_SUPPLIES" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="%BOXES">
             <items>
               <MenuItem fx:id="showBoxesMenuItem" mnemonicParsing="false" onAction="#showBoxesMenuItemAction" text="%SHOW_BOXES" />

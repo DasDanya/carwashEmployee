@@ -4,7 +4,11 @@ module ru.pin120.carwashemployee {
     requires lombok;
     requires okhttp3;
     requires com.google.gson;
-    requires se.alipsa.ymp;
+    requires jfxtras.agenda;
+    requires jfxtras.controls;
+    requires jfxtras.common;
+    requires jfxtras.fxml;
+    requires jfxtras.icalendaragenda;
 
 
     opens ru.pin120.carwashemployee to javafx.fxml;
@@ -37,5 +41,11 @@ module ru.pin120.carwashemployee {
 
     opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.WorkSchedule;
+
+    opens ru.pin120.carwashemployee.Bookings to javafx.fxml, com.google.gson, jfxtras.agenda, jfxtras.controls;
+    exports ru.pin120.carwashemployee.Bookings;
+
+    opens ru.pin120.carwashemployee.CategoriesOfSupplies to javafx.fxml, com.google.gson;
+    exports ru.pin120.carwashemployee.CategoriesOfSupplies;
 
 }

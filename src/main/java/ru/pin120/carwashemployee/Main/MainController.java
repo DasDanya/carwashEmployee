@@ -40,6 +40,13 @@ public class MainController implements Initializable {
     }
 
     public void showBookingsMenuItem(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.Bookings", "Bookings/fxml/Bookings.fxml");
+            fxWindowData.getModalStage().setTitle(rb.getString("BOOKINGS_FORM_TITLE"));
+            fxWindowData.getModalStage().show();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+        }
     }
 
     public void showClientsMenuItemAction(ActionEvent actionEvent) {
@@ -103,4 +110,17 @@ public class MainController implements Initializable {
     }
 
 
+    public void showCategoriesOfSuppliesMenuItemAction(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.CategoriesOfSupplies", "CategoriesOfSupplies/fxml/CategoriesOfSupplies.fxml");
+            fxWindowData.getModalStage().setTitle(rb.getString("CATEGORIES_OF_SUPPLIES_FORM_TITLE"));
+            fxWindowData.getModalStage().show();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+        }
+    }
+
+
+    public void showSuppliesMenuItemAction(ActionEvent actionEvent) {
+    }
 }

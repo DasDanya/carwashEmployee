@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoryOfTransportRepository {
 
 
-    private static final String url = AppHelper.getCarWashAPI() + "/categoryOfTransport";
+    private static final String url = AppHelper.getCarWashAPI() + "/categoriesOfTransport";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private OkHttpClient client = new OkHttpClient();
@@ -155,7 +155,6 @@ public class CategoryOfTransportRepository {
     }
 
     public List<CategoryOfTransport> getCategoriesOfTransportByCatTrName(String parameter) throws Exception {
-        //parameter = URLEncoder.encode(parameter, "UTF-8");
         Request request = new Request.Builder()
                 .url(url + "/" + parameter)
                 .build();

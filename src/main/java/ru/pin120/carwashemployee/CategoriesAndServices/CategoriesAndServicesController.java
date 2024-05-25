@@ -82,7 +82,7 @@ public class CategoriesAndServicesController implements Initializable {
         settingTooltipForButtons();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::bindWithCategory, this::doRefresh));
         categoriesSelectedModelListener();
-
+        FXHelper.setContextMenuForEditableTextField(searchField);
         searchCategoryCheckBox.setSelected(true);
     }
 

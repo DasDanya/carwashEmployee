@@ -54,6 +54,7 @@ public class CategoriesOfTransportController implements Initializable {
 
         categoriesTable.getSelectionModel().selectFirst();
         Platform.runLater(() -> categoriesTable.requestFocus());
+        FXHelper.setContextMenuForEditableTextField(searchField);
 
         settingTooltipForButtons();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));

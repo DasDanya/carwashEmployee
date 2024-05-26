@@ -81,6 +81,7 @@ public class CleanersController implements Initializable {
             CleanerFX cleanerFX = c.getValue();
             return cleanerFX.getBoxId() == null ? null : cleanerFX.boxIdProperty().asObject();
         });
+        cleanersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         FXHelper.setContextMenuForEditableTextField(filterSurnameField);
         FXHelper.setContextMenuForEditableTextField(filterNameField);

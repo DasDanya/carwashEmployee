@@ -77,6 +77,7 @@ public class ClientsController implements Initializable {
         nameColumn.setCellValueFactory(c->c.getValue().clNameProperty());
         phoneColumn.setCellValueFactory(c->c.getValue().clPhoneProperty());
         saleColumn.setCellValueFactory(c->c.getValue().clDiscountProperty().asObject());
+        clientsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         discountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, ClientFX.MAX_DISCOUNT,0,1));
         try {
             setSpinnerFormatter();

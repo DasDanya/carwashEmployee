@@ -70,6 +70,7 @@ public class ClientTransportController implements Initializable {
         markColumn.setCellValueFactory(ct->ct.getValue().clTrMarkProperty());
         categoryColumn.setCellValueFactory(ct->ct.getValue().clTrCategoryProperty());
         stageNumberColumn.setCellValueFactory(ct->ct.getValue().clTrStateNumberProperty());
+        clientTransportTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         FXHelper.setContextMenuForEditableTextField(filterMarkField);
         FXHelper.setContextMenuForEditableTextField(filterModelField);

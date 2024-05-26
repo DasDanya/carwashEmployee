@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoriesOfSuppliesForServiceController;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -37,6 +38,8 @@ public class CategoriesAndServicesController implements Initializable {
     @FXML
     private Button refreshButton;
     @FXML
+    private Button setSuppliesButton;
+    @FXML
     private TableView<CategoryOfServicesFX> categoriesTable;
     @FXML
     private TableColumn<CategoryOfServicesFX, String> categoryNameColumn;
@@ -54,6 +57,7 @@ public class CategoriesAndServicesController implements Initializable {
     ResourceBundle rb;
     List<CategoryOfServices> categoriesWithServices;
 
+    List<Service> servicesOfCategory;
     List<String> categoriesNames;
 
     String lastSearchedCategory = "";
@@ -125,7 +129,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     private void fillingServicesObservableList(String categoryName) throws Exception {
-        List<Service> servicesOfCategory = serviceRepository.getServicesByCatName(categoryName);
+        servicesOfCategory = serviceRepository.getServicesByCatName(categoryName);
         for(Service service: servicesOfCategory){
             services.add(new ServiceFX(service.getServName()));
         }
@@ -195,6 +199,9 @@ public class CategoriesAndServicesController implements Initializable {
         });
         setServicePriceAndTimeButton.setOnMouseEntered(event->{
             setServicePriceAndTimeButton.setTooltip(new Tooltip(rb.getString("SET_PRICE_AND_TIME_SERVICE")));
+        });
+        setSuppliesButton.setOnMouseEntered(event->{
+            setSuppliesButton.setTooltip(new Tooltip(rb.getString("SET_SUPPLIES")));
         });
     }
 
@@ -560,6 +567,35 @@ public class CategoriesAndServicesController implements Initializable {
                 fxWindowData.getModalStage().showAndWait();
 
                 servicesTable.requestFocus();
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            servicesTable.requestFocus();
+        }
+    }
+
+    public void setSuppliesButtonAction(ActionEvent actionEvent) {
+        try{
+            ServiceFX serviceFX = servicesTable.getSelectionModel().getSelectedItem();
+            if(serviceFX == null){
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                servicesTable.requestFocus();
+            }else{
+                Service selectedService = servicesOfCategory.stream()
+                        .filter(c->c.getServName().equals(serviceFX.getName()))
+                        .findFirst()
+                        .orElse(null);
+
+                if(selectedService == null){
+                    FXHelper.showErrorAlert(rb.getString("SERVICE_NOT_EXISTS"));
+                }else{
+                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.CategoriesOfSuppliesForService", "CategoriesOfSupplies/fxml/CategoriesOfSuppliesForService.fxml", getActualScene());
+                    CategoriesOfSuppliesForServiceController categoriesOfSuppliesForServiceController = fxWindowData.getLoader().getController();
+                    categoriesOfSuppliesForServiceController.settingForm(selectedService, fxWindowData.getModalStage());
+
+                    fxWindowData.getModalStage().showAndWait();
+                    servicesTable.requestFocus();
+                }
             }
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());

@@ -49,6 +49,7 @@ public class BoxesController implements Initializable {
 
         numberColumn.setCellValueFactory(c -> c.getValue().boxIdProperty().asObject());
         statusColumn.setCellValueFactory(c -> c.getValue().boxStatusProperty());
+        boxesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         fillingAll();
 
         settingTooltipForButtons();

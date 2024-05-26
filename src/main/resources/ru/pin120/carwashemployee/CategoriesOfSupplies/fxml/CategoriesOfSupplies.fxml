@@ -13,7 +13,7 @@
 
 <VBox prefHeight="314.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.CategoriesOfSupplies.CategoriesOfSuppliesController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar minHeight="40.0" prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="20.0" prefWidth="20.0">
                <graphic>

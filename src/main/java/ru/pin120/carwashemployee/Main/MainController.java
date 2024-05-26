@@ -65,6 +65,7 @@ public class MainController implements Initializable {
             fxWindowData.getModalStage().setTitle(rb.getString("CLEANERS_FORM_TITLE"));
             fxWindowData.getModalStage().show();
         } catch (Exception e) {
+            e.printStackTrace();
             FXHelper.showErrorAlert(e.getMessage());
         }
     }

@@ -71,6 +71,7 @@ public class TransportController implements Initializable {
         markColumn.setCellValueFactory(t->t.getValue().trMarkProperty());
         modelColumn.setCellValueFactory(t->t.getValue().trModelProperty());
         categoryColumn.setCellValueFactory(t->t.getValue().trCategoryProperty());
+        transportsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         FXHelper.setContextMenuForEditableTextField(filterMarkField);
         FXHelper.setContextMenuForEditableTextField(filterModelField);

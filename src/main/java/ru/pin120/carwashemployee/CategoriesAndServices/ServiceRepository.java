@@ -7,6 +7,7 @@ import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.CategoriesAndServices.BindWithCategoryDTO;
 import ru.pin120.carwashemployee.CategoriesAndServices.Service;
 import ru.pin120.carwashemployee.CategoriesAndServices.ServiceDTO;
+import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
@@ -35,6 +36,21 @@ public class ServiceRepository {
         }
         String jsonData = response.body().string();
         Type type = new TypeToken<List<Service>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public Service get(String servName) throws Exception{
+        Request request = new Request.Builder()
+                .url(url + "/get/" +  servName)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<Service>(){}.getType();
 
         return gson.fromJson(jsonData, type);
     }
@@ -168,5 +184,29 @@ public class ServiceRepository {
         }
 
         return successDelete;
+    }
+
+    public Service editCategoriesOfSupplies(Service service) throws Exception{
+        Service editedService = null;
+        String jsonData = gson.toJson(service);
+
+        RequestBody body = RequestBody.create(JSON, jsonData);
+
+        Request request = new Request.Builder()
+                .url(url + "/necessaryCategoriesOfSupplies/"+service.getServName())
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 200) {
+            String result = response.body().string();
+            Type type = new TypeToken<Service>() {}.getType();
+            editedService = gson.fromJson(result, type);
+        } else {
+            throw new HttpRetryException(response.body().string(), response.code());
+            //throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+
+        return editedService;
     }
 }

@@ -76,6 +76,7 @@ public class PriceListPositionController implements Initializable {
         priceColumn.setCellValueFactory(st->st.getValue().priceProperty().asObject());
         timeColumn.setCellValueFactory(st->st.getValue().timeProperty().asObject());
         idColumn.setCellValueFactory(st->st.getValue().idProperty().asObject());
+        priceListTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         initFilterPanel();
         setTooltipForButton();

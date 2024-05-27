@@ -7,8 +7,6 @@ import okhttp3.*;
 import ru.pin120.carwashemployee.Adapters.LocalDateAdapter;
 import ru.pin120.carwashemployee.Adapters.LocalTimeAdapter;
 import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
-import ru.pin120.carwashemployee.Cleaners.Cleaner;
 import ru.pin120.carwashemployee.Cleaners.CleanerDTO;
 
 import java.lang.reflect.Type;
@@ -26,9 +24,16 @@ public class WorkScheduleRepository {
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .create();
 
-    public List<WorkSchedule> get() throws Exception{
+    public List<WorkScheduleDTO> get(LocalDate startInterval, LocalDate endInterval, Long clrId, Integer pageIndex) throws Exception{
+        String partUrl = "?startInterval="+startInterval;
+        partUrl+="&endInterval="+endInterval;
+        partUrl+="&clrId="+clrId;
+        if(pageIndex != null) {
+            partUrl += "&pageIndex=" + pageIndex;
+        }
+
         Request request = new Request.Builder()
-                .url(url)
+                .url(url + partUrl)
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -36,13 +41,13 @@ public class WorkScheduleRepository {
             throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
         }
         String jsonData = response.body().string();
-        Type type = new TypeToken<List<WorkSchedule>>(){}.getType();
+        Type type = new TypeToken<List<WorkScheduleDTO>>(){}.getType();
 
         return gson.fromJson(jsonData, type);
     }
 
-    public List<WorkSchedule> create(List<CleanerDTO> cleanerDTOList) throws Exception{
-        List<WorkSchedule> createdWorkschedule = null;
+    public ResultCreateWorkSchedulesDTO create(List<CleanerDTO> cleanerDTOList) throws Exception{
+        ResultCreateWorkSchedulesDTO resultCreate = null;
         String jsonData = gson.toJson(cleanerDTOList);
 
         RequestBody body = RequestBody.create(JSON, jsonData);
@@ -55,15 +60,19 @@ public class WorkScheduleRepository {
         Response response = client.newCall(request).execute();
         if (response.code() == 200) {
             String result = response.body().string();
-            Type type = new TypeToken<List<WorkSchedule>>() {}.getType();
-            createdWorkschedule = gson.fromJson(result, type);
-        } else if (response.code() == 400) {
-            throw new HttpRetryException(response.body().string(), response.code());
+            Type type = new TypeToken<ResultCreateWorkSchedulesDTO>() {}.getType();
+            resultCreate = gson.fromJson(result, type);
+        } else if (response.code() == 409) {
+            String result = response.body().string();
+            Type type = new TypeToken<ResultCreateWorkSchedulesDTO>() {}.getType();
+            resultCreate = gson.fromJson(result, type);
+
+            throw new HttpRetryException(resultCreate.getConflictMessage(), response.code());
         } else {
             throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
         }
 
-        return  createdWorkschedule;
+        return  resultCreate;
     }
 
     public boolean delete(List<WorkSchedule> deleted) throws Exception {

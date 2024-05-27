@@ -16,6 +16,7 @@ public class CleanerDTO {
     private String clrSurname;
     private String clrName;
     private String clrPatronymic;
+    private String clrPhone;
     private CleanerStatus clrStatus;
     private Box box;
     private List<WorkSchedule> workSchedules;

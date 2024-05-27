@@ -9,6 +9,9 @@ module ru.pin120.carwashemployee {
     requires jfxtras.common;
     requires jfxtras.fxml;
     requires jfxtras.icalendaragenda;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires java.desktop;
 
 
     opens ru.pin120.carwashemployee to javafx.fxml;
@@ -39,7 +42,7 @@ module ru.pin120.carwashemployee {
     opens ru.pin120.carwashemployee.Main to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.Main;
 
-    opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson;
+    opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson, org.apache.poi.poi, org.apache.poi.ooxml;
     exports ru.pin120.carwashemployee.WorkSchedule;
 
     opens ru.pin120.carwashemployee.Bookings to javafx.fxml, com.google.gson, jfxtras.agenda, jfxtras.controls;

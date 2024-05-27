@@ -3,12 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.WorkSchedule.WorkScheduleController">
@@ -24,19 +27,46 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="getWorkScheduleCleanerButton" mnemonicParsing="false" onAction="#getWorkScheduleCleanerButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/calendarButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </items>
       </ToolBar>
-      <DatePicker fx:id="datePicker" editable="false" VBox.vgrow="NEVER">
+      <HBox alignment="CENTER_LEFT" maxHeight="30.0" maxWidth="5000.0" minHeight="30.0" prefHeight="30.0">
+         <children>
+            <Label text="%DATE" />
+            <DatePicker fx:id="datePicker" editable="false">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </DatePicker>
+            <Label text="%BOX">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="boxesComboBox" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </ComboBox>
+         </children>
          <VBox.margin>
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
-      </DatePicker>
+      </HBox>
       <TableView fx:id="workScheduleTable" prefHeight="390.0" prefWidth="1410.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="cleanerIdColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="id" visible="false" />
-          <TableColumn fx:id="fioColumn" prefWidth="300.0" text="%FIO" />
-            <TableColumn fx:id="numberBoxColumn" prefWidth="100.0" text="%NUMBER_BOX" />
+          <TableColumn fx:id="fioColumn" prefWidth="270.0" text="%FIO" />
             <TableColumn fx:id="statusColumn" prefWidth="120.0" text="%STATUS" />
+            <TableColumn fx:id="phoneColumn" prefWidth="130.0" text="%PHONE" />
             <TableColumn fx:id="day1Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="1" />
             <TableColumn fx:id="day2Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="2" />
             <TableColumn fx:id="day3Column" editable="false" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="3" />

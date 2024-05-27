@@ -46,8 +46,6 @@ public class EditCleanerController implements Initializable {
     @FXML
     private TextField photoInfoField;
     @FXML
-    private ComboBox<Box> boxNumberComboBox;
-    @FXML
     private ComboBox<CleanerStatus> statusComboBox;
     private ResourceBundle rb;
     @FXML
@@ -115,49 +113,18 @@ public class EditCleanerController implements Initializable {
 
     private void fillingComboBoxes() {
         statusComboBox.getItems().setAll(CleanerStatus.values());
-
-        try {
-            boxes = boxesRepository.getAll(); // getAvailable()
-            boxNumberComboBox.getItems().addAll(boxes);
-            if(boxNumberComboBox.getItems().isEmpty() && operationMode == FXOperationMode.CREATE){
-                btOK.setDisable(true);
-            }
-        }catch (Exception e){
-            FXHelper.showErrorAlert(e.getMessage());
-        }
     }
 
-    private void setConvertersForComboBoxes(){
+    private void setConvertersForComboBoxes() {
         statusComboBox.setConverter(new StringConverter<CleanerStatus>() {
             @Override
             public String toString(CleanerStatus status) {
                 return status == null ? null : status.getDisplayValue();
             }
+
             @Override
             public CleanerStatus fromString(String string) {
                 return null;
-            }
-        });
-
-        boxNumberComboBox.setConverter(new StringConverter<Box>() {
-            @Override
-            public String toString(Box box) {
-                return box == null ? null : box.getBoxId() == null ? "" : box.getBoxId().toString();
-            }
-            @Override
-            public Box fromString(String string) {
-                if (string == null || string.isBlank()) {
-                    return null;
-                }
-                try {
-                    Long id = Long.parseLong(string);
-                    return boxes.stream()
-                            .filter(box -> box.getBoxId().equals(id))
-                            .findFirst()
-                            .orElse(null);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
             }
         });
     }
@@ -181,7 +148,6 @@ public class EditCleanerController implements Initializable {
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_TITLE"));
                 statusComboBox.getSelectionModel().select(CleanerStatus.ACT);
-                boxNumberComboBox.getSelectionModel().selectFirst();
                 photoInfoField.setText(rb.getString("DEFAULT_PHOTO"));
                 statusComboBox.setDisable(true);
                 break;
@@ -199,7 +165,6 @@ public class EditCleanerController implements Initializable {
                 patronymicField.setDisable(true);
                 phoneField.setDisable(true);
                 statusComboBox.setDisable(true);
-                boxNumberComboBox.setDisable(true);
                 loadImageButton.setDisable(true);
 
                 Platform.runLater(()->btOK.requestFocus());
@@ -215,7 +180,6 @@ public class EditCleanerController implements Initializable {
         nameField.setText(cleaner.getClrName());
         patronymicField.setText(cleaner.getClrPatronymic());
         phoneField.setText(cleaner.getClrPhone().substring(2));
-        boxNumberComboBox.getSelectionModel().select(cleaner.getBox());
         statusComboBox.getSelectionModel().select(cleaner.getClrStatus());
     }
 
@@ -250,7 +214,6 @@ public class EditCleanerController implements Initializable {
                         cleaner.setClrPatronymic(patronymicField.getText().trim());
                         cleaner.setClrPhone("+7"+phoneField.getText().trim());
                         cleaner.setClrStatus(statusComboBox.getValue());
-                        cleaner.setBox(boxNumberComboBox.getValue());
 
                         Cleaner createdCleaner = cleanersRepository.create(cleaner, selectedPhoto);
                         if(createdCleaner != null){
@@ -261,7 +224,7 @@ public class EditCleanerController implements Initializable {
                         break;
                     case EDIT:
                         if(cleaner.getClrSurname().equals(surnameField.getText().trim()) && cleaner.getClrName().equals(nameField.getText().trim()) && ((cleaner.getClrPatronymic() == null && patronymicField.getText() == null) || cleaner.getClrPatronymic().equals(patronymicField.getText().trim())) &&
-                        cleaner.getClrPhone().equals("+7"+phoneField.getText().trim()) && cleaner.getClrStatus() == statusComboBox.getValue() && cleaner.getBox() == boxNumberComboBox.getValue() && photoInfoField.getText().equals(rb.getString("CLEANER_PHOTO"))){
+                        cleaner.getClrPhone().equals("+7"+phoneField.getText().trim()) && cleaner.getClrStatus() == statusComboBox.getValue()  && photoInfoField.getText().equals(rb.getString("CLEANER_PHOTO"))){
                             canExit = true;
                         }else{
                             cleaner.setClrSurname(surnameField.getText().trim());
@@ -269,13 +232,11 @@ public class EditCleanerController implements Initializable {
                             cleaner.setClrPatronymic(patronymicField.getText() != null ? patronymicField.getText().trim() : null);
                             cleaner.setClrPhone("+7"+phoneField.getText().trim());
                             cleaner.setClrStatus(statusComboBox.getValue());
-                            cleaner.setBox(boxNumberComboBox.getValue());
 
                             Cleaner editedCleaner = cleanersRepository.edit(cleaner, selectedPhoto);
                             if(editedCleaner != null){
                                 canExit = true;
                                 cleaner.setClrPhotoName(editedCleaner.getClrPhotoName());
-                                cleaner.setBox(editedCleaner.getBox());
                             }
                         }
                         break;

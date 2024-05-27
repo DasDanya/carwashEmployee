@@ -15,12 +15,16 @@ import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.WorkSchedule.ViewWorkScheduleCleanerController;
+import ru.pin120.carwashemployee.WorkSchedule.WorkScheduleFX;
 
 import java.net.URL;
 import java.util.*;
 
 public class CleanersController implements Initializable {
 
+    @FXML
+    private Button getWorkScheduleCleanerButton;
     @FXML
     private Button createButton;
     @FXML
@@ -42,8 +46,6 @@ public class CleanersController implements Initializable {
     @FXML
     private TextField filterPhoneField;
     @FXML
-    private ComboBox<Box> filterBoxNumberComboBox;
-    @FXML
     private ComboBox<CleanerStatus> filterStatusComboBox;
     @FXML
     private TableView<CleanerFX> cleanersTable;
@@ -56,16 +58,12 @@ public class CleanersController implements Initializable {
     @FXML
     private TableColumn<CleanerFX,String> statusColumn;
     @FXML
-    private TableColumn<CleanerFX,Long> boxNumberColumn;
-    @FXML
     private TableColumn<CleanerFX,String> phoneColumn;
     @FXML
     private TableColumn<CleanerFX,Long> idColumn;
     private ResourceBundle rb;
     private CleanersRepository cleanersRepository = new CleanersRepository();
-    private BoxesRepository boxesRepository = new BoxesRepository();
     private ObservableList<CleanerFX> cleanerFXES = FXCollections.observableArrayList();
-    private List<Box> boxes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,10 +75,6 @@ public class CleanersController implements Initializable {
         phoneColumn.setCellValueFactory(c -> c.getValue().clrPhoneProperty());
         statusColumn.setCellValueFactory(c -> c.getValue().clrStatusProperty());
         idColumn.setCellValueFactory(c -> c.getValue().clrIdProperty().asObject());
-        boxNumberColumn.setCellValueFactory(c -> {
-            CleanerFX cleanerFX = c.getValue();
-            return cleanerFX.getBoxId() == null ? null : cleanerFX.boxIdProperty().asObject();
-        });
         cleanersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         FXHelper.setContextMenuForEditableTextField(filterSurnameField);
@@ -112,14 +106,13 @@ public class CleanersController implements Initializable {
 
     private void fillingAll() {
         try{
-            List<Cleaner> cleaners = cleanersRepository.get(null,null,null,null,CleanerStatus.ACT, null);
+            List<Cleaner> cleaners = cleanersRepository.get(null,null,null,null,CleanerStatus.ACT);
             fillingObservableList(cleaners);
             cleanersTable.setItems(cleanerFXES);
             cleanersTable.getSelectionModel().selectFirst();
             Platform.runLater(() -> cleanersTable.requestFocus());
 
             fillingStatusComboBox();
-            fillingBoxNumberComboBox();
         }catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());
         }
@@ -127,7 +120,7 @@ public class CleanersController implements Initializable {
 
     private void fillingObservableList(List<Cleaner> cleaners){
         for(Cleaner cleaner:cleaners){
-            CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic(), cleaner.getClrPhone(), cleaner.getClrPhotoName(), cleaner.getClrStatus(),  cleaner.getBox() == null ? null : cleaner.getBox().getBoxId());
+            CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic(), cleaner.getClrPhone(), cleaner.getClrPhotoName(), cleaner.getClrStatus());
             cleanerFXES.add(cleanerFX);
         }
     }
@@ -144,42 +137,11 @@ public class CleanersController implements Initializable {
                 return null;
             }
         });
-
-        filterBoxNumberComboBox.setConverter(new StringConverter<Box>() {
-            @Override
-            public String toString(Box box) {
-                return box == null ? null : box.getBoxId() == null ? "" : box.getBoxId().toString();
-            }
-            @Override
-            public Box fromString(String string) {
-                if (string == null || string.isBlank()) {
-                    return null;
-                }
-                try {
-                    Long id = Long.parseLong(string);
-                    return boxes.stream()
-                            .filter(box -> box.getBoxId().equals(id))
-                            .findFirst()
-                            .orElse(null);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-        });
     }
     private void fillingStatusComboBox(){
         filterStatusComboBox.getItems().setAll(CleanerStatus.values());
         filterStatusComboBox.getItems().add(0,null);
         filterStatusComboBox.getSelectionModel().select(CleanerStatus.ACT);
-
-    }
-    private void fillingBoxNumberComboBox() throws Exception{
-        filterBoxNumberComboBox.getItems().clear();
-
-        boxes = boxesRepository.getAll();
-        //filterBoxNumberComboBox.getItems().add(null);
-        filterBoxNumberComboBox.getItems().addAll(boxes);
-        //Platform.runLater(()->filterBoxNumberComboBox.getSelectionModel().select(0));
 
     }
 
@@ -238,14 +200,6 @@ public class CleanersController implements Initializable {
                     cleaner.setClrPhone(selectedCleanerFX.getClrPhone());
                     cleaner.setClrPhotoName(selectedCleanerFX.getClrPhotoName());
                     cleaner.setClrStatus(CleanerStatus.valueOfDisplayValue(selectedCleanerFX.getClrStatus()));
-
-                    Long selectedCleanerFXBoxId = selectedCleanerFX.getBoxId();
-                    Box box = boxes.stream()
-                            .filter(b -> Objects.equals(b.getBoxId(), selectedCleanerFXBoxId))
-                            .findFirst()
-                            .orElse(null);
-                    cleaner.setBox(box);
-
                 }
                 break;
         }
@@ -271,14 +225,13 @@ public class CleanersController implements Initializable {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
                 case CREATE:
-                    CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(),cleaner.getClrPatronymic(),cleaner.getClrPhone(),cleaner.getClrPhotoName(),cleaner.getClrStatus(),cleaner.getBox().getBoxId());
+                    CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(),cleaner.getClrPatronymic(),cleaner.getClrPhone(),cleaner.getClrPhotoName(),cleaner.getClrStatus());
                     cleanerFXES.add(cleanerFX);
                     cleanerFXES.sort(Comparator.comparing(CleanerFX::getClrStatus, String::compareToIgnoreCase)
                             .thenComparing(CleanerFX::getClrSurname, String::compareToIgnoreCase)
                             .thenComparing(CleanerFX::getClrName, String::compareToIgnoreCase)
                             .thenComparing(CleanerFX::getClrPatronymic, String::compareToIgnoreCase)
-                            .thenComparing(CleanerFX::getClrPhone, String::compareToIgnoreCase)
-                            .thenComparing(CleanerFX::getBoxId));
+                            .thenComparing(CleanerFX::getClrPhone, String::compareToIgnoreCase));
 
                     cleanersTable.getSelectionModel().select(cleanerFX);
                     statusColumn.setSortType(TableColumn.SortType.ASCENDING);
@@ -289,7 +242,6 @@ public class CleanersController implements Initializable {
                     selectedCleanerFX.setClrPatronymic(cleaner.getClrPatronymic());
                     selectedCleanerFX.setClrPhone(cleaner.getClrPhone());
 
-                    selectedCleanerFX.setBoxId(cleaner.getBox().getBoxId());
                     selectedCleanerFX.setClrStatus(cleaner.getClrStatus().getDisplayValue());
                     selectedCleanerFX.setClrPhotoName(cleaner.getClrPhotoName());
 
@@ -297,8 +249,7 @@ public class CleanersController implements Initializable {
                             .thenComparing(CleanerFX::getClrSurname, String::compareToIgnoreCase)
                             .thenComparing(CleanerFX::getClrName, String::compareToIgnoreCase)
                             .thenComparing(CleanerFX::getClrPatronymic, String::compareToIgnoreCase)
-                            .thenComparing(CleanerFX::getClrPhone, String::compareToIgnoreCase)
-                            .thenComparing(CleanerFX::getBoxId));
+                            .thenComparing(CleanerFX::getClrPhone, String::compareToIgnoreCase));
 
                     cleanersTable.getSelectionModel().select(selectedCleanerFX);
                     statusColumn.setSortType(TableColumn.SortType.ASCENDING);
@@ -328,7 +279,7 @@ public class CleanersController implements Initializable {
         try{
             cleanerFXES.clear();
 
-            List<Cleaner> cleaners = cleanersRepository.get(filterSurnameField.getText().trim(), filterNameField.getText().trim(), filterPatronymicField.getText().trim(), filterPhoneField.getText().trim(), filterStatusComboBox.getValue(), filterBoxNumberComboBox.getValue() == null ? null : filterBoxNumberComboBox.getValue().getBoxId());
+            List<Cleaner> cleaners = cleanersRepository.get(filterSurnameField.getText().trim(), filterNameField.getText().trim(), filterPatronymicField.getText().trim(), filterPhoneField.getText().trim(), filterStatusComboBox.getValue());
             fillingObservableList(cleaners);
             cleanersTable.setItems(cleanerFXES);
             cleanersTable.requestFocus();
@@ -368,6 +319,31 @@ public class CleanersController implements Initializable {
                 }
             }
         }
+        cleanersTable.requestFocus();
+    }
+
+    public void getWorkScheduleCleanerButtonAction(ActionEvent actionEvent) {
+        if(cleanersTable.getSelectionModel().getSelectedItem() == null){
+            FXHelper.showErrorAlert(rb.getString("NOT_SELECT_CLEANER"));
+        }else{
+            CleanerFX cleanerFX = cleanersTable.getSelectionModel().getSelectedItem();
+            try {
+                Cleaner cleaner = new Cleaner();
+                cleaner.setClrId(cleanerFX.getClrId());
+                cleaner.setClrSurname(cleanerFX.getClrSurname());
+                cleaner.setClrName(cleanerFX.getClrName());
+                cleaner.setClrPatronymic(cleanerFX.getClrPatronymic());
+
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.WorkSchedule.resources.ViewWorkScheduleCleaner", "WorkSchedule/fxml/ViewWorkScheduleCleaner.fxml", getActualScene());
+                ViewWorkScheduleCleanerController viewWorkScheduleCleanerController = fxWindowData.getLoader().getController();
+                viewWorkScheduleCleanerController.settingForm(cleaner,fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+            }
+        }
+
         cleanersTable.requestFocus();
     }
 }

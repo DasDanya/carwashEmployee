@@ -9,9 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import ru.pin120.carwashemployee.Cleaners.CleanerDTO;
-import ru.pin120.carwashemployee.Cleaners.CleanerStatus;
-import ru.pin120.carwashemployee.Cleaners.CleanersRepository;
+import javafx.util.StringConverter;
+import ru.pin120.carwashemployee.Boxes.Box;
+import ru.pin120.carwashemployee.Boxes.BoxesRepository;
+import ru.pin120.carwashemployee.Cleaners.*;
 import ru.pin120.carwashemployee.FX.FXHelper;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,10 +24,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javafx.util.Callback;
+import ru.pin120.carwashemployee.FX.FXWindowData;
 
 public class WorkScheduleController implements Initializable {
     @FXML
+    private ComboBox<Box> boxesComboBox;
+    @FXML
     private Button refreshButton;
+    @FXML
+    private Button getWorkScheduleCleanerButton;
     @FXML
     private Button btSave;
     @FXML
@@ -38,7 +44,7 @@ public class WorkScheduleController implements Initializable {
     @FXML
     private TableColumn<WorkScheduleFX, String> statusColumn;
     @FXML
-    private TableColumn<WorkScheduleFX, Long> numberBoxColumn;
+    private TableColumn<WorkScheduleFX, String> phoneColumn;
     @FXML
     private TableColumn<WorkScheduleFX, CheckBox> day1Column;
     @FXML
@@ -110,7 +116,9 @@ public class WorkScheduleController implements Initializable {
 
     private CleanersRepository cleanersRepository = new CleanersRepository();
     private WorkScheduleRepository workScheduleRepository = new WorkScheduleRepository();
+    private BoxesRepository boxesRepository = new BoxesRepository();
     private List<CleanerDTO> cleanerDTOList;
+
     private ObservableList<WorkScheduleFX> workScheduleFXES = FXCollections.observableArrayList();
 
     @Override
@@ -119,9 +127,9 @@ public class WorkScheduleController implements Initializable {
         Platform.runLater(()->getActualScene().getStylesheets().add(getClass().getResource("/ru/pin120/carwashemployee/index.css").toExternalForm()));
 
         cleanerIdColumn.setCellValueFactory(w->w.getValue().clrIdProperty().asObject());
-        numberBoxColumn.setCellValueFactory(w->w.getValue().boxIdProperty().asObject());
         fioColumn.setCellValueFactory(w->w.getValue().fioProperty());
         statusColumn.setCellValueFactory(w->w.getValue().statusProperty());
+        phoneColumn.setCellValueFactory(w->w.getValue().phoneProperty());
         day1Column.setCellValueFactory(w->w.getValue().day1Property());
         day2Column.setCellValueFactory(w->w.getValue().day2Property());
         day3Column.setCellValueFactory(w->w.getValue().day3Property());
@@ -155,13 +163,65 @@ public class WorkScheduleController implements Initializable {
         day31Column.setCellValueFactory(w->w.getValue().day31Property());
 
         settingDatePicker();
-        fillingTable(true);
+        settingBoxesComboBox();
+        filling();
+        //fillingTable();
+        setTooltipForButtons();
 
+        Platform.runLater(()->FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
+
+    }
+
+    private void setTooltipForButtons() {
         refreshButton.setOnMouseEntered(event -> {
             refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
         });
-        Platform.runLater(()->FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
+        getWorkScheduleCleanerButton.setOnMouseEntered(event -> {
+            getWorkScheduleCleanerButton.setTooltip(new Tooltip(rb.getString("SHOW_WORK_SCHEDULE_CLEANER")));
+        });
     }
+
+    private void settingBoxesComboBox(){
+        boxesComboBox.setConverter(new StringConverter<Box>() {
+            @Override
+            public String toString(Box box) {
+                return box.getBoxId().toString();
+            }
+            @Override
+            public Box fromString(String string) {
+                return null;
+            }
+        });
+
+        boxesComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null && oldValue != null){
+                if(!Objects.equals(newValue.getBoxId(), oldValue.getBoxId())){
+                    LocalDate today = LocalDate.now();
+                    LocalDate pickerValue = datePicker.getValue();
+                    fillingTable(today.getMonth() == pickerValue.getMonth() && today.getYear() == pickerValue.getYear());
+                }
+            }
+        });
+    }
+
+
+    private void filling(){
+        try{
+            List<Box> boxes = boxesRepository.getAll();
+
+            boxesComboBox.getItems().setAll(boxes);
+            boxesComboBox.getSelectionModel().selectFirst();
+
+            if(boxesComboBox.getItems().isEmpty()){
+                btSave.setDisable(true);
+            }else{
+                fillingTable(true);
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+        }
+    }
+
 
 
     private Scene getActualScene(){
@@ -171,10 +231,13 @@ public class WorkScheduleController implements Initializable {
     private void fillingTable(boolean currentMonth) {
         setInterval(datePicker.getValue());
         try {
-            cleanerDTOList = cleanersRepository.getWithWorkSchedule(startInterval, endInterval, currentMonth);
-            fillingObservableList(cleanerDTOList);
-            
+            //workSchedules = workScheduleRepository.get(startInterval, endInterval, boxesComboBox.getValue().getBoxId());
+            cleanerDTOList = cleanersRepository.getWithWorkSchedule(startInterval, endInterval, boxesComboBox.getValue().getBoxId(), currentMonth);
+
+            workScheduleFXES.clear();
+            fillingObservableList();
             workScheduleTable.setItems(workScheduleFXES);
+
             workScheduleTable.getSelectionModel().selectFirst();
             Platform.runLater(() -> workScheduleTable.requestFocus());
         } catch (Exception e) {
@@ -183,12 +246,12 @@ public class WorkScheduleController implements Initializable {
 
     }
 
-    private void fillingObservableList(List<CleanerDTO> cleanerDTOList){
+    private void fillingObservableList(){
         int daysInMonth = datePicker.getValue().lengthOfMonth();
         for(CleanerDTO cleanerDTO: cleanerDTOList){
             String patronymic = cleanerDTO.getClrPatronymic() == null ? "" : cleanerDTO.getClrPatronymic();
             String fio = cleanerDTO.getClrSurname() + " " + cleanerDTO.getClrName() + " " + patronymic;
-            WorkScheduleFX workScheduleFX = new WorkScheduleFX(cleanerDTO.getClrId(), fio, cleanerDTO.getClrStatus().getDisplayValue(), cleanerDTO.getBox().getBoxId());
+            WorkScheduleFX workScheduleFX = new WorkScheduleFX(cleanerDTO.getClrId(), fio, cleanerDTO.getClrStatus().getDisplayValue(), cleanerDTO.getClrPhone());
 
             boolean dismissed =  cleanerDTO.getClrStatus() == CleanerStatus.DISMISSED;
             for(int day = 1; day <= daysInMonth; day++){
@@ -385,7 +448,6 @@ public class WorkScheduleController implements Initializable {
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             highlightColumn(newValue.getDayOfMonth());
             if(oldValue.getMonth() != newValue.getMonth() || oldValue.getYear() != newValue.getYear()){
-                workScheduleFXES.clear();
                 //setInterval(newValue);
                 LocalDate now = LocalDate.now();
                 if(now.getYear() == newValue.getYear() && now.getMonth() == newValue.getMonth()) {
@@ -449,11 +511,11 @@ public class WorkScheduleController implements Initializable {
 
                 LocalDate date = LocalDate.of(today.getYear(), today.getMonth(), finalDay);
                 if(check.isSelected() && workSchedule == null) { // Если день выбрали (при инициализации не было галки)
-                    CleanerDTO cleanerInCreatedList = getByBoxIdAndDayInWorkSchedule(created, deleted, cleanerDTO, finalDay);
+                    CleanerDTO cleanerInCreatedList = getByBoxIdAndDayInWorkSchedule(created, deleted, finalDay);
                     if (checkExistingWorkingDay(cleanerInCreatedList, date)) {
                         return;
                     } else {
-                        CleanerDTO cleanerInBaseList = getByBoxIdAndDayInWorkSchedule(cleanerDTOList, deleted, cleanerDTO, finalDay);
+                        CleanerDTO cleanerInBaseList = getByBoxIdAndDayInWorkSchedule(cleanerDTOList, deleted, finalDay);
                         if (checkExistingWorkingDay(cleanerInBaseList, date)) {
                             return;
                         }
@@ -467,7 +529,7 @@ public class WorkScheduleController implements Initializable {
             }
 
             if(!createdWorkSchedules.isEmpty()){
-                CleanerDTO newCleaner = new CleanerDTO(cleanerDTO.getClrId(), cleanerDTO.getClrSurname(), cleanerDTO.getClrName(), cleanerDTO.getClrPatronymic(), cleanerDTO.getClrStatus(), cleanerDTO.getBox(), createdWorkSchedules);
+                CleanerDTO newCleaner = new CleanerDTO(cleanerDTO.getClrId(), cleanerDTO.getClrSurname(), cleanerDTO.getClrName(), cleanerDTO.getClrPatronymic(),cleanerDTO.getClrPhone(), cleanerDTO.getClrStatus(), boxesComboBox.getValue(), createdWorkSchedules);
                 created.add(newCleaner);
             }
         }
@@ -475,8 +537,8 @@ public class WorkScheduleController implements Initializable {
         boolean success = true;
         try {
             if (!created.isEmpty()) {
-                List<WorkSchedule> workSchedules = workScheduleRepository.create(created);
-                if(workSchedules == null){
+                ResultCreateWorkSchedulesDTO result = workScheduleRepository.create(created);
+                if(result == null){
                     success = false;
                 }
             }
@@ -484,15 +546,16 @@ public class WorkScheduleController implements Initializable {
                 success = workScheduleRepository.delete(deleted);
             }
         }catch (Exception e){
+            success = false;
             FXHelper.showErrorAlert(e.getMessage());
             workScheduleTable.requestFocus();
         }
 
         if(success) {
             FXHelper.showInfoAlert(rb.getString("SUCCESS_SAVE"));
-            workScheduleFXES.clear();
-            fillingTable(true);
         }
+        workScheduleFXES.clear();
+        fillingTable(true);
 
 
 
@@ -509,11 +572,12 @@ public class WorkScheduleController implements Initializable {
         return false;
     }
 
-    private CleanerDTO getByBoxIdAndDayInWorkSchedule(List<CleanerDTO> cleanerDTOList, List<WorkSchedule> deleted, CleanerDTO cleanerDTO, int day){
+    private CleanerDTO getByBoxIdAndDayInWorkSchedule(List<CleanerDTO> cleanerDTOList, List<WorkSchedule> deleted, int day){
         return  cleanerDTOList.stream()
-                .filter(c-> Objects.equals(c.getBox().getBoxId(), cleanerDTO.getBox().getBoxId()) && c.getWorkSchedules().stream().anyMatch(ws->ws.getWsWorkDay().getDayOfMonth() == day && deleted.stream().noneMatch(w->w.getWsId().equals(ws.getWsId()))))
+                .filter(c-> c.getWorkSchedules().stream().anyMatch(ws->ws.getWsWorkDay().getDayOfMonth() == day && deleted.stream().noneMatch(w->w.getWsId().equals(ws.getWsId()))))
                 .findFirst()
                 .orElse(null);
+
 
 //        LocalDate now = LocalDate.now();
 //        for(CleanerDTO cleanerDTO1: cleanerDTOList){
@@ -534,12 +598,37 @@ public class WorkScheduleController implements Initializable {
     }
 
     private void doRefresh(){
-        workScheduleFXES.clear();
         LocalDate pastDate = datePicker.getValue();
         LocalDate now = LocalDate.now();
         datePicker.setValue(now);
         if(pastDate.getMonth() == now.getMonth() && pastDate.getYear() == now.getYear()) {
             fillingTable(true);
         }
+    }
+
+    public void getWorkScheduleCleanerButtonAction(ActionEvent actionEvent) {
+        if(workScheduleTable.getSelectionModel().getSelectedItem() == null){
+            FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CLEANER"));
+        }else{
+            WorkScheduleFX workScheduleFX = workScheduleTable.getSelectionModel().getSelectedItem();
+            try {
+                Cleaner cleaner = new Cleaner();
+                cleaner.setClrId(workScheduleFX.getClrId());
+                String[] fio = workScheduleFX.getFio().split(" ");
+                cleaner.setClrSurname(fio[0]);
+                cleaner.setClrName(fio[1]);
+                cleaner.setClrPatronymic(fio.length == 3 ? fio[2] : "");
+
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.WorkSchedule.resources.ViewWorkScheduleCleaner", "WorkSchedule/fxml/ViewWorkScheduleCleaner.fxml", getActualScene());
+                ViewWorkScheduleCleanerController viewWorkScheduleCleanerController = fxWindowData.getLoader().getController();
+                viewWorkScheduleCleanerController.settingForm(cleaner,fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+            }
+        }
+
+        workScheduleTable.requestFocus();
     }
 }

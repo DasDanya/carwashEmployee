@@ -20,7 +20,6 @@ public class CleanerFX {
     private StringProperty clrPhone;
     private StringProperty clrStatus;
     private StringProperty clrPhotoName;
-    private LongProperty boxId;
     //private Long boxIdValue;
 
     public long getClrId() {
@@ -71,11 +70,6 @@ public class CleanerFX {
         return clrStatus;
     }
 
-    public Long getBoxId() {
-        //return boxIdValue;
-        return boxIdProperty().get();
-    }
-
     public String getClrPhotoName() {
         return clrPhotoName.get();
     }
@@ -84,12 +78,6 @@ public class CleanerFX {
         return clrPhotoName;
     }
 
-    public LongProperty boxIdProperty() {
-//        if (boxId == null) {
-//            boxId = new SimpleLongProperty(this, "boxId", boxIdValue == null ? 0 : boxIdValue);
-//        }
-        return boxId;
-    }
 
     public void setClrSurname(String clrSurname) {
         this.clrSurname.set(clrSurname);
@@ -115,11 +103,8 @@ public class CleanerFX {
         this.clrPhotoName.set(clrPhotoName);
     }
 
-    public void setBoxId(long boxId) {
-        this.boxId.set(boxId);
-    }
 
-    public CleanerFX(Long clrId, String clrSurname, String clrName, String clrPatronymic, String clrPhone, String clrPhotoName, CleanerStatus clrStatus, Long boxId) {
+    public CleanerFX(Long clrId, String clrSurname, String clrName, String clrPatronymic, String clrPhone, String clrPhotoName, CleanerStatus clrStatus) {
         this.clrId = new SimpleLongProperty(clrId);
         this.clrSurname = new SimpleStringProperty(clrSurname);
         this.clrName = new SimpleStringProperty(clrName);
@@ -127,7 +112,7 @@ public class CleanerFX {
         this.clrPhone = new SimpleStringProperty(clrPhone);
         this.clrPhotoName = new SimpleStringProperty(clrPhotoName);
         this.clrStatus = new SimpleStringProperty(clrStatus.getDisplayValue());
-        this.boxId = new SimpleLongProperty(boxId);
         //this.boxIdValue = boxId;
     }
+
 }

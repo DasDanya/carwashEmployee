@@ -11,7 +11,7 @@ public class WorkScheduleFX {
     private LongProperty clrId;
     private StringProperty fio;
     private StringProperty status;
-    private LongProperty boxId;
+    private StringProperty phone;
     private ObjectProperty<CheckBox> day1 = new SimpleObjectProperty<>(new CheckBox());
     private ObjectProperty<CheckBox> day2 = new SimpleObjectProperty<>(new CheckBox());
     private ObjectProperty<CheckBox> day3 = new SimpleObjectProperty<>(new CheckBox());
@@ -68,12 +68,12 @@ public class WorkScheduleFX {
         return status;
     }
 
-    public long getBoxId() {
-        return boxId.get();
+    public String getPhone() {
+        return phone.get();
     }
 
-    public LongProperty boxIdProperty() {
-        return boxId;
+    public StringProperty phoneProperty() {
+        return phone;
     }
 
     public CheckBox getDay1() {
@@ -324,17 +324,16 @@ public class WorkScheduleFX {
         return day31;
     }
 
-    public WorkScheduleFX(Long clrId, String fio, String status, Long boxId){
+    public WorkScheduleFX(Long clrId, String fio, String status, String phone){
         this.clrId = new SimpleLongProperty(clrId);
         this.fio = new SimpleStringProperty(fio);
         this.status = new SimpleStringProperty(status);
-        this.boxId = new SimpleLongProperty(boxId);
+        this.phone = new SimpleStringProperty(phone);
     }
 
-    public WorkScheduleFX(Long clrId, String fio, Long boxId, CheckBox day1, CheckBox day2, CheckBox day3, CheckBox day4, CheckBox day5, CheckBox day6, CheckBox day7, CheckBox day8, CheckBox day9, CheckBox day10, CheckBox day11, CheckBox day12, CheckBox day13, CheckBox day14, CheckBox day15, CheckBox day16, CheckBox day17, CheckBox day18, CheckBox day19, CheckBox day20, CheckBox day21, CheckBox day22, CheckBox day23, CheckBox day24, CheckBox day25, CheckBox day26, CheckBox day27, CheckBox day28, CheckBox day29, CheckBox day30, CheckBox day31) {
+    public WorkScheduleFX(Long clrId, String fio,CheckBox day1, CheckBox day2, CheckBox day3, CheckBox day4, CheckBox day5, CheckBox day6, CheckBox day7, CheckBox day8, CheckBox day9, CheckBox day10, CheckBox day11, CheckBox day12, CheckBox day13, CheckBox day14, CheckBox day15, CheckBox day16, CheckBox day17, CheckBox day18, CheckBox day19, CheckBox day20, CheckBox day21, CheckBox day22, CheckBox day23, CheckBox day24, CheckBox day25, CheckBox day26, CheckBox day27, CheckBox day28, CheckBox day29, CheckBox day30, CheckBox day31) {
         this.clrId = new SimpleLongProperty(clrId);
         this.fio = new SimpleStringProperty(fio);
-        this.boxId = new SimpleLongProperty(boxId);
         this.day1 = new SimpleObjectProperty<>(day1);
         this.day2 = new SimpleObjectProperty<>(day2);
         this.day3 = new SimpleObjectProperty<>(day3);

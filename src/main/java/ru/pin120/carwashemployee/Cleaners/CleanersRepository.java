@@ -33,10 +33,11 @@ public class CleanersRepository {
             .create();
 
 
-    public List<CleanerDTO> getWithWorkSchedule( @NonNull LocalDate startInterval,  @NonNull LocalDate endInterval, boolean currentMonth) throws Exception{
+    public List<CleanerDTO> getWithWorkSchedule( @NonNull LocalDate startInterval,  @NonNull LocalDate endInterval, @NonNull Long boxId, boolean currentMonth) throws Exception{
         System.out.println(startInterval + " " + endInterval + " " + currentMonth);
         String partUrl = "?startInterval=" + startInterval;
         partUrl+="&endInterval="+endInterval;
+        partUrl+="&boxId="+boxId;
         partUrl+="&currentMonth="+currentMonth;
         Request request = new Request.Builder()
                 .url(url+ "/workSchedule" + partUrl)
@@ -52,7 +53,7 @@ public class CleanersRepository {
         return gson.fromJson(jsonData, type);
     }
 
-    public List<Cleaner> get(String surname, String name, String patronymic, String phone, CleanerStatus status, Long boxId) throws Exception{
+    public List<Cleaner> get(String surname, String name, String patronymic, String phone, CleanerStatus status) throws Exception{
         String partUrl = "";
         if(surname != null && !surname.isBlank()){
             surname = URLEncoder.encode(surname, "UTF-8");
@@ -88,13 +89,6 @@ public class CleanersRepository {
                 partUrl += "&status=" + status;
             }else{
                 partUrl += "?status=" + status;
-            }
-        }
-        if(boxId != null){
-            if(partUrl.contains("?")) {
-                partUrl += "&boxNumber=" + boxId;
-            }else{
-                partUrl += "?boxNumber=" + boxId;
             }
         }
 

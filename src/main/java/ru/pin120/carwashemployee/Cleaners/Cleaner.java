@@ -19,6 +19,4 @@ public class Cleaner {
     private String clrPhone;
     private String clrPhotoName;
     private CleanerStatus clrStatus;
-    private Box box;
-
 }

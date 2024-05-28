@@ -9,4 +9,5 @@ import lombok.*;
 @ToString
 public class CategoryOfSupplies {
     private String csupName;
+    private UnitOfMeasure unit;
 }

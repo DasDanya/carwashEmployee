@@ -1,9 +1,8 @@
-package ru.pin120.carwashemployee.Cleaners;
+package ru.pin120.carwashemployee.Supplies;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,13 +11,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.Cleaners.Cleaner;
+import ru.pin120.carwashemployee.Cleaners.CleanersRepository;
 import ru.pin120.carwashemployee.FX.FXHelper;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ShowCleanerPhotoController implements Initializable {
+public class ShowSupplyPhotoController implements Initializable {
     private ResourceBundle rb;
 
     @FXML
@@ -33,12 +33,12 @@ public class ShowCleanerPhotoController implements Initializable {
     double scaleYMultiplyer = 1.0;
     double imageWidth = 600;
     double imageHeight = 600;
-    private CleanersRepository cleanersRepository = new CleanersRepository();
+    private SupplyRepository supplyRepository = new SupplyRepository();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
 
-        photo = AppHelper.getDefaultAvatar();
+        photo = AppHelper.getNoPhoto();
         photoImageView.setFitWidth(imageWidth);
         photoImageView.setFitHeight(imageHeight);
 
@@ -66,29 +66,29 @@ public class ShowCleanerPhotoController implements Initializable {
 
         photoImageView.setImage(photo);
         getActualStage().setTitle(rb.getString("TITLE"));
-        
+
     }
 
-    public void showPhoto(Image selectedPhoto, Cleaner cleaner) {
+    public void showPhoto(Image selectedPhoto, Supply supply) {
         if(selectedPhoto != null){
             photo = selectedPhoto;
         }
 
         photoImageView.setImage(photo);
-        String fio = cleaner.getClrPatronymic() != null ? String.format(" %s %s %s", cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic()) : String.format(" %s %s", cleaner.getClrSurname(), cleaner.getClrName());
-        getActualStage().setTitle(rb.getString("TITLE") + fio);
+        getActualStage().setTitle(String.format("%s %s %s %d %s", rb.getString("TITLE"), supply.getCategory().getCsupName(), supply.getSupName(), supply.getSupMeasure(), supply.getCategory().getUnit().getDisplayValue()));
     }
 
-    public void showPhoto(Cleaner cleaner){
+    public void showPhoto(Supply supply){
         try{
-            photo = cleanersRepository.getPhoto(cleaner.getClrPhotoName());
+            photo = supplyRepository.getPhoto(supply.getSupPhotoName());
             photoImageView.setImage(photo);
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());
         }
-        String fio = cleaner.getClrPatronymic() != null ? String.format(" %s %s %s", cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic()) : String.format(" %s %s", cleaner.getClrSurname(), cleaner.getClrName());
-        getActualStage().setTitle(rb.getString("TITLE") + fio);
+
+        getActualStage().setTitle(String.format("%s %s %s %d %s", rb.getString("TITLE"), supply.getCategory().getCsupName(), supply.getSupName(), supply.getSupMeasure(), supply.getCategory().getUnit().getDisplayValue()));
     }
+
 
     public void onAnchorPaneMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
@@ -119,5 +119,6 @@ public class ShowCleanerPhotoController implements Initializable {
             rootAnchorPane.setScaleY(scaleYMultiplyer -= 0.05);
         }
     }
+
 
 }

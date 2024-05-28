@@ -77,7 +77,7 @@ public class TransportController implements Initializable {
         FXHelper.setContextMenuForEditableTextField(filterModelField);
         FXHelper.setContextMenuForEditableTextField(filterCategoryField);
 
-        setTooltipForButton();
+        setTooltipForButtons();
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
 
         fillingTable(0);
@@ -136,7 +136,7 @@ public class TransportController implements Initializable {
         return transportsTable.getScene();
     }
 
-    private void setTooltipForButton() {
+    private void setTooltipForButtons() {
         createButton.setOnMouseEntered(event->{
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_TRANSPORT")));
         });

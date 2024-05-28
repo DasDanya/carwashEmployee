@@ -4,10 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import lombok.Getter;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
+import ru.pin120.carwashemployee.Cleaners.CleanerStatus;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -19,6 +22,9 @@ public class EditCategoryOfSuppliesController implements Initializable {
 
     private static final int MAX_LENGTH_CATEGORY_NAME = 30;
     private static final String CATEGORY_REGEX = "^[а-яА-ЯёЁ -]+$";
+
+    @FXML
+    private ComboBox<UnitOfMeasure> unitComboBox;
     @FXML
     private Button btCancel;
     @FXML
@@ -36,6 +42,22 @@ public class EditCategoryOfSuppliesController implements Initializable {
         rb = resourceBundle;
         FXHelper.setContextMenuForEditableTextField(categoryNameField);
         categoryNameFieldTextListener();
+        setConvertersForComboBoxes();
+    }
+
+    private void setConvertersForComboBoxes() {
+        unitComboBox.getItems().setAll(UnitOfMeasure.values());
+        unitComboBox.setConverter(new StringConverter<UnitOfMeasure>() {
+            @Override
+            public String toString(UnitOfMeasure unit) {
+                return unit.getDisplayValue();
+            }
+
+            @Override
+            public UnitOfMeasure fromString(String string) {
+                return null;
+            }
+        });
     }
 
     private void categoryNameFieldTextListener() {
@@ -56,13 +78,13 @@ public class EditCategoryOfSuppliesController implements Initializable {
         switch (operationMode){
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_FORM_TITLE"));
-                break;
-            case EDIT:
-                this.stage.setTitle(rb.getString("EDIT_FORM_TITLE"));
+                unitComboBox.getSelectionModel().selectFirst();
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_FORM_TITLE"));
+                unitComboBox.getSelectionModel().select(categoryOfSupplies.getUnit());
                 categoryNameField.setDisable(true);
+                unitComboBox.setDisable(true);
                 break;
 
         }
@@ -85,6 +107,7 @@ public class EditCategoryOfSuppliesController implements Initializable {
             try{
                 if(operationMode == FXOperationMode.CREATE){
                     categoryOfSupplies.setCsupName(categoryNameField.getText().trim());
+                    categoryOfSupplies.setUnit(unitComboBox.getSelectionModel().getSelectedItem());
                     if(categoryOfSuppliesRepository.create(categoryOfSupplies) != null){
                         canExit = true;
                     }

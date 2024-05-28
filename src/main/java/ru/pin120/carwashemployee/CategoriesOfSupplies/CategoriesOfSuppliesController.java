@@ -8,9 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -34,19 +31,23 @@ public class CategoriesOfSuppliesController implements Initializable {
     @FXML
     private TextField searchField;
     @FXML
-    private TableView<CategoryOfSupplies> categoriesTable;
+    private TableView<CategoriesOfSuppliesFX> categoriesTable;
     @FXML
-    private TableColumn<CategoryOfSupplies, String> categoryNameColumn;
+    private TableColumn<CategoriesOfSuppliesFX, String> categoryNameColumn;
+    @FXML
+    private TableColumn<CategoriesOfSuppliesFX, String> unitColumn;
+
     private ResourceBundle rb;
 
     private CategoryOfSuppliesRepository categoryOfSuppliesRepository = new CategoryOfSuppliesRepository();
-    private ObservableList<CategoryOfSupplies> categoriesOfSupplies = FXCollections.observableArrayList();
+    private ObservableList<CategoriesOfSuppliesFX> categoriesOfSuppliesFXES = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
 
-        categoryNameColumn.prefWidthProperty().bind(categoriesTable.widthProperty());
-        categoryNameColumn.setCellValueFactory(new PropertyValueFactory<CategoryOfSupplies, String>("csupName"));
+        categoryNameColumn.setCellValueFactory(c->c.getValue().csupNameProperty());
+        unitColumn.setCellValueFactory(c->c.getValue().unitProperty());
+        categoriesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         fillingAll();
         settingTooltipForButtons();
@@ -57,14 +58,22 @@ public class CategoriesOfSuppliesController implements Initializable {
     private void fillingAll() {
         try{
             List<CategoryOfSupplies> categories = categoryOfSuppliesRepository.getAll();
-            categoriesOfSupplies.setAll(categories);
-            categoriesTable.setItems(categoriesOfSupplies);
+            fillingObservableList(categories);
+            categoriesTable.setItems(categoriesOfSuppliesFXES);
 
             categoriesTable.getSelectionModel().selectFirst();
             Platform.runLater(()->categoriesTable.requestFocus());
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());
             categoriesTable.requestFocus();
+        }
+    }
+
+    private void fillingObservableList(List<CategoryOfSupplies> categories){
+        categoriesOfSuppliesFXES.clear();
+        for(CategoryOfSupplies category: categories){
+            CategoriesOfSuppliesFX categoriesOfSuppliesFX = new CategoriesOfSuppliesFX(category.getCsupName(), category.getUnit());
+            categoriesOfSuppliesFXES.add(categoriesOfSuppliesFX);
         }
     }
 
@@ -98,13 +107,17 @@ public class CategoriesOfSuppliesController implements Initializable {
     private void doOperation(FXOperationMode operationMode){
         if(operationMode != FXOperationMode.EDIT) {
             CategoryOfSupplies categoryOfSupplies = null;
+            CategoriesOfSuppliesFX selectedCategoryOfSuppliesFX = null;
             switch (operationMode) {
                 case CREATE:
                     categoryOfSupplies = new CategoryOfSupplies();
                     break;
                 case DELETE:
                     if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
-                        categoryOfSupplies = categoriesTable.getSelectionModel().getSelectedItem();
+                        selectedCategoryOfSuppliesFX = categoriesTable.getSelectionModel().getSelectedItem();
+                        categoryOfSupplies = new CategoryOfSupplies();
+                        categoryOfSupplies.setCsupName(selectedCategoryOfSuppliesFX.getCsupName());
+                        categoryOfSupplies.setUnit(UnitOfMeasure.valueOfDisplayValue(selectedCategoryOfSuppliesFX.getUnit()));
                     }
                     break;
             }
@@ -118,7 +131,7 @@ public class CategoriesOfSuppliesController implements Initializable {
 
                     editCategoryOfSuppliesController.setParameters(categoryOfSupplies, operationMode, fxWindowData.getModalStage());
                     fxWindowData.getModalStage().showAndWait();
-                    doResult(operationMode, editCategoryOfSuppliesController.getExitMode(), categoryOfSupplies);
+                    doResult(operationMode, editCategoryOfSuppliesController.getExitMode(), categoryOfSupplies, selectedCategoryOfSuppliesFX);
 
                 } catch (Exception e) {
                     FXHelper.showErrorAlert(e.getMessage());
@@ -128,16 +141,17 @@ public class CategoriesOfSuppliesController implements Initializable {
         }
     }
 
-    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfSupplies categoryOfSupplies){
+    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfSupplies categoryOfSupplies, CategoriesOfSuppliesFX selectedCategory){
         if(exitMode == FXFormExitMode.OK){
             if(operationMode == FXOperationMode.CREATE){
-                categoriesOfSupplies.add(categoryOfSupplies);
-                categoriesOfSupplies.sort(Comparator.comparing(CategoryOfSupplies::getCsupName, String::compareToIgnoreCase));
+                CategoriesOfSuppliesFX newCategory = new CategoriesOfSuppliesFX(categoryOfSupplies.getCsupName(), categoryOfSupplies.getUnit());
+                categoriesOfSuppliesFXES.add(newCategory);
+                categoriesOfSuppliesFXES.sort(Comparator.comparing(CategoriesOfSuppliesFX::getCsupName, String::compareToIgnoreCase));
 
-                categoriesTable.getSelectionModel().select(categoryOfSupplies);
+                categoriesTable.getSelectionModel().select(newCategory);
                 categoryNameColumn.setSortType(TableColumn.SortType.ASCENDING);
             }else{
-                categoriesOfSupplies.remove(categoryOfSupplies);
+                categoriesOfSuppliesFXES.remove(selectedCategory);
             }
         }
         categoriesTable.requestFocus();
@@ -148,7 +162,7 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     private void doRefresh(){
-        categoriesOfSupplies.clear();
+        categoriesOfSuppliesFXES.clear();
         searchField.clear();
 
         fillingAll();
@@ -163,9 +177,8 @@ public class CategoriesOfSuppliesController implements Initializable {
             String csupName = searchField.getText().trim();
             try{
                 List<CategoryOfSupplies> resultOfSearch = categoryOfSuppliesRepository.search(csupName);
-                categoriesOfSupplies.setAll(resultOfSearch);
-
-                if(!categoriesOfSupplies.isEmpty()){
+                fillingObservableList(resultOfSearch);
+                if(!categoriesOfSuppliesFXES.isEmpty()){
                     categoriesTable.requestFocus();
                     categoriesTable.getSelectionModel().selectFirst();
                 }else{

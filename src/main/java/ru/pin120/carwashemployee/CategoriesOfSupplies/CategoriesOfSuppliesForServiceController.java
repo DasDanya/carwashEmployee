@@ -31,6 +31,8 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     private TableColumn<CategoryOfSuppliesForServiceFX, CheckBox> selectColumn;
     @FXML
     private TableColumn<CategoryOfSuppliesForServiceFX, String> categoriesOfSuppliesColumn;
+    @FXML
+    private TableColumn<CategoryOfSuppliesForServiceFX, String> unitColumn;
     private ResourceBundle rb;
     private Service service;
     private CategoryOfSuppliesRepository categoryOfSuppliesRepository = new CategoryOfSuppliesRepository();
@@ -43,6 +45,7 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
 
         selectColumn.setCellValueFactory(c->c.getValue().selectProperty());
         categoriesOfSuppliesColumn.setCellValueFactory(c->c.getValue().csupNameProperty());
+        unitColumn.setCellValueFactory(c->c.getValue().unitProperty());
         suppliesForServiceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         refreshButton.setOnMouseEntered(event -> {
@@ -75,7 +78,7 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
                     if (service.getCategoriesOfSupplies().stream().anyMatch(c->c.getCsupName().equals(categoryOfSupplies.getCsupName()))) {
                         check.setSelected(true);
                     }
-                    CategoryOfSuppliesForServiceFX category = new CategoryOfSuppliesForServiceFX(check, categoryOfSupplies.getCsupName());
+                    CategoryOfSuppliesForServiceFX category = new CategoryOfSuppliesForServiceFX(check, categoryOfSupplies.getCsupName(), categoryOfSupplies.getUnit());
                     suppliesForServiceFXES.add(category);
                 }
 
@@ -115,7 +118,7 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
         List<CategoryOfSupplies> necessaryCategories = new ArrayList<>();
         for(CategoryOfSuppliesForServiceFX category: suppliesForServiceFXES){
             if(category.getSelect().isSelected()){
-                necessaryCategories.add(new CategoryOfSupplies(category.getCsupName()));
+                necessaryCategories.add(new CategoryOfSupplies(category.getCsupName(), UnitOfMeasure.valueOfDisplayValue(category.getUnit())));
             }
         }
         try {

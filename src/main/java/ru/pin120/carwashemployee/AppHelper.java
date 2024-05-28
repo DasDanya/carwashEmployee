@@ -18,6 +18,8 @@ public class AppHelper {
 
     public static Image getDefaultAvatar(){return new Image(AppHelper.class.getResourceAsStream("/ru/pin120/carwashemployee/images/avatardefault.jpg"));}
 
+    public static Image getNoPhoto(){return new Image(AppHelper.class.getResourceAsStream("/ru/pin120/carwashemployee/images/noPhoto.jpeg"));}
+
     public static File getDefaultAvatarAsFile(){
         try (InputStream inputStream = AppHelper.class.getResourceAsStream("/ru/pin120/carwashemployee/images/avatardefault.jpg")) {
             if (inputStream == null) {

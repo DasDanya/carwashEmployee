@@ -123,5 +123,12 @@ public class MainController implements Initializable {
 
 
     public void showSuppliesMenuItemAction(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Supplies.resources.Supplies", "Supplies/fxml/Supplies.fxml");
+            fxWindowData.getModalStage().setTitle(rb.getString("SUPPLIES_FORM_TITLE"));
+            fxWindowData.getModalStage().show();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+        }
     }
 }

@@ -207,8 +207,8 @@ public class ClientsController implements Initializable {
                 break;
             case EDIT:
             case DELETE:
-                if(clientsTable.getSelectionModel().getSelectedItem() != null){
-                    ClientFX clientFX = clientsTable.getSelectionModel().getSelectedItem();
+                ClientFX clientFX = clientsTable.getSelectionModel().getSelectedItem();
+                if(clientFX != null){
 
                     client = new Client();
                     client.setClId(clientFX.getClId());
@@ -298,7 +298,7 @@ public class ClientsController implements Initializable {
             filterName = filterNameField.getText().trim();
             filterPhone = filterPhoneField.getText().trim();
 
-            if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null) {
+            if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null && !operationDiscountComboBox.getSelectionModel().getSelectedItem().isBlank()) {
                 filterDiscount = discountSpinner.getValue();
                 filterDiscountOperator = operationDiscountComboBox.getSelectionModel().getSelectedItem();
             }

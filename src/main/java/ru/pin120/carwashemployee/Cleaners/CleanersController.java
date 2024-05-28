@@ -164,6 +164,9 @@ public class CleanersController implements Initializable {
         showPhotoButton.setOnMouseEntered(event->{
             showPhotoButton.setTooltip(new Tooltip(rb.getString("SHOW_PHOTO")));
         });
+        getWorkScheduleCleanerButton.setOnMouseEntered(event->{
+            getWorkScheduleCleanerButton.setTooltip(new Tooltip(rb.getString("SHOW_WORK_SCHEDULE_CLEANER")));
+        });
     }
 
     private Scene getActualScene(){
@@ -190,8 +193,8 @@ public class CleanersController implements Initializable {
                 break;
             case EDIT:
             case DELETE:
-                if(cleanersTable.getSelectionModel().getSelectedItem() != null){
-                    selectedCleanerFX = cleanersTable.getSelectionModel().getSelectedItem();
+                selectedCleanerFX = cleanersTable.getSelectionModel().getSelectedItem();
+                if(selectedCleanerFX != null){
                     cleaner = new Cleaner();
                     cleaner.setClrId(selectedCleanerFX.getClrId());
                     cleaner.setClrSurname(selectedCleanerFX.getClrSurname());

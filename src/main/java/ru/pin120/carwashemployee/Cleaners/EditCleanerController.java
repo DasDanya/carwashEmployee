@@ -51,7 +51,6 @@ public class EditCleanerController implements Initializable {
     @FXML
     private Stage stage;
     private Cleaner cleaner;
-    private List<Box> boxes;
     private FXOperationMode operationMode;
 
     @Getter
@@ -293,7 +292,11 @@ public class EditCleanerController implements Initializable {
             FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Cleaners.resources.ShowCleanerPhoto", "Cleaners/fxml/ShowCleanerPhoto.fxml", getActualScene());
             ShowCleanerPhotoController showCleanerPhotoController = fxWindowData.getLoader().getController();
             if(operationMode == FXOperationMode.CREATE || ((operationMode == FXOperationMode.EDIT || operationMode == FXOperationMode.DELETE) && selectedPhoto != null)) {
-                showCleanerPhotoController.showPhoto(FXHelper.convertToImage(selectedPhoto));
+                if(operationMode == FXOperationMode.CREATE) {
+                    showCleanerPhotoController.showPhoto(FXHelper.convertToImage(selectedPhoto));
+                }else{
+                    showCleanerPhotoController.showPhoto(FXHelper.convertToImage(selectedPhoto), cleaner);
+                }
             }else{
                 showCleanerPhotoController.showPhoto(cleaner);
             }

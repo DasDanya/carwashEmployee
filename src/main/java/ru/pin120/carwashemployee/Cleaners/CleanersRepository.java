@@ -126,19 +126,15 @@ public class CleanersRepository {
     public Cleaner create(Cleaner cleaner, File photo) throws Exception{
         Cleaner createdCleaner = null;
         String jsonData = gson.toJson(cleaner);
-        MultipartBody body;
-        if(photo != null) {
-            body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")))
-                    .addFormDataPart("photo", photo.getName(), RequestBody.create(photo, MediaType.parse("image/*")))
-                    .build();
-        }else{
-            body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")))
-                    .build();
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")));
+
+        if (photo != null) {
+            builder.addFormDataPart("photo", photo.getName(), RequestBody.create(photo, MediaType.parse("image/*")));
         }
+
+        MultipartBody body = builder.build();
 
         Request request = new Request.Builder()
                 .url(url + "/create")
@@ -185,19 +181,15 @@ public class CleanersRepository {
     public Cleaner edit(Cleaner cleaner, File photo) throws Exception{
         Cleaner editedCleaner = null;
         String jsonData = gson.toJson(cleaner);
-        MultipartBody body;
-        if(photo != null) {
-            body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")))
-                    .addFormDataPart("photo", photo.getName(), RequestBody.create(photo, MediaType.parse("image/*")))
-                    .build();
-        }else{
-            body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")))
-                    .build();
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("cleaner", null, RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8")));
+
+        if (photo != null) {
+            builder.addFormDataPart("photo", photo.getName(), RequestBody.create(photo, MediaType.parse("image/*")));
         }
+
+        MultipartBody body = builder.build();
 
         Request request = new Request.Builder()
                 .url(url + "/edit/"+cleaner.getClrId())

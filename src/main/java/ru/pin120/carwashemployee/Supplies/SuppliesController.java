@@ -8,12 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoryOfSupplies;
-import ru.pin120.carwashemployee.CategoriesOfSupplies.UnitOfMeasure;
-import ru.pin120.carwashemployee.Cleaners.Cleaner;
-import ru.pin120.carwashemployee.Cleaners.CleanerFX;
-import ru.pin120.carwashemployee.Cleaners.ShowCleanerPhotoController;
-import ru.pin120.carwashemployee.Clients.ClientFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -23,6 +17,8 @@ import java.net.URL;
 import java.util.*;
 
 public class SuppliesController implements Initializable {
+    @FXML
+    private Button addSupplyInBoxButton;
     @FXML
     private Button showPhotoButton;
     @FXML
@@ -108,7 +104,7 @@ public class SuppliesController implements Initializable {
             }else{
                 supplies = supplyRepository.get(pageIndex,filterName,filterCategory,filterOperator,filterCount);
             }
-            fillingObservableList(supplies);
+            fillingObservableList();
 
             suppliesTable.setItems(supplyFXES);
             suppliesTable.getSelectionModel().selectFirst();
@@ -119,7 +115,7 @@ public class SuppliesController implements Initializable {
         }
     }
 
-    private void fillingObservableList(List<Supply> supplies) {
+    private void fillingObservableList() {
         for(Supply supply: supplies){
             String measure = supply.getSupMeasure() + " " + supply.getCategory().getUnit().getDisplayValue();
             SupplyFX supplyFX = new SupplyFX(supply.getSupId(), supply.getSupName(), supply.getCategory().getCsupName(), measure, supply.getSupPhotoName(),supply.getSupCount());
@@ -172,6 +168,9 @@ public class SuppliesController implements Initializable {
         });
         showFilterButton.setOnMouseEntered(event->{
             showFilterButton.setTooltip(new Tooltip(rb.getString("SHOW_LAST_FILTER")));
+        });
+        addSupplyInBoxButton.setOnMouseEntered(event->{
+            addSupplyInBoxButton.setTooltip(new Tooltip(rb.getString("ADD_SUPPLY_IN_BOX")));
         });
     }
 
@@ -284,7 +283,8 @@ public class SuppliesController implements Initializable {
             filterCategory = filterCategoryField.getText().trim();
             filterName = filterNameField.getText().trim();
 
-            if(operationCountComboBox.getSelectionModel().getSelectedItem() != null && !operationCountComboBox.getSelectionModel().getSelectedItem().isBlank()) {
+            //if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null && !operationDiscountComboBox.getSelectionModel().getSelectedItem().isBlank()) {
+            if(operationCountComboBox.getSelectionModel().getSelectedItem() != null) {
                 filterCount = filterCountSpinner.getValue();
                 filterOperator = operationCountComboBox.getSelectionModel().getSelectedItem();
             }
@@ -303,12 +303,10 @@ public class SuppliesController implements Initializable {
             FXHelper.showErrorAlert(rb.getString("NOT_SELECT_SUPPLY"));
         }else{
             try {
-                Supply supply = new Supply();
-                supply.setSupName(selectedSupplyFX.getSupName());
-                supply.setSupPhotoName(selectedSupplyFX.getSupPhotoName());
-                String[] measure = selectedSupplyFX.getSupMeasure().split(" ");
-                supply.setSupMeasure(Integer.parseInt(measure[0]));
-                supply.setCategory(new CategoryOfSupplies(selectedSupplyFX.getSupCategory(), UnitOfMeasure.valueOfDisplayValue(measure[1])));
+                Supply supply = supplies.stream()
+                        .filter(s->s.getSupId().longValue() == selectedSupplyFX.getSupId())
+                        .findFirst()
+                        .orElse(null);
 
                 FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Supplies.resources.ShowSupplyPhoto", "Supplies/fxml/ShowSupplyPhoto.fxml", getActualScene());
                 ShowSupplyPhotoController showSupplyPhotoController = fxWindowData.getLoader().getController();
@@ -320,6 +318,41 @@ public class SuppliesController implements Initializable {
                 suppliesTable.requestFocus();
             }
         }
+        suppliesTable.requestFocus();
+    }
+
+    public void addSupplyInBoxButtonAction(ActionEvent actionEvent) {
+        SupplyFX selectedSupplyFX = suppliesTable.getSelectionModel().getSelectedItem();
+        if(selectedSupplyFX == null){
+            FXHelper.showErrorAlert(rb.getString("NOT_SELECT_SUPPLY"));
+        }else{
+            try {
+
+                Supply supply = supplies.stream()
+                        .filter(s->s.getSupId().longValue() == selectedSupplyFX.getSupId())
+                        .findFirst()
+                        .orElse(null);
+
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Supplies.resources.AddSupplyInBox", "Supplies/fxml/AddSupplyInBox.fxml", getActualScene());
+                AddSupplyInBoxController addSupplyInBoxController = fxWindowData.getLoader().getController();
+                addSupplyInBoxController.setParameters(supply,fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+
+                if(addSupplyInBoxController.getExitMode() == FXFormExitMode.OK){
+                    fillingTable(pagination.getCurrentPageIndex());
+                    Optional<SupplyFX> supplyFXed = supplyFXES.stream()
+                            .filter(s->s.getSupId() == supply.getSupId())
+                            .findFirst();
+
+                    supplyFXed.ifPresent(fx -> suppliesTable.getSelectionModel().select(fx));
+                }
+
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+                suppliesTable.requestFocus();
+            }
+        }
+        
         suppliesTable.requestFocus();
     }
 }

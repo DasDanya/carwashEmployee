@@ -4,11 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ContextMenu;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -22,6 +18,7 @@ import ru.pin120.carwashemployee.StartApplication;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -180,6 +177,17 @@ public class FXHelper {
             return new Image(photoAsFile.toURI().toString());
         }
         return null;
+    }
+
+    public static Optional<ButtonType> createConfirmAlert(String title, String contextText){
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
+        alert.getDialogPane().setPrefSize(800,50);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(contextText);
+
+        return alert.showAndWait();
     }
 
 

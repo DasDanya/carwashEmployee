@@ -1,23 +1,22 @@
-package ru.pin120.carwashemployee.Supplies;
+package ru.pin120.carwashemployee.SuppliesInBox;
 
 import javafx.beans.property.*;
 
-public class SupplyFX {
+public class SuppliesInBoxFX {
 
-    public static final int MAX_LENGTH_NAME=50;
-    private LongProperty supId;
+    private LongProperty sibId;
     private StringProperty supName;
     private StringProperty supCategory;
     private StringProperty supMeasure;
     private StringProperty supPhotoName;
     private IntegerProperty supCount;
 
-    public long getSupId() {
-        return supId.get();
+    public long getSibId() {
+        return sibId.get();
     }
 
-    public LongProperty supIdProperty() {
-        return supId;
+    public LongProperty sibIdProperty() {
+        return sibId;
     }
 
     public String getSupName() {
@@ -40,7 +39,6 @@ public class SupplyFX {
         return supMeasure.get();
     }
 
-
     public StringProperty supMeasureProperty() {
         return supMeasure;
     }
@@ -61,20 +59,12 @@ public class SupplyFX {
         return supCount;
     }
 
-    public void setSupCount(int supCount) {
-        this.supCount.set(supCount);
-    }
-
-    public SupplyFX(Long supId, String supName, String supCategory, String supMeasure, String supPhotoName, Integer supCount) {
-        this.supId = new SimpleLongProperty(supId);
+    public SuppliesInBoxFX(Long sibId, String supName, String supCategory, String supMeasure, String supPhotoName, Integer supCount) {
+        this.sibId = new SimpleLongProperty(sibId);
         this.supName = new SimpleStringProperty(supName);
         this.supCategory = new SimpleStringProperty(supCategory);
         this.supMeasure = new SimpleStringProperty(supMeasure);
         this.supPhotoName = new SimpleStringProperty(supPhotoName);
         this.supCount = new SimpleIntegerProperty(supCount);
     }
-
 }
-
-
-

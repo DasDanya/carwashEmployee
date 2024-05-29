@@ -298,7 +298,8 @@ public class ClientsController implements Initializable {
             filterName = filterNameField.getText().trim();
             filterPhone = filterPhoneField.getText().trim();
 
-            if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null && !operationDiscountComboBox.getSelectionModel().getSelectedItem().isBlank()) {
+            //if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null && !operationDiscountComboBox.getSelectionModel().getSelectedItem().isBlank()) {
+            if(operationDiscountComboBox.getSelectionModel().getSelectedItem() != null) {
                 filterDiscount = discountSpinner.getValue();
                 filterDiscountOperator = operationDiscountComboBox.getSelectionModel().getSelectedItem();
             }

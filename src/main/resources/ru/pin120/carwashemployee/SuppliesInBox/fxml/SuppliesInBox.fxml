@@ -17,28 +17,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Supplies.SuppliesController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.SuppliesInBox.SuppliesInBoxController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="20.0" prefWidth="20.0">
-               <graphic>
-                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/createButton.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="20.0" prefWidth="20.0">
-               <graphic>
-                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/editButton.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" prefHeight="20.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -58,7 +40,16 @@
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="10.0" />
-            <Button fx:id="addSupplyInBoxButton" mnemonicParsing="false" onAction="#addSupplyInBoxButtonAction" prefHeight="20.0" prefWidth="20.0">
+            <Button fx:id="decreaseButton" mnemonicParsing="false" onAction="#decreaseButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/minusButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="addInWarehouseButton" mnemonicParsing="false" onAction="#addInWarehouseButtonAction" prefHeight="20.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -79,8 +70,8 @@
          </items>
       </ToolBar>
       <SplitPane dividerPositions="0.22" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
-        <items>
-          <AnchorPane maxHeight="65.0" minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="599.0">
+         <items>
+            <AnchorPane maxHeight="65.0" minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="599.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -146,18 +137,18 @@
                   </VBox>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <TableView fx:id="suppliesTable" prefHeight="276.0" prefWidth="771.0" VBox.vgrow="ALWAYS">
-                          <columns>
-                            <TableColumn fx:id="nameColumn" prefWidth="259.0" text="%NAME" />
+                           <columns>
+                              <TableColumn fx:id="nameColumn" prefWidth="259.0" text="%NAME" />
                               <TableColumn fx:id="categoryColumn" prefWidth="259.0" text="%CATEGORY" />
                               <TableColumn fx:id="measureColumn" prefWidth="160.0" text="%MEASURE" />
                               <TableColumn fx:id="countColumn" prefWidth="120.0" style="-fx-alignment: CENTER;" text="%COUNT" />
                               <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Column X" visible="false" />
-                          </columns>
+                           </columns>
                         </TableView>
                         <Pagination fx:id="pagination" prefHeight="10.0" prefWidth="200.0" VBox.vgrow="NEVER">
                            <VBox.margin>
@@ -168,10 +159,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-        </items>
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
+         </items>
       </SplitPane>
    </children>
 </VBox>

@@ -11,14 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
-import javafx.stage.Stage;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransportFX;
-import ru.pin120.carwashemployee.CategoriesOfTransport.EditCategoryOfTransportController;
-import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.SuppliesInBox.SuppliesInBoxController;
 
 import java.net.URL;
 import java.util.Comparator;
@@ -27,6 +24,10 @@ import java.util.ResourceBundle;
 
 public class BoxesController implements Initializable {
 
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private Button showSuppliesButton;
     @FXML
     private Button createButton;
     @FXML
@@ -88,6 +89,12 @@ public class BoxesController implements Initializable {
         });
         editButton.setOnMouseEntered(event -> {
             editButton.setTooltip(new Tooltip(rb.getString("EDIT_BOX")));
+        });
+        refreshButton.setOnMouseEntered(event -> {
+            refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
+        });
+        showSuppliesButton.setOnMouseEntered(event -> {
+            showSuppliesButton.setTooltip(new Tooltip(rb.getString("SHOW_SUPPLIES")));
         });
     }
 
@@ -165,5 +172,32 @@ public class BoxesController implements Initializable {
         boxesTable.requestFocus();
     }
 
-    private void doRefresh(){}
+
+    public void refreshAction(ActionEvent actionEvent) {
+        doRefresh();
+    }
+
+    private void doRefresh(){
+        boxFXES.clear();
+        fillingAll();
+    }
+
+    public void showSuppliesButtonAction(ActionEvent actionEvent) {
+        BoxFX boxFX = boxesTable.getSelectionModel().getSelectedItem();
+        if(boxFX == null){
+            FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOX"));
+        }else{
+            try{
+                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.SuppliesInBox.resources.SuppliesInBox", "SuppliesInBox/fxml/SuppliesInBox.fxml", getActualScene());
+                SuppliesInBoxController suppliesInBoxController = fxWindowData.getLoader().getController();
+                suppliesInBoxController.startFilling(boxFX.getBoxId(), fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+            }catch (Exception e){
+                FXHelper.showErrorAlert(e.getMessage());
+                boxesTable.requestFocus();
+            }
+        }
+
+        boxesTable.requestFocus();
+    }
 }

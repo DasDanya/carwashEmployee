@@ -1,3 +1,19 @@
 .table-view .column-header-background .highlight-header {
     -fx-background-color: #0096C9;
 }
+.booking-booked{
+    -fx-background-color: #aba7a7;
+}
+.booking-cancelled-by-client{
+    -fx-background-color: #e2e505;
+}
+.booking-done{
+    -fx-background-color: #38f00a;
+}
+.booking-in-progress{
+    -fx-background-color: #09d3ed;
+}
+.booking-not-done{
+    -fx-background-color: #f00212;
+}
+

@@ -197,8 +197,8 @@ public class EditSupplyController implements Initializable {
                 this.stage.setTitle(rb.getString("EDIT_TITLE"));
                 photoInfoField.setText(rb.getString("SUPPLY_PHOTO"));
                 measureSpinner.setDisable(true);
-                nameField.setDisable(true);
-                searchField.setDisable(true);
+                nameField.setEditable(false);
+                searchField.setEditable(false);
                 searchButton.setDisable(true);
                 categoriesTable.setDisable(true);
 
@@ -209,13 +209,14 @@ public class EditSupplyController implements Initializable {
                 photoInfoField.setText(rb.getString("SUPPLY_PHOTO"));
                 measureSpinner.setDisable(true);
                 countSpinner.setDisable(true);
-                nameField.setDisable(true);
+                nameField.setEditable(false);
                 loadImageButton.setDisable(true);
-                searchField.setDisable(true);
+                searchField.setEditable(false);
                 searchButton.setDisable(true);
                 categoriesTable.setDisable(true);
 
                 fillingComponents();
+                Platform.runLater(()->btOK.requestFocus());
                 break;
         }
 

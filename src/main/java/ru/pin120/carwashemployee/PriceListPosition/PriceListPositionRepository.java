@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
 import java.net.URLEncoder;
@@ -31,6 +28,21 @@ public class PriceListPositionRepository {
         }
         String jsonData = response.body().string();
         Type type = new TypeToken<List<PriceListPosition>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public List<ServiceWithPriceList> getCategoryOfTransportPriceList(Long catTrId) throws Exception {
+        Request request = new Request.Builder()
+                .url(url+"/getPriceListOfCategoryTransport?catTrId=" + catTrId)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<ServiceWithPriceList>>(){}.getType();
 
         return gson.fromJson(jsonData, type);
     }

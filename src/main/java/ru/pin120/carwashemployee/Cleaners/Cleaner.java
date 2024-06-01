@@ -1,15 +1,13 @@
 package ru.pin120.carwashemployee.Cleaners;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.pin120.carwashemployee.Boxes.Box;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Cleaner {
 
     private Long clrId;

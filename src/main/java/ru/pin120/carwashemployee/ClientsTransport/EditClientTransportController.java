@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class EditClientTransportController implements Initializable {
 
+
     @FXML
     private Pagination pagination;
     @FXML
@@ -38,6 +39,8 @@ public class EditClientTransportController implements Initializable {
     private TableView<TransportFX> transportsTable;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button btOK;
     @FXML
     private TextField filterCategoryField;
     @FXML
@@ -141,14 +144,15 @@ public class EditClientTransportController implements Initializable {
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_TITLE"));
-                stateNumberField.setDisable(true);
-                filterMarkField.setDisable(true);
-                filterModelField.setDisable(true);
-                filterCategoryField.setDisable(true);
+                stateNumberField.setEditable(false);
+                filterMarkField.setEditable(false);
+                filterModelField.setEditable(false);
+                filterCategoryField.setEditable(false);
                 searchButton.setDisable(true);
                 transportsTable.setDisable(true);
                 pagination.setDisable(true);
                 fillingComponents();
+                Platform.runLater(()->btOK.requestFocus());
                 break;
         }
 

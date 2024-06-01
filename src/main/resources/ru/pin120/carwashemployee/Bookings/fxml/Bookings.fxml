@@ -70,13 +70,14 @@
          <children>
             <TableView fx:id="boxesTable" prefWidth="635.0">
               <columns>
-                <TableColumn fx:id="numberColumn" prefWidth="628.7999877095223" text="%NUMBER_BOX" />
+                <TableColumn fx:id="numberColumn" prefWidth="163.19997245073318" text="%NUMBER_BOX" />
+                  <TableColumn fx:id="statusColumn" prefWidth="465.6000152587891" text="%STATUS" />
               </columns>
             </TableView>
             <CalendarPicker fx:id="calendar" maxHeight="625.0" minHeight="98.0" prefHeight="154.0" prefWidth="250.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Agenda fx:id="agenda" VBox.vgrow="ALWAYS">
+      <Agenda fx:id="agenda" allowDragging="false" allowResize="false" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
          </VBox.margin>

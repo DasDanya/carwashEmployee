@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.PriceListPosition.PriceListPosition;
-import ru.pin120.carwashemployee.Transport.Transport;
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
@@ -21,7 +19,23 @@ public class ClientsTransportRepository {
 
     public List<ClientsTransport> getByClientId(Long clientId) throws Exception{
         Request request = new Request.Builder()
-                .url(url+"/getByClient?clId=" + clientId)
+                .url(url+"/byClient?clId=" + clientId)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        }
+        String jsonData = response.body().string();
+        Type type = new TypeToken<List<ClientsTransport>>(){}.getType();
+
+        return gson.fromJson(jsonData, type);
+    }
+
+    public List<ClientsTransport> getByStateNumber(String stateNumber) throws Exception{
+        stateNumber = URLEncoder.encode(stateNumber, "UTF-8");
+        Request request = new Request.Builder()
+                .url(url+"/byStateNumber?stateNumber=" + stateNumber)
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -112,8 +126,8 @@ public class ClientsTransportRepository {
         return successDelete;
     }
 
-    public List<ClientsTransport> search(Long clId, String mark, String model, String category, String stateNumber) throws Exception {
-        String partUrl = "/getByClient?clId=" + clId;
+    public List<ClientsTransport> searchClientTransport(Long clId, String mark, String model, String category, String stateNumber) throws Exception {
+        String partUrl = "/byClient?clId=" + clId;
         if(mark != null && !mark.isBlank()){
             mark = URLEncoder.encode(mark, "UTF-8");
             partUrl+="&mark=" + mark;
@@ -144,4 +158,5 @@ public class ClientsTransportRepository {
 
         return gson.fromJson(jsonData, type);
     }
+
 }

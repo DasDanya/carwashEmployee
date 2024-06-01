@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppHelper {
@@ -57,8 +58,31 @@ public class AppHelper {
 
     public static String getInfoText(){return rb.getString("INFO_TEXT");}
 
-    public static String getYes(){return rb.getString("YES");}
-    public static String getNo(){return rb.getString("NO");}
+
+    public static Integer getStepServiceTime(){
+        try {
+            return Integer.parseInt(rb.getString("STEP_SERVICE_TIME"));
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public static LocalTime startWorkTime(){
+        try{
+            return LocalTime.parse(rb.getString("START_WORK_TIME"));
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public static LocalTime endWorkTime(){
+        try{
+            return LocalTime.parse(rb.getString("END_WORK_TIME"));
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public static String getExistsEntityTextEnd(){return rb.getString("EXISTS_ENTITY_TEXT_END");}
 
 }

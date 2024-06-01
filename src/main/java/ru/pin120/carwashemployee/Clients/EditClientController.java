@@ -83,10 +83,11 @@ public class EditClientController implements Initializable {
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_TITLE"));
                 fillingComponents();
-                surnameField.setDisable(true);
-                nameField.setDisable(true);
-                phoneField.setDisable(true);
+                surnameField.setEditable(false);
+                nameField.setEditable(false);
+                phoneField.setEditable(false);
                 discountSpinner.setDisable(true);
+                Platform.runLater(()->btOK.requestFocus());
                 break;
         }
 

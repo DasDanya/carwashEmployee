@@ -102,10 +102,11 @@ public class EditTransportController implements Initializable {
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_TITLE"));
                 Platform.runLater(this::fillingComponents);
-                markField.setDisable(true);
-                modelField.setDisable(true);
+                markField.setEditable(false);
+                modelField.setEditable(false);
                 transportCategoryComboBox.setDisable(true);
                 getAvailableCategoriesButton.setDisable(true);
+                Platform.runLater(()->btOK.requestFocus());
                 break;
         }
 

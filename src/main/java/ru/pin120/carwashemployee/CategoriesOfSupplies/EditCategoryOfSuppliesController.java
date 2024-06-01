@@ -1,5 +1,6 @@
 package ru.pin120.carwashemployee.CategoriesOfSupplies;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +28,8 @@ public class EditCategoryOfSuppliesController implements Initializable {
     private ComboBox<UnitOfMeasure> unitComboBox;
     @FXML
     private Button btCancel;
+    @FXML
+    private Button btOK;
     @FXML
     private TextField categoryNameField;
     @FXML
@@ -83,8 +86,9 @@ public class EditCategoryOfSuppliesController implements Initializable {
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_FORM_TITLE"));
                 unitComboBox.getSelectionModel().select(categoryOfSupplies.getUnit());
-                categoryNameField.setDisable(true);
+                categoryNameField.setEditable(false);
                 unitComboBox.setDisable(true);
+                Platform.runLater(()->btOK.requestFocus());
                 break;
 
         }

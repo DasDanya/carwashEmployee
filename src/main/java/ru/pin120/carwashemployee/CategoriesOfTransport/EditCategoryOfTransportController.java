@@ -1,5 +1,6 @@
 package ru.pin120.carwashemployee.CategoriesOfTransport;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class EditCategoryOfTransportController implements Initializable {
 
+    @FXML
+    private Button btOK;
     @FXML
     private Button btCancel;
     @FXML
@@ -64,7 +67,8 @@ public class EditCategoryOfTransportController implements Initializable {
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_FORM_TITLE"));
-                categoryNameField.setDisable(true);
+                categoryNameField.setEditable(false);
+                Platform.runLater(()->btOK.requestFocus());
                 break;
 
         }

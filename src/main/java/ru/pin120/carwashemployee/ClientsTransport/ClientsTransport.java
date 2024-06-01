@@ -1,9 +1,6 @@
 package ru.pin120.carwashemployee.ClientsTransport;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.pin120.carwashemployee.Clients.Client;
 import ru.pin120.carwashemployee.Transport.Transport;
 
@@ -11,6 +8,7 @@ import ru.pin120.carwashemployee.Transport.Transport;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ClientsTransport {
 
     private Long clTrId;

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import jfxtras.scene.control.LocalTimeTextField?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Bookings.EditBookingController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="327.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="%STATUS" />
+                        <ComboBox fx:id="statusComboBox" maxWidth="5000.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <Label text="%START_TIME">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <LocalTimeTextField fx:id="bookingStartTimeField" pickerShowing="true">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </LocalTimeTextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxWidth="5000.0" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="searchClTransportField" prefHeight="26.0" prefWidth="5000.0" promptText="%STATENUMBER" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="searchClrTransportButton" mnemonicParsing="false" onAction="#searchClrTransportButtonAction" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/searchButton.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="5.0" right="1.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="showClientButton" mnemonicParsing="false" onAction="#showClientButtonAction" prefHeight="20.0" prefWidth="20.0">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/showButton.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView fx:id="clientTransportTable" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="markColumn" prefWidth="235.0" text="%MARK" />
+                        <TableColumn fx:id="modelColumn" prefWidth="260.79998779296875" style="-fx-alignment: CENTER;" text="%MODEL" />
+                        <TableColumn fx:id="categoryTrColumn" prefWidth="275.0" text="%CATEGORY" />
+                        <TableColumn fx:id="stageNumberColumn" prefWidth="120.0" style="-fx-alignment: CENTER;" text="%STATENUMBER" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="368.0">
+         <children>
+            <VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxWidth="5000.0" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox fx:id="searchCategoryCheckBox" mnemonicParsing="false" text="%CATEGORY" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                        <TextField fx:id="searchServiceField" prefHeight="26.0" prefWidth="253.0" promptText="%NAME" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="searchServButton" mnemonicParsing="false" onAction="#searchServButtonAction" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/searchButton.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="5.0" right="1.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="priceListTable" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="selectColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="%SELECT" />
+                        <TableColumn fx:id="categoryServColumn" prefWidth="240.0" text="%CATEGORY" />
+                        <TableColumn fx:id="serviceColumn" prefWidth="240.0" text="%SERVICE" />
+                        <TableColumn fx:id="priceColumn" prefWidth="145.0" style="-fx-alignment: CENTER;" text="%PRICE" />
+                        <TableColumn fx:id="timeColumn" prefWidth="150.0" style="-fx-alignment: CENTER;" text="%TIME" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox prefHeight="20.0" prefWidth="200.0" style="-fx-font-weight: bold;">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label fx:id="infoPriceLabel" style="-fx-font-style: italic;" text="%INFO_PRICE" />
+                        <Label fx:id="priceLabel" text="Label">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label style="-fx-font-style: italic;" text="%INFO_TIME_EXECUTE">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="infoTimeExecuteLabel" text="Label">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <Button fx:id="btOK" mnemonicParsing="false" onAction="#btOKAction" text="%BT_OK" />
+                        <Button fx:id="btCancel" mnemonicParsing="false" onAction="#btCancelAction" text="%BT_CANCEL" />
+                     </buttons>
+                  </ButtonBar>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

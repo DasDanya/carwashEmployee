@@ -159,10 +159,10 @@ public class EditCleanerController implements Initializable {
                 this.stage.setTitle(rb.getString("DELETE_TITLE"));
                 photoInfoField.setText(rb.getString("CLEANER_PHOTO"));
                 fillingComponents();
-                surnameField.setDisable(true);
-                nameField.setDisable(true);
-                patronymicField.setDisable(true);
-                phoneField.setDisable(true);
+                surnameField.setEditable(false);
+                nameField.setEditable(false);
+                patronymicField.setEditable(false);
+                phoneField.setEditable(false);
                 statusComboBox.setDisable(true);
                 loadImageButton.setDisable(true);
 

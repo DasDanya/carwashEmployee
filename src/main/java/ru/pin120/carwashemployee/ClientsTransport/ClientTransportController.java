@@ -265,7 +265,7 @@ public class ClientTransportController implements Initializable {
     public void searchButtonAction(ActionEvent actionEvent) {
         try{
             clientsTransportFXES.clear();
-            List<ClientsTransport> clientTransport = clientsTransportRepository.search(client.getClId(), filterMarkField.getText().trim(), filterModelField.getText().trim(), filterCategoryField.getText().trim(), filterStateNumberField.getText().trim());
+            List<ClientsTransport> clientTransport = clientsTransportRepository.searchClientTransport(client.getClId(), filterMarkField.getText().trim(), filterModelField.getText().trim(), filterCategoryField.getText().trim(), filterStateNumberField.getText().trim());
             fillingObservableList(clientTransport);
             clientTransportTable.setItems(clientsTransportFXES);
             clientTransportTable.requestFocus();

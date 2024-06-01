@@ -1,5 +1,6 @@
 package ru.pin120.carwashemployee.CategoriesAndServices;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class EditServiceController implements Initializable {
 
+    @FXML
+    private Button btOK;
     @FXML
     private Button btCancel;
 
@@ -62,7 +65,8 @@ public class EditServiceController implements Initializable {
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_FORM_TITLE"));
-                serviceNameField.setDisable(true);
+                serviceNameField.setEditable(false);
+                Platform.runLater(()->btOK.requestFocus());
                 break;
 
         }

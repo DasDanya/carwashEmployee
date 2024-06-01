@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum BoxStatus {
 
     AVAILABLE("Доступен"),
-    REPAIR("Закрыт");
+    CLOSED("Закрыт");
     @Getter
     private final String displayValue;
 

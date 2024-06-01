@@ -34,7 +34,6 @@ public class CleanersRepository {
 
 
     public List<CleanerDTO> getWithWorkSchedule( @NonNull LocalDate startInterval,  @NonNull LocalDate endInterval, @NonNull Long boxId, boolean currentMonth) throws Exception{
-        System.out.println(startInterval + " " + endInterval + " " + currentMonth);
         String partUrl = "?startInterval=" + startInterval;
         partUrl+="&endInterval="+endInterval;
         partUrl+="&boxId="+boxId;

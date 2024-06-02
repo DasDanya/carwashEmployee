@@ -472,7 +472,7 @@ public class WorkScheduleController implements Initializable {
             CleanerDTO cleanerDTO = cleanerDTOList.get(i);
             Class<?> clazz = workScheduleFX.getClass();
 
-            for (int day = today.getDayOfMonth(); day <= 31; day++) {
+            for (int day = today.getDayOfMonth(); day <= datePicker.getValue().lengthOfMonth(); day++) {
                 int finalDay = day;
                 String getterName = "getDay" + finalDay;
                 Method method = clazz.getMethod(getterName);
@@ -498,7 +498,7 @@ public class WorkScheduleController implements Initializable {
 
             List<WorkSchedule> createdWorkSchedules = new ArrayList<>();
 
-            for (int day = today.getDayOfMonth(); day <= 31; day++) {
+            for (int day = today.getDayOfMonth(); day <= datePicker.getValue().lengthOfMonth(); day++) {
                 int finalDay = day;
                 String getterName = "getDay" + finalDay;
                 Method method = clazz.getMethod(getterName);

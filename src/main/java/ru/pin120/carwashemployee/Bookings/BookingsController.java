@@ -26,7 +26,6 @@ import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
-import ru.pin120.carwashemployee.SuppliesInBox.DecreaseSuppliesInBoxController;
 
 import java.net.URL;
 import java.time.*;
@@ -38,6 +37,10 @@ public class BookingsController implements Initializable {
 
     @FXML
     private CalendarPicker calendar;
+    @FXML
+    private Button changeStatusButton;
+    @FXML
+    private Button showButton;
     @FXML
     private Button createButton;
     @FXML
@@ -76,7 +79,7 @@ public class BookingsController implements Initializable {
         calendarListener();
         boxesTableSelectModelListener();
         setBoxes();
-        getBoxBookings();
+        //getBoxBookings();
         settingTooltipForButtons();
         Platform.runLater(()-> {
             getStage().setMaximized(true);
@@ -90,6 +93,7 @@ public class BookingsController implements Initializable {
     private void boxesTableSelectModelListener() {
         boxesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
             if(newValue != null){
+                selectedAppointment = null;
                 getBoxBookings();
             }
         });
@@ -100,7 +104,6 @@ public class BookingsController implements Initializable {
             while (change.next()) {
                 if (change.wasAdded()) {
                     selectedAppointment = change.getAddedSubList().get(0);
-                    FXHelper.showInfoAlert(selectedAppointment.getDescription());
                 }
             }
         });
@@ -124,6 +127,12 @@ public class BookingsController implements Initializable {
         });
         refreshButton.setOnMouseEntered(event -> {
             refreshButton.setTooltip(new Tooltip(rb.getString("REFRESH")));
+        });
+        showButton.setOnMouseEntered(event -> {
+            showButton.setTooltip(new Tooltip(rb.getString("SHOW_BOOKING")));
+        });
+        changeStatusButton.setOnMouseEntered(event -> {
+            changeStatusButton.setTooltip(new Tooltip(rb.getString("EDIT_STATUS")));
         });
     }
 
@@ -166,7 +175,8 @@ public class BookingsController implements Initializable {
                     addAgendaAppointments(booking);
                 }
 
-                agenda.setDisplayedLocalDateTime(LocalDateTime.now());
+                //LocalDateTime localDateTime = LocalDateTime.of(agenda.getDisplayedLocalDateTime().toLocalDate(),
+                //agenda.setDisplayedLocalDateTime(LocalDateTime.now());
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
             }
@@ -182,7 +192,7 @@ public class BookingsController implements Initializable {
         //String summary = String.format("Заказ №%s\nТранспорт %s", booking.getBkId(), booking.getClientTransport().getClTrStateNumber());
         String groupAgendaColor;
         switch (booking.getBkStatus()){
-            case CANCELLED_BY_CLIENT -> groupAgendaColor = "booking-cancelled-by-client";
+            case CANCELLED -> groupAgendaColor = "booking-cancelled-by-client";
             case DONE -> groupAgendaColor = "booking-done";
             case IN_PROGRESS -> groupAgendaColor = "booking-in-progress";
             case NOT_DONE -> groupAgendaColor = "booking-not-done";
@@ -206,23 +216,25 @@ public class BookingsController implements Initializable {
 
     private void calendarListener(){
         calendar.calendarProperty().addListener((observableValue, oldValue, newValue) -> {
-            if(newValue != null && oldValue != null){
-
-                int oldValueYear = oldValue.get(Calendar.YEAR);
-                int oldValueWeek = oldValue.get(Calendar.WEEK_OF_YEAR);
-
-                int newValueYear = newValue.get(Calendar.YEAR);
-                int newValueWeek = newValue.get(Calendar.WEEK_OF_YEAR);
-
-                if(oldValueYear == newValueYear && oldValueWeek == newValueWeek){
-                    getBoxBookings();
-                }
-
+            if(newValue != null){
                 LocalDate localDate = newValue.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalTime nowTime = LocalTime.now();
                 agenda.setDisplayedLocalDateTime(LocalDateTime.of(localDate,nowTime));
 
+                if(oldValue != null) {
+                    int oldValueYear = oldValue.get(Calendar.YEAR);
+                    int oldValueWeek = oldValue.get(Calendar.WEEK_OF_YEAR);
 
+                    int newValueYear = newValue.get(Calendar.YEAR);
+                    int newValueWeek = newValue.get(Calendar.WEEK_OF_YEAR);
+
+                    if (oldValueYear != newValueYear || oldValueWeek != newValueWeek) {
+                        selectedAppointment = null;
+                        getBoxBookings();
+                    }
+                }else{
+                    getBoxBookings();
+                }
             }
         });
     }
@@ -238,48 +250,133 @@ public class BookingsController implements Initializable {
     public void deleteButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.DELETE);
     }
+    public void changeStatusButtonAction(ActionEvent actionEvent) {
+        doOperation(FXOperationMode.OTHER);
+    }
 
     private void doOperation(FXOperationMode operationMode){
-        boolean canShowModalWindow = false;
-        BoxFX selectedBoxFX = boxesTable.getSelectionModel().getSelectedItem();
-        Booking booking = new Booking();
-        if(selectedBoxFX == null){
-            FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOX"));
-        }else {
-            switch (operationMode) {
-                case CREATE:
-                    if (agenda.getDisplayedLocalDateTime().toLocalDate().isBefore(LocalDate.now())) {
-                        FXHelper.showErrorAlert(rb.getString("DONT_CREATE_BOOKING_IN_PAST"));
-                    } else {
-                        if (BoxStatus.valueOfDisplayValue(selectedBoxFX.getBoxStatus()) == BoxStatus.CLOSED) {
-                            FXHelper.showErrorAlert(rb.getString("DONT_BOOKED_CLOSED_BOX"));
+        boolean canOpenWindow = false;
+        Booking booking = null;
+        switch (operationMode) {
+            case CREATE:
+                BoxFX selectedBoxFX = boxesTable.getSelectionModel().getSelectedItem();
+                if(selectedBoxFX == null){
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOX"));
+                }else {
+                    Box box = boxes.stream()
+                            .filter(b->b.getBoxId() == selectedBoxFX.getBoxId())
+                            .findFirst()
+                            .orElse(null);
+
+                    if(box != null){
+                        if (agenda.getDisplayedLocalDateTime().toLocalDate().isBefore(LocalDate.now())) {
+                            FXHelper.showErrorAlert(rb.getString("DONT_CREATE_BOOKING_IN_PAST"));
                         } else {
-                            canShowModalWindow = true;
+                            if (BoxStatus.valueOfDisplayValue(selectedBoxFX.getBoxStatus()) == BoxStatus.CLOSED) {
+                                FXHelper.showErrorAlert(rb.getString("DONT_BOOKED_CLOSED_BOX"));
+                            } else {
+                                booking = new Booking();
+                                booking.setBox(box);
+                                canOpenWindow = true;
+                            }
+                        }
+                    }else{
+                        FXHelper.showErrorAlert(rb.getString("BOX_NOT_EXISTS"));
+                    }
+                }
+                break;
+            case EDIT:
+                if(selectedAppointment == null){
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
+                    agenda.requestFocus();
+                }else {
+                    booking = bookings.stream()
+                            .filter(b -> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (booking == null) {
+                        FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
+                    }else{
+                        if(booking.getBkStatus() != BookingStatus.BOOKED){
+                            FXHelper.showErrorAlert(String.format(rb.getString("EDIT_BOOKING_ERROR"), BookingStatus.BOOKED.getDisplayValue()));
+                        }else{
+                            canOpenWindow = true;
                         }
                     }
-                    break;
-            }
-        }
-        if(canShowModalWindow){
-            try{
-                Box box = boxes.stream()
-                        .filter(b->b.getBoxId() == selectedBoxFX.getBoxId())
-                        .findFirst()
-                        .orElse(null);
-
-                if(box != null){
-                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Bookings.resources.EditBooking", "Bookings/fxml/EditBooking.fxml", getActualScene());
-                    EditBookingController editBookingController = fxWindowData.getLoader().getController();
-                    editBookingController.settingForm(agenda.getDisplayedLocalDateTime(), operationMode,fxWindowData.getModalStage(), box, booking);
-
-                    fxWindowData.getModalStage().showAndWait();
-                    doResult(operationMode, editBookingController.getExitMode());
-                }else{
-                    FXHelper.showErrorAlert(rb.getString("BOX_NOT_EXISTS"));
                 }
+                break;
+            case OTHER:
+                if(selectedAppointment == null){
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
+                    agenda.requestFocus();
+                }else{
+                    booking = bookings.stream()
+                            .filter(b-> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
+                            .findFirst()
+                            .orElse(null);
 
+                    if(booking == null){
+                        FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
+                    }else{
+                        List<BookingStatus> bookingStatuses = List.of(BookingStatus.NOT_DONE, BookingStatus.DONE);
+                        if(bookingStatuses.contains(booking.getBkStatus())){
+                            FXHelper.showErrorAlert(String.format(rb.getString("CANNOT_EDIT_BOOKING_WITH_STATUS"), BookingStatus.NOT_DONE.getDisplayValue(), BookingStatus.DONE.getDisplayValue()));
+                        }else{
+                            canOpenWindow = true;
+                        }
+                    }
+                }
+                break;
+            case SHOW:
+                if(selectedAppointment == null){
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
+                    agenda.requestFocus();
+                }else {
+                    booking = bookings.stream()
+                            .filter(b -> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (booking == null) {
+                        FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
+                    }else{
+                        canOpenWindow = true;
+                    }
+                }
+                break;
+            case DELETE:
+                if(selectedAppointment == null){
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
+                    agenda.requestFocus();
+                }else {
+                    booking = bookings.stream()
+                            .filter(b -> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (booking == null) {
+                        FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
+                    }else{
+                        if(booking.getBkStatus() == BookingStatus.NOT_DONE || booking.getBkStatus() == BookingStatus.CANCELLED){
+                            canOpenWindow = true;
+                        }else{
+                            FXHelper.showErrorAlert(String.format(rb.getString("NOT_CORRECT_BOOKING_FOR_DELETE"), BookingStatus.CANCELLED.getDisplayValue(), BookingStatus.NOT_DONE.getDisplayValue()));
+                        }
+                    }
+                }
+                break;
+
+        }
+        if(canOpenWindow){
+            try{
+                FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.EditBooking", "Bookings/fxml/EditBooking.fxml");
+                EditBookingController editBookingController = fxWindowData.getLoader().getController();
+                editBookingController.settingForm(agenda.getDisplayedLocalDateTime(), operationMode,fxWindowData.getModalStage(), booking);
+
+                fxWindowData.getModalStage().showAndWait();
+                doRefresh();
             }catch (Exception e){
-                e.printStackTrace();
                 FXHelper.showErrorAlert(e.getMessage());
             }
         }
@@ -287,15 +384,9 @@ public class BookingsController implements Initializable {
         agenda.requestFocus();
     }
 
-    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode) {
-        if(exitMode == FXFormExitMode.OK){
-            switch (operationMode){
-                case CREATE:
-                    getBoxBookings();
-                    break;
-            }
-        }
-    }
+//    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode) {
+//
+//    }
 
 
     public void refreshAction(ActionEvent actionEvent) {
@@ -303,9 +394,13 @@ public class BookingsController implements Initializable {
     }
 
     private void doRefresh(){
+        selectedAppointment = null;
         setBoxes();
         getBoxBookings();
     }
 
+    public void showButtonAction(ActionEvent actionEvent) {
+        doOperation(FXOperationMode.SHOW);
+    }
 
 }

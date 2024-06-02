@@ -93,7 +93,7 @@ public class BoxesRepository {
             Type type = new TypeToken<Box>() {}.getType();
             editedBox = gson.fromJson(result, type);
         } else {
-            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+            throw new HttpRetryException(response.body().string(), response.code());
         }
 
         return editedBox;

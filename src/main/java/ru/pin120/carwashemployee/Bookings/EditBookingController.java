@@ -13,6 +13,7 @@ import jfxtras.scene.control.LocalTimeTextField;
 import lombok.Getter;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.Boxes.Box;
+import ru.pin120.carwashemployee.Boxes.BoxesRepository;
 import ru.pin120.carwashemployee.Clients.Client;
 import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 import ru.pin120.carwashemployee.ClientsTransport.ClientsTransportFX;
@@ -26,22 +27,22 @@ import ru.pin120.carwashemployee.PriceListPosition.ServiceWithPriceList;
 import ru.pin120.carwashemployee.PriceListPosition.ServiceWithPriceListFX;
 
 
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class EditBookingController implements Initializable, ServiceInPriceListSelectable {
 
     @FXML
     private LocalTimeTextField bookingStartTimeField;
+    @FXML
+    private DatePicker bookingStartDatePicker;
+    @FXML
+    private ComboBox<Box> boxesComboBox;
     @FXML
     private ComboBox<BookingStatus> statusComboBox;
     @FXML
@@ -91,6 +92,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     private ClientsTransportRepository clientsTransportRepository = new ClientsTransportRepository();
     private PriceListPositionRepository priceListPositionRepository = new PriceListPositionRepository();
     private BookingsRepository bookingsRepository = new BookingsRepository();
+    private BoxesRepository boxesRepository = new BoxesRepository();
     private FXOperationMode operationMode;
     @Getter
     private FXFormExitMode exitMode;
@@ -111,8 +113,6 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
-        fillingBookingStatusComboBox();
-
         modelColumn.setCellValueFactory(ct->ct.getValue().clTrModelProperty());
         markColumn.setCellValueFactory(ct->ct.getValue().clTrMarkProperty());
         categoryTrColumn.setCellValueFactory(ct->ct.getValue().clTrCategoryProperty());
@@ -133,8 +133,27 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
         stateNumberFieldListener();
         tableSelectModelListener();
         setTooltipForButtons();
+        converterBoxesInComboBox();
+        settingBookingStatusComboBox();
     }
 
+    private void converterBoxesInComboBox(){
+        boxesComboBox.setConverter(new StringConverter<Box>() {
+            @Override
+            public String toString(Box box) {
+                if(box == null){
+                    return "";
+                }
+                return box.getBoxId().toString();
+            }
+
+            @Override
+            public Box fromString(String boxIdString) {
+                Long boxId = Long.valueOf(boxIdString);
+                return null;
+            }
+        });
+    }
 
     private void stateNumberFieldListener() {
         searchClTransportField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -158,22 +177,28 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
         });
     }
 
-    public void settingForm(LocalDateTime selectedDate, FXOperationMode operationMode, Stage stage, Box box, Booking booking){
+    public void settingForm(LocalDateTime selectedDate, FXOperationMode operationMode, Stage stage, Booking booking){
         this.selectedDate = selectedDate;
         this.operationMode = operationMode;
         this.stage = stage;
-        this.box = box;
+        this.box = booking.getBox();
         this.booking = booking;
 
         switch (operationMode){
             case CREATE:
-                this.stage.setTitle(String.format(rb.getString("CREATE_TITLE"),this.box.getBoxId(), this.selectedDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+                this.stage.setTitle(rb.getString("CREATE_TITLE"));
+                boxesComboBox.getItems().add(this.box);
+                boxesComboBox.getSelectionModel().selectFirst();
+                bookingStartDatePicker.setValue(selectedDate.toLocalDate());
+                bookingStartDatePicker.setDisable(true);
+
                 searchServButton.setDisable(true);
-                statusComboBox.getSelectionModel().select(BookingStatus.BOOKED);
+                statusComboBox.getItems().add(BookingStatus.BOOKED);
+                statusComboBox.getSelectionModel().selectFirst();
                 statusComboBox.setDisable(true);
                 LocalTime now = LocalTime.now();
                 if(now.isBefore(AppHelper.startWorkTime()) || !now.isBefore(AppHelper.endWorkTime())){
-                    //bookingStartTimeField.setEditable(false);
+                    bookingStartTimeField.setEditable(false);
                 }
                 bookingStartTimeField.setLocalTime(now);
                 if(this.selectedDate.toLocalDate().equals(LocalDate.now())) {
@@ -190,9 +215,141 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
                 setTimeExecuteLabelText();
                 //Platform.runLater(()->searchClTransportField.requestFocus());
                 break;
+            case EDIT:
+                this.stage.setTitle(String.format(rb.getString("EDIT_TITLE"), booking.getBkId()));
+                statusComboBox.getItems().add(booking.getBkStatus());
+                statusComboBox.getSelectionModel().selectFirst();
+                fillingBoxesComboBox();
+                boxesComboBox.getSelectionModel().select(box);
+                bookingStartTimeField.setLocalTime(LocalTime.of(booking.getBkStartTime().getHour(), booking.getBkStartTime().getMinute()));
+                bookingStartDatePicker.setValue(booking.getBkStartTime().toLocalDate());
+
+                showServicesInBooking();
+                settingTimeSpinner(AppHelper.startWorkTime());
+                break;
+            case OTHER:
+                statusComboBoxListener();
+                this.stage.setTitle(String.format(rb.getString("EDIT_STATUS_TITLE"), booking.getBkId()));
+
+                generalFillingComponents();
+                List<BookingStatus> bookingStatuses = getBookingStatuses(booking);
+                statusComboBox.getItems().addAll(bookingStatuses);
+                statusComboBox.getSelectionModel().selectFirst();
+
+                //if(booking.getBkStatus() != BookingStatus.CANCELLED){
+                    //boxesComboBox.getItems().add(this.box);
+                //}
+                Platform.runLater(this::showServicesInBooking);
+
+                break;
+            case SHOW:
+                this.stage.setTitle(String.format(rb.getString("SHOW_TITLE"), booking.getBkId()));
+                generalFillingComponents();
+                statusComboBox.getItems().add(booking.getBkStatus());
+                statusComboBox.getSelectionModel().selectFirst();
+
+                prohibitChangingComponents();
+                LocalTime endTime = LocalTime.of(booking.getBkEndTime().getHour(), booking.getBkEndTime().getMinute());
+                infoTimeExecuteLabel.setText(String.format(rb.getString("INFO_TIME_EXECUTE_VALUE"), endTime.toString()));
+
+                break;
+            case DELETE:
+                this.stage.setTitle(String.format(rb.getString("DELETE_TITLE"), booking.getBkId()));
+                generalFillingComponents();
+                statusComboBox.getItems().add(booking.getBkStatus());
+                statusComboBox.getSelectionModel().selectFirst();
+                prohibitChangingComponents();
+
+                LocalTime endTimeD = LocalTime.of(booking.getBkEndTime().getHour(), booking.getBkEndTime().getMinute());
+                infoTimeExecuteLabel.setText(String.format(rb.getString("INFO_TIME_EXECUTE_VALUE"), endTimeD.toString()));
+                break;
+
         }
 
+        //Platform.runLater(this::statusComboBoxListener);
         this.stage.setMaximized(true);
+    }
+
+    private void generalFillingComponents(){
+        bookingStartTimeField.setLocalTime(LocalTime.of(booking.getBkStartTime().getHour(), booking.getBkStartTime().getMinute()));
+        bookingStartTimeField.setEditable(false);
+
+        bookingStartDatePicker.setValue(booking.getBkStartTime().toLocalDate());
+        bookingStartDatePicker.setDisable(true);
+
+        boxesComboBox.getItems().add(box);
+        Platform.runLater(()->boxesComboBox.getSelectionModel().selectFirst());
+    }
+    
+    
+    private List<BookingStatus> getBookingStatuses(Booking booking) {
+        List<BookingStatus> bookingStatuses = new ArrayList<>();
+        if(booking.getBkStatus() == BookingStatus.BOOKED) {
+            bookingStatuses = List.of(BookingStatus.IN_PROGRESS, BookingStatus.CANCELLED);
+        }else if(booking.getBkStatus() == BookingStatus.CANCELLED){
+            bookingStatuses = List.of(BookingStatus.BOOKED);
+        }else if(booking.getBkStatus() == BookingStatus.IN_PROGRESS){
+            bookingStatuses = List.of(BookingStatus.DONE, BookingStatus.NOT_DONE);
+        }
+        return bookingStatuses;
+    }
+    
+    
+    private void prohibitChangingComponents(){
+        showServicesInBooking();
+        searchClTransportField.setEditable(false);
+        searchServiceField.setEditable(false);
+        searchClrTransportButton.setDisable(true);
+        searchServButton.setDisable(true);
+        priceListTable.setDisable(true);
+    }
+
+    private void allowComponentChanges(){
+        showServicesInBooking();
+        searchClTransportField.setEditable(true);
+        searchServiceField.setEditable(true);
+        searchClrTransportButton.setDisable(false);
+        searchServButton.setDisable(false);
+        priceListTable.setDisable(false);
+    }
+
+    private void statusComboBoxListener(){
+        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != BookingStatus.BOOKED || booking.getBkStatus() == BookingStatus.CANCELLED){
+                prohibitChangingComponents();
+            }else{
+                allowComponentChanges();
+            }
+        });
+    }
+
+
+    private void showServicesInBooking(){
+        searchClTransportField.setText(booking.getClientTransport().getClTrStateNumber());
+        searchClientTransport();
+        ClientsTransportFX clientsTransportFX = clientsTransportFXES.stream()
+                .filter(c->c.getClTrId() == booking.getClientTransport().getClTrId())
+                .findFirst()
+                .orElse(null);
+
+        if(clientsTransportFX != null){
+            Platform.runLater(()->clientTransportTable.getSelectionModel().select(clientsTransportFX));
+        }
+
+        for(ServiceWithPriceListFX serviceWithPriceListFX: serviceWithPriceListFXES){
+            if(booking.getServices().stream().anyMatch(s->s.getServName().equals(serviceWithPriceListFX.getServName()))){
+                serviceWithPriceListFX.getSelect().setSelected(true);
+            }
+        }
+    }
+
+    private void fillingBoxesComboBox(){
+        try {
+            List<Box> boxes = boxesRepository.getAll();
+            boxesComboBox.getItems().setAll(boxes);
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+        }
     }
 
     private void settingTimeSpinner(LocalTime startTime){
@@ -207,8 +364,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
         });
     }
 
-    private void fillingBookingStatusComboBox(){
-        statusComboBox.getItems().setAll(BookingStatus.values());
+    private void settingBookingStatusComboBox(){
         statusComboBox.setConverter(new StringConverter<BookingStatus>() {
             @Override
             public String toString(BookingStatus status) {
@@ -223,6 +379,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     public void searchClrTransportButtonAction(ActionEvent actionEvent) {
+        searchClientTransport();
+    }
+
+    private void searchClientTransport(){
         if(searchClTransportField.getText() == null || searchClTransportField.getText().isBlank()){
             FXHelper.showErrorAlert(rb.getString("NECCESARY_INPUT_STATE_NUMBER"));
         }else {
@@ -260,6 +420,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
         clientTransportTable.requestFocus();
     }
+
+
 
     private void tableSelectModelListener() {
         clientTransportTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
@@ -363,53 +525,153 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
         infoTimeExecuteLabel.setText(String.format(rb.getString("INFO_TIME_EXECUTE_VALUE"), totalExecuteTime.toString()));
     }
 
+    private boolean timeLimitIsExceeding(){
+        LocalDateTime maxTime = LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime());
+        LocalDateTime totalTimeExecute = LocalDateTime.of(bookingStartDatePicker.getValue(), bookingStartTimeField.getLocalTime());
+        totalTimeExecute = totalTimeExecute.plusMinutes(timeExecute);
+
+        return totalTimeExecute.isAfter(maxTime);
+    }
 
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
-        long minutesDifference = bookingStartTimeField.getLocalTime().until(AppHelper.endWorkTime(), ChronoUnit.MINUTES);
-        if(timeExecute > minutesDifference){
-            FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), AppHelper.endWorkTime().toString()));
-            priceListTable.requestFocus();
-        }else{
             switch (operationMode){
                 case CREATE:
-                    List<ServiceWithPriceList> services = new ArrayList<>();
-                    for (ServiceWithPriceListFX serviceWithPriceListFX: serviceWithPriceListFXES){
-                        if(serviceWithPriceListFX.getSelect().isSelected()){
-                            ServiceWithPriceList service = new ServiceWithPriceList(serviceWithPriceListFX.getCatName(), serviceWithPriceListFX.getServName(), serviceWithPriceListFX.getPlPrice(), serviceWithPriceListFX.getPlTime());
-                            services.add(service);
+                    if(timeLimitIsExceeding()) {
+                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+                        priceListTable.requestFocus();
+                    }else {
+                        List<ServiceWithPriceList> services = getListSelectedServices();
+                        if (services.isEmpty()) {
+                            FXHelper.showErrorAlert(rb.getString("LIST_OF_SERVICES_NOT_EMPTY"));
+                        } else {
+                            LocalTime startExecuteTime = bookingStartTimeField.getLocalTime();
+                            LocalTime totalExecuteTime = startExecuteTime.plusMinutes(timeExecute);
+                            BookingDTO bookingDTO = new BookingDTO();
+                            bookingDTO.setBkStatus(BookingStatus.BOOKED);
+                            bookingDTO.setBkStartTime(getLocalDateTimeWithHoursAndMinutes(selectedDate.withHour(startExecuteTime.getHour()).withMinute(startExecuteTime.getMinute())));
+                            bookingDTO.setBkEndTime(getLocalDateTimeWithHoursAndMinutes(selectedDate.withHour(totalExecuteTime.getHour()).withMinute(totalExecuteTime.getMinute())));
+                            bookingDTO.setBox(box);
+                            bookingDTO.setClientTransport(selectedClientTransport);
+                            bookingDTO.setServices(services);
+
+                            try {
+                                Booking createdBooking = bookingsRepository.create(bookingDTO);
+                                if (createdBooking != null) {
+                                    canExit = true;
+                                }
+                            } catch (Exception e) {
+                                FXHelper.showErrorAlert(e.getMessage());
+                            }
                         }
                     }
-                    if(services.isEmpty()){
-                        FXHelper.showErrorAlert(rb.getString("LIST_OF_SERVICES_NOT_EMPTY"));
+                    break;
+                case EDIT:
+                    if(timeLimitIsExceeding()) {
+                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+                        priceListTable.requestFocus();
                     }else {
-                        LocalTime startExecuteTime = bookingStartTimeField.getLocalTime();
-                        LocalTime totalExecuteTime = startExecuteTime.plusMinutes(timeExecute);
-                        BookingDTO bookingDTO = new BookingDTO();
-                        bookingDTO.setBkStartTime(getLocalDateTimeWithHoursAndMinutes(selectedDate.withHour(startExecuteTime.getHour()).withMinute(startExecuteTime.getMinute())));
-                        bookingDTO.setBkEndTime(getLocalDateTimeWithHoursAndMinutes(selectedDate.withHour(totalExecuteTime.getHour()).withMinute(totalExecuteTime.getMinute())));
-                        bookingDTO.setBox(box);
-                        bookingDTO.setClientTransport(selectedClientTransport);
-                        bookingDTO.setServices(services);
+                        List<ServiceWithPriceList> services = getListSelectedServices();
+                        if (services.isEmpty()) {
+                            FXHelper.showErrorAlert(rb.getString("LIST_OF_SERVICES_NOT_EMPTY"));
+                        }else{
 
-                        try {
-                            Booking createdBooking = bookingsRepository.create(bookingDTO);
-                            if(createdBooking != null){
-                                canExit = true;
+                            BookingDTO bookingDTO = new BookingDTO();
+                            bookingDTO.setBkId(booking.getBkId());
+                            bookingDTO.setBkStatus(BookingStatus.BOOKED);
+
+                            LocalTime startExecuteTimeEd = bookingStartTimeField.getLocalTime();
+                            LocalTime totalExecuteTimeEd = startExecuteTimeEd.plusMinutes(timeExecute);
+                            LocalDateTime localDateTimeStartTime = LocalDateTime.of(bookingStartDatePicker.getValue(), startExecuteTimeEd);
+                            LocalDateTime localDateEndStartTime = LocalDateTime.of(bookingStartDatePicker.getValue(), totalExecuteTimeEd);
+
+                            bookingDTO.setBkStartTime(getLocalDateTimeWithHoursAndMinutes(localDateTimeStartTime));
+                            bookingDTO.setBkEndTime(getLocalDateTimeWithHoursAndMinutes(localDateEndStartTime));
+                            bookingDTO.setBox(boxesComboBox.getSelectionModel().getSelectedItem());
+                            bookingDTO.setClientTransport(selectedClientTransport);
+                            bookingDTO.setServices(services);
+                            try {
+                                Booking editedBooking = bookingsRepository.edit(bookingDTO);
+                                if (editedBooking != null) {
+                                    canExit = true;
+                                }
+                            } catch (Exception e) {
+                                FXHelper.showErrorAlert(e.getMessage());
                             }
-                        }catch (Exception e){
-                            FXHelper.showErrorAlert(e.getMessage());
+                        }
+                    }
+                    break;
+                case OTHER:
+                    BookingStatus selectedBookingStatus = statusComboBox.getSelectionModel().getSelectedItem();
+                    BookingDTO bookingDTO = null;
+                    if(selectedBookingStatus == BookingStatus.IN_PROGRESS){
+                        LocalDateTime nowTime = getLocalDateTimeWithHoursAndMinutes(LocalDateTime.now());
+                        if(nowTime.isBefore(booking.getBkStartTime()) || nowTime.isAfter(booking.getBkEndTime())){
+                            FXHelper.showErrorAlert(String.format(rb.getString("NOT_CORRECT_START_EXECUTING_BOOKING"), booking.getBkStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")), booking.getBkEndTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+                        }else{
+                            bookingDTO = getBookingDTOFromBooking();
+                        }
+                    }else{
+                        bookingDTO = getBookingDTOFromBooking();
+                    }
+                    if(bookingDTO != null) {
+                        if(bookingDTO.getServices().isEmpty()){
+                            FXHelper.showErrorAlert(rb.getString("LIST_OF_SERVICES_NOT_EMPTY"));
+                            priceListTable.requestFocus();
+                        }else{
+                            bookingDTO.setBkStatus(selectedBookingStatus);
+                            try {
+                                Booking editedBooking = bookingsRepository.setNewStatus(bookingDTO);
+                                if (editedBooking != null) {
+                                    canExit = true;
+                                }
+                            } catch (Exception e) {
+                                FXHelper.showErrorAlert(e.getMessage());
+                            }
                         }
                     }
 
                     break;
-            }
+                case SHOW:
+                    canExit = true;
+                    break;
+                case DELETE:
+                    try {
+                        canExit = bookingsRepository.delete(booking.getBkId());
+                    }catch (Exception e){
+                        FXHelper.showErrorAlert(e.getMessage());
+                    }
+                    break;
         }
         if(canExit){
             exitMode = FXFormExitMode.OK;
             stage.close();
         }
     }
+
+    private BookingDTO getBookingDTOFromBooking(){
+        BookingDTO bookingDTO = new BookingDTO();
+        bookingDTO.setBkId(booking.getBkId());
+        bookingDTO.setBkStartTime(booking.getBkStartTime());
+        bookingDTO.setBkEndTime(booking.getBkEndTime());
+        bookingDTO.setBox(box);
+        bookingDTO.setClientTransport(selectedClientTransport);
+        bookingDTO.setServices(getListSelectedServices());
+
+        return bookingDTO;
+    }
+
+    private List<ServiceWithPriceList> getListSelectedServices(){
+        List<ServiceWithPriceList> services = new ArrayList<>();
+        for (ServiceWithPriceListFX serviceWithPriceListFX: serviceWithPriceListFXES){
+            if(serviceWithPriceListFX.getSelect().isSelected()){
+                ServiceWithPriceList service = new ServiceWithPriceList(serviceWithPriceListFX.getCatName(), serviceWithPriceListFX.getServName(), serviceWithPriceListFX.getPlPrice(), serviceWithPriceListFX.getPlTime());
+                services.add(service);
+            }
+        }
+        return services;
+    }
+
 
     private LocalDateTime getLocalDateTimeWithHoursAndMinutes(LocalDateTime localDateTime){
         return localDateTime.withSecond(0).withNano(0);

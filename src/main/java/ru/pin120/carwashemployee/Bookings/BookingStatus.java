@@ -5,7 +5,7 @@ import lombok.Getter;
 public enum BookingStatus {
 
     BOOKED("Бронь"),
-    CANCELLED_BY_CLIENT("Отменен клиентом"),
+    CANCELLED("Отменен"),
     DONE("Выполнен"),
     IN_PROGRESS("Выполняется"),
     NOT_DONE("Не выполнен");

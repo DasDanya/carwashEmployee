@@ -172,6 +172,8 @@ public class FXHelper {
         return new FXWindowData(loader, modalStage);
     }
 
+
+
     public static Image convertToImage(File photoAsFile){
         if(photoAsFile != null) {
             return new Image(photoAsFile.toURI().toString());

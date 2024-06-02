@@ -17,6 +17,8 @@ import java.util.List;
 @Getter
 @Setter
 public class BookingDTO {
+    private String bkId;
+    private BookingStatus bkStatus;
     private LocalDateTime bkStartTime;
     private LocalDateTime bkEndTime;
     private Box box;

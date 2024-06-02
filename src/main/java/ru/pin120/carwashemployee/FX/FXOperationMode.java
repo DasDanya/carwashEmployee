@@ -4,5 +4,6 @@ public enum FXOperationMode {
     CREATE,
     DELETE,
     EDIT,
-    SHOW
+    SHOW,
+    OTHER
 }

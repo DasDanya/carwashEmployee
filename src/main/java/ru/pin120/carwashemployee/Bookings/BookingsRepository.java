@@ -6,8 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.Adapters.LocalDateTimeAdapter;
 import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.Cleaners.CleanerDTO;
-import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
@@ -42,9 +40,9 @@ public class BookingsRepository {
         return gson.fromJson(jsonData, type);
     }
 
-    public Booking create(BookingDTO transport) throws Exception {
+    public Booking create(BookingDTO bookingDTO) throws Exception {
         Booking createdBooking = null;
-        String jsonData = gson.toJson(transport);
+        String jsonData = gson.toJson(bookingDTO);
 
         System.out.println(jsonData);
         RequestBody body = RequestBody.create(JSON, jsonData);
@@ -60,10 +58,76 @@ public class BookingsRepository {
             Type type = new TypeToken<Booking>() {}.getType();
             createdBooking = gson.fromJson(result, type);
         } else {
-            throw new HttpRetryException(response.body().string(), 409);
+            throw new HttpRetryException(response.body().string(), response.code());
         }
 
         return createdBooking;
+    }
+
+    public Booking setNewStatus(BookingDTO bookingDTO) throws Exception {
+        Booking editedBooking = null;
+        String jsonData = gson.toJson(bookingDTO);
+
+        System.out.println(jsonData);
+        RequestBody body = RequestBody.create(JSON, jsonData);
+
+        Request request = new Request.Builder()
+                .url(url + "/newStatus/"+bookingDTO.getBkId())
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 200) {
+            String result = response.body().string();
+            Type type = new TypeToken<Booking>() {}.getType();
+            editedBooking = gson.fromJson(result, type);
+        } else {
+            throw new HttpRetryException(response.body().string(), response.code());
+        }
+
+        return editedBooking;
+    }
+
+    public Booking edit(BookingDTO bookingDTO) throws Exception {
+        Booking editedBooking = null;
+        String jsonData = gson.toJson(bookingDTO);
+
+        System.out.println(jsonData);
+        RequestBody body = RequestBody.create(JSON, jsonData);
+
+        Request request = new Request.Builder()
+                .url(url + "/edit/"+bookingDTO.getBkId())
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 200) {
+            String result = response.body().string();
+            Type type = new TypeToken<Booking>() {}.getType();
+            editedBooking = gson.fromJson(result, type);
+        } else {
+            throw new HttpRetryException(response.body().string(), response.code());
+        }
+
+        return editedBooking;
+    }
+
+    public boolean delete(String id) throws Exception {
+        boolean successDelete;
+
+        Request request = new Request.Builder()
+                .url(url + "/delete/"+id)
+                .delete()
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (response.code() == 204) {
+            successDelete = true;
+        } else {
+            throw new HttpRetryException(response.body().string(), response.code());
+        }
+
+        return successDelete;
     }
 
 }

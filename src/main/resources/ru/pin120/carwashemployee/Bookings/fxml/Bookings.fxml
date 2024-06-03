@@ -74,6 +74,15 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="showTableButton" mnemonicParsing="false" onAction="#showTableButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/tableButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </items>
       </ToolBar>
       <GridPane hgap="10.0" prefHeight="54.0" prefWidth="886.0">

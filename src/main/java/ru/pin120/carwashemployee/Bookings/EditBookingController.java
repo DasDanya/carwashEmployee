@@ -198,7 +198,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
                 statusComboBox.setDisable(true);
                 LocalTime now = LocalTime.now();
                 if(now.isBefore(AppHelper.startWorkTime()) || !now.isBefore(AppHelper.endWorkTime())){
-                    bookingStartTimeField.setEditable(false);
+                    //bookingStartTimeField.setEditable(false);
                 }
                 bookingStartTimeField.setLocalTime(now);
                 if(this.selectedDate.toLocalDate().equals(LocalDate.now())) {

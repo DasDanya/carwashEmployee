@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import jfxtras.scene.control.LocalDateTimeTextField?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Bookings.FilterBookingsController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="600.0">
+         <items>
+            <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/refreshButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="10.0" />
+            <Button fx:id="showButton" mnemonicParsing="false" onAction="#showButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/createButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane maxHeight="70.0" minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="599.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label text="%START_INTERVAL">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <LocalDateTimeTextField fx:id="startIntervalField" maxWidth="5000.0" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </LocalDateTimeTextField>
+                              <Button fx:id="resetStartTimePickerButton" mnemonicParsing="false" onAction="#resetStartTimePickerButtonAction">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/resetButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Label text="%END_INTERVAL">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <LocalDateTimeTextField fx:id="endIntervalField" maxWidth="5000.0" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </LocalDateTimeTextField>
+                              <Button fx:id="resetEndTimePickerButton" mnemonicParsing="false" onAction="#resetEndTimePickerButtonAction">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/resetButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0">
+                           <children>
+                              <ComboBox fx:id="statusComboBox" prefWidth="200.0" promptText="%STATUS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <ComboBox fx:id="boxesComboBox" prefWidth="150.0" promptText="%BOX" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <ComboBox fx:id="operationPriceComboBox" maxWidth="5000.0" prefWidth="150.0" promptText="%COMPARING_OPERATOR" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <Spinner fx:id="priceSpinner" editable="true" maxWidth="5000.0" prefWidth="75.0" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Spinner>
+                              <Button fx:id="showFilterParametersButton" mnemonicParsing="false" onAction="#showFilterParametersButtonAction" HBox.hgrow="ALWAYS">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/showButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonAction" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/searchButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="calculateButton" mnemonicParsing="false" onAction="#calculateButtonAction">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/calculateButton.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <TableView fx:id="bookingsTable" prefHeight="218.0" prefWidth="1086.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                              <TableColumn fx:id="bkNumberColumn" prefWidth="105.0" text="%NUMBER" />
+                            <TableColumn fx:id="startTimeColumn" prefWidth="105.0" text="%START_TIME" />
+                              <TableColumn fx:id="endTimeColumn" prefWidth="120.0" style="-fx-alignment: CENTER;" text="%END_TIME" />
+                              <TableColumn fx:id="statusColumn" prefWidth="220.0" style="-fx-alignment: CENTER;" text="%STATUS" />
+                              <TableColumn fx:id="priceColumn" prefWidth="120.0" text="%PRICE" />
+                              <TableColumn fx:id="boxColumn" prefWidth="85.0" text="%BOX" />
+                              <TableColumn fx:id="cleanerColumn" prefWidth="320.0" text="%CLEANER" />
+                          </columns>
+                        </TableView>
+                        <Pagination fx:id="pagination" prefHeight="10.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Pagination>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </SplitPane>
+   </children>
+</VBox>

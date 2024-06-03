@@ -9,8 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
+import ru.pin120.carwashemployee.Bookings.FilterBookingsController;
 import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Boxes.BoxesRepository;
+import ru.pin120.carwashemployee.Clients.Client;
+import ru.pin120.carwashemployee.Clients.ClientFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -23,6 +26,8 @@ import java.util.*;
 
 public class CleanersController implements Initializable {
 
+    @FXML
+    private Button showBookingsButton;
     @FXML
     private Button getWorkScheduleCleanerButton;
     @FXML
@@ -166,6 +171,9 @@ public class CleanersController implements Initializable {
         });
         getWorkScheduleCleanerButton.setOnMouseEntered(event->{
             getWorkScheduleCleanerButton.setTooltip(new Tooltip(rb.getString("SHOW_WORK_SCHEDULE_CLEANER")));
+        });
+        showBookingsButton.setOnMouseEntered(event->{
+            showBookingsButton.setTooltip(new Tooltip(rb.getString("SHOW_BOOKINGS")));
         });
     }
 
@@ -345,6 +353,31 @@ public class CleanersController implements Initializable {
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
             }
+        }
+
+        cleanersTable.requestFocus();
+    }
+
+    public void showBookingsButtonAction(ActionEvent actionEvent) {
+        try{
+            CleanerFX cleanerFX = cleanersTable.getSelectionModel().getSelectedItem();
+            if(cleanerFX == null){
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECT_CLEANER"));
+            }else{
+                Cleaner cleaner = new Cleaner();
+                cleaner.setClrId(cleanerFX.getClrId());
+                cleaner.setClrSurname(cleanerFX.getClrSurname());
+                cleaner.setClrName(cleanerFX.getClrName());
+                cleaner.setClrPatronymic(cleanerFX.getClrPatronymic());
+
+                FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.FilterBookings", "Bookings/fxml/FilterBookings.fxml");
+                FilterBookingsController filterBookingsController = fxWindowData.getLoader().getController();
+                filterBookingsController.setParameters(null,cleaner,fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            cleanersTable.requestFocus();
         }
 
         cleanersTable.requestFocus();

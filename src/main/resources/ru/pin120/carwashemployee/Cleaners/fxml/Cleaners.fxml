@@ -74,6 +74,15 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="showBookingsButton" mnemonicParsing="false" onAction="#showBookingsButtonAction" prefHeight="20.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/appIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </items>
       </ToolBar>
       <SplitPane dividerPositions="0.2022" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">

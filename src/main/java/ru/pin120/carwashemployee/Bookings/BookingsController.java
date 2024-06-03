@@ -22,7 +22,6 @@ import ru.pin120.carwashemployee.Boxes.BoxStatus;
 import ru.pin120.carwashemployee.Boxes.BoxesRepository;
 import ru.pin120.carwashemployee.Clients.Client;
 import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
-import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
@@ -35,6 +34,8 @@ import java.util.*;
 
 public class BookingsController implements Initializable {
 
+    @FXML
+    private Button showTableButton;
     @FXML
     private CalendarPicker calendar;
     @FXML
@@ -133,6 +134,9 @@ public class BookingsController implements Initializable {
         });
         changeStatusButton.setOnMouseEntered(event -> {
             changeStatusButton.setTooltip(new Tooltip(rb.getString("EDIT_STATUS")));
+        });
+        showTableButton.setOnMouseEntered(event -> {
+            showTableButton.setTooltip(new Tooltip(rb.getString("SHOW_TABLE")));
         });
     }
 
@@ -375,13 +379,18 @@ public class BookingsController implements Initializable {
                 editBookingController.settingForm(agenda.getDisplayedLocalDateTime(), operationMode,fxWindowData.getModalStage(), booking);
 
                 fxWindowData.getModalStage().showAndWait();
-                doRefresh();
+                reloadBookings();
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
             }
         }
 
         agenda.requestFocus();
+    }
+
+    private void reloadBookings() {
+        selectedAppointment = null;
+        getBoxBookings();
     }
 
 //    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode) {
@@ -394,13 +403,23 @@ public class BookingsController implements Initializable {
     }
 
     private void doRefresh(){
-        selectedAppointment = null;
         setBoxes();
-        getBoxBookings();
+        reloadBookings();
     }
 
     public void showButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.SHOW);
     }
 
+    public void showTableButtonAction(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.FilterBookings", "Bookings/fxml/FilterBookings.fxml");
+            FilterBookingsController filterBookingsController = fxWindowData.getLoader().getController();
+            filterBookingsController.setParameters(null, null, fxWindowData.getModalStage());
+            fxWindowData.getModalStage().showAndWait();
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+        }
+
+    }
 }

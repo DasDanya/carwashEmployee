@@ -191,37 +191,43 @@ public class ViewWorkScheduleCleanerController implements Initializable {
 
                 Row headerRow = sheet.createRow(0);
                 Cell headerCell = headerRow.createCell(0);
-                headerCell.setCellValue(rb.getString("FORM_TITLE") + " " + cleaner.getClrSurname() + " " + cleaner.getClrName() + " " + cleaner.getClrPatronymic());
-                headerCell.setCellStyle(StyleHelper.createStyleBoldText(workbook, (short) 14));
+                String patronymic = cleaner.getClrPatronymic() == null ? "" : cleaner.getClrPatronymic();
+                headerCell.setCellValue(rb.getString("FORM_TITLE") + " " + cleaner.getClrSurname() + " " + cleaner.getClrName() + " " + patronymic);
+                headerCell.setCellStyle(StyleHelper.createStyleBoldText(workbook, false,(short) 14));
 
 
 
                 Row intervalRow = sheet.createRow(1);
                 Cell with = intervalRow.createCell(0);
                 with.setCellValue(rb.getString("WITH") + " " + startIntervalString);
-                with.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook, (short) 10));
+                with.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook, false, (short) 10));
 
                 Cell by = intervalRow.createCell(1);
-                by.setCellValue(rb.getString("BY") + " " + startIntervalString);
-                by.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook, (short) 10));
+                by.setCellValue(rb.getString("BY") + " " + endIntervalString);
+                by.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook,false, (short) 10));
 
 
                 Row columns = sheet.createRow(2);
                 Cell date = columns.createCell(0);
                 date.setCellValue(rb.getString("DATE"));
-                date.setCellStyle(StyleHelper.createStyleBoldText(workbook, (short) 10));
+                date.setCellStyle(StyleHelper.createStyleBoldText(workbook, true, (short) 10));
 
                 Cell box = columns.createCell(1);
                 box.setCellValue(rb.getString("BOX"));
-                box.setCellStyle(StyleHelper.createStyleBoldText(workbook, (short) 10));
+                box.setCellStyle(StyleHelper.createStyleBoldText(workbook, true,(short) 10));
 
                 int rowIndex = 3;
                 int startRowIndex = rowIndex;
 
                 for(WorkScheduleDTO workScheduleDTO: workScheduleDTOS){
                     Row dataRow = sheet.createRow(rowIndex);
-                    dataRow.createCell(0).setCellValue(workScheduleDTO.getWsWorkDay().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-                    dataRow.createCell(1).setCellValue(workScheduleDTO.getBox().getBoxId());
+                    Cell dateColumn = dataRow.createCell(0);
+                    dateColumn.setCellValue(workScheduleDTO.getWsWorkDay().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                    dateColumn.setCellStyle(StyleHelper.createWithBorder(workbook));
+
+                    Cell boxColumn = dataRow.createCell(1);
+                    boxColumn.setCellValue(workScheduleDTO.getBox().getBoxId());
+                    boxColumn.setCellStyle(StyleHelper.createWithBorder(workbook));
 
                     rowIndex++;
                 }
@@ -229,7 +235,7 @@ public class ViewWorkScheduleCleanerController implements Initializable {
                 Row total = sheet.createRow(rowIndex);
                 Cell totalColumn = total.createCell(0);
                 totalColumn.setCellValue(String.format(rb.getString("COUNT_WORK_DAYS"),rowIndex - startRowIndex));
-                totalColumn.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook, (short) 10));
+                totalColumn.setCellStyle(StyleHelper.createStyleBoldItalicText(workbook, false,(short) 10));
 
 
 
@@ -251,7 +257,7 @@ public class ViewWorkScheduleCleanerController implements Initializable {
                 }
 
             }else{
-                FXHelper.showErrorAlert(String.format(rb.getString("LIST_WORK_SCHEDULE_EMPTY"), startIntervalString, endIntervalString));
+                FXHelper.showInfoAlert(rb.getString("LIST_WORK_SCHEDULE_EMPTY"));
             }
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());

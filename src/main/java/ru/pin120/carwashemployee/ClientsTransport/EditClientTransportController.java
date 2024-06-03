@@ -234,7 +234,7 @@ public class EditClientTransportController implements Initializable {
 
     private boolean isValidStateNumber(TransportFX transportFX, String stateNumber) {
         boolean validStateNumber = true;
-        if (transportFX.getTrCategory().equalsIgnoreCase("мотоцикл") || transportFX.getTrCategory().equalsIgnoreCase("квадроцикл") || transportFX.getTrCategory().equalsIgnoreCase("трактор")) {
+        if (transportFX.getTrCategory().toLowerCase().contains("мотоцикл") || transportFX.getTrCategory().toLowerCase().contains("квадроцикл") || transportFX.getTrCategory().toLowerCase().contains("трактор")) {
             if (!stateNumber.matches(ClientsTransportFX.MOTO_AGR_REGEX)) {
                 validStateNumber = false;
                 FXHelper.showErrorAlert(rb.getString("NOT_VALID_MOTO_AGR"));

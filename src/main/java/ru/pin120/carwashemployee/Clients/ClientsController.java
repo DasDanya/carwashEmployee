@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.Bookings.FilterBookingsController;
 import ru.pin120.carwashemployee.ClientsTransport.ClientTransportController;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
@@ -45,6 +46,8 @@ public class ClientsController implements Initializable {
     private TextField filterSurnameField;
     @FXML
     private Button showTransportButton;
+    @FXML
+    private Button showBookingsButton;
     @FXML
     public Button showFilterParametersButton;
     @FXML
@@ -113,6 +116,7 @@ public class ClientsController implements Initializable {
         });
     }
 
+
     private void setSpinnerFormatter() {
         TextFormatter<Integer> discountFormatter = new TextFormatter<>(change -> {
             if (change.getControlNewText().matches("\\d*")) {
@@ -180,6 +184,9 @@ public class ClientsController implements Initializable {
         });
         showTransportButton.setOnMouseEntered(event->{
             showTransportButton.setTooltip(new Tooltip(rb.getString("SHOW_TRANSPORT")));
+        });
+        showBookingsButton.setOnMouseEntered(event->{
+            showBookingsButton.setTooltip(new Tooltip(rb.getString("SHOW_BOOKINGS")));
         });
     }
 
@@ -337,5 +344,25 @@ public class ClientsController implements Initializable {
             FXHelper.showErrorAlert(e.getMessage());
             clientsTable.requestFocus();
         }
+    }
+
+    public void showBookingsButtonAction(ActionEvent actionEvent) {
+        try{
+            ClientFX clientFX = clientsTable.getSelectionModel().getSelectedItem();
+            if(clientFX == null){
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECT_CLIENT"));
+            }else{
+                Client client = new Client(clientFX.getClId(), clientFX.getClSurname(), clientFX.getClName(),clientFX.getClPhone(),clientFX.getClDiscount());
+                FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.FilterBookings", "Bookings/fxml/FilterBookings.fxml");
+                FilterBookingsController filterBookingsController = fxWindowData.getLoader().getController();
+                filterBookingsController.setParameters(client,null,fxWindowData.getModalStage());
+                fxWindowData.getModalStage().showAndWait();
+            }
+        }catch (Exception e){
+            FXHelper.showErrorAlert(e.getMessage());
+            clientsTable.requestFocus();
+        }
+
+        clientsTable.requestFocus();
     }
 }

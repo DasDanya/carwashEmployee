@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class EditCategoryOfSuppliesController implements Initializable {
 
-    private static final int MAX_LENGTH_CATEGORY_NAME = 30;
+    private static final int MAX_LENGTH_CATEGORY_NAME = 50;
     private static final String CATEGORY_REGEX = "^[а-яА-ЯёЁ -]+$";
 
     @FXML

@@ -1,12 +1,15 @@
 package ru.pin120.carwashemployee.Main;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 
@@ -15,11 +18,15 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
+    private Menu usersMenu;
+    @FXML
     private MenuBar menuBar;
     private ResourceBundle rb;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
+        Platform.runLater(()->getStage().setTitle(rb.getString("FORM_TITLE")));
+        //FXHelper.showInfoAlert(AppHelper.getJwtToken() + "\n" + AppHelper.getUserName() + "\n" + AppHelper.getUserRole());
     }
 
     private Stage getStage(){
@@ -126,6 +133,16 @@ public class MainController implements Initializable {
         try {
             FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Supplies.resources.Supplies", "Supplies/fxml/Supplies.fxml");
             fxWindowData.getModalStage().setTitle(rb.getString("SUPPLIES_FORM_TITLE"));
+            fxWindowData.getModalStage().show();
+        } catch (Exception e) {
+            FXHelper.showErrorAlert(e.getMessage());
+        }
+    }
+
+    public void showUsersMenuItemAction(ActionEvent actionEvent) {
+        try {
+            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Users.resources.Users", "Users/fxml/Users.fxml");
+            fxWindowData.getModalStage().setTitle(rb.getString("USERS_FORM_TITLE"));
             fxWindowData.getModalStage().show();
         } catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());

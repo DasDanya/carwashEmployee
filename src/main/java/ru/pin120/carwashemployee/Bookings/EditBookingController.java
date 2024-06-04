@@ -32,7 +32,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class EditBookingController implements Initializable, ServiceInPriceListSelectable {
@@ -197,18 +196,18 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
                 statusComboBox.getSelectionModel().selectFirst();
                 statusComboBox.setDisable(true);
                 LocalTime now = LocalTime.now();
-                if(now.isBefore(AppHelper.startWorkTime()) || !now.isBefore(AppHelper.endWorkTime())){
+                if(now.isBefore(AppHelper.getStartWorkTime()) || !now.isBefore(AppHelper.getEndWorkTime())){
                     //bookingStartTimeField.setEditable(false);
                 }
                 bookingStartTimeField.setLocalTime(now);
                 if(this.selectedDate.toLocalDate().equals(LocalDate.now())) {
                     LocalTime startTime = now.minusMinutes(5);
-                    if(startTime.isBefore(AppHelper.startWorkTime())) {
-                        startTime = AppHelper.startWorkTime();
+                    if(startTime.isBefore(AppHelper.getStartWorkTime())) {
+                        startTime = AppHelper.getStartWorkTime();
                     }
                     settingTimeSpinner(LocalTime.of(startTime.getHour(), startTime.getMinute()));
                 }else{
-                    settingTimeSpinner(AppHelper.startWorkTime());
+                    settingTimeSpinner(AppHelper.getStartWorkTime());
                 }
 
                 setPriceLabelText(price);
@@ -225,7 +224,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
                 bookingStartDatePicker.setValue(booking.getBkStartTime().toLocalDate());
 
                 showServicesInBooking();
-                settingTimeSpinner(AppHelper.startWorkTime());
+                settingTimeSpinner(AppHelper.getStartWorkTime());
                 break;
             case OTHER:
                 statusComboBoxListener();
@@ -356,7 +355,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
         bookingStartTimeField.setParseErrorCallback(throwable -> null);
 
         bookingStartTimeField.localTimeProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && (newValue.isBefore(LocalTime.of(startTime.getHour(), startTime.getMinute())) || !newValue.isBefore(AppHelper.endWorkTime()))) {
+            if (newValue != null && (newValue.isBefore(LocalTime.of(startTime.getHour(), startTime.getMinute())) || !newValue.isBefore(AppHelper.getEndWorkTime()))) {
                 bookingStartTimeField.setLocalTime(oldValue);
             }else {
                 setTimeExecuteLabelText();
@@ -526,7 +525,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     private boolean timeLimitIsExceeding(){
-        LocalDateTime maxTime = LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime());
+        LocalDateTime maxTime = LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.getEndWorkTime());
         LocalDateTime totalTimeExecute = LocalDateTime.of(bookingStartDatePicker.getValue(), bookingStartTimeField.getLocalTime());
         totalTimeExecute = totalTimeExecute.plusMinutes(timeExecute);
 
@@ -538,7 +537,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
             switch (operationMode){
                 case CREATE:
                     if(timeLimitIsExceeding()) {
-                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.getEndWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
                         priceListTable.requestFocus();
                     }else {
                         List<ServiceWithPriceList> services = getListSelectedServices();
@@ -568,7 +567,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
                     break;
                 case EDIT:
                     if(timeLimitIsExceeding()) {
-                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.endWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+                        FXHelper.showErrorAlert(String.format(rb.getString("EXCEEDING_TIME_LIMIT"), LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.getEndWorkTime()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
                         priceListTable.requestFocus();
                     }else {
                         List<ServiceWithPriceList> services = getListSelectedServices();

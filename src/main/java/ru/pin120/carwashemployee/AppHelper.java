@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.time.LocalTime;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class AppHelper {
@@ -21,29 +22,6 @@ public class AppHelper {
 
     public static Image getNoPhoto(){return new Image(AppHelper.class.getResourceAsStream("/ru/pin120/carwashemployee/images/noPhoto.jpeg"));}
 
-    public static File getDefaultAvatarAsFile(){
-        try (InputStream inputStream = AppHelper.class.getResourceAsStream("/ru/pin120/carwashemployee/images/avatardefault.jpg")) {
-            if (inputStream == null) {
-                throw new IllegalArgumentException("Файл не найден: /ru/pin120/carwashemployee/images/avatardefault.jpg");
-            }
-
-            File tempFile = Files.createTempFile("avatardefault", ".jpg").toFile();
-            tempFile.deleteOnExit();
-
-            try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-            }
-
-            return tempFile;
-        } catch (IOException e) {
-            FXHelper.showErrorAlert(e.getMessage());
-            return null;
-        }
-    }
     public static String getCarWashAPI(){
         return rb.getString("URL_CARWASH_API");
     }
@@ -67,7 +45,7 @@ public class AppHelper {
         }
     }
 
-    public static LocalTime startWorkTime(){
+    public static LocalTime getStartWorkTime(){
         try{
             return LocalTime.parse(rb.getString("START_WORK_TIME"));
         }catch (Exception e){
@@ -75,7 +53,7 @@ public class AppHelper {
         }
     }
 
-    public static LocalTime endWorkTime(){
+    public static LocalTime getEndWorkTime(){
         try{
             return LocalTime.parse(rb.getString("END_WORK_TIME"));
         }catch (Exception e){
@@ -83,6 +61,22 @@ public class AppHelper {
         }
     }
 
+    public static String getSecretKeyForAes(){
+        return rb.getString("AES_SECRET_KEY");
+    }
+
     public static String getExistsEntityTextEnd(){return rb.getString("EXISTS_ENTITY_TEXT_END");}
+
+    public static String getJwtToken(){
+        return rb.getString("JWT_TOKEN");
+    }
+
+    public static String getUserName(){
+        return rb.getString("username");
+    }
+
+    public static String getUserRole(){
+        return rb.getString("USER_ROLE");
+    }
 
 }

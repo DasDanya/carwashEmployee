@@ -54,7 +54,7 @@ public class EditPriceListPositionController implements Initializable {
         rb = resourceBundle;
         try {
             priceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, PriceListPositionFX.MAX_PRICE, 0, 50));
-            timeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(AppHelper.getStepServiceTime(), Math.abs((int)Duration.between(AppHelper.startWorkTime(), AppHelper.endWorkTime()).toMinutes()), AppHelper.getStepServiceTime(), AppHelper.getStepServiceTime()));
+            timeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(AppHelper.getStepServiceTime(), Math.abs((int)Duration.between(AppHelper.getStartWorkTime(), AppHelper.getEndWorkTime()).toMinutes()), AppHelper.getStepServiceTime(), AppHelper.getStepServiceTime()));
         }catch (Exception e){
             FXHelper.showErrorAlert(e.getMessage());
         }
@@ -87,7 +87,7 @@ public class EditPriceListPositionController implements Initializable {
         TextFormatter<Integer> timeFormatter = new TextFormatter<>(change -> {
             if (change.getControlNewText().matches("\\d*")) {
                 int newValue = Integer.parseInt(change.getControlNewText());
-                if (newValue <= Math.abs((int)Duration.between(AppHelper.startWorkTime(), AppHelper.endWorkTime()).toMinutes()) || newValue >= AppHelper.getStepServiceTime()) {
+                if (newValue <= Math.abs((int)Duration.between(AppHelper.getStartWorkTime(), AppHelper.getEndWorkTime()).toMinutes()) || newValue >= AppHelper.getStepServiceTime()) {
                     return change;
                 }
             }

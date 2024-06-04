@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
@@ -120,8 +121,13 @@ public class FilterBookingsController implements Initializable {
         converterBoxesInComboBox();
         settingStatusComboBox();
         settingCountSpinner();
+
+        Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
     }
 
+    private Scene getActualScene(){
+        return bookingsTable.getScene();
+    }
     private void setTooltipForButtons() {
         resetStartTimePickerButton.setOnMouseEntered(event -> {
             resetStartTimePickerButton.setTooltip(new Tooltip(rb.getString("RESET_START_TIME")));
@@ -225,6 +231,10 @@ public class FilterBookingsController implements Initializable {
     }
 
     public void refreshAction(ActionEvent actionEvent) {
+        doRefresh();
+    }
+
+    private void doRefresh(){
         filterStartTime = null;
         filterEndTime = null;
         filterStatus = null;

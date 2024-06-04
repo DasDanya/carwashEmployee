@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Main.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Main.MainController">
    <children>
       <MenuBar fx:id="menuBar">
         <menus>
@@ -46,6 +46,11 @@
               <items>
                 <MenuItem fx:id="showCategoriesAndServicesMenuItem" mnemonicParsing="false" onAction="#showCategoriesAndServicesMenuItemAction" text="%SHOW_CATEGORIES_AND_SERVICES" />
               </items>
+            </Menu>
+            <Menu fx:id="usersMenu" mnemonicParsing="false" text="%USERS">
+               <items>
+                  <MenuItem fx:id="showUsersMenuItem" mnemonicParsing="false" onAction="#showUsersMenuItemAction" text="%SHOW_USERS" />
+               </items>
             </Menu>
         </menus>
       </MenuBar>

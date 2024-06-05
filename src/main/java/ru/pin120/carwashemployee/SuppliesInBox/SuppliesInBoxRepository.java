@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 import ru.pin120.carwashemployee.Supplies.Supply;
 import ru.pin120.carwashemployee.Transport.Transport;
 
@@ -19,7 +20,9 @@ public class SuppliesInBoxRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/suppliesInBox";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new Gson();
 
     public SuppliesInBox add(SuppliesInBox suppliesInBox) throws Exception{

@@ -8,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.Comparator;
@@ -105,37 +107,42 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     private void doOperation(FXOperationMode operationMode){
-        if(operationMode != FXOperationMode.EDIT) {
-            CategoryOfSupplies categoryOfSupplies = null;
-            CategoriesOfSuppliesFX selectedCategoryOfSuppliesFX = null;
-            switch (operationMode) {
-                case CREATE:
-                    categoryOfSupplies = new CategoryOfSupplies();
-                    break;
-                case DELETE:
-                    if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
-                        selectedCategoryOfSuppliesFX = categoriesTable.getSelectionModel().getSelectedItem();
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
+            categoriesTable.requestFocus();
+        }else {
+            if (operationMode != FXOperationMode.EDIT) {
+                CategoryOfSupplies categoryOfSupplies = null;
+                CategoriesOfSuppliesFX selectedCategoryOfSuppliesFX = null;
+                switch (operationMode) {
+                    case CREATE:
                         categoryOfSupplies = new CategoryOfSupplies();
-                        categoryOfSupplies.setCsupName(selectedCategoryOfSuppliesFX.getCsupName());
-                        categoryOfSupplies.setUnit(UnitOfMeasure.valueOfDisplayValue(selectedCategoryOfSuppliesFX.getUnit()));
-                    }
-                    break;
-            }
-            if (categoryOfSupplies == null) {
-                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
-                categoriesTable.requestFocus();
-            } else {
-                try {
-                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.EditCategoryOfSupplies", "CategoriesOfSupplies/fxml/EditCategoryOfSupplies.fxml", getActualScene());
-                    EditCategoryOfSuppliesController editCategoryOfSuppliesController = fxWindowData.getLoader().getController();
-
-                    editCategoryOfSuppliesController.setParameters(categoryOfSupplies, operationMode, fxWindowData.getModalStage());
-                    fxWindowData.getModalStage().showAndWait();
-                    doResult(operationMode, editCategoryOfSuppliesController.getExitMode(), categoryOfSupplies, selectedCategoryOfSuppliesFX);
-
-                } catch (Exception e) {
-                    FXHelper.showErrorAlert(e.getMessage());
+                        break;
+                    case DELETE:
+                        if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
+                            selectedCategoryOfSuppliesFX = categoriesTable.getSelectionModel().getSelectedItem();
+                            categoryOfSupplies = new CategoryOfSupplies();
+                            categoryOfSupplies.setCsupName(selectedCategoryOfSuppliesFX.getCsupName());
+                            categoryOfSupplies.setUnit(UnitOfMeasure.valueOfDisplayValue(selectedCategoryOfSuppliesFX.getUnit()));
+                        }
+                        break;
+                }
+                if (categoryOfSupplies == null) {
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
                     categoriesTable.requestFocus();
+                } else {
+                    try {
+                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.EditCategoryOfSupplies", "CategoriesOfSupplies/fxml/EditCategoryOfSupplies.fxml", getActualScene());
+                        EditCategoryOfSuppliesController editCategoryOfSuppliesController = fxWindowData.getLoader().getController();
+
+                        editCategoryOfSuppliesController.setParameters(categoryOfSupplies, operationMode, fxWindowData.getModalStage());
+                        fxWindowData.getModalStage().showAndWait();
+                        doResult(operationMode, editCategoryOfSuppliesController.getExitMode(), categoryOfSupplies, selectedCategoryOfSuppliesFX);
+
+                    } catch (Exception e) {
+                        FXHelper.showErrorAlert(e.getMessage());
+                        categoriesTable.requestFocus();
+                    }
                 }
             }
         }

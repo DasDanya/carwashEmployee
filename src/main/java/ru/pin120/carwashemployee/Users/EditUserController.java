@@ -10,10 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import lombok.Getter;
-import ru.pin120.carwashemployee.Aes;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
+import ru.pin120.carwashemployee.Http.RegisterRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -56,8 +56,6 @@ public class EditUserController implements Initializable {
 
         fieldsListeners();
         //roleComboBox.getItems().addAll(UserRole.ADMINISTRATOR);
-        roleComboBox.getItems().addAll(UserRole.values());
-        roleComboBox.getSelectionModel().selectFirst();
         roleComboBox.setConverter(new StringConverter<UserRole>() {
             @Override
             public String toString(UserRole role) {
@@ -141,6 +139,12 @@ public class EditUserController implements Initializable {
                             user.setUsName(createdUser.getUsName());
                         }
                         break;
+                    case EDIT:
+                            canExit = usersRepository.editPassword(nameField.getText().trim(),passwordField.getText().trim());
+                        break;
+                    case DELETE:
+                        canExit = usersRepository.delete(user.getUsName());
+                        break;
                 }
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
@@ -149,6 +153,10 @@ public class EditUserController implements Initializable {
         if(canExit){
             exitMode = FXFormExitMode.OK;
             stage.close();
+        }else{
+            if (operationMode == FXOperationMode.DELETE){
+                btCancel.requestFocus();
+            }
         }
     }
 
@@ -162,15 +170,30 @@ public class EditUserController implements Initializable {
         switch (operationMode){
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_TITLE"));
+                roleComboBox.getItems().addAll(UserRole.values());
                 break;
             case EDIT:
                 this.stage.setTitle(rb.getString("EDIT_TITLE"));
+                roleComboBox.getItems().add(user.getUsRole());
+                nameField.setText(user.getUsName());
+                nameField.setEditable(false);
+                Platform.runLater(()->passwordField.requestFocus());
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_TITLE"));
+                passwordField.setEditable(false);
+                passwordShowField.setEditable(false);
+                passwordField.setVisible(false);
+                passwordShowField.setVisible(true);
+                passwordShowField.setText(rb.getString("EMPTY_PASSWORD"));
+                showCheckBox.setDisable(true);
+                roleComboBox.getItems().add(user.getUsRole());
+                nameField.setText(user.getUsName());
+                nameField.setEditable(false);
                 break;
         }
 
+        roleComboBox.getSelectionModel().selectFirst();
         this.stage.setMaxHeight(170);
         closeWindowAction();
     }

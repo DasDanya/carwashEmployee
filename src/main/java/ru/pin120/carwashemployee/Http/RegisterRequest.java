@@ -1,4 +1,4 @@
-package ru.pin120.carwashemployee.Users;
+package ru.pin120.carwashemployee.Http;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginRequest {
+public class RegisterRequest {
     private String username;
     private String password;
+    private String role;
 }

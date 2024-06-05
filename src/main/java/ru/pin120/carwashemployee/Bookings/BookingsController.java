@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.CalendarPicker;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Boxes.BoxFX;
 import ru.pin120.carwashemployee.Boxes.BoxStatus;
@@ -25,6 +26,7 @@ import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.time.*;
@@ -350,22 +352,26 @@ public class BookingsController implements Initializable {
                 }
                 break;
             case DELETE:
-                if(selectedAppointment == null){
-                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
-                    agenda.requestFocus();
+                if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+                    FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
                 }else {
-                    booking = bookings.stream()
-                            .filter(b -> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
-                            .findFirst()
-                            .orElse(null);
+                    if (selectedAppointment == null) {
+                        FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_BOOKING"));
+                        agenda.requestFocus();
+                    } else {
+                        booking = bookings.stream()
+                                .filter(b -> b.getBkStartTime().equals(selectedAppointment.getStartLocalDateTime()) && b.getBkEndTime().equals(selectedAppointment.getEndLocalDateTime()))
+                                .findFirst()
+                                .orElse(null);
 
-                    if (booking == null) {
-                        FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
-                    }else{
-                        if(booking.getBkStatus() == BookingStatus.NOT_DONE || booking.getBkStatus() == BookingStatus.CANCELLED){
-                            canOpenWindow = true;
-                        }else{
-                            FXHelper.showErrorAlert(String.format(rb.getString("NOT_CORRECT_BOOKING_FOR_DELETE"), BookingStatus.CANCELLED.getDisplayValue(), BookingStatus.NOT_DONE.getDisplayValue()));
+                        if (booking == null) {
+                            FXHelper.showErrorAlert(rb.getString("BOOKING_NOT_EXISTS"));
+                        } else {
+                            if (booking.getBkStatus() == BookingStatus.NOT_DONE || booking.getBkStatus() == BookingStatus.CANCELLED) {
+                                canOpenWindow = true;
+                            } else {
+                                FXHelper.showErrorAlert(String.format(rb.getString("NOT_CORRECT_BOOKING_FOR_DELETE"), BookingStatus.CANCELLED.getDisplayValue(), BookingStatus.NOT_DONE.getDisplayValue()));
+                            }
                         }
                     }
                 }

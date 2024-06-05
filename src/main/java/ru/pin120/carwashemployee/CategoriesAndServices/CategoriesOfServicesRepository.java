@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,7 +18,9 @@ public class CategoriesOfServicesRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/categoryOfServices";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new Gson();
 //    public List<CategoriesWithServicesDTO> getCategoriesWithServices() throws Exception {
 //        Request request = new Request.Builder()

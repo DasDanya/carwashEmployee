@@ -11,6 +11,7 @@ import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.Boxes.BoxStatus;
 import ru.pin120.carwashemployee.Clients.Client;
 import ru.pin120.carwashemployee.FX.FXHelper;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 import ru.pin120.carwashemployee.Transport.Transport;
 
 import java.io.ByteArrayInputStream;
@@ -27,7 +28,9 @@ public class CleanersRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/cleaners";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .create();

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 import ru.pin120.carwashemployee.PriceListPosition.PriceListPosition;
 
 import java.io.IOException;
@@ -18,7 +19,9 @@ public class TransportRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/transport";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new Gson();
 
 

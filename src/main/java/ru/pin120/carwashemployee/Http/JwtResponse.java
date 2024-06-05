@@ -1,9 +1,10 @@
-package ru.pin120.carwashemployee.Users;
+package ru.pin120.carwashemployee.Http;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.pin120.carwashemployee.Users.UserDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor

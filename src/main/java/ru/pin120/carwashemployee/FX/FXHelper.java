@@ -98,7 +98,7 @@ public class FXHelper {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.setTitle(AppHelper.getErrorText());
         alert.setHeaderText(null);
-        alert.getDialogPane().setPrefSize(800,200);
+        alert.getDialogPane().setPrefSize(800,130);
 
         Window window = alert.getDialogPane().getScene().getWindow();
         window.centerOnScreen();
@@ -111,7 +111,7 @@ public class FXHelper {
         alert.setTitle(AppHelper.getInfoText());
         alert.initModality(Modality.NONE);
         alert.setHeaderText(null);
-        alert.getDialogPane().setPrefSize(800,200);
+        alert.getDialogPane().setPrefSize(800,130);
 
         Window window = alert.getDialogPane().getScene().getWindow();
         window.centerOnScreen();

@@ -8,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.Comparator;
@@ -99,42 +101,45 @@ public class CategoriesOfTransportController implements Initializable {
 
 
     private void doOperation(FXOperationMode operationMode){
-        CategoryOfTransport categoryOfTransport = null;
-        CategoryOfTransportFX categoryOfTransportFX = null;
-
-        switch (operationMode){
-            case CREATE:
-                categoryOfTransport = new CategoryOfTransport();
-                break;
-            case EDIT:
-            case DELETE:
-                if(categoriesTable.getSelectionModel().getSelectedItem() != null){
-                    categoryOfTransport = new CategoryOfTransport();
-                    categoryOfTransportFX = categoriesTable.getSelectionModel().getSelectedItem();
-                    categoryOfTransport.setCatTrName(categoryOfTransportFX.getCatTrName());
-                    categoryOfTransport.setCatTrId(categoryOfTransportFX.getCatTrId());
-                }
-                break;
-        }
-        if (categoryOfTransport == null) {
-            FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
             categoriesTable.requestFocus();
-        }else{
-            try{
-                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfTransport.resources.EditCategoryOfTransport", "CategoriesOfTransport/fxml/EditCategoryOfTransport.fxml", getActualScene());
-                EditCategoryOfTransportController editCategoryOfTransportController = fxWindowData.getLoader().getController();
+        }else {
+            CategoryOfTransport categoryOfTransport = null;
+            CategoryOfTransportFX categoryOfTransportFX = null;
 
-                editCategoryOfTransportController.setParameters(categoryOfTransport, operationMode, fxWindowData.getModalStage());
-                fxWindowData.getModalStage().showAndWait();
-                doResult(operationMode, editCategoryOfTransportController.getExitMode(), categoryOfTransport, categoryOfTransportFX);
-
-            }catch (Exception e){
-                FXHelper.showErrorAlert(e.getMessage());
+            switch (operationMode) {
+                case CREATE:
+                    categoryOfTransport = new CategoryOfTransport();
+                    break;
+                case EDIT:
+                case DELETE:
+                    if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
+                        categoryOfTransport = new CategoryOfTransport();
+                        categoryOfTransportFX = categoriesTable.getSelectionModel().getSelectedItem();
+                        categoryOfTransport.setCatTrName(categoryOfTransportFX.getCatTrName());
+                        categoryOfTransport.setCatTrId(categoryOfTransportFX.getCatTrId());
+                    }
+                    break;
+            }
+            if (categoryOfTransport == null) {
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
                 categoriesTable.requestFocus();
+            } else {
+                try {
+                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfTransport.resources.EditCategoryOfTransport", "CategoriesOfTransport/fxml/EditCategoryOfTransport.fxml", getActualScene());
+                    EditCategoryOfTransportController editCategoryOfTransportController = fxWindowData.getLoader().getController();
+
+                    editCategoryOfTransportController.setParameters(categoryOfTransport, operationMode, fxWindowData.getModalStage());
+                    fxWindowData.getModalStage().showAndWait();
+                    doResult(operationMode, editCategoryOfTransportController.getExitMode(), categoryOfTransport, categoryOfTransportFX);
+
+                } catch (Exception e) {
+                    FXHelper.showErrorAlert(e.getMessage());
+                    categoriesTable.requestFocus();
+                }
             }
         }
-
-
     }
 
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfTransport categoryOfTransport, CategoryOfTransportFX categoryOfTransportFX) {

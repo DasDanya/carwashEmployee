@@ -7,6 +7,7 @@ import okhttp3.*;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.Cleaners.Cleaner;
 import ru.pin120.carwashemployee.Clients.Client;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 
 import java.io.File;
 import java.io.InputStream;
@@ -22,7 +23,9 @@ public class SupplyRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/supplies";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new Gson();
 
     public List<Supply> get(int pageIndex) throws Exception{

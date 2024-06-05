@@ -10,12 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.CategoriesAndServices.Service;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.*;
@@ -190,48 +192,53 @@ public class PriceListPositionController implements Initializable {
     }
 
     private void doOperation(FXOperationMode operationMode){
-        PriceListPosition priceListPosition = null;
-        PriceListPositionFX selectedPriceListPositionFX = null;
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
+            priceListTable.requestFocus();
+        }else {
+            PriceListPosition priceListPosition = null;
+            PriceListPositionFX selectedPriceListPositionFX = null;
 
-        switch (operationMode){
-            case CREATE:
-                priceListPosition = new PriceListPosition();
-                priceListPosition.setService(new Service(serviceName));
-                break;
-            case EDIT:
-            case DELETE:
-                if(priceListTable.getSelectionModel().getSelectedItem() != null){
-                    selectedPriceListPositionFX = priceListTable.getSelectionModel().getSelectedItem();
-
+            switch (operationMode) {
+                case CREATE:
                     priceListPosition = new PriceListPosition();
                     priceListPosition.setService(new Service(serviceName));
-                    priceListPosition.setPlPrice(selectedPriceListPositionFX.getPrice());
-                    priceListPosition.setPlTime(selectedPriceListPositionFX.getTime());
-                    priceListPosition.setPlId(selectedPriceListPositionFX.getId());
+                    break;
+                case EDIT:
+                case DELETE:
+                    if (priceListTable.getSelectionModel().getSelectedItem() != null) {
+                        selectedPriceListPositionFX = priceListTable.getSelectionModel().getSelectedItem();
 
-                    CategoryOfTransport categoryOfTransport = new CategoryOfTransport();
-                    categoryOfTransport.setCatTrName(selectedPriceListPositionFX.getCatTrName());
-                    priceListPosition.setCategoryOfTransport(categoryOfTransport);
-                }
-                break;
-        }
-        if(priceListPosition == null){
-            FXHelper.showErrorAlert("NOT_SELECT_RECORD");
-            priceListTable.requestFocus();
-        }else{
-            try{
-                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.PriceListPosition.resources.EditPriceListPosition", "PriceListPosition/fxml/EditPriceListPosition.fxml", getActualScene());
-                EditPriceListPositionController editPriceListPositionController = fxWindowData.getLoader().getController();
+                        priceListPosition = new PriceListPosition();
+                        priceListPosition.setService(new Service(serviceName));
+                        priceListPosition.setPlPrice(selectedPriceListPositionFX.getPrice());
+                        priceListPosition.setPlTime(selectedPriceListPositionFX.getTime());
+                        priceListPosition.setPlId(selectedPriceListPositionFX.getId());
 
-                editPriceListPositionController.setParameters(priceListPosition, operationMode, fxWindowData.getModalStage());
-
-                fxWindowData.getModalStage().showAndWait();
-                doResult(operationMode,editPriceListPositionController.getExitMode(), priceListPosition, selectedPriceListPositionFX);
-                //doRefresh();
-
-            }catch (Exception e){
-                FXHelper.showErrorAlert(e.getMessage());
+                        CategoryOfTransport categoryOfTransport = new CategoryOfTransport();
+                        categoryOfTransport.setCatTrName(selectedPriceListPositionFX.getCatTrName());
+                        priceListPosition.setCategoryOfTransport(categoryOfTransport);
+                    }
+                    break;
+            }
+            if (priceListPosition == null) {
+                FXHelper.showErrorAlert("NOT_SELECT_RECORD");
                 priceListTable.requestFocus();
+            } else {
+                try {
+                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.PriceListPosition.resources.EditPriceListPosition", "PriceListPosition/fxml/EditPriceListPosition.fxml", getActualScene());
+                    EditPriceListPositionController editPriceListPositionController = fxWindowData.getLoader().getController();
+
+                    editPriceListPositionController.setParameters(priceListPosition, operationMode, fxWindowData.getModalStage());
+
+                    fxWindowData.getModalStage().showAndWait();
+                    doResult(operationMode, editPriceListPositionController.getExitMode(), priceListPosition, selectedPriceListPositionFX);
+                    //doRefresh();
+
+                } catch (Exception e) {
+                    FXHelper.showErrorAlert(e.getMessage());
+                    priceListTable.requestFocus();
+                }
             }
         }
     }

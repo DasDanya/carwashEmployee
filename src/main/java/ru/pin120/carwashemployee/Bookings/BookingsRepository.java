@@ -8,6 +8,7 @@ import ru.pin120.carwashemployee.Adapters.LocalDateAdapter;
 import ru.pin120.carwashemployee.Adapters.LocalDateTimeAdapter;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXHelper;
+import ru.pin120.carwashemployee.Http.AuthInterceptor;
 import ru.pin120.carwashemployee.Supplies.Supply;
 
 import java.lang.reflect.Type;
@@ -24,7 +25,9 @@ public class BookingsRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/bookings";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new AuthInterceptor())
+            .build();
     private Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())

@@ -9,12 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoriesOfSuppliesForServiceController;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 import ru.pin120.carwashemployee.PriceListPosition.PriceListPositionController;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.*;
@@ -221,82 +223,87 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     private void doOperation(FXOperationMode mode){
-        if(mode != FXOperationMode.EDIT) {
-            if (lastSelectedTable == categoriesTable) {
-                CategoryOfServicesFX selectedCategoryOfServicesFX = null;
-                //int selectedItemIndex = -1;
-                CategoryOfServices categoryOfServices = null;
-                switch (mode) {
-                    case CREATE:
-                        categoryOfServices = new CategoryOfServices();
-                        break;
-                    case EDIT:
-                    case DELETE:
-                        if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
-                            categoryOfServices = new CategoryOfServices();
-                            categoryOfServices.setCatName(categoriesTable.getSelectionModel().getSelectedItem().getName());
-                            selectedCategoryOfServicesFX = categoriesTable.getSelectionModel().getSelectedItem();
-                            //selectedItemIndex = categoriesTable.getSelectionModel().getSelectedIndex();
-                        }
-                        break;
-                }
-
-                if (categoryOfServices == null) {
-                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
-                    categoriesTable.requestFocus();
-                } else {
-                    try {
-
-                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditCategoryOfServices", "CategoriesAndServices/fxml/EditCategoryOfServices.fxml", getActualScene());
-
-                        EditCategoryOfServicesController categoryOfServicesController = fxWindowData.getLoader().getController();
-                        categoryOfServicesController.setParameters(categoryOfServices, mode, fxWindowData.getModalStage());
-
-                        fxWindowData.getModalStage().showAndWait();
-                        doResultCategoryOfServices(mode, categoryOfServicesController.getExitMode(), categoryOfServices, selectedCategoryOfServicesFX);
-
-                    } catch (Exception e) {
-                        FXHelper.showErrorAlert(e.getMessage());
-                        categoriesTable.requestFocus();
-                    }
-                }
-            } else {
-                ServiceDTO serviceDTO = null;
-                if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
-                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
-                    servicesTable.requestFocus();
-                } else {
-                    String catName = categoriesTable.getSelectionModel().getSelectedItem().getName();
-                    ServiceFX selectedServiceFX = null;
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
+            lastSelectedTable.requestFocus();
+        }else {
+            if (mode != FXOperationMode.EDIT) {
+                if (lastSelectedTable == categoriesTable) {
+                    CategoryOfServicesFX selectedCategoryOfServicesFX = null;
+                    //int selectedItemIndex = -1;
+                    CategoryOfServices categoryOfServices = null;
                     switch (mode) {
                         case CREATE:
-                            serviceDTO = new ServiceDTO();
-                            serviceDTO.setCatName(catName);
+                            categoryOfServices = new CategoryOfServices();
                             break;
+                        case EDIT:
                         case DELETE:
-                            if (servicesTable.getSelectionModel().getSelectedItem() != null) {
-                                serviceDTO = new ServiceDTO();
-                                serviceDTO.setCatName(catName);
-                                serviceDTO.setServName(servicesTable.getSelectionModel().getSelectedItem().getName());
-                                selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+                            if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
+                                categoryOfServices = new CategoryOfServices();
+                                categoryOfServices.setCatName(categoriesTable.getSelectionModel().getSelectedItem().getName());
+                                selectedCategoryOfServicesFX = categoriesTable.getSelectionModel().getSelectedItem();
+                                //selectedItemIndex = categoriesTable.getSelectionModel().getSelectedIndex();
                             }
                             break;
                     }
-                    if (serviceDTO == null) {
-                        FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
-                        servicesTable.requestFocus();
+
+                    if (categoryOfServices == null) {
+                        FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+                        categoriesTable.requestFocus();
                     } else {
                         try {
-                            FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditService", "CategoriesAndServices/fxml/EditService.fxml", getActualScene());
 
-                            EditServiceController serviceController = fxWindowData.getLoader().getController();
-                            serviceController.setParameters(serviceDTO, mode, fxWindowData.getModalStage());
+                            FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditCategoryOfServices", "CategoriesAndServices/fxml/EditCategoryOfServices.fxml", getActualScene());
+
+                            EditCategoryOfServicesController categoryOfServicesController = fxWindowData.getLoader().getController();
+                            categoryOfServicesController.setParameters(categoryOfServices, mode, fxWindowData.getModalStage());
 
                             fxWindowData.getModalStage().showAndWait();
-                            doResultService(mode, serviceController.getExitMode(), serviceDTO, selectedServiceFX);
+                            doResultCategoryOfServices(mode, categoryOfServicesController.getExitMode(), categoryOfServices, selectedCategoryOfServicesFX);
+
                         } catch (Exception e) {
                             FXHelper.showErrorAlert(e.getMessage());
+                            categoriesTable.requestFocus();
+                        }
+                    }
+                } else {
+                    ServiceDTO serviceDTO = null;
+                    if (categoriesTable.getSelectionModel().getSelectedItem() == null) {
+                        FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+                        servicesTable.requestFocus();
+                    } else {
+                        String catName = categoriesTable.getSelectionModel().getSelectedItem().getName();
+                        ServiceFX selectedServiceFX = null;
+                        switch (mode) {
+                            case CREATE:
+                                serviceDTO = new ServiceDTO();
+                                serviceDTO.setCatName(catName);
+                                break;
+                            case DELETE:
+                                if (servicesTable.getSelectionModel().getSelectedItem() != null) {
+                                    serviceDTO = new ServiceDTO();
+                                    serviceDTO.setCatName(catName);
+                                    serviceDTO.setServName(servicesTable.getSelectionModel().getSelectedItem().getName());
+                                    selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+                                }
+                                break;
+                        }
+                        if (serviceDTO == null) {
+                            FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
                             servicesTable.requestFocus();
+                        } else {
+                            try {
+                                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.EditService", "CategoriesAndServices/fxml/EditService.fxml", getActualScene());
+
+                                EditServiceController serviceController = fxWindowData.getLoader().getController();
+                                serviceController.setParameters(serviceDTO, mode, fxWindowData.getModalStage());
+
+                                fxWindowData.getModalStage().showAndWait();
+                                doResultService(mode, serviceController.getExitMode(), serviceDTO, selectedServiceFX);
+                            } catch (Exception e) {
+                                FXHelper.showErrorAlert(e.getMessage());
+                                servicesTable.requestFocus();
+                            }
                         }
                     }
                 }
@@ -367,14 +374,18 @@ public class CategoriesAndServicesController implements Initializable {
 
 
     private void bindWithCategory(){
-        if(!categoriesTable.getItems().isEmpty()) {
-            if(!servicesTable.getItems().isEmpty()) {
-                if(categoriesTable.getSelectionModel().getSelectedItem() != null) {
-                    //List<String> categoriesForBind = new ArrayList<>();
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
+        }
+        else {
+            if (!categoriesTable.getItems().isEmpty()) {
+                if (!servicesTable.getItems().isEmpty()) {
+                    if (categoriesTable.getSelectionModel().getSelectedItem() != null) {
+                        //List<String> categoriesForBind = new ArrayList<>();
 
-                    ServiceFX selectedServiceFX = null;
-                    String selectedCatName = categoriesTable.getSelectionModel().getSelectedItem().getName();
-                    int indexSelectedCategory = categoriesTable.getSelectionModel().getSelectedIndex();
+                        ServiceFX selectedServiceFX = null;
+                        String selectedCatName = categoriesTable.getSelectionModel().getSelectedItem().getName();
+                        int indexSelectedCategory = categoriesTable.getSelectionModel().getSelectedIndex();
 //                    for (CategoryOfServices categoryOfServices : categoriesWithServices) {
 //                        if (!selectedCatName.equals(categoryOfServices.getCatName())) {
 //                            categoriesForBind.add(categoryOfServices.getCatName());
@@ -386,51 +397,52 @@ public class CategoriesAndServicesController implements Initializable {
 //                    }
 //                }
 
-                    try {
-                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.BindWithCategory", "CategoriesAndServices/fxml/BindWithCategory.fxml", getActualScene());
+                        try {
+                            FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesAndServices.resources.BindWithCategory", "CategoriesAndServices/fxml/BindWithCategory.fxml", getActualScene());
 
 
-                        BindWithCategoryController controller = fxWindowData.getLoader().getController();
-                        if (lastSelectedTable == categoriesTable) {
-                            controller.setParameters(fxWindowData.getModalStage(), BindWithCategoryMode.CATEGORY, selectedCatName,selectedCatName);
-                            fxWindowData.getModalStage().showAndWait();
-                        } else {
-                            if(servicesTable.getSelectionModel().getSelectedItem() != null) {
-                                selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
-                                controller.setParameters(fxWindowData.getModalStage(),BindWithCategoryMode.SERVICE, selectedCatName, servicesTable.getSelectionModel().getSelectedItem().getName());
+                            BindWithCategoryController controller = fxWindowData.getLoader().getController();
+                            if (lastSelectedTable == categoriesTable) {
+                                controller.setParameters(fxWindowData.getModalStage(), BindWithCategoryMode.CATEGORY, selectedCatName, selectedCatName);
                                 fxWindowData.getModalStage().showAndWait();
-                            }else{
-                                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                            } else {
+                                if (servicesTable.getSelectionModel().getSelectedItem() != null) {
+                                    selectedServiceFX = servicesTable.getSelectionModel().getSelectedItem();
+                                    controller.setParameters(fxWindowData.getModalStage(), BindWithCategoryMode.SERVICE, selectedCatName, servicesTable.getSelectionModel().getSelectedItem().getName());
+                                    fxWindowData.getModalStage().showAndWait();
+                                } else {
+                                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                                }
                             }
-                        }
 
 //                        if (controller.getExitMode() == FXFormExitMode.OK) {
 //                            doRefresh();
 //                            categoriesTable.getSelectionModel().select(indexSelectedCategory);
 //                        }
-                        if (controller.getExitMode() == FXFormExitMode.OK) {
-                            if(lastSelectedTable == categoriesTable){
-                                services.clear();
-                            }else{
-                                if(selectedServiceFX != null){
-                                    services.remove(selectedServiceFX);
+                            if (controller.getExitMode() == FXFormExitMode.OK) {
+                                if (lastSelectedTable == categoriesTable) {
+                                    services.clear();
+                                } else {
+                                    if (selectedServiceFX != null) {
+                                        services.remove(selectedServiceFX);
+                                    }
                                 }
+                                categoriesTable.getSelectionModel().select(indexSelectedCategory);
                             }
-                            categoriesTable.getSelectionModel().select(indexSelectedCategory);
-                        }
 
-                    } catch (Exception e) {
-                        FXHelper.showErrorAlert(e.getMessage());
-                        categoriesTable.requestFocus();
+                        } catch (Exception e) {
+                            FXHelper.showErrorAlert(e.getMessage());
+                            categoriesTable.requestFocus();
+                        }
+                    } else {
+                        FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
                     }
-                }else{
-                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_CATEGORY"));
+                } else {
+                    FXHelper.showErrorAlert(rb.getString("NOT_EXISTS_SERVICES_FOR_BIND"));
                 }
-            }else{
-                FXHelper.showErrorAlert(rb.getString("NOT_EXISTS_SERVICES_FOR_BIND"));
+            } else {
+                FXHelper.showErrorAlert(rb.getString("NOT_EXISTS_CATEGORY_FOR_BIND"));
             }
-        }else{
-            FXHelper.showErrorAlert(rb.getString("NOT_EXISTS_CATEGORY_FOR_BIND"));
         }
 
         categoriesTable.requestFocus();
@@ -575,31 +587,36 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     public void setSuppliesButtonAction(ActionEvent actionEvent) {
-        try{
-            ServiceFX serviceFX = servicesTable.getSelectionModel().getSelectedItem();
-            if(serviceFX == null){
-                FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
-                servicesTable.requestFocus();
-            }else{
-                Service selectedService = servicesOfCategory.stream()
-                        .filter(c->c.getServName().equals(serviceFX.getName()))
-                        .findFirst()
-                        .orElse(null);
-
-                if(selectedService == null){
-                    FXHelper.showErrorAlert(rb.getString("SERVICE_NOT_EXISTS"));
-                }else{
-                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.CategoriesOfSuppliesForService", "CategoriesOfSupplies/fxml/CategoriesOfSuppliesForService.fxml", getActualScene());
-                    CategoriesOfSuppliesForServiceController categoriesOfSuppliesForServiceController = fxWindowData.getLoader().getController();
-                    categoriesOfSuppliesForServiceController.settingForm(selectedService, fxWindowData.getModalStage());
-
-                    fxWindowData.getModalStage().showAndWait();
-                    servicesTable.requestFocus();
-                }
-            }
-        }catch (Exception e){
-            FXHelper.showErrorAlert(e.getMessage());
+        if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+            FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
             servicesTable.requestFocus();
+        }else {
+            try {
+                ServiceFX serviceFX = servicesTable.getSelectionModel().getSelectedItem();
+                if (serviceFX == null) {
+                    FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_SERVICE"));
+                    servicesTable.requestFocus();
+                } else {
+                    Service selectedService = servicesOfCategory.stream()
+                            .filter(c -> c.getServName().equals(serviceFX.getName()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (selectedService == null) {
+                        FXHelper.showErrorAlert(rb.getString("SERVICE_NOT_EXISTS"));
+                    } else {
+                        FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.CategoriesOfSupplies.resources.CategoriesOfSuppliesForService", "CategoriesOfSupplies/fxml/CategoriesOfSuppliesForService.fxml", getActualScene());
+                        CategoriesOfSuppliesForServiceController categoriesOfSuppliesForServiceController = fxWindowData.getLoader().getController();
+                        categoriesOfSuppliesForServiceController.settingForm(selectedService, fxWindowData.getModalStage());
+
+                        fxWindowData.getModalStage().showAndWait();
+                        servicesTable.requestFocus();
+                    }
+                }
+            } catch (Exception e) {
+                FXHelper.showErrorAlert(e.getMessage());
+                servicesTable.requestFocus();
+            }
         }
     }
 }

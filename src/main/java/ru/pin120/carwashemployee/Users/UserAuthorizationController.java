@@ -7,13 +7,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXWindowData;
-import ru.pin120.carwashemployee.StartApplication;
+import ru.pin120.carwashemployee.Http.LoginRequest;
 
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class UserAuthorizationController implements Initializable {
@@ -107,4 +105,6 @@ public class UserAuthorizationController implements Initializable {
 
         }
     }
+
+
 }

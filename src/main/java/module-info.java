@@ -42,7 +42,7 @@ module ru.pin120.carwashemployee {
     opens ru.pin120.carwashemployee.Main to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.Main;
 
-    opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson, org.apache.poi.poi, org.apache.poi.ooxml;
+    opens ru.pin120.carwashemployee.WorkSchedule to javafx.fxml, com.google.gson;
     exports ru.pin120.carwashemployee.WorkSchedule;
 
     opens ru.pin120.carwashemployee.Bookings to javafx.fxml, com.google.gson, jfxtras.agenda, jfxtras.controls;
@@ -59,5 +59,7 @@ module ru.pin120.carwashemployee {
 
     opens ru.pin120.carwashemployee.Users to javafx.fxml,com.google.gson;
     exports ru.pin120.carwashemployee.Users;
+    exports ru.pin120.carwashemployee.Http;
+    opens ru.pin120.carwashemployee.Http to com.google.gson, javafx.fxml;
 
 }

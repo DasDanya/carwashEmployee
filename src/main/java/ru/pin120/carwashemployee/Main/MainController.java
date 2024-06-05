@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -12,11 +13,16 @@ import javafx.stage.Stage;
 import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXWindowData;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label welcomeLabel;
     @FXML
     private Menu usersMenu;
     @FXML
@@ -26,7 +32,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
         Platform.runLater(()->getStage().setTitle(rb.getString("FORM_TITLE")));
-        //FXHelper.showInfoAlert(AppHelper.getJwtToken() + "\n" + AppHelper.getUserName() + "\n" + AppHelper.getUserRole());
+        usernameLabel.setText(AppHelper.getUserInfo().get(1) + "!");
     }
 
     private Stage getStage(){
@@ -141,9 +147,13 @@ public class MainController implements Initializable {
 
     public void showUsersMenuItemAction(ActionEvent actionEvent) {
         try {
-            FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Users.resources.Users", "Users/fxml/Users.fxml");
-            fxWindowData.getModalStage().setTitle(rb.getString("USERS_FORM_TITLE"));
-            fxWindowData.getModalStage().show();
+            if(AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+                FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Users.resources.Users", "Users/fxml/Users.fxml");
+                fxWindowData.getModalStage().setTitle(rb.getString("USERS_FORM_TITLE"));
+                fxWindowData.getModalStage().show();
+            }else{
+                FXHelper.showErrorAlert(AppHelper.getCannotAccessFormText());
+            }
         } catch (Exception e) {
             FXHelper.showErrorAlert(e.getMessage());
         }

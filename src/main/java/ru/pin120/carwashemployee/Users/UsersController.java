@@ -127,21 +127,30 @@ public class UsersController implements Initializable {
             FXHelper.showErrorAlert(rb.getString("NOT_SELECTED_USER"));
             usersTable.requestFocus();
         }else {
-            try {
-                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Users.resources.EditUser", "Users/fxml/EditUser.fxml", getActualScene());
-                EditUserController editUserController = fxWindowData.getLoader().getController();
-                editUserController.setParameters(operationMode, user, fxWindowData.getModalStage());
-                fxWindowData.getModalStage().showAndWait();
-                doResult(operationMode, editUserController.getExitMode(), user);
-            } catch (Exception e) {
-                FXHelper.showErrorAlert(e.getMessage());
-                usersTable.requestFocus();
+            boolean canOpenWindow = true;
+            if(operationMode == FXOperationMode.DELETE) {
+                if (user.getUsRole() == UserRole.OWNER) {
+                    FXHelper.showErrorAlert(String.format(rb.getString("CANNOT_DELETE_USER"), UserRole.OWNER.getDisplayValue()));
+                    usersTable.requestFocus();
+                    canOpenWindow = false;
+                }
+            }
+            if(canOpenWindow){
+                try {
+                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Users.resources.EditUser", "Users/fxml/EditUser.fxml", getActualScene());
+                    EditUserController editUserController = fxWindowData.getLoader().getController();
+                    editUserController.setParameters(operationMode, user, fxWindowData.getModalStage());
+                    fxWindowData.getModalStage().showAndWait();
+                    doResult(operationMode, editUserController.getExitMode(), user, selectedUserFX);
+                } catch (Exception e) {
+                    FXHelper.showErrorAlert(e.getMessage());
+                    usersTable.requestFocus();
+                }
             }
         }
-
     }
 
-    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, User user) {
+    private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, User user,UserFX selectedUserFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
                 case CREATE:
@@ -151,6 +160,12 @@ public class UsersController implements Initializable {
                             .thenComparing(UserFX::getUsName));
 
                     usersTable.getSelectionModel().select(userFX);
+                    break;
+                case DELETE:
+                    userFXES.remove(selectedUserFX);
+                    break;
+                case EDIT:
+                    FXHelper.showInfoAlert(rb.getString("SUCCESS_EDIT_PASSWORD"));
                     break;
             }
         }

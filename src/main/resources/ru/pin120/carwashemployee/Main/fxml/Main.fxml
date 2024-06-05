@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Main.MainController">
    <children>
@@ -36,6 +38,11 @@
                   <MenuItem fx:id="showWorkScheduleMenuItem" mnemonicParsing="false" onAction="#showWorkScheduleMenuItemAction" text="%SHOW_WORKSCHEDULE" />
               </items>
             </Menu>
+            <Menu fx:id="usersMenu" mnemonicParsing="false" text="%USERS">
+               <items>
+                  <MenuItem fx:id="showUsersMenuItem" mnemonicParsing="false" onAction="#showUsersMenuItemAction" text="%SHOW_USERS" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="%TRANSPORT">
               <items>
                 <MenuItem fx:id="showCategoryTransportMenuItem" mnemonicParsing="false" onAction="#showCategoryTransportMenuItemAction" text="%SHOW_TR_CATEGORY" />
@@ -47,12 +54,21 @@
                 <MenuItem fx:id="showCategoriesAndServicesMenuItem" mnemonicParsing="false" onAction="#showCategoriesAndServicesMenuItemAction" text="%SHOW_CATEGORIES_AND_SERVICES" />
               </items>
             </Menu>
-            <Menu fx:id="usersMenu" mnemonicParsing="false" text="%USERS">
-               <items>
-                  <MenuItem fx:id="showUsersMenuItem" mnemonicParsing="false" onAction="#showUsersMenuItemAction" text="%SHOW_USERS" />
-               </items>
-            </Menu>
         </menus>
       </MenuBar>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="welcomeLabel" text="%WELCOME">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+            <Label fx:id="usernameLabel" text="%WELCOME">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </VBox>

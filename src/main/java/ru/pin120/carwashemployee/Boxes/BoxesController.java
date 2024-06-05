@@ -11,11 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import ru.pin120.carwashemployee.AppHelper;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 import ru.pin120.carwashemployee.SuppliesInBox.SuppliesInBoxController;
+import ru.pin120.carwashemployee.Users.UserRole;
 
 import java.net.URL;
 import java.util.Comparator;
@@ -132,12 +134,23 @@ public class BoxesController implements Initializable {
             boxesTable.requestFocus();
         }else{
             try{
-                FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Boxes.resources.EditBox", "Boxes/fxml/EditBox.fxml", getActualScene());
-                EditBoxController editBoxController = fxWindowData.getLoader().getController();
+                boolean canOpenWindow = true;
+                if(operationMode == FXOperationMode.CREATE || operationMode == FXOperationMode.DELETE) {
+                    if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
+                        canOpenWindow = false;
+                        FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
+                    }
+                }
+                if(canOpenWindow) {
+                    FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Boxes.resources.EditBox", "Boxes/fxml/EditBox.fxml", getActualScene());
+                    EditBoxController editBoxController = fxWindowData.getLoader().getController();
 
-                editBoxController.setParameters(box, operationMode, fxWindowData.getModalStage());
-                fxWindowData.getModalStage().showAndWait();
-                doResult(operationMode, editBoxController.getExitMode(), box, selectedBoxFX);
+                    editBoxController.setParameters(box, operationMode, fxWindowData.getModalStage());
+                    fxWindowData.getModalStage().showAndWait();
+                    doResult(operationMode, editBoxController.getExitMode(), box, selectedBoxFX);
+                }else{
+                    boxesTable.requestFocus();
+                }
             }catch (Exception e){
                 FXHelper.showErrorAlert(e.getMessage());
                 boxesTable.requestFocus();

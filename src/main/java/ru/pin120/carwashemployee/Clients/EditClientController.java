@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
+import ru.pin120.carwashemployee.Cleaners.Cleaner;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -14,6 +15,9 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о клиенте
+ */
 public class EditClientController implements Initializable {
     @FXML
     private TextField surnameField;
@@ -36,6 +40,14 @@ public class EditClientController implements Initializable {
     private FXOperationMode operationMode;
     private ClientsRepository clientsRepository = new ClientsRepository();
     private Client client;
+
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -52,6 +64,12 @@ public class EditClientController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает форматтер для Spinner (discountSpinner),
+     * чтобы ограничить ввод только цифрами и контролировать максимальное значение скидки.
+     * Если новое значение введено некорректно или превышает максимально допустимое значение,
+     * ввод не принимается.
+     */
     private void setSpinnerFormatter() {
         TextFormatter<Integer> discountFormatter = new TextFormatter<>(change -> {
             if (change.getControlNewText().matches("\\d*")) {
@@ -66,6 +84,13 @@ public class EditClientController implements Initializable {
         discountSpinner.getEditor().setTextFormatter(discountFormatter);
     }
 
+    /**
+     * Устанавливает параметры для формы создания, изменения, удаления клиента.
+     *
+     * @param client Объект {@link Client}, содержащий данные о клиенте.
+     * @param operationMode Режим операции (создание, изменение, удаление).
+     * @param stage Модальное окно, на котором отображается форма.
+     */
     public void setParameters(Client client, FXOperationMode operationMode, Stage stage){
         this.client = client;
         this.operationMode = operationMode;
@@ -95,7 +120,13 @@ public class EditClientController implements Initializable {
         closeWindowAction();
     }
 
-
+    /**
+     * Устанавливает слушатели для текстовых полей (surnameField, nameField, phoneField).
+     * При превышении максимальной длины введенных данных в полях фамилии и имени, метод возвращает
+     * значение к предыдущему (старому) значению.
+     * Для поля телефона осуществляется фильтрация, оставляя только цифры и обрезая до максимально
+     * допустимой длины.
+     */
     private void textListeners(){
         surnameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -124,6 +155,11 @@ public class EditClientController implements Initializable {
         });
     }
 
+    /**
+     * Заполняет компоненты данными клиента для редактирования.
+     * Устанавливает значения фамилии, имени, номера телефона клиента и скидки в соответствующие
+     * текстовые поля и спиннер.
+     */
     private void fillingComponents() {
         surnameField.setText(client.getClSurname());
         nameField.setText(client.getClName());
@@ -132,6 +168,11 @@ public class EditClientController implements Initializable {
     }
 
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(surnameField.getText() == null || surnameField.getText().isBlank()){
@@ -195,11 +236,22 @@ public class EditClientController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

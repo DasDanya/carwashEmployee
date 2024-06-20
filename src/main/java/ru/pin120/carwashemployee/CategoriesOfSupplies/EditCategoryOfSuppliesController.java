@@ -19,6 +19,10 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о категории расходных материалов
+ *
+ */
 public class EditCategoryOfSuppliesController implements Initializable {
 
     private static final int MAX_LENGTH_CATEGORY_NAME = 50;
@@ -40,6 +44,13 @@ public class EditCategoryOfSuppliesController implements Initializable {
     private FXFormExitMode exitMode;
     private CategoryOfSupplies categoryOfSupplies;
     private CategoryOfSuppliesRepository categoryOfSuppliesRepository = new CategoryOfSuppliesRepository();
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -48,6 +59,11 @@ public class EditCategoryOfSuppliesController implements Initializable {
         setConvertersForComboBoxes();
     }
 
+    /**
+     * Устанавливает значения и конвертеры для выпадающего списка единиц измерения.
+     * Заполняет элементы выпадающего списка единицами измерения {@link UnitOfMeasure}.
+     * Устанавливает конвертер для правильного отображения выбранных значений в строковом формате.
+     */
     private void setConvertersForComboBoxes() {
         unitComboBox.getItems().setAll(UnitOfMeasure.values());
         unitComboBox.setConverter(new StringConverter<UnitOfMeasure>() {
@@ -63,6 +79,11 @@ public class EditCategoryOfSuppliesController implements Initializable {
         });
     }
 
+
+    /**
+     * Устанавливает слушатель изменений текста для поля названия категории.
+     * Проверяет длину введенного значения и обрезает его до максимально допустимой длины, если необходимо.
+     */
     private void categoryNameFieldTextListener() {
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -73,6 +94,13 @@ public class EditCategoryOfSuppliesController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для формы создания или удаления категории расходных материалов.
+     *
+     * @param categoryOfSupplies Объект {@link CategoryOfSupplies}, содержащий данные о категории расходных материалов.
+     * @param operationMode Режим операции (создание или удаление).
+     * @param modalStage Модальное окно, на котором отображается форма.
+     */
     public void setParameters(CategoryOfSupplies categoryOfSupplies, FXOperationMode operationMode, Stage modalStage) {
         this.categoryOfSupplies = categoryOfSupplies;
         this.operationMode = operationMode;
@@ -98,6 +126,11 @@ public class EditCategoryOfSuppliesController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(categoryNameField.getText() == null || categoryNameField.getText().isBlank()) {
@@ -134,11 +167,21 @@ public class EditCategoryOfSuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * FX представление мойщика
+ */
 public class CleanerFX {
     public static final int MAX_PHONE_FILLING=10;
     public static final int MAX_SURNAME_LENGTH=50;
@@ -13,12 +16,35 @@ public class CleanerFX {
     public static final String SURNAME_REGEX = "^[А-ЯЁа-яё-]+$";
     public static final String NAME_REGEX = "^[А-ЯЁа-яё-]+$";
     public static final String PATRONYMIC_REGEX = "^(|[А-ЯЁа-яё-]+)$";
+
+    /**
+     * id мойщика
+     */
     private LongProperty clrId;
+
+    /**
+     * Фамилия
+     */
     private StringProperty clrSurname;
+    /**
+     * Имя
+     */
     private StringProperty clrName;
+    /**
+     * Отчество
+     */
     private StringProperty clrPatronymic;
+    /**
+     * Номер телефона
+     */
     private StringProperty clrPhone;
+    /**
+     * Статус
+     */
     private StringProperty clrStatus;
+    /**
+     * Название фотографии
+     */
     private StringProperty clrPhotoName;
     //private Long boxIdValue;
 
@@ -104,6 +130,16 @@ public class CleanerFX {
     }
 
 
+    /**
+     * Конструктор для создания объекта CleanerFX
+     * @param clrId id мойщика
+     * @param clrSurname фамилия
+     * @param clrName имя
+     * @param clrPatronymic отчество
+     * @param clrPhone номер телефона
+     * @param clrPhotoName название фотографии
+     * @param clrStatus статус
+     */
     public CleanerFX(Long clrId, String clrSurname, String clrName, String clrPatronymic, String clrPhone, String clrPhotoName, CleanerStatus clrStatus) {
         this.clrId = new SimpleLongProperty(clrId);
         this.clrSurname = new SimpleStringProperty(clrSurname);

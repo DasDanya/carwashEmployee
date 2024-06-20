@@ -24,6 +24,9 @@ import ru.pin120.carwashemployee.WorkSchedule.WorkScheduleFX;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с мойщиками
+ */
 public class CleanersController implements Initializable {
 
     @FXML
@@ -70,6 +73,13 @@ public class CleanersController implements Initializable {
     private CleanersRepository cleanersRepository = new CleanersRepository();
     private ObservableList<CleanerFX> cleanerFXES = FXCollections.observableArrayList();
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -95,6 +105,10 @@ public class CleanersController implements Initializable {
         filterPhoneListener();
     }
 
+    /**
+     * Устанавливает слушатель изменений текстового поля для фильтрации ввода телефонного номера.
+     * Метод удаляет все нечисловые символы из введенного значения и обрезает его до максимально допустимой длины,
+     */
     private void filterPhoneListener(){
         filterPhoneField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -109,6 +123,9 @@ public class CleanersController implements Initializable {
         });
     }
 
+    /**
+     * Заполняет таблицу данными о мойщиках
+     */
     private void fillingAll() {
         try{
             List<Cleaner> cleaners = cleanersRepository.get(null,null,null,null,CleanerStatus.ACT);
@@ -123,6 +140,11 @@ public class CleanersController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о мойщиках
+     *
+     * @param cleaners список мойщиков для заполнения
+     */
     private void fillingObservableList(List<Cleaner> cleaners){
         for(Cleaner cleaner:cleaners){
             CleanerFX cleanerFX = new CleanerFX(cleaner.getClrId(),cleaner.getClrSurname(), cleaner.getClrName(), cleaner.getClrPatronymic(), cleaner.getClrPhone(), cleaner.getClrPhotoName(), cleaner.getClrStatus());
@@ -131,6 +153,11 @@ public class CleanersController implements Initializable {
     }
 
 
+    /**
+     * Устанавливает конвертер для комбо-бокса статусов мойщика.
+     * Конвертер используется для отображения объектов типа {@code CleanerStatus} в строковом представлении
+     * и обратно при необходимости.
+     */
     private void setConvertersForComboBoxes(){
         filterStatusComboBox.setConverter(new StringConverter<CleanerStatus>() {
             @Override
@@ -143,6 +170,10 @@ public class CleanersController implements Initializable {
             }
         });
     }
+
+    /**
+     * Заполняет комбо-бокс статусов мойщика значениями и устанавливает выбранный элемент по умолчанию.
+     */
     private void fillingStatusComboBox(){
         filterStatusComboBox.getItems().setAll(CleanerStatus.values());
         filterStatusComboBox.getItems().add(0,null);
@@ -150,6 +181,9 @@ public class CleanersController implements Initializable {
 
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_CLEANER")));
@@ -177,9 +211,17 @@ public class CleanersController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return cleanersTable.getScene();
     }
+
+
+
     public void createButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.CREATE);
     }
@@ -192,6 +234,11 @@ public class CleanersController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+
+    /**
+     * Выполняет операции с мойщиком
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         Cleaner cleaner = null;
         CleanerFX selectedCleanerFX = null;
@@ -232,6 +279,14 @@ public class CleanersController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     *
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param cleaner объект мойщика
+     * @param selectedCleanerFX выбранный CleanerFX для изменения или удаления
+     */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, Cleaner cleaner, CleanerFX selectedCleanerFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -277,6 +332,9 @@ public class CleanersController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         filterSurnameField.clear();
         filterNameField.clear();

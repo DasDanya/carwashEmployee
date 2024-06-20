@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер для привязки услуг к категории
+ */
 public class BindWithCategoryController implements Initializable {
 
     @FXML
@@ -36,11 +39,26 @@ public class BindWithCategoryController implements Initializable {
     private ServiceRepository serviceRepository = new ServiceRepository();
     private CategoriesOfServicesRepository categoriesOfServicesRepository = new CategoriesOfServicesRepository();
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
     }
 
+    /**
+     * Устанавливает параметры для текущего окна.
+     *
+     * @param stage          текущее окно (Stage)
+     * @param bindMode       режим привязки (BindWithCategoryMode)
+     * @param currentCategory текущая категория
+     * @param parameter      параметр для привязки
+     */
     public void setParameters(Stage stage, BindWithCategoryMode bindMode, String currentCategory,String parameter){
         parentStage = stage;
         this.bindMode = bindMode;
@@ -69,6 +87,11 @@ public class BindWithCategoryController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Обрабатывает действие при нажатии кнопки "OK".
+     *
+     * @param actionEvent событие действия
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         try {
@@ -88,11 +111,19 @@ public class BindWithCategoryController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает действие при нажатии кнопки "Отмена".
+     *
+     * @param actionEvent событие действия
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         parentStage.close();
     }
 
+    /**
+     * Устанавливает действие при закрытии окна.
+     */
     private void closeWindowAction(){
         parentStage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

@@ -43,30 +43,34 @@ public class TransportRepository {
         return gson.fromJson(jsonData, type);
     }
 
-    public Transport create(Transport transport) throws Exception {
-        Transport createdTransport = null;
-        String jsonData = gson.toJson(transport);
+    /**
+     * Метод добавления транспорта
+     * @param transport Создаваемый транспорт
+     * @return Созданный транспорт с id
+     * @throws IOException Ошибка обработки ответа от сервера
+     */
+    public Transport create(Transport transport) throws IOException {
+        Transport createdTransport;
+        String jsonData = gson.toJson(transport); // Преобразование данных в JSON
 
-        System.out.println(jsonData);
-        RequestBody body = RequestBody.create(JSON, jsonData);
+        RequestBody body = RequestBody.create(JSON, jsonData); // Создание тела запроса
 
         Request request = new Request.Builder()
                 .url(url + "/create")
                 .post(body)
-                .build();
+                .build(); // Формирование запроса
 
-        Response response = client.newCall(request).execute();
-        switch (response.code()){
-            case 200:
-                String result = response.body().string();
-                Type type = new TypeToken<Transport>(){}.getType();
-                createdTransport = gson.fromJson(result, type);
-                break;
-            case 409:
-                throw new HttpRetryException(response.body().string(), 409);
-            default:
-                throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
-        }
+        Response response = client.newCall(request).execute(); // Получение ответа от сервера
+        String result = response.body().string(); // Получение JSON
+        Type type = new TypeToken<Transport>() {}.getType(); // Указание нужного типа данных
+        createdTransport = gson.fromJson(result, type); // Преобразование в нужный тип данных
+//        if (response.code() == 200) {
+//            String result = response.body().string(); // Получение JSON
+//            Type type = new TypeToken<Transport>() {}.getType(); // Указание нужного типа данных
+//            createdTransport = gson.fromJson(result, type); // Преобразование в нужный тип данных
+//        } else {
+//            throw new HttpRetryException(response.body().string(), response.code());
+//        }
 
         return createdTransport;
     }
@@ -84,16 +88,12 @@ public class TransportRepository {
                 .build();
 
         Response response = client.newCall(request).execute();
-        switch (response.code()){
-            case 200:
-                String result = response.body().string();
-                Type type = new TypeToken<Transport>(){}.getType();
-                editedTransport = gson.fromJson(result, type);
-                break;
-            case 409:
-                throw new HttpRetryException(response.body().string(), 409);
-            default:
-                throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+        if (response.code() == 200) {
+            String result = response.body().string();
+            Type type = new TypeToken<Transport>() {}.getType();
+            editedTransport = gson.fromJson(result, type);
+        } else {
+            throw new HttpRetryException(response.body().string(), response.code());
         }
 
         return editedTransport;

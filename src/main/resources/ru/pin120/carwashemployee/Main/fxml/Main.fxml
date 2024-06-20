@@ -1,73 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Main.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.pin120.carwashemployee.Main.MainController">
    <children>
       <MenuBar fx:id="menuBar">
-        <menus>
-            <Menu mnemonicParsing="false" text="%SUPPLIES">
-              <items>
-                  <MenuItem fx:id="showSuppliesMenuItem" mnemonicParsing="false" onAction="#showSuppliesMenuItemAction" text="%SHOW_SUPPLIES" />
-                <MenuItem fx:id="showCategoriesOfSuppliesMenuItem" mnemonicParsing="false" onAction="#showCategoriesOfSuppliesMenuItemAction" text="%SHOW_CATERORIES_OF_SUPPLIES" />
-              </items>
+         <menus>
+            <Menu mnemonicParsing="false" text="%BOXES">
+               <items>
+                  <MenuItem fx:id="showBoxesMenuItem" mnemonicParsing="false" onAction="#showBoxesMenuItemAction" text="%SHOW_BOXES" />
+               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="%BOXES">
-            <items>
-              <MenuItem fx:id="showBoxesMenuItem" mnemonicParsing="false" onAction="#showBoxesMenuItemAction" text="%SHOW_BOXES" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="%BOOKINGS">
-            <items>
-              <MenuItem fx:id="showBookingsMenuItem" mnemonicParsing="false" onAction="#showBookingsMenuItem" text="%SHOW_BOOKINGS" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="%CLIENTS">
-            <items>
-              <MenuItem fx:id="showClientsMenuItem" mnemonicParsing="false" onAction="#showClientsMenuItemAction" text="%SHOW_CLIENTS" />
-            </items>
-          </Menu>
+            <Menu mnemonicParsing="false" text="%BOOKINGS">
+               <items>
+                  <MenuItem fx:id="showBookingsMenuItem" mnemonicParsing="false" onAction="#showBookingsMenuItem" text="%SHOW_BOOKINGS" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%CLIENTS">
+               <items>
+                  <MenuItem fx:id="showClientsMenuItem" mnemonicParsing="false" onAction="#showClientsMenuItemAction" text="%SHOW_CLIENTS" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="%CLEANERS">
-              <items>
-                <MenuItem fx:id="showCleanersMenuItem" mnemonicParsing="false" onAction="#showCleanersMenuItemAction" text="%SHOW_CLEANERS" />
+               <items>
+                  <MenuItem fx:id="showCleanersMenuItem" mnemonicParsing="false" onAction="#showCleanersMenuItemAction" text="%SHOW_CLEANERS" />
                   <MenuItem fx:id="showWorkScheduleMenuItem" mnemonicParsing="false" onAction="#showWorkScheduleMenuItemAction" text="%SHOW_WORKSCHEDULE" />
-              </items>
+               </items>
             </Menu>
             <Menu fx:id="usersMenu" mnemonicParsing="false" text="%USERS">
                <items>
                   <MenuItem fx:id="showUsersMenuItem" mnemonicParsing="false" onAction="#showUsersMenuItemAction" text="%SHOW_USERS" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="%SUPPLIES">
+               <items>
+                  <MenuItem fx:id="showSuppliesMenuItem" mnemonicParsing="false" onAction="#showSuppliesMenuItemAction" text="%SHOW_SUPPLIES" />
+                  <MenuItem fx:id="showCategoriesOfSuppliesMenuItem" mnemonicParsing="false" onAction="#showCategoriesOfSuppliesMenuItemAction" text="%SHOW_CATERORIES_OF_SUPPLIES" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="%TRANSPORT">
-              <items>
-                <MenuItem fx:id="showCategoryTransportMenuItem" mnemonicParsing="false" onAction="#showCategoryTransportMenuItemAction" text="%SHOW_TR_CATEGORY" />
+               <items>
+                  <MenuItem fx:id="showCategoryTransportMenuItem" mnemonicParsing="false" onAction="#showCategoryTransportMenuItemAction" text="%SHOW_TR_CATEGORY" />
                   <MenuItem fx:id="showTransportMenuItem" mnemonicParsing="false" onAction="#showTransportMenuItemAction" text="%SHOW_TRANSPORT" />
-              </items>
+               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%SERVICES">
-              <items>
-                <MenuItem fx:id="showCategoriesAndServicesMenuItem" mnemonicParsing="false" onAction="#showCategoriesAndServicesMenuItemAction" text="%SHOW_CATEGORIES_AND_SERVICES" />
-              </items>
+               <items>
+                  <MenuItem fx:id="showCategoriesAndServicesMenuItem" mnemonicParsing="false" onAction="#showCategoriesAndServicesMenuItemAction" text="%SHOW_CATEGORIES_AND_SERVICES" />
+               </items>
             </Menu>
-        </menus>
+         </menus>
       </MenuBar>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="vbox" alignment="CENTER" prefHeight="502.0" prefWidth="684.0" style="-fx-background-color: WHITE;" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
          <children>
             <Label fx:id="welcomeLabel" text="%WELCOME">
                <font>
-                  <Font size="40.0" />
+                  <Font size="30.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="15.0" />
+               </VBox.margin>
             </Label>
-            <Label fx:id="usernameLabel" text="%WELCOME">
-               <font>
-                  <Font size="40.0" />
-               </font>
-            </Label>
+            <ImageView fx:id="logoView" fitHeight="350.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/mainLogo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" text="%EXIT" />
          </children>
       </VBox>
    </children>

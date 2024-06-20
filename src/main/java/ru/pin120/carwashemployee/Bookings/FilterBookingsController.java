@@ -40,6 +40,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Контроллер для работы с заказами в табличном виде
+ */
 public class FilterBookingsController implements Initializable {
 
     @FXML
@@ -99,6 +102,12 @@ public class FilterBookingsController implements Initializable {
     private String filterCompareOperator;
     private Integer filterPrice;
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -125,9 +134,18 @@ public class FilterBookingsController implements Initializable {
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
     }
 
+    /**
+     * Получение текущей сцены.
+     *
+     * @return Текущая сцена
+     */
     private Scene getActualScene(){
         return bookingsTable.getScene();
     }
+
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void setTooltipForButtons() {
         resetStartTimePickerButton.setOnMouseEntered(event -> {
             resetStartTimePickerButton.setTooltip(new Tooltip(rb.getString("RESET_START_TIME")));
@@ -153,6 +171,10 @@ public class FilterBookingsController implements Initializable {
         });
     }
 
+    /**
+     * Настраивает спиннер для выбора целочисленного значения и устанавливает текстовый форматтер для поля редактирования спиннера.
+     * Позволяет вводить только цифры в поле редактирования спиннера.
+     */
     private void settingCountSpinner() {
         priceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,0,50));
         FXHelper.setContextMenuForEditableTextField(priceSpinner.getEditor());
@@ -167,6 +189,10 @@ public class FilterBookingsController implements Initializable {
         priceSpinner.getEditor().setTextFormatter(formatter);
     }
 
+    /**
+     * Настраивает комбо-бокс для выбора статуса заказа.
+     * Добавляет все значения перечисления BookingStatus в комбо-бокс и устанавливает конвертер для отображения текста статуса.
+     */
     private void settingStatusComboBox(){
         statusComboBox.getItems().add(null);
         statusComboBox.getItems().addAll(BookingStatus.values());
@@ -182,6 +208,10 @@ public class FilterBookingsController implements Initializable {
         });
     }
 
+    /**
+     * Заполняет комбо-бокс выбора боксов данными из репозитория.
+     * В случае ошибки отображает диалоговое окно с сообщением об ошибке.
+     */
     private void fillingBoxesComboBox(){
         try{
             List<Box> boxes = boxesRepository.getAll();
@@ -191,6 +221,11 @@ public class FilterBookingsController implements Initializable {
             FXHelper.showErrorAlert(e.getMessage());
         }
     }
+
+    /**
+     * Устанавливает конвертер для комбо-бокса выбора боксов.
+     * Конвертер преобразует объект Box в строку для отображения в комбо-боксе и обратно.
+     */
     private void converterBoxesInComboBox(){
         boxesComboBox.setConverter(new StringConverter<Box>() {
             @Override
@@ -209,6 +244,10 @@ public class FilterBookingsController implements Initializable {
         });
     }
 
+    /**
+     * Добавляет слушатели событий для полей выбора интервала времени.
+     * Устанавливает ограничение на ввод текста и обновляет значения полей, обрезая до минут при изменении значения.
+     */
     private void intervalFieldListeners(){
         startIntervalField.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, Event::consume);
         startIntervalField.localDateTimeProperty().addListener((observable, oldValue, newValue) -> {
@@ -234,6 +273,10 @@ public class FilterBookingsController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Выполняет операцию обновления данных и сбрасывает все фильтры и настройки.
+     * Перезаполняет таблицу заказов с начальной страницы пагинации.
+     */
     private void doRefresh(){
         filterStartTime = null;
         filterEndTime = null;
@@ -309,6 +352,16 @@ public class FilterBookingsController implements Initializable {
         }
     }
 
+
+    /**
+     * Устанавливает параметры окна на основе переданных данных клиента, мойщика и сцены.
+     * В зависимости от переданных объектов клиента или мойщика, устанавливает заголовок окна.
+     * Устанавливает всплывающие подсказки для кнопок и заполняет таблицу заказов с начальной страницы пагинации.
+     *
+     * @param client  Клиент (может быть null).
+     * @param cleaner Мойщик (может быть null).
+     * @param stage   Сцена (окно) для установки заголовка и работы с всплывающими подсказками.
+     */
     public void setParameters(Client client, Cleaner cleaner, Stage stage) {
         this.stage = stage;
         if(client != null) {
@@ -326,12 +379,20 @@ public class FilterBookingsController implements Initializable {
         fillingTable(0);
     }
 
+    /**
+     * Устанавливает слушателя изменения текущей страницы пагинации
+     * При изменении текущей страницы вызывает метод для заполнения таблицы заказов на новой странице.
+     */
     private void pageIndexListener() {
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
             fillingTable(newIndex.intValue());
         });
     }
 
+    /**
+     * Заполняет таблицу заказов на указанной странице пагинации.
+     * @param pageIndex Номер страницы пагинации для загрузки данных.
+     */
     private void fillingTable(int pageIndex) {
         bookingFXES.clear();
         bookings.clear();
@@ -398,6 +459,12 @@ public class FilterBookingsController implements Initializable {
         }
     }
 
+    /**
+     * Генерирует Excel-отчет на основе переданной данных о выполненных заказах мойщика.
+     *
+     * @param info Данные о выполненных заказах мойщика, где ключ - дата, значение - объект BookingInfoDTO.
+     * @throws IOException Возникает в случае ошибок при работе с файлами.
+     */
     private void generateReport(Map<LocalDate, BookingInfoDTO> info) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(rb.getString("DONE_BOOKINGS"));

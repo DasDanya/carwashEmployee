@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер привязки категорий расходных материалов к услуге
+ */
 public class CategoriesOfSuppliesForServiceController implements Initializable {
 
     @FXML
@@ -39,6 +42,12 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     private ServiceRepository serviceRepository = new ServiceRepository();
     private ObservableList<CategoryOfSuppliesForServiceFX> suppliesForServiceFXES = FXCollections.observableArrayList();
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -55,20 +64,31 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
         Platform.runLater(()->FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return suppliesForServiceTable.getScene();
     }
 
 
+    /**
+     * Настраивает форму для отображения информации о привязки категорий расходных материалов к услуге.
+     * Устанавливает заголовок окна на основе названия услуги, заполняет таблицу с привязками
+     * @param service Услуга, для которой будет устанавливаться привязка
+     * @param stage   Окно JavaFX, на котором будет отображаться форма
+     */
     public void settingForm(Service service, Stage stage) {
         this.service = service;
         stage.setTitle(String.format(rb.getString("FORM_TITLE"), service.getServName()));
         fillingTable();
-        for(CategoryOfSupplies categoryOfSupplies: service.getCategoriesOfSupplies()){
-            System.out.println(categoryOfSupplies);
-        }
     }
 
+    /**
+     * Заполняет таблицу с привязками категорий расходных материалов к услуге
+     */
     private void fillingTable(){
         try {
             List<CategoryOfSupplies> categoriesOfSupplies = categoryOfSuppliesRepository.getAll();
@@ -100,6 +120,9 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         try {
             Service actualService = serviceRepository.get(service.getServName());

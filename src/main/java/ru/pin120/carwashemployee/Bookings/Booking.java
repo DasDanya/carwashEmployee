@@ -9,6 +9,9 @@ import ru.pin120.carwashemployee.ClientsTransport.ClientsTransport;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Модель заказа
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,14 +19,41 @@ import java.util.List;
 @ToString
 public class Booking {
 
+    /**
+     * id заказа
+     */
     private String bkId;
+    /**
+     * время начала
+     */
     private LocalDateTime bkStartTime;
+    /**
+     * время окончания
+     */
     private LocalDateTime bkEndTime;
+    /**
+     * стоимость
+     */
     private Integer bkPrice;
+    /**
+     * статус
+     */
     private BookingStatus bkStatus;
+    /**
+     * бокс, в котором выполняется заказ
+     */
     private Box box;
+    /**
+     * мойщик, выполняющий заказ
+     */
     private Cleaner cleaner;
+    /**
+     * транспорт клиента
+     */
     private ClientsTransport clientTransport;
+    /**
+     * список услуг
+     */
     private List<Service> services;
 
 }

@@ -14,6 +14,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий клиента
+ */
 public class ClientsRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/clients";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -24,6 +27,14 @@ public class ClientsRepository {
     private Gson gson = new Gson();
 
 
+    /**
+     * Получает список клиентов указанной страницы.
+     * Если указанный индекс страницы меньше нуля, возвращает пустой список.
+     *
+     * @param pageIndex индекс страницы
+     * @return список клиентов указанной страницы
+     * @throws Exception если произошла ошибка при выполнении HTTP-запроса или обработке данных
+     */
     public List<Client> getByPage(int pageIndex) throws Exception {
         if(pageIndex < 0){
             return new ArrayList<>();
@@ -42,6 +53,19 @@ public class ClientsRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Выполняет поиск клиентов с учетом заданных фильтров и страницы.
+     * Если указанный индекс страницы меньше нуля, возвращает пустой список.
+     *
+     * @param pageIndex индекс страницы
+     * @param surname фамилия клиента
+     * @param name имя клиента
+     * @param phone номер телефона клиента
+     * @param discount скидка клиента
+     * @param filterDiscountOperator оператор сравнения для фильтрации скидки
+     * @return список клиентов, соответствующих заданным фильтрам и находящихся на указанной странице
+     * @throws Exception если произошла ошибка при выполнении HTTP-запроса или обработке данных
+     */
     public List<Client> search(int pageIndex, String surname, String name, String phone, Integer discount, String filterDiscountOperator) throws Exception {
         if (pageIndex < 0){
             return new ArrayList<>();
@@ -80,6 +104,13 @@ public class ClientsRepository {
 
     }
 
+    /**
+     * Создает нового клиента
+     *
+     * @param clientData данные нового клиента
+     * @return созданный клиент
+     * @throws Exception если произошла ошибка при выполнении HTTP-запроса или обработке данных
+     */
     public Client create(Client clientData) throws Exception {
         Client createdClient = null;
         String jsonData = gson.toJson(clientData);
@@ -103,6 +134,14 @@ public class ClientsRepository {
         return createdClient;
     }
 
+
+    /**
+     * Редактирует существующего клиента
+     *
+     * @param clientData данные клиента для редактирования
+     * @return отредактированный клиент
+     * @throws Exception если произошла ошибка при выполнении HTTP-запроса или обработке данных
+     */
     public Client edit(Client clientData) throws Exception {
         Client editedClient = null;
         String jsonData = gson.toJson(clientData);
@@ -126,6 +165,13 @@ public class ClientsRepository {
         return editedClient;
     }
 
+    /**
+     * Удаляет клиента с указанным id.
+     *
+     * @param id id клиента для удаления
+     * @return true, если клиент успешно удален; false в противном случае
+     * @throws Exception если произошла ошибка при выполнении HTTP-запроса или обработке данных
+     */
     public boolean delete(Long id) throws Exception {
         boolean successDelete;
 

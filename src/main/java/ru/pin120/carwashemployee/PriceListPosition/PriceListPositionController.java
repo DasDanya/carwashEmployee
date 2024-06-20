@@ -22,6 +22,9 @@ import ru.pin120.carwashemployee.Users.UserRole;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с позиций прайс-листа
+ */
 public class PriceListPositionController implements Initializable {
 
     @FXML
@@ -70,6 +73,13 @@ public class PriceListPositionController implements Initializable {
 
     private PriceListPositionRepository priceListPositionRepository = new PriceListPositionRepository();
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -88,6 +98,11 @@ public class PriceListPositionController implements Initializable {
 
     }
 
+    /**
+     * Инициализирует панель фильтрации.
+     * Устанавливает форматеры для спиннеров, заполняет элементы ComboBox операторами и
+     * настраивает контекстные меню для текстовых полей.
+     */
     private void initFilterPanel(){
         setSpinnersFormatters();
 
@@ -100,6 +115,10 @@ public class PriceListPositionController implements Initializable {
         FXHelper.setContextMenuForEditableTextField(filterCategoryField);
     }
 
+    /**
+     * Устанавливает форматеры для спиннеров фильтрации.
+     * Форматеры ограничивают ввод только цифрами и проверяют, чтобы введенные значения не превышали установленные пределы.
+     */
     private void setSpinnersFormatters(){
         filterPriceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,PriceListPositionFX.MAX_PRICE,0,50));
         filterTimeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,PriceListPositionFX.MAX_TIME,1,1));
@@ -129,6 +148,9 @@ public class PriceListPositionController implements Initializable {
         filterTimeSpinner.getEditor().setTextFormatter(timeFormatter);
     }
 
+    /**
+     * Заполняет таблицу позиций прайс-листа всеми доступными позициями.
+     */
     private void fillingAll(){
         try{
             List<PriceListPosition> priceListPositions = priceListPositionRepository.getByServName(serviceName);
@@ -141,6 +163,11 @@ public class PriceListPositionController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о позициях прайс-листа
+     *
+     * @param priceListPositions список транспортных средств для заполнения
+     */
     private void fillingObservableList(List<PriceListPosition> priceListPositions){
         for(PriceListPosition priceListPosition : priceListPositions){
             PriceListPositionFX priceListPositionFX = new PriceListPositionFX(priceListPosition.getCategoryOfTransport().getCatTrName(), priceListPosition.getPlPrice(), priceListPosition.getPlTime(), priceListPosition.getPlId());
@@ -148,6 +175,12 @@ public class PriceListPositionController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает параметры услуги и модального окна.
+     *
+     * @param serviceName  название услуги
+     * @param modalStage  модальное окно, тип Stage.
+     */
     public void setParameters(String serviceName, Stage modalStage) {
         this.serviceName = serviceName;
         stage = modalStage;
@@ -157,6 +190,9 @@ public class PriceListPositionController implements Initializable {
 
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void setTooltipForButton(){
         createButton.setOnMouseEntered(event->{
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_RECORD")));
@@ -175,6 +211,11 @@ public class PriceListPositionController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return priceListTable.getScene();
     }
@@ -191,6 +232,10 @@ public class PriceListPositionController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с позицией прайс-листа
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
             FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
@@ -243,6 +288,13 @@ public class PriceListPositionController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param priceListPosition объект позиции прайс-листа
+     * @param selectedPriceListPositionFX выбранный PriceListPositionFX для изменения или удаления
+     */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, PriceListPosition priceListPosition, PriceListPositionFX selectedPriceListPositionFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -274,6 +326,9 @@ public class PriceListPositionController implements Initializable {
         priceListTable.requestFocus();
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         priceListPositionFXES.clear();
         
@@ -295,6 +350,10 @@ public class PriceListPositionController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
@@ -303,6 +362,9 @@ public class PriceListPositionController implements Initializable {
         doSearch();
     }
 
+    /**
+     * Поиск позиций прайс-листа
+     */
     private void doSearch(){
         try {
             if((filterCategoryField.getText() != null && !filterCategoryField.getText().isBlank()) || (operationTimeComboBox.getSelectionModel().getSelectedItem() != null && !operationTimeComboBox.getSelectionModel().getSelectedItem().isBlank()) || (operationPriceComboBox.getSelectionModel().getSelectedItem() != null && !operationPriceComboBox.getSelectionModel().getSelectedItem().isBlank())) {

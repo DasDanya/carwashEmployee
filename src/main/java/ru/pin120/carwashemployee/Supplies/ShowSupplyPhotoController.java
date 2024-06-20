@@ -34,6 +34,13 @@ public class ShowSupplyPhotoController implements Initializable {
     double imageWidth = 600;
     double imageHeight = 600;
     private SupplyRepository supplyRepository = new SupplyRepository();
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -55,10 +62,20 @@ public class ShowSupplyPhotoController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущее окно (Stage), к которому привязан элемент photoImageView.
+     *
+     * @return текущее окно (Stage)
+     */
     private Stage getActualStage(){
         return (Stage) photoImageView.getScene().getWindow();
     }
 
+    /**
+     * Отображает выбранное изображение в элементе photoImageView и устанавливает заголовок текущего окна.
+     *
+     * @param selectedPhoto выбранное изображение для отображения
+     */
     public void showPhoto(Image selectedPhoto){
         if(selectedPhoto != null){
             photo = selectedPhoto;
@@ -69,6 +86,12 @@ public class ShowSupplyPhotoController implements Initializable {
 
     }
 
+    /**
+     * Отображает выбранное изображение в элементе photoImageView и устанавливает заголовок текущего окна
+     * с информацией о расходном материале
+     * @param selectedPhoto выбранное изображение для отображения
+     * @param supply объект Supply, содержащий информацию о расходном материале
+     */
     public void showPhoto(Image selectedPhoto, Supply supply) {
         if(selectedPhoto != null){
             photo = selectedPhoto;
@@ -78,6 +101,12 @@ public class ShowSupplyPhotoController implements Initializable {
         getActualStage().setTitle(String.format("%s %s %s %d %s", rb.getString("TITLE"), supply.getCategory().getCsupName(), supply.getSupName(), supply.getSupMeasure(), supply.getCategory().getUnit().getDisplayValue()));
     }
 
+    /**
+     * Отображает фотографию расходного материала в элементе photoImageView
+     * и устанавливает заголовок текущего окна с информацией о расходном материале
+     *
+     * @param supply объект Supply, содержащий информацию о расходном материале
+     */
     public void showPhoto(Supply supply){
         try{
             photo = supplyRepository.getPhoto(supply.getSupPhotoName());
@@ -90,6 +119,12 @@ public class ShowSupplyPhotoController implements Initializable {
     }
 
 
+    /**
+     * Обработчик события "MouseDragged" для элемента AnchorPane.
+     * Перемещает окно (rootAnchorPane) в соответствии с перемещением мыши.
+     *
+     * @param mouseEvent событие "MouseDragged", вызванное перемещением мыши
+     */
     public void onAnchorPaneMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
             double newX = mouseEvent.getSceneX() - initialX;
@@ -99,6 +134,12 @@ public class ShowSupplyPhotoController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события "MousePressed" для элемента AnchorPane.
+     * Запоминает начальные координаты мыши для использования при перемещении окна (rootAnchorPane).
+     *
+     * @param mouseEvent событие "MousePressed", вызванное нажатием кнопки мыши
+     */
     public void onAnchorPaneMousePressed(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
             initialX = mouseEvent.getSceneX() - rootAnchorPane.getLayoutX();
@@ -106,6 +147,13 @@ public class ShowSupplyPhotoController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события прокрутки (ScrollEvent) для элемента AnchorPane (rootAnchorPane).
+     * Масштабирует окно (rootAnchorPane) в зависимости от направления прокрутки мыши.
+     * При прокрутке вверх увеличивает масштаб, при прокрутке вниз уменьшает масштаб (если масштаб > 0.5).
+     *
+     * @param scrollEvent событие прокрутки (ScrollEvent), вызванное прокруткой колеса мыши
+     */
     public void onScrollingView(ScrollEvent scrollEvent) {
         double deltaY = scrollEvent.getDeltaY();
         if (deltaY > 0) {

@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
+import ru.pin120.carwashemployee.FX.FXOperationMode;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 import ru.pin120.carwashemployee.Supplies.ShowSupplyPhotoController;
 import ru.pin120.carwashemployee.Supplies.Supply;
@@ -87,7 +88,7 @@ public class SuppliesInBoxController implements Initializable {
         operationCountComboBox.getItems().setAll(operators);
 
         setTooltipForButtons();
-        Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doRefresh));
+        Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
         pageIndexListener();
 
         try {
@@ -175,31 +176,36 @@ public class SuppliesInBoxController implements Initializable {
         }
     }
 
-
-    public void deleteButtonAction(ActionEvent actionEvent) {
-        SuppliesInBoxFX selectedSupplyFX = suppliesTable.getSelectionModel().getSelectedItem();
-        if(selectedSupplyFX == null){
-            FXHelper.showErrorAlert(rb.getString("NOT_SELECT_SUPPLY"));
-        }else{
-            try {
-                SuppliesInBox supplyInBox = getSupplyInBox(selectedSupplyFX);
-                if(supplyInBox != null) {
-                    Optional<ButtonType> result = FXHelper.createConfirmAlert(rb.getString("CONFIRM_DELETE_TITLE"), String.format(rb.getString("CONFIRM_DELETE_TEXT"), supplyInBox.getSupply().getCategory().getCsupName(), supplyInBox.getSupply().getSupName(), supplyInBox.getSupply().getSupMeasure(), supplyInBox.getSupply().getCategory().getUnit().getDisplayValue()));
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        if(suppliesInBoxRepository.delete(supplyInBox.getSibId())){
-                            fillingTable(pagination.getCurrentPageIndex());
+    private void doOperation(FXOperationMode operationMode) {
+        if (operationMode == FXOperationMode.DELETE) {
+            SuppliesInBoxFX selectedSupplyFX = suppliesTable.getSelectionModel().getSelectedItem();
+            if (selectedSupplyFX == null) {
+                FXHelper.showErrorAlert(rb.getString("NOT_SELECT_SUPPLY"));
+            } else {
+                try {
+                    SuppliesInBox supplyInBox = getSupplyInBox(selectedSupplyFX);
+                    if (supplyInBox != null) {
+                        Optional<ButtonType> result = FXHelper.createConfirmAlert(rb.getString("CONFIRM_DELETE_TITLE"), String.format(rb.getString("CONFIRM_DELETE_TEXT"), supplyInBox.getSupply().getCategory().getCsupName(), supplyInBox.getSupply().getSupName(), supplyInBox.getSupply().getSupMeasure(), supplyInBox.getSupply().getCategory().getUnit().getDisplayValue()));
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            if (suppliesInBoxRepository.delete(supplyInBox.getSibId())) {
+                                fillingTable(pagination.getCurrentPageIndex());
+                            }
                         }
+                    } else {
+                        FXHelper.showErrorAlert(rb.getString("SUPPLY_NOT_EXIST"));
                     }
-                }else{
-                    FXHelper.showErrorAlert(rb.getString("SUPPLY_NOT_EXIST"));
+                } catch (Exception e) {
+                    FXHelper.showErrorAlert(e.getMessage());
+                    suppliesTable.requestFocus();
                 }
-            }catch (Exception e){
-                FXHelper.showErrorAlert(e.getMessage());
-                suppliesTable.requestFocus();
             }
         }
 
         suppliesTable.requestFocus();
+    }
+
+    public void deleteButtonAction(ActionEvent actionEvent) {
+       doOperation(FXOperationMode.DELETE);
     }
 
     private SuppliesInBox getSupplyInBox(SuppliesInBoxFX suppliesInBoxFX){

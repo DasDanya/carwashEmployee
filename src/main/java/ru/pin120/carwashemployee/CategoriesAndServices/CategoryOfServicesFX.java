@@ -4,11 +4,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.NoArgsConstructor;
 
+/**
+ * FX представление категории услуг
+ */
 @NoArgsConstructor
 public class CategoryOfServicesFX {
 
     public static final int MAX_LENGTH_CATEGORY_NAME = 30;
     public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
+    /**
+     * Название категории
+     */
     private StringProperty name;
 
     public String getName() {

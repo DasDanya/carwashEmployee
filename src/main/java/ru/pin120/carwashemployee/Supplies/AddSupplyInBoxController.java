@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер добавления расходного материала в бокс
+ */
 public class AddSupplyInBoxController implements Initializable {
     @FXML
     private ComboBox<Box> boxesComboBox;
@@ -40,12 +43,24 @@ public class AddSupplyInBoxController implements Initializable {
 
     private Supply supply;
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
         settingBoxesComboBox();
     }
 
+
+    /**
+     * Настраивает спиннер для выбора количества с заданным максимальным значением.
+     *
+     * @param maxValue максимальное значение для спиннера.
+     */
     private void settingCountSpinner(int maxValue) {
         countSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maxValue,0,1));
         TextFormatter<Integer> formatter = new TextFormatter<>(change -> {
@@ -61,6 +76,12 @@ public class AddSupplyInBoxController implements Initializable {
         countSpinner.getEditor().setTextFormatter(formatter);
     }
 
+    /**
+     * Устанавливает параметры для формы добавления расходных материалов в бокс
+     *
+     * @param supply расходный материал
+     * @param stage Stage.
+     */
     public void setParameters(Supply supply, Stage stage) {
         this.supply = supply;
         this.stage = stage;
@@ -72,11 +93,17 @@ public class AddSupplyInBoxController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
-
+    /**
+     * Настраивает ComboBox для выбора боксов (boxes).
+     */
     private void settingBoxesComboBox(){
         try{
             boxes = boxesRepository.getAll();
@@ -112,6 +139,11 @@ public class AddSupplyInBoxController implements Initializable {
     }
 
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         if(countSpinner.getValue() == 0){
             FXHelper.showErrorAlert(rb.getString("NOT_ZERO_COUNT"));
@@ -135,6 +167,12 @@ public class AddSupplyInBoxController implements Initializable {
 
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();

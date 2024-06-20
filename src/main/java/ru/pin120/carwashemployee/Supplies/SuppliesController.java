@@ -16,6 +16,9 @@ import ru.pin120.carwashemployee.FX.FXWindowData;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с расходными материалами
+ */
 public class SuppliesController implements Initializable {
     @FXML
     private Button addSupplyInBoxButton;
@@ -66,6 +69,12 @@ public class SuppliesController implements Initializable {
     private String filterOperator = "";
     private Integer filterCount = null;
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -95,6 +104,11 @@ public class SuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет таблицу расходных материалов (suppliesTable), исходя из текущего индекса страницы.
+     *
+     * @param pageIndex индекс текущей страницы пагинации
+     */
     private void fillingTable(int pageIndex) {
         try{
             supplies.clear();
@@ -115,6 +129,9 @@ public class SuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о расходных материалах
+     */
     private void fillingObservableList() {
         for(Supply supply: supplies){
             String measure = supply.getSupMeasure() + " " + supply.getCategory().getUnit().getDisplayValue();
@@ -123,6 +140,9 @@ public class SuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Настраивает filterCountSpinner с соответствующей фабрикой значений и текстовым форматтером.
+     */
     private void settingCountSpinner() {
         filterCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,0,1));
         FXHelper.setContextMenuForEditableTextField(filterCountSpinner.getEditor());
@@ -137,16 +157,28 @@ public class SuppliesController implements Initializable {
         filterCountSpinner.getEditor().setTextFormatter(formatter);
     }
 
+    /**
+     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
+     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     */
     private void pageIndexListener() {
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
             fillingTable(newIndex.intValue());
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return suppliesTable.getScene();
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void setTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_SUPPLY")));
@@ -186,6 +218,10 @@ public class SuppliesController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с расходным материалом
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         Supply supply = null;
         switch (operationMode){
@@ -222,6 +258,13 @@ public class SuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     *
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param supply объект расходного материала
+     */
     private void doResult(FXFormExitMode exitMode, FXOperationMode operationMode, Supply supply) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -257,6 +300,9 @@ public class SuppliesController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Обновление данных
+     */
     private void doRefresh(){
         filterNameField.clear();
         filterCategoryField.clear();

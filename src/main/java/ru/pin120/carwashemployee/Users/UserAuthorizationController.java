@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 import ru.pin120.carwashemployee.Http.LoginRequest;
+import ru.pin120.carwashemployee.Main.MainController;
 
 import java.net.URL;
 import java.util.ResourceBundle;

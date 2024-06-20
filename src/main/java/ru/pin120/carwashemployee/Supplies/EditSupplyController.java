@@ -25,6 +25,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+/**
+ * Контроллер редактирования данных о расходном материале
+ */
 public class EditSupplyController implements Initializable {
     @FXML
     private Label measureLabel;
@@ -70,6 +74,12 @@ public class EditSupplyController implements Initializable {
 
     private File selectedPhoto;
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -90,12 +100,19 @@ public class EditSupplyController implements Initializable {
         settingTooltipForButtons();
     }
 
+
+    /**
+     * Добавляет слушателя к таблице categoriesTable.
+     */
     private void tableSelectModelListener() {
         categoriesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
             setMeasureLabelText(newValue);
         });
     }
 
+    /**
+     * Заполняет таблицу категорий всеми категориями расходных материалов
+     */
     private void fillingAll() {
         try{
             List<CategoryOfSupplies> categories = categoryOfSuppliesRepository.getAll();
@@ -113,6 +130,11 @@ public class EditSupplyController implements Initializable {
     }
 
 
+    /**
+     * Устанавливает текст для метки measureLabel в зависимости от выбранной категории.
+     *
+     * @param category объект категории расходных материалов, для которой устанавливается текст
+     */
     private void setMeasureLabelText(CategoriesOfSuppliesFX category){
         if(category != null){
             measureLabel.setText(category.getUnit().equals(UnitOfMeasure.MILLILITERS.getDisplayValue()) ? rb.getString("AMOUNT_UNIT") : rb.getString("COUNT_UNIT"));
@@ -121,6 +143,11 @@ public class EditSupplyController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о категориях расходных материалов
+     *
+     * @param categories список категорий для заполнения
+     */
     private void fillingObservableList(List<CategoryOfSupplies> categories){
         categoriesOfSuppliesFXES.clear();
         for(CategoryOfSupplies category: categories){
@@ -129,6 +156,9 @@ public class EditSupplyController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         loadImageButton.setOnMouseEntered(event -> {
             loadImageButton.setTooltip(new Tooltip(rb.getString("LOAD_PHOTO")));
@@ -146,6 +176,10 @@ public class EditSupplyController implements Initializable {
 
 
 
+
+    /**
+     * Настраивает countSpinner и measureSpinner с соответствующими форматтерами.
+     */
     private void settingSpinners() {
         int minCountSpinnerValue = operationMode == FXOperationMode.CREATE ? 1 : 0;
         countSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(minCountSpinnerValue, Integer.MAX_VALUE,1,1));
@@ -172,6 +206,9 @@ public class EditSupplyController implements Initializable {
     }
 
 
+    /**
+     * Добавляет слушателя для nameField, который ограничивает длину текста указанной до максимальной длины.
+     */
     private void nameFieldListener() {
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -182,6 +219,13 @@ public class EditSupplyController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для текущего расходного материала, режима операции и модального окна. Настраивает компоненты формы в зависимости от режима операции (CREATE, EDIT, DELETE).
+     *
+     * @param supply Расходный материал
+     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
+     * @param modalStage Модальное окно
+     */
     public void setParameters(Supply supply, FXOperationMode operationMode, Stage modalStage) {
         this.supply = supply;
         this.operationMode = operationMode;
@@ -223,6 +267,9 @@ public class EditSupplyController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Заполняет компоненты формы данными текущего расходного материала
+     */
     private void fillingComponents(){
         nameField.setText(supply.getSupName());
         countSpinner.getValueFactory().setValue(supply.getSupCount());
@@ -233,6 +280,9 @@ public class EditSupplyController implements Initializable {
         doSearch();
     }
 
+    /**
+     * Устанавливает действие для закрытия окна, которое изменяет режим выхода на EXIT.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
@@ -241,6 +291,9 @@ public class EditSupplyController implements Initializable {
         doSearch();
     }
 
+    /**
+     * Поиск данных
+     */
     private void doSearch(){
         if(searchField.getText() == null || searchField.getText().isBlank()){
             FXHelper.showErrorAlert(rb.getString("SEARCH_FIELD_IS_EMPTY"));
@@ -299,10 +352,20 @@ public class EditSupplyController implements Initializable {
         }
     }
 
+    /**
+     * Возвращает текущую сцену.
+     *
+     * @return Текущая сцена.
+     */
     private Scene getActualScene(){
         return categoriesTable.getScene();
     }
 
+    /**
+     * Обрабатывает действие кнопки OK.
+     *
+     * @param actionEvent Событие действия.
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         CategoriesOfSuppliesFX category = categoriesTable.getSelectionModel().getSelectedItem();
@@ -366,6 +429,12 @@ public class EditSupplyController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
@@ -375,6 +444,9 @@ public class EditSupplyController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Обновляет данные
+     */
     private void doRefresh(){
         categoriesOfSuppliesFXES.clear();
         searchField.clear();

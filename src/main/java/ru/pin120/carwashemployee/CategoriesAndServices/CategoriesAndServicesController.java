@@ -21,6 +21,9 @@ import ru.pin120.carwashemployee.Users.UserRole;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с категориями и услугами автомойки
+ */
 public class CategoriesAndServicesController implements Initializable {
 
     @FXML
@@ -65,6 +68,12 @@ public class CategoriesAndServicesController implements Initializable {
     String lastSearchedCategory = "";
     String lastSearchedService = "";
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -92,6 +101,9 @@ public class CategoriesAndServicesController implements Initializable {
         searchCategoryCheckBox.setSelected(true);
     }
 
+    /**
+     * Инициализирует списки, используемые для заполнения ObservableLists.
+     */
     private void initFillingObservableLists(){
         try {
 //            categoriesWithServices = categoriesOfServicesRepository.getCategoriesWithServices();
@@ -112,24 +124,25 @@ public class CategoriesAndServicesController implements Initializable {
         servicesTable.setItems(services);
     }
 
-    private void fillingCategoriesAndServicesTables(){
-        for(int i = 0; i < categoriesWithServices.size(); i++){
-            categoriesOfServices.add(new CategoryOfServicesFX(categoriesWithServices.get(i).getCatName()));
-            if(i == 0){
-                fillingServicesObservableList(categoriesWithServices.get(i).getServices());
-            }
-        }
-        categoriesTable.setItems(categoriesOfServices);
-        servicesTable.setItems(services);
-    }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){ return categoriesTable.getScene();}
-    private void fillingServicesObservableList(List<Service> servicesOfCertainCategory){
-        for(Service service: servicesOfCertainCategory){
-            services.add(new ServiceFX(service.getServName()));
-        }
-    }
+//    private void fillingServicesObservableList(List<Service> servicesOfCertainCategory){
+//        for(Service service: servicesOfCertainCategory){
+//            services.add(new ServiceFX(service.getServName()));
+//        }
+//    }
 
+    /**
+     * Заполняет ObservableList услугами по имени категории.
+     *
+     * @param categoryName имя категории
+     * @throws Exception если возникает ошибка при получении услуг
+     */
     private void fillingServicesObservableList(String categoryName) throws Exception {
         servicesOfCategory = serviceRepository.getServicesByCatName(categoryName);
         for(Service service: servicesOfCategory){
@@ -137,6 +150,9 @@ public class CategoriesAndServicesController implements Initializable {
         }
     }
 
+    /**
+     * Добавляет слушатель выбранной категории
+     */
     private void categoriesSelectedModelListener(){
         categoriesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -165,6 +181,9 @@ public class CategoriesAndServicesController implements Initializable {
         });
     }
 
+    /**
+     * Отслеживает фокус на таблицах категорий и услуг.
+     */
     private void trackingFocusOnTables(){
 
         categoriesTable.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -180,6 +199,9 @@ public class CategoriesAndServicesController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons(){
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(lastSelectedTable == categoriesTable ? new Tooltip(rb.getString("CREATE_CATEGORY")) : new Tooltip(rb.getString("CREATE_SERVICE")));
@@ -222,6 +244,11 @@ public class CategoriesAndServicesController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с категорией или с услугой.
+     * Выполнение операции зависит от таблицы, которая находиться в фокусе
+     * @param mode Режим операции
+     */
     private void doOperation(FXOperationMode mode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
             FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
@@ -311,6 +338,13 @@ public class CategoriesAndServicesController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результаты операций с категорией (создание, удаление).
+     * @param operationMode режим операции (создание, удаление)
+     * @param exitMode режим выхода из формы
+     * @param categoryOfServices Категория
+     * @param selectedCategoryOfServicesFX выбранная категория CategoryOfServicesFX для удаления
+     */
     private void doResultCategoryOfServices(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfServices categoryOfServices, CategoryOfServicesFX selectedCategoryOfServicesFX){
         if(exitMode == FXFormExitMode.OK) {
             switch (operationMode) {
@@ -344,6 +378,14 @@ public class CategoriesAndServicesController implements Initializable {
         categoriesTable.requestFocus();
     }
 
+    /**
+     * Обрабатывает результаты операций с услугой (создание, удаление).
+     *
+     * @param operationMode режим операции (создание, удаление)
+     * @param exitMode режим выхода из формы
+     * @param serviceDTO объект ServiceDTO, содержащий информацию об услуге
+     * @param selectedServiceFX выбранная услуга ServiceFX для удаления
+     */
     private void doResultService(FXOperationMode operationMode, FXFormExitMode exitMode, ServiceDTO serviceDTO, ServiceFX selectedServiceFX){
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -372,7 +414,9 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
 
-
+    /**
+     * Связывает услугу с категорией
+     */
     private void bindWithCategory(){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
             FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
@@ -452,12 +496,19 @@ public class CategoriesAndServicesController implements Initializable {
         bindWithCategory();
     }
 
+    /**
+     * Очищает ObservableList категорий и услуг
+     */
     private void doClearData(){
         //categoriesTable.setItems(null);
         //servicesTable.setItems(null);
         categoriesOfServices.clear();
         services.clear();
     }
+
+    /**
+     * Очищает текстовое поле для поиска и обновляет данные в таблицах
+     */
     private void doRefresh(){
         doClearData();
 
@@ -486,6 +537,9 @@ public class CategoriesAndServicesController implements Initializable {
         doSearch();
     }
 
+    /**
+     * Поиск данных
+     */
     private void doSearch(){
         lastSearchedService = "";
         lastSearchedCategory = "";
@@ -546,22 +600,6 @@ public class CategoriesAndServicesController implements Initializable {
                     servicesTable.requestFocus();
                 }
             }
-//            String searchParameter = searchField.getText().trim().toLowerCase();
-//            doClearData();
-//            if(searchCategoryCheckBox.isSelected()){
-//
-//                categoriesWithServices = categoriesWithServices.stream()
-//                        .filter(c-> c.getCatName().toLowerCase().contains(searchParameter))
-//                        .toList();
-//                fillingCategoriesAndServicesTables();
-//
-//                categoriesTable.requestFocus();
-//                categoriesTable.getSelectionModel().selectFirst();
-//
-//            }else{
-//
-//            }
-
         }
     }
 
@@ -619,4 +657,16 @@ public class CategoriesAndServicesController implements Initializable {
             }
         }
     }
+
+
+    //    private void fillingCategoriesAndServicesTables(){
+//        for(int i = 0; i < categoriesWithServices.size(); i++){
+//            categoriesOfServices.add(new CategoryOfServicesFX(categoriesWithServices.get(i).getCatName()));
+//            if(i == 0){
+//                fillingServicesObservableList(categoriesWithServices.get(i).getServices());
+//            }
+//        }
+//        categoriesTable.setItems(categoriesOfServices);
+//        servicesTable.setItems(services);
+//    }
 }

@@ -34,6 +34,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+/**
+ * Контроллер формы с заказами
+ */
 public class BookingsController implements Initializable {
 
     @FXML
@@ -69,6 +72,13 @@ public class BookingsController implements Initializable {
 
     private Appointment selectedAppointment;
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Platform.runLater(()->getActualScene().getStylesheets().add(getClass().getResource("/ru/pin120/carwashemployee/index.css").toExternalForm()));
@@ -93,6 +103,9 @@ public class BookingsController implements Initializable {
         settingAgenda();
     }
 
+    /**
+     * Добавляет слушатель на таблицу боксов
+     */
     private void boxesTableSelectModelListener() {
         boxesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
             if(newValue != null){
@@ -102,6 +115,9 @@ public class BookingsController implements Initializable {
         });
     }
 
+    /**
+     * Настройка компонента Agenda
+     */
     private void settingAgenda(){
         agenda.selectedAppointments().addListener((ListChangeListener<Appointment>) change -> {
             while (change.next()) {
@@ -118,6 +134,9 @@ public class BookingsController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_BOOKING")));
@@ -142,6 +161,9 @@ public class BookingsController implements Initializable {
         });
     }
 
+    /**
+     * Загрузка и установка данных о боксах.
+     */
     private void setBoxes(){
         try{
             boxFXES.clear();
@@ -161,7 +183,9 @@ public class BookingsController implements Initializable {
     }
 
 
-
+    /**
+     * Получение заказов выбранного бокса
+     */
     private void getBoxBookings(){
         agenda.appointments().clear();
         BoxFX selectedBox = boxesTable.getSelectionModel().getSelectedItem();
@@ -189,6 +213,10 @@ public class BookingsController implements Initializable {
         }
     }
 
+    /**
+     * Добавление данных о заказе в Agenda
+     * @param booking Заказ
+     */
     private void addAgendaAppointments(Booking booking){
         ClientsTransport clientsTransport = booking.getClientTransport();
         Client client = clientsTransport.getClient();
@@ -211,15 +239,25 @@ public class BookingsController implements Initializable {
                 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass(groupAgendaColor)));
     }
 
-
+    /**
+     * Получение объекта Stage данной формы
+     * @return Объект Stage
+     */
     private Stage getStage(){
         return (Stage) agenda.getScene().getWindow();
     }
 
+    /**
+     * Получение объекта Scene данной формы
+     * @return объект Scene
+     */
     private Scene getActualScene(){
         return agenda.getScene();
     }
 
+    /**
+     * Прослушиватель календаря
+     */
     private void calendarListener(){
         calendar.calendarProperty().addListener((observableValue, oldValue, newValue) -> {
             if(newValue != null){
@@ -245,21 +283,48 @@ public class BookingsController implements Initializable {
         });
     }
 
+    /**
+     * Обрабатывает действие создания заказа
+     *
+     * @param actionEvent Событие действия
+     */
     public void createButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.CREATE);
     }
 
+    /**
+     * Обрабатывает действие изменения данных о заказе
+     *
+     * @param actionEvent Событие действия.
+     */
     public void editButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.EDIT);
     }
 
+    /**
+     * Обрабатывает действие удаления заказа
+     *
+     * @param actionEvent Событие действия
+     */
     public void deleteButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.DELETE);
     }
+
+    /**
+     * Обрабатывает действие изменения статуса заказа
+     *
+     * @param actionEvent Событие действия
+     */
     public void changeStatusButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.OTHER);
     }
 
+
+    /**
+     * Выполняет операцию с заказом
+     *
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         boolean canOpenWindow = false;
         Booking booking = null;
@@ -394,6 +459,9 @@ public class BookingsController implements Initializable {
         agenda.requestFocus();
     }
 
+    /**
+     * Обновляет данные о заказах
+     */
     private void reloadBookings() {
         selectedAppointment = null;
         getBoxBookings();
@@ -404,19 +472,37 @@ public class BookingsController implements Initializable {
 //    }
 
 
+    /**
+     * Обрабатывает действие обновления данных
+     *
+     * @param actionEvent Событие действия.
+     */
     public void refreshAction(ActionEvent actionEvent) {
         doRefresh();
     }
 
+    /**
+     * Выполняет обновление данных
+     */
     private void doRefresh(){
         setBoxes();
         reloadBookings();
     }
 
+    /**
+     * Обрабатывает действие показа заказа
+     *
+     * @param actionEvent Событие действия
+     */
     public void showButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.SHOW);
     }
 
+    /**
+     * Обрабатывает действие нажатия на кнопку открытия табличного представления
+     *
+     * @param actionEvent Событие действия
+     */
     public void showTableButtonAction(ActionEvent actionEvent) {
         try {
             FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Bookings.resources.FilterBookings", "Bookings/fxml/FilterBookings.fxml");

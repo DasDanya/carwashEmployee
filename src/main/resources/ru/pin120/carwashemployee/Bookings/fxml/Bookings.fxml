@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -85,31 +86,44 @@
             </Button>
          </items>
       </ToolBar>
-      <GridPane hgap="10.0" prefHeight="54.0" prefWidth="886.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="5000.0" minHeight="210.0" prefHeight="210.0" vgrow="ALWAYS" />
-        </rowConstraints>
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-         <children>
-            <TableView fx:id="boxesTable" prefWidth="635.0">
-              <columns>
-                <TableColumn fx:id="numberColumn" prefWidth="163.19997245073318" text="%NUMBER_BOX" />
-                  <TableColumn fx:id="statusColumn" prefWidth="465.6000152587891" text="%STATUS" />
-              </columns>
-            </TableView>
-            <CalendarPicker fx:id="calendar" maxHeight="625.0" minHeight="98.0" prefHeight="154.0" prefWidth="250.0" GridPane.columnIndex="1" />
-         </children>
-      </GridPane>
-      <Agenda fx:id="agenda" allowDragging="false" allowResize="false" VBox.vgrow="ALWAYS">
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
-         </VBox.margin>
-      </Agenda>
+      <SplitPane dividerPositions="0.42" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
+        <items>
+          <AnchorPane maxHeight="220.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <VBox layoutX="5.0" layoutY="4.199999809265137" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <GridPane hgap="10.0" prefHeight="54.0" prefWidth="886.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="5000.0" minHeight="210.0" prefHeight="210.0" vgrow="ALWAYS" />
+                          </rowConstraints>
+                           <children>
+                              <TableView fx:id="boxesTable" prefWidth="635.0">
+                                <columns>
+                                  <TableColumn fx:id="numberColumn" prefWidth="163.19997245073318" text="%NUMBER_BOX" />
+                                    <TableColumn fx:id="statusColumn" prefWidth="465.6000152587891" text="%STATUS" />
+                                </columns>
+                              </TableView>
+                              <CalendarPicker fx:id="calendar" maxHeight="625.0" minHeight="98.0" prefHeight="154.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="160.0">
+               <children>
+                  <VBox layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <Agenda fx:id="agenda" allowDragging="false" allowResize="false" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </VBox>

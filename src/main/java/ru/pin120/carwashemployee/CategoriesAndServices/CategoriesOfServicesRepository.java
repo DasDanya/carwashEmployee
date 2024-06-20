@@ -13,6 +13,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * Репозиторий категории услуг
+ */
 public class CategoriesOfServicesRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/categoryOfServices";
@@ -52,6 +55,12 @@ public class CategoriesOfServicesRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список всех названий категорий.
+     *
+     * @return список названий категорий
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public List<String> getCategoriesName() throws Exception{
         Request request = new Request.Builder()
                 .url(url + "/getAllCatNames")
@@ -67,6 +76,13 @@ public class CategoriesOfServicesRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список названий категорий, соответствующих заданному параметру.
+     *
+     * @param parameter параметр поиска
+     * @return список названий категорий
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public List<String> getCategoriesNameByParameter(String parameter) throws Exception {
         //parameter = URLEncoder.encode(parameter, "UTF-8");
         Request request = new Request.Builder()
@@ -83,6 +99,13 @@ public class CategoriesOfServicesRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Создает новую категорию услуг
+     *
+     * @param categoryOfServices объект категории услуг
+     * @return true, если создание прошло успешно, иначе false
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public boolean createCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception{
         boolean successCreate;
         String jsonData = gson.toJson(categoryOfServices);
@@ -131,6 +154,12 @@ public class CategoriesOfServicesRepository {
         return successEdit;
     }
 
+    /**
+     * Удаляет категорию
+     * @param categoryOfServices объект категории услуг
+     * @return true, если удаление прошло успешно, иначе false
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public boolean deleteCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception {
         boolean successDelete;
         //String jsonData = gson.toJson(categoryOfServices);

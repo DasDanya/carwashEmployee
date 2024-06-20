@@ -22,6 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+/**
+ * Контроллер формы с транспортом клиента
+ */
 public class ClientTransportController implements Initializable {
 
     @FXML
@@ -61,6 +65,13 @@ public class ClientTransportController implements Initializable {
 
     private ClientsTransportRepository clientsTransportRepository = new ClientsTransportRepository();
     private ObservableList<ClientsTransportFX> clientsTransportFXES = FXCollections.observableArrayList();
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -84,6 +95,10 @@ public class ClientTransportController implements Initializable {
         filterStateNumberFieldListener();
     }
 
+    /**
+     * Проверяет длину введенного значения и предотвращает ввод более длинных номеров,
+     * чем максимально допустимая длина для государственного номера транспортного средства.
+     */
     private void filterStateNumberFieldListener() {
         filterStateNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -95,6 +110,9 @@ public class ClientTransportController implements Initializable {
     }
 
 
+    /**
+     * Заполняет таблицу данными о транспортных средствах клиента
+     */
     private void fillingAll() {
         try{
             List<ClientsTransport> clientTransport = clientsTransportRepository.getByClientId(client.getClId());
@@ -107,6 +125,11 @@ public class ClientTransportController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о транспортных средствах
+     *
+     * @param clientTransport список транспортных средств для заполнения
+     */
     private void fillingObservableList(List<ClientsTransport> clientTransport) {
         for(ClientsTransport ct: clientTransport){
             ClientsTransportFX clientsTransportFX = new ClientsTransportFX(ct.getClTrId(), ct.getTransport().getTrMark(), ct.getTransport().getTrModel(), ct.getTransport().getCategoryOfTransport().getCatTrName(), ct.getClTrStateNumber());
@@ -114,10 +137,18 @@ public class ClientTransportController implements Initializable {
         }
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return clientTransportTable.getScene();
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void setTooltipForButtons() {
         createButton.setOnMouseEntered(event->{
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_TRANSPORT")));
@@ -136,7 +167,12 @@ public class ClientTransportController implements Initializable {
         });
     }
 
-
+    /**
+     * Устанавливает параметры клиента и модального окна.
+     *
+     * @param client      объект типа Client, содержащий информацию о клиенте
+     * @param modalStage  модальное окно, тип Stage.
+     */
     public void setParameters(Client client, Stage modalStage) {
         this.client = client;
         this.stage = modalStage;
@@ -157,6 +193,10 @@ public class ClientTransportController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с транспортным средством
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         ClientsTransport clientsTransport = null;
         ClientsTransportFX selectedClientTransportFX = null;
@@ -206,6 +246,13 @@ public class ClientTransportController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     * @param ct объект транспортного средства
+     * @param selectedClientTransportFX выбранный ClientsTransportFX для изменения или удаления
+     * @param exitMode режим выхода из формы
+     * @param operationMode режим операции
+     */
     private void doResult(ClientsTransport ct, ClientsTransportFX selectedClientTransportFX, FXFormExitMode exitMode, FXOperationMode operationMode) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -247,6 +294,9 @@ public class ClientTransportController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         filterCategoryField.clear();
         filterMarkField.clear();

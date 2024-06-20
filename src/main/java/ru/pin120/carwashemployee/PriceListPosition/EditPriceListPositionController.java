@@ -21,6 +21,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о позиции прайс-листа
+ */
 public class EditPriceListPositionController implements Initializable {
 
 
@@ -48,6 +51,12 @@ public class EditPriceListPositionController implements Initializable {
     private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
     private PriceListPositionRepository priceListPositionRepository = new PriceListPositionRepository();
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -71,6 +80,11 @@ public class EditPriceListPositionController implements Initializable {
     }
 
 
+    /**
+     * Устанавливает форматеры для спиннеров.
+     * Форматер для спиннера стоимости позволяет вводить только цифры и ограничивает значение максимальной стоимости.
+     * Форматер для спиннера времени позволяет вводить только цифры и ограничивает значение максимального времени работы.
+     */
     private void setSpinnersFormatters(){
         TextFormatter<Integer> priceFormatter = new TextFormatter<>(change -> {
             if (change.getControlNewText().matches("\\d*")) {
@@ -97,7 +111,13 @@ public class EditPriceListPositionController implements Initializable {
         timeSpinner.getEditor().setTextFormatter(timeFormatter);
     }
 
-
+    /**
+     * Устанавливает параметры для редактирования позиции прайс-листа.
+     *
+     * @param priceListPosition позиция прайс-листа, которую нужно редактировать.
+     * @param operationMode режим операции (создание, редактирование, удаление).
+     * @param stage Stage.
+     */
     public void setParameters(PriceListPosition priceListPosition, FXOperationMode operationMode, Stage stage){
         this.priceListPosition = priceListPosition;
         this.operationMode = operationMode;
@@ -130,12 +150,18 @@ public class EditPriceListPositionController implements Initializable {
 
     }
 
+    /**
+     * Заполняет компоненты данными текущей позиции прайс-листа.
+     */
     private void fillingComponents(){
         priceSpinner.getValueFactory().setValue(priceListPosition.getPlPrice());
         timeSpinner.getValueFactory().setValue(priceListPosition.getPlTime());
         transportCategoryComboBox.getItems().add(priceListPosition.getCategoryOfTransport());
     }
 
+    /**
+     * Конвертирует объекты CategoryOfTransport в строки для отображения в ComboBox.
+     */
     private void convertCategoryOfTransportToString(){
         transportCategoryComboBox.setConverter(new StringConverter<CategoryOfTransport>() {
             @Override
@@ -154,6 +180,11 @@ public class EditPriceListPositionController implements Initializable {
             btCancel.requestFocus();
         }
     }
+
+
+    /**
+     * Заполняет ComboBox категориями транспорта, для которых не установлена стоимость и время.
+     */
     private void fillingTransportCategory(){
         try{
             List<CategoryOfTransport> categoriesWithoutPriceAndTime = categoryOfTransportRepository.getCategoriesOfTransportWithoutPriceAndTime(priceListPosition.getService().getServName());
@@ -163,10 +194,20 @@ public class EditPriceListPositionController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
+
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(priceSpinner.getValue() == 0){
@@ -223,6 +264,12 @@ public class EditPriceListPositionController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();

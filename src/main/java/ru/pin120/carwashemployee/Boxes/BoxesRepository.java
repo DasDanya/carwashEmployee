@@ -14,6 +14,9 @@ import java.net.HttpRetryException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий бокса
+ */
 public class BoxesRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/boxes";
@@ -24,6 +27,11 @@ public class BoxesRepository {
     private Gson gson = new Gson();
 
 
+    /**
+     * Получение всех боксов
+     * @return Список с боксами
+     * @throws Exception Если возникает ошибка при выполнении запроса или обработки ответа.
+     */
     public List<Box> getAll() throws Exception {
 
         Request request = new Request.Builder()
@@ -40,22 +48,31 @@ public class BoxesRepository {
         return gson.fromJson(jsonData, type);
     }
 
-    public List<Box> getAvailable() throws Exception {
+//    public List<Box> getAvailable() throws Exception {
+//
+//        Request request = new Request.Builder()
+//                .url(url+"/available")
+//                .build();
+//
+//        Response response = client.newCall(request).execute();
+//        if(response.code() != 200){
+//            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
+//        }
+//        String jsonData = response.body().string();
+//        Type type = new TypeToken<List<Box>>(){}.getType();
+//
+//        return gson.fromJson(jsonData, type);
+//    }
 
-        Request request = new Request.Builder()
-                .url(url+"/available")
-                .build();
 
-        Response response = client.newCall(request).execute();
-        if(response.code() != 200){
-            throw new HttpRetryException(AppHelper.getHttpErrorText() + " " + response.code(), response.code());
-        }
-        String jsonData = response.body().string();
-        Type type = new TypeToken<List<Box>>(){}.getType();
 
-        return gson.fromJson(jsonData, type);
-    }
-
+    /**
+     * Создает новый бокс на сервере, используя HTTP POST запрос на URL '/boxes/create'.
+     *
+     * @param box Объект Box, который необходимо создать.
+     * @return Объект Box, представляющий созданный бокс.
+     * @throws Exception Если возникает ошибка при выполнении запроса или обработки ответа.
+     */
     public Box create(Box box) throws Exception{
         Box createdBox = null;
         String jsonData = gson.toJson(box);
@@ -79,6 +96,13 @@ public class BoxesRepository {
         return createdBox;
     }
 
+    /**
+     * Изменяет существующий бокс на сервере, используя HTTP PUT запрос на URL '/boxes/edit/{id}'.
+     *
+     * @param box Объект Box, который необходимо изменить.
+     * @return Объект Box, представляющий измененный бокс.
+     * @throws Exception Если возникает ошибка при выполнении запроса или обработки ответа.
+     */
     public Box edit(Box box) throws Exception{
         Box editedBox = null;
         String jsonData = gson.toJson(box);
@@ -102,6 +126,13 @@ public class BoxesRepository {
         return editedBox;
     }
 
+    /**
+     * Удаляет существующий бокс на сервере, используя HTTP DELETE запрос на URL '/boxes/delete/{id}'.
+     *
+     * @param id Идентификатор бокса, который необходимо удалить.
+     * @return true, если удаление выполнено успешно (HTTP статус 204), иначе false.
+     * @throws Exception Если возникает ошибка при выполнении запроса или обработки ответа.
+     */
     public boolean delete(Long id) throws Exception {
         boolean successDelete;
 

@@ -24,6 +24,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер формы с боксами
+ */
 public class BoxesController implements Initializable {
 
     @FXML
@@ -46,6 +49,13 @@ public class BoxesController implements Initializable {
 
     private BoxesRepository boxesRepository = new BoxesRepository();
     private ObservableList<BoxFX> boxFXES = FXCollections.observableArrayList();
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -59,6 +69,9 @@ public class BoxesController implements Initializable {
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
     }
 
+    /**
+     * Заполняет таблицу информацией о боксах
+     */
     private void fillingAll() {
         try{
             List<Box> boxes = boxesRepository.getAll();
@@ -71,6 +84,11 @@ public class BoxesController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList объектами типа BoxFX на основе списка объектов Box.
+     *
+     * @param boxes Список объектов Box для заполнения ObservableList.
+     */
     private void fillingObservableList(List<Box> boxes){
         for(Box box: boxes){
             BoxFX boxFX = new BoxFX(box.getBoxId(), box.getBoxStatus());
@@ -78,10 +96,18 @@ public class BoxesController implements Initializable {
         }
     }
 
+    /**
+     * Возвращает текущую сцену, на которой находится таблица боксов
+     *
+     * @return Текущая сцена, на которой находится таблица боксов
+     */
     private Scene getActualScene(){
         return boxesTable.getScene();
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_BOX")));
@@ -112,6 +138,11 @@ public class BoxesController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операцию над боксом в зависимости от заданного режима операции
+     *
+     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
+     */
     private void doOperation(FXOperationMode operationMode){
         Box box = null;
         BoxFX selectedBoxFX = null;
@@ -158,6 +189,14 @@ public class BoxesController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат операции над боксом (CREATE, EDIT, DELETE) в зависимости от режима выхода из формы.
+     *
+     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
+     * @param exitMode      Режим выхода из формы (OK, CANCEL).
+     * @param box           Объект бокса, над которым выполнялась операция.
+     * @param selectedBoxFX Выбранный объект бокса для редактирования или удаления.
+     */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, Box box, BoxFX selectedBoxFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -190,6 +229,10 @@ public class BoxesController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Очищает ObservableList boxFXES и затем вызывает метод fillingAll() для заполнения таблицы
+     * актуальными данными о боксах.
+     */
     private void doRefresh(){
         boxFXES.clear();
         fillingAll();

@@ -11,6 +11,9 @@ import java.net.HttpRetryException;
 import java.net.URLEncoder;
 import java.util.List;
 
+/**
+ * Репозиторий позиции прайс-листа
+ */
 public class PriceListPositionRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/priceList";
@@ -20,6 +23,13 @@ public class PriceListPositionRepository {
             .build();
     private Gson gson = new Gson();
 
+    /**
+     * Получает список позиций прайс-листа по названию услуги.
+     *
+     * @param servName название услуги для фильтрации позиций прайс-листа.
+     * @return список позиций прайс-листа, связанных с указанной услугой.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public List<PriceListPosition> getByServName(String servName) throws Exception {
         Request request = new Request.Builder()
                 .url(url+"/" + servName)
@@ -35,6 +45,13 @@ public class PriceListPositionRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список услуг с прайс-листом для указанной категории транспорта.
+     *
+     * @param catTrId id категории транспорта.
+     * @return список услуг с прайс-листом, связанных с указанной категорией транспорта.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public List<ServiceWithPriceList> getCategoryOfTransportPriceList(Long catTrId) throws Exception {
         Request request = new Request.Builder()
                 .url(url+"/getPriceListOfCategoryTransport?catTrId=" + catTrId)
@@ -51,6 +68,13 @@ public class PriceListPositionRepository {
     }
 
 
+    /**
+     * Создает новую позицию в прайс-листе
+     *
+     * @param priceListPosition объект позиции прайс-листа для создания.
+     * @return созданная позиция прайс-листа.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public PriceListPosition createPriceListPosition(PriceListPosition priceListPosition) throws Exception {
         PriceListPosition createdPriceListPosition = null;
         String jsonData = gson.toJson(priceListPosition);
@@ -78,6 +102,13 @@ public class PriceListPositionRepository {
         return createdPriceListPosition;
     }
 
+    /**
+     * Редактирует позицию в прайс-листе.
+     *
+     * @param priceListPosition объект позиции прайс-листа с новыми данными для редактирования.
+     * @return отредактированная позиция прайс-листа.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public PriceListPosition editPriceListPositionPriceAndTime(PriceListPosition priceListPosition) throws Exception {
         PriceListPosition editedPriceListPosition = null;
         String jsonData = gson.toJson(priceListPosition);
@@ -103,6 +134,13 @@ public class PriceListPositionRepository {
         return editedPriceListPosition;
     }
 
+    /**
+     * Удаляет позицию в прайс-листе по её id.
+     *
+     * @param plId id позиции прайс-листа для удаления.
+     * @return {@code true}, если удаление прошло успешно; {@code false} в противном случае.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public boolean deletePriceListPosition(Long plId) throws Exception {
         boolean successDelete;
 
@@ -126,6 +164,18 @@ public class PriceListPositionRepository {
     }
 
 
+    /**
+     * Поиск позиций прайс-листа по различным критериям
+     *
+     * @param servName название услуги
+     * @param catTrName название категории транспорта
+     * @param priceOperator оператор сравнения для стоимости
+     * @param price стоимость выполнения
+     * @param timeOperator оператор сравнения для времени
+     * @param time время выполнения
+     * @return список позиций прайс-листа, соответствующих критериям поиска.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public List<PriceListPosition> searchPriceListPosition(String servName, String catTrName, String priceOperator, Integer price, String timeOperator, Integer time) throws Exception {
         String parameter = "?servName=" + servName;
         if(catTrName != null && !catTrName.isBlank()){

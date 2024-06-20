@@ -5,16 +5,34 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * FX представление транспорта клиента
+ */
 public class ClientsTransportFX {
 
     public static final int MAX_STATE_NUMBER_LENGTH = 9;
     public static final String MOTO_AGR_REGEX="^\\d{4}(?<!0000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$";
     public static final String CAR_REGEX = "^[АВЕКМНОРСТУХ]\\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$";
 
+    /**
+     * id транспорта клиента
+     */
     private LongProperty clTrId;
+    /**
+     * Госномер транспорта
+     */
     private StringProperty clTrStateNumber;
+    /**
+     * Марка
+     */
     private StringProperty clTrMark;
+    /**
+     * Модель
+     */
     private StringProperty clTrModel;
+    /**
+     * Категория
+     */
     private StringProperty clTrCategory;
 
     public long getClTrId() {
@@ -73,6 +91,14 @@ public class ClientsTransportFX {
         this.clTrCategory.set(clTrCategory);
     }
 
+    /**
+     * Конструктор для создания объекта ClientsTransportFX
+     * @param clTrId id транспорта клиента
+     * @param clTrMark марка
+     * @param clTrModel модель
+     * @param clTrCategory категория
+     * @param clTrStateNumber госномер
+     */
     public ClientsTransportFX(Long clTrId, String clTrMark, String clTrModel, String clTrCategory, String clTrStateNumber) {
         this.clTrId = new SimpleLongProperty(clTrId);
         this.clTrStateNumber = new SimpleStringProperty(clTrStateNumber);

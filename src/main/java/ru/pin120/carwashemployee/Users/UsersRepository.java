@@ -89,7 +89,6 @@ public class UsersRepository {
 
     public boolean login(LoginRequest loginRequest) throws Exception {
         boolean successLogin = false;
-
         loginRequest.setUsername(Aes.encrypt(loginRequest.getUsername()));
         loginRequest.setPassword(Aes.encrypt(loginRequest.getPassword()));
 

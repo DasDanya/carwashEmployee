@@ -7,9 +7,8 @@ import okhttp3.*;
 import ru.pin120.carwashemployee.Adapters.LocalDateAdapter;
 import ru.pin120.carwashemployee.Adapters.LocalDateTimeAdapter;
 import ru.pin120.carwashemployee.AppHelper;
-import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.Http.AuthInterceptor;
-import ru.pin120.carwashemployee.Supplies.Supply;
+
 
 import java.lang.reflect.Type;
 import java.net.HttpRetryException;
@@ -21,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Репозиторий заказа
+ */
 public class BookingsRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/bookings";
@@ -34,6 +36,21 @@ public class BookingsRepository {
             .create();
 
 
+    /**
+     * Получает список заказов с возможностью фильтрации по различным параметрам.
+     *
+     * @param pageIndex      Индекс страницы для пагинации
+     * @param cleanerId      ID мойщика
+     * @param clientId       ID клиента
+     * @param boxId          ID бокса
+     * @param startInterval  Начальный интервал времени
+     * @param endInterval    Конечный интервал времени
+     * @param bookingStatus  Статус заказа
+     * @param compareOperator Оператор сравнения для стоиомости
+     * @param price          Стоимость
+     * @return Список объектов {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public List<Booking> get(int pageIndex,Long cleanerId, Long clientId, Long boxId, LocalDateTime startInterval, LocalDateTime endInterval, String bookingStatus, String compareOperator, Integer price) throws Exception {
         if(pageIndex < 0){
             return new ArrayList<>();
@@ -80,6 +97,20 @@ public class BookingsRepository {
     }
 
 
+    /**
+     * Получает информацию о бронированиях с возможностью фильтрации по различным параметрам
+     *
+     * @param cleanerId      ID мойщика
+     * @param clientId       ID клиента
+     * @param boxId          ID бокса
+     * @param startInterval  Начальный интервал времени
+     * @param endInterval    Конечный интервал времени
+     * @param bookingStatus  Стату
+     * @param compareOperator Оператор сравнения для стоимости
+     * @param price          Стоимость
+     * @return Объект {@link BookingInfoDTO}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public BookingInfoDTO getInfo(Long cleanerId, Long clientId, Long boxId, LocalDateTime startInterval, LocalDateTime endInterval, String bookingStatus, String compareOperator, Integer price) throws Exception {
         String partUrl = "";
         if(cleanerId != null){
@@ -145,6 +176,15 @@ public class BookingsRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает информацию о работе мойщика за определенный период
+     *
+     * @param cleanerId     ID мойщика
+     * @param startInterval Начальный интервал времени
+     * @param endInterval   Конечный интервал времени
+     * @return Map с ключами - днями работы мойщика {@link LocalDate} и значениями - данными о работе в этот день {@link BookingInfoDTO}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public Map<LocalDate, BookingInfoDTO> getInfoAboutWorkOfCleaner(Long cleanerId, LocalDateTime startInterval, LocalDateTime endInterval) throws Exception{
         String partUrl = "?cleanerId=" + cleanerId;
         if(startInterval != null){
@@ -168,6 +208,15 @@ public class BookingsRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список заказов для конкретного бокса за указанный интервал времени
+     *
+     * @param startInterval Начальный интервал времени
+     * @param endInterval   Конечный интервал времени
+     * @param boxId         ID бокса.
+     * @return Список объектов {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public List<Booking> getBoxBookings(LocalDateTime startInterval, LocalDateTime endInterval, Long boxId) throws Exception{
         String partUrl = "?startInterval=" + startInterval;
         partUrl+="&endInterval="+endInterval;
@@ -187,6 +236,13 @@ public class BookingsRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Создает новый заказ
+     *
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий данные нового заказа
+     * @return Созданный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public Booking create(BookingDTO bookingDTO) throws Exception {
         Booking createdBooking = null;
         String jsonData = gson.toJson(bookingDTO);
@@ -211,7 +267,13 @@ public class BookingsRepository {
         return createdBooking;
     }
 
-
+    /**
+     * Устанавливает новый статус для заказа
+     *
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий данные о заказе с новым статусом.
+     * @return Обновленный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
+     */
     public Booking setNewStatus(BookingDTO bookingDTO) throws Exception {
         Booking editedBooking = null;
         String jsonData = gson.toJson(bookingDTO);
@@ -236,6 +298,13 @@ public class BookingsRepository {
         return editedBooking;
     }
 
+    /**
+     * Редактирует существующий заказ
+     *
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий обновленные данные заказа
+     * @return Обновленный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса.
+     */
     public Booking edit(BookingDTO bookingDTO) throws Exception {
         Booking editedBooking = null;
         String jsonData = gson.toJson(bookingDTO);
@@ -260,6 +329,13 @@ public class BookingsRepository {
         return editedBooking;
     }
 
+    /**
+     * Удаляет заказ по его ID
+     *
+     * @param id ID заказа
+     * @return true, если заказ успешно удален, иначе false
+     * @throws Exception если произошла ошибка при выполнении запроса.
+     */
     public boolean delete(String id) throws Exception {
         boolean successDelete;
 

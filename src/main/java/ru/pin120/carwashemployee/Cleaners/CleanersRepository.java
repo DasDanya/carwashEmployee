@@ -24,6 +24,9 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * Репозиторий мойщика
+ */
 public class CleanersRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/cleaners";
@@ -36,6 +39,15 @@ public class CleanersRepository {
             .create();
 
 
+    /**
+     * Получает список объектов CleanerDTO с графиком работы за указанный интервал дат.
+     * @param startInterval начальная дата интервала
+     * @param endInterval конечная дата интервала
+     * @param boxId id бокса (параметр запроса)
+     * @param currentMonth флаг, указывающий текущий ли месяц (параметр запроса)
+     * @return список объектов CleanerDTO, соответствующих критериям запроса
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public List<CleanerDTO> getWithWorkSchedule( @NonNull LocalDate startInterval,  @NonNull LocalDate endInterval, @NonNull Long boxId, boolean currentMonth) throws Exception{
         String partUrl = "?startInterval=" + startInterval;
         partUrl+="&endInterval="+endInterval;
@@ -55,6 +67,16 @@ public class CleanersRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список объектов Cleaner в соответствии с указанными параметрами фильтрации.
+     * @param surname фамилия
+     * @param name имя
+     * @param patronymic отчество
+     * @param phone телефон
+     * @param status статус
+     * @return список объектов Cleaner, соответствующих критериям запроса
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public List<Cleaner> get(String surname, String name, String patronymic, String phone, CleanerStatus status) throws Exception{
         String partUrl = "";
         if(surname != null && !surname.isBlank()){
@@ -108,7 +130,12 @@ public class CleanersRepository {
         return gson.fromJson(jsonData, type);
     }
 
-
+    /**
+     * Получает изображение фотографии мойщика по названию файла.
+     * @param photoName название файла фотографии
+     * @return объект Image, представляющий изображение фотографии
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public Image getPhoto(String photoName) throws Exception{
         Request request = new Request.Builder()
                 .url(url+"/getPhoto/" + photoName)
@@ -125,6 +152,13 @@ public class CleanersRepository {
         return new Image(inputStream);
     }
 
+    /**
+     * Создает нового мойщика с указанными данными и фотографией.
+     * @param cleaner объект Cleaner, содержащий данные нового мойщика
+     * @param photo файл фотографии нового мойщика (может быть null)
+     * @return созданный объект Cleaner
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public Cleaner create(Cleaner cleaner, File photo) throws Exception{
         Cleaner createdCleaner = null;
         String jsonData = gson.toJson(cleaner);
@@ -157,6 +191,12 @@ public class CleanersRepository {
         return createdCleaner;
     }
 
+    /**
+     * Удаляет мойщика по его id.
+     * @param id id мойщика для удаления
+     * @return true, если удаление успешно выполнено; false в противном случае
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public boolean delete(Long id) throws Exception {
         boolean successDelete;
 
@@ -179,7 +219,13 @@ public class CleanersRepository {
         return successDelete;
     }
 
-
+    /**
+     * Изменяет данные о существующем мойщике с указанными данными и фотографией.
+     * @param cleaner объект Cleaner, содержащий обновленные данные мойщика
+     * @param photo файл фотографии мойщика для обновления (может быть null)
+     * @return обновленный объект Cleaner
+     * @throws Exception если возникает ошибка при выполнении HTTP запроса или обработке ответа
+     */
     public Cleaner edit(Cleaner cleaner, File photo) throws Exception{
         Cleaner editedCleaner = null;
         String jsonData = gson.toJson(cleaner);

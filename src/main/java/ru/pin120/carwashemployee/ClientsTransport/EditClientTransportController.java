@@ -22,6 +22,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о транспорте клиента
+ */
 public class EditClientTransportController implements Initializable {
 
 
@@ -62,6 +65,13 @@ public class EditClientTransportController implements Initializable {
     private ClientsTransportRepository clientsTransportRepository = new ClientsTransportRepository();
 
     List<Transport> transports;
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -81,12 +91,21 @@ public class EditClientTransportController implements Initializable {
         setTooltipForButton();
     }
 
+    /**
+     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
+     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     */
     private void pageIndexListener(){
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
             fillingTable(newIndex.intValue());
         });
     }
 
+    /**
+     * Заполняет таблицу транспорта (transportsTable), исходя из текущего индекса страницы.
+     *
+     * @param pageIndex индекс текущей страницы пагинации
+     */
     private void fillingTable(int pageIndex){
         try{
             transportsTable.getItems().clear();
@@ -111,13 +130,19 @@ public class EditClientTransportController implements Initializable {
         }
     }
 
-
+    /**
+     * Устанавливает всплывающую подсказку для кнопки
+     */
     private void setTooltipForButton() {
         searchButton.setOnMouseEntered(event->{
             searchButton.setTooltip(new Tooltip(rb.getString("SEARCH_TRANSPORT")));
         });
     }
 
+    /**
+     * Проверяет длину введенного значения и предотвращает ввод более длинных номеров,
+     * чем максимально допустимая длина для государственного номера транспортного средства.
+     */
     private void stateNumberFieldListener() {
         stateNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -128,6 +153,15 @@ public class EditClientTransportController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для окна создания, редактирования или удаления транспорта клиента.
+     * В зависимости от режима операции (создание, редактирование или удаление),
+     * устанавливает заголовок окна и настраивает соответствующие компоненты интерфейса.
+     *
+     * @param clientsTransport объект типа ClientsTransport, представляющий информацию о транспорте клиента
+     * @param operationMode режим операции (CREATE, EDIT или DELETE)
+     * @param modalStage модальное окно
+     */
     public void setParameters(ClientsTransport clientsTransport, FXOperationMode operationMode, Stage modalStage) {
         this.clientsTransport = clientsTransport;
         this.operationMode = operationMode;
@@ -160,6 +194,11 @@ public class EditClientTransportController implements Initializable {
 
     }
 
+    /**
+     * Заполняет компоненты интерфейса данными о транспорте клиента для редактирования или удаления.
+     * Устанавливает значения полей государственного номера транспорта, марки, модели и категории транспорта.
+     * Также заполняет таблицу транспорта
+     */
     private void fillingComponents() {
         stateNumberField.setText(clientsTransport.getClTrStateNumber());
         filterMarkField.setText(clientsTransport.getTransport().getTrMark());
@@ -180,6 +219,11 @@ public class EditClientTransportController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(operationMode == FXOperationMode.CREATE || operationMode == FXOperationMode.EDIT) {
@@ -232,6 +276,18 @@ public class EditClientTransportController implements Initializable {
         }
     }
 
+    /**
+     * Проверяет корректность государственного номера транспортного средства
+     * в зависимости от категории транспорта.
+     *
+     * Мотоциклы, квадроциклы и тракторы должны соответствовать шаблону MOTO_AGR_REGEX.
+     * Автомобили должны соответствовать шаблону CAR_REGEX.
+     * В случае некорректного номера выводится сообщение об ошибке с соответствующим текстом.
+     *
+     * @param transportFX объект типа TransportFX, содержащий информацию о транспортном средстве
+     * @param stateNumber государственный номер транспортного средства для проверки
+     * @return true, если государственный номер корректен; в противном случае false
+     */
     private boolean isValidStateNumber(TransportFX transportFX, String stateNumber) {
         boolean validStateNumber = true;
         if (transportFX.getTrCategory().toLowerCase().contains("мотоцикл") || transportFX.getTrCategory().toLowerCase().contains("квадроцикл") || transportFX.getTrCategory().toLowerCase().contains("трактор")) {
@@ -246,11 +302,22 @@ public class EditClientTransportController implements Initializable {
         return validStateNumber;
     }
 
+
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

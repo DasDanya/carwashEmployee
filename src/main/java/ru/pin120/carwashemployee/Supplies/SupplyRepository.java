@@ -18,6 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий расходного материала
+ */
 public class SupplyRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/supplies";
@@ -28,6 +31,13 @@ public class SupplyRepository {
             .build();
     private Gson gson = new Gson();
 
+    /**
+     * Получает список расходных материалов на указанной странице.
+     *
+     * @param pageIndex индекс страницы для получения (начинается с 0).
+     * @return список объектов Supply на указанной странице. Если pageIndex < 0, возвращается пустой список.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public List<Supply> get(int pageIndex) throws Exception{
         if(pageIndex < 0){
             return new ArrayList<>();
@@ -47,6 +57,17 @@ public class SupplyRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает список расходных материалов на указанной странице с фильтрацией.
+     *
+     * @param pageIndex индекс страницы
+     * @param filterName название
+     * @param filterCategory категория
+     * @param filterOperator оператор сравнения количества
+     * @param filterCount общее количество
+     * @return список объектов Supply, соответствующих параметрам поиска на указанной странице. Если pageIndex < 0, возвращается пустой список.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public List<Supply> get(int pageIndex, String filterName, String filterCategory, String filterOperator, Integer filterCount) throws Exception {
         if(pageIndex < 0){
             return new ArrayList<>();
@@ -80,6 +101,13 @@ public class SupplyRepository {
         return gson.fromJson(jsonData, type);
     }
 
+    /**
+     * Получает изображение расходного материала по имени файла фотографии.
+     *
+     * @param supPhotoName имя файла фотографии расходного материала.
+     * @return объект Image, представляющий фотографию расходного материала.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public Image getPhoto(String supPhotoName) throws Exception {
         Request request = new Request.Builder()
                 .url(url+"/getPhoto/" + supPhotoName)
@@ -94,6 +122,14 @@ public class SupplyRepository {
         return new Image(inputStream);
     }
 
+    /**
+     * Создает новую расходный материал с возможностью загрузки фотографии.
+     *
+     * @param supply объект Supply, представляющий новый расходный материал.
+     * @param photo файл фотографии для загрузки (может быть null).
+     * @return объект Supply, представляющий созданный расходный материал.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public Supply create(Supply supply, File photo) throws Exception{
         Supply createdSupply = null;
         String jsonData = gson.toJson(supply);
@@ -126,6 +162,13 @@ public class SupplyRepository {
         return createdSupply;
     }
 
+    /**
+     * Удаляет расходный материал по указанному id.
+     *
+     * @param id id расходного материала для удаления.
+     * @return true, если удаление прошло успешно; false в противном случае.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public boolean delete(Long id) throws Exception {
         boolean successDelete;
 
@@ -148,6 +191,14 @@ public class SupplyRepository {
         return successDelete;
     }
 
+    /**
+     * Редактирует существующий расходный материал с возможностью загрузки новой фотографии.
+     *
+     * @param supply объект Supply, представляющий редактируемый расходный материал.
+     * @param photo файл новой фотографии для загрузки (может быть null).
+     * @return объект Supply, представляющий отредактированный расходный материал.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
+     */
     public Supply edit(Supply supply, File photo) throws Exception{
         Supply editedSupply = null;
         String jsonData = gson.toJson(supply);

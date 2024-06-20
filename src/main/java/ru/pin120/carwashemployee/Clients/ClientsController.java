@@ -18,6 +18,9 @@ import ru.pin120.carwashemployee.FX.FXWindowData;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с клиентами
+ */
 public class ClientsController implements Initializable {
 
     @FXML
@@ -71,6 +74,13 @@ public class ClientsController implements Initializable {
     private Integer filterDiscount = null;
     private String filterDiscountOperator = "";
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -102,6 +112,10 @@ public class ClientsController implements Initializable {
         filterPhoneListener();
     }
 
+    /**
+     * Устанавливает слушатель изменений текстового поля для фильтрации ввода телефонного номера.
+     * Метод удаляет все нечисловые символы из введенного значения и обрезает его до максимально допустимой длины,
+     */
     private void filterPhoneListener(){
         filterPhoneField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -117,6 +131,12 @@ public class ClientsController implements Initializable {
     }
 
 
+    /**
+     * Устанавливает форматтер для Spinner (discountSpinner),
+     * чтобы ограничить ввод только цифрами и контролировать максимальное значение скидки.
+     * Если новое значение введено некорректно или превышает максимально допустимое значение,
+     * ввод не принимается.
+     */
     private void setSpinnerFormatter() {
         TextFormatter<Integer> discountFormatter = new TextFormatter<>(change -> {
             if (change.getControlNewText().matches("\\d*")) {
@@ -131,6 +151,11 @@ public class ClientsController implements Initializable {
         discountSpinner.getEditor().setTextFormatter(discountFormatter);
     }
 
+    /**
+     * Заполняет таблицу клиентов (clientsTable), исходя из текущего индекса страницы.
+     *
+     * @param pageIndex индекс текущей страницы пагинации
+     */
     private void fillingTable(int pageIndex){
         try{
             clientFXES.clear();
@@ -150,6 +175,11 @@ public class ClientsController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о клиентах
+     *
+     * @param clients список клиентов для заполнения
+     */
     private void fillingObservableList(List<Client> clients) {
         for(Client client: clients){
             ClientFX clientFX = new ClientFX(client.getClId(), client.getClSurname(), client.getClName(), client.getClPhone(), client.getClDiscount());
@@ -157,12 +187,19 @@ public class ClientsController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
+     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     */
     private void pageIndexListener(){
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
             fillingTable(newIndex.intValue());
         });
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void setTooltipForButton() {
         createButton.setOnMouseEntered(event->{
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_CLIENT")));
@@ -190,6 +227,11 @@ public class ClientsController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return clientsTable.getScene();
     }
@@ -206,6 +248,10 @@ public class ClientsController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с клиентом
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         Client client = null;
         switch (operationMode){
@@ -245,6 +291,13 @@ public class ClientsController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     *
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param client объект клиента
+     */
     private void doResult(FXFormExitMode exitMode, FXOperationMode operationMode, Client client) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -281,6 +334,9 @@ public class ClientsController implements Initializable {
         doRefresh();
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         filterSurnameField.clear();
         filterNameField.clear();

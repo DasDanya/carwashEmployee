@@ -20,6 +20,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер категорий транспорта
+ */
 public class CategoriesOfTransportController implements Initializable {
 
     @FXML
@@ -45,6 +48,13 @@ public class CategoriesOfTransportController implements Initializable {
     private ObservableList<CategoryOfTransportFX> categoryOfTransportFXES = FXCollections.observableArrayList();
     private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
 
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -62,6 +72,9 @@ public class CategoriesOfTransportController implements Initializable {
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
     }
 
+    /**
+     * Заполняет таблицу категорий всеми категориями транспорта
+     */
     private void fillingAll(){
         try {
             List<CategoryOfTransport> categoryOfCars = categoryOfTransportRepository.getAll();
@@ -72,6 +85,11 @@ public class CategoriesOfTransportController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о категориях транспорта
+     *
+     * @param categoryOfCars список категорий для заполнения
+     */
     private void fillingObservableList(List<CategoryOfTransport> categoryOfCars){
         for(CategoryOfTransport category: categoryOfCars){
             CategoryOfTransportFX categoryOfTransportFX = new CategoryOfTransportFX(category.getCatTrName(),category.getCatTrId());
@@ -79,6 +97,9 @@ public class CategoriesOfTransportController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_CATEGORY")));
@@ -97,9 +118,17 @@ public class CategoriesOfTransportController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){ return categoriesTable.getScene();}
 
-
+    /**
+     * Выполняет операции с категорией транспорта
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
             FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
@@ -142,6 +171,14 @@ public class CategoriesOfTransportController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     *
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param categoryOfTransport объект категории транспорта
+     * @param categoryOfTransportFX выбранная CategoryOfTransportFX для изменения или удаления
+     */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfTransport categoryOfTransport, CategoryOfTransportFX categoryOfTransportFX) {
         if(exitMode == FXFormExitMode.OK){
             switch (operationMode){
@@ -182,6 +219,9 @@ public class CategoriesOfTransportController implements Initializable {
         doOperation(FXOperationMode.EDIT);
     }
 
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         categoryOfTransportFXES.clear();
         searchField.clear();
@@ -201,6 +241,9 @@ public class CategoriesOfTransportController implements Initializable {
         doSearch();
     }
 
+    /**
+     * Поиск категорий транспорта
+     */
     private void doSearch(){
         if(searchField.getText() == null || searchField.getText().isBlank()){
             FXHelper.showErrorAlert(rb.getString("SEARCH_FIELD_IS_EMPTY"));

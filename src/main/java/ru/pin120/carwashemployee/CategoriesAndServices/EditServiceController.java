@@ -15,6 +15,9 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных об услуге
+ */
 public class EditServiceController implements Initializable {
 
     @FXML
@@ -35,6 +38,12 @@ public class EditServiceController implements Initializable {
 
     private ServiceRepository serviceRepository = new ServiceRepository();
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -42,6 +51,9 @@ public class EditServiceController implements Initializable {
         serviceNameFieldTextListener();
     }
 
+    /**
+     * Слушатель для поля ввода названия услуги, ограничивает длину вводимого текста.
+     */
     private void serviceNameFieldTextListener(){
         serviceNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -52,6 +64,13 @@ public class EditServiceController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для формы редактирования услуги
+     *
+     * @param serviceDTO объект услуги
+     * @param mode режим операции (создание, удаление)
+     * @param stage (Stage) для отображения формы
+     */
     public void setParameters(ServiceDTO serviceDTO, FXOperationMode mode, Stage stage){
         this.serviceDTO = serviceDTO;
         this.mode = mode;
@@ -76,6 +95,11 @@ public class EditServiceController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Обрабатывает нажатие кнопки OK, выполняет операцию в зависимости от режима (создание, удаление).
+     *
+     * @param actionEvent событие нажатия кнопки
+     */
     @FXML
     private void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -113,12 +137,21 @@ public class EditServiceController implements Initializable {
         }
 
     }
+
+    /**
+     * Обрабатывает нажатие кнопки Cancel, закрывает форму.
+     *
+     * @param actionEvent событие нажатия кнопки
+     */
     @FXML
     private void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+    /**
+     * Устанавливает действие при закрытии окна, чтобы задать режим выхода.
+     */
     private void closeWindowAction(){
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
+import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoryOfSupplies;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
 import ru.pin120.carwashemployee.FX.FXOperationMode;
@@ -15,6 +16,9 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о категории транспорта
+ */
 public class EditCategoryOfTransportController implements Initializable {
 
     @FXML
@@ -36,6 +40,12 @@ public class EditCategoryOfTransportController implements Initializable {
 
     private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -43,6 +53,10 @@ public class EditCategoryOfTransportController implements Initializable {
         categoryNameFieldTextListener();
     }
 
+    /**
+     * Устанавливает слушатель изменений текста для поля названия категории.
+     * Проверяет длину введенного значения и обрезает его до максимально допустимой длины, если необходимо.
+     */
     private void categoryNameFieldTextListener() {
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -53,6 +67,13 @@ public class EditCategoryOfTransportController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для формы создания, изменения, удаления категории транспорта.
+     *
+     * @param categoryOfTransport Объект {@link CategoryOfTransport}, содержащий данные о категории транспорта.
+     * @param operationMode Режим операции (создание, изменение, удаление).
+     * @param stage Модальное окно, на котором отображается форма.
+     */
     public void setParameters(CategoryOfTransport categoryOfTransport, FXOperationMode operationMode, Stage stage){
         this.categoryOfTransport = categoryOfTransport;
         this.operationMode = operationMode;
@@ -77,10 +98,19 @@ public class EditCategoryOfTransportController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(categoryNameField.getText() == null || categoryNameField.getText().isBlank()) {
@@ -135,6 +165,12 @@ public class EditCategoryOfTransportController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();

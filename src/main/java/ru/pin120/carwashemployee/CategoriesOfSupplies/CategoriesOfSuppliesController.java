@@ -20,6 +20,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер формы с категориями расходных материалов
+ */
 public class CategoriesOfSuppliesController implements Initializable {
 
     @FXML
@@ -43,6 +46,14 @@ public class CategoriesOfSuppliesController implements Initializable {
 
     private CategoryOfSuppliesRepository categoryOfSuppliesRepository = new CategoryOfSuppliesRepository();
     private ObservableList<CategoriesOfSuppliesFX> categoriesOfSuppliesFXES = FXCollections.observableArrayList();
+
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -57,6 +68,9 @@ public class CategoriesOfSuppliesController implements Initializable {
         Platform.runLater(() -> FXHelper.bindHotKeysToDoOperation(getActualScene(), this::doOperation, this::doRefresh));
     }
 
+    /**
+     * Заполняет таблицу категорий всеми категориями расходных материалов
+     */
     private void fillingAll() {
         try{
             List<CategoryOfSupplies> categories = categoryOfSuppliesRepository.getAll();
@@ -71,6 +85,11 @@ public class CategoriesOfSuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Заполняет ObservableList данными о категориях расходных материалов
+     *
+     * @param categories список категорий для заполнения
+     */
     private void fillingObservableList(List<CategoryOfSupplies> categories){
         categoriesOfSuppliesFXES.clear();
         for(CategoryOfSupplies category: categories){
@@ -79,6 +98,9 @@ public class CategoriesOfSuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
             createButton.setTooltip(new Tooltip(rb.getString("CREATE_CATEGORY")));
@@ -94,6 +116,11 @@ public class CategoriesOfSuppliesController implements Initializable {
         });
     }
 
+    /**
+     * Возвращает текущую сцену (Scene).
+     *
+     * @return текущая сцена
+     */
     private Scene getActualScene(){
         return categoriesTable.getScene();
     }
@@ -106,6 +133,10 @@ public class CategoriesOfSuppliesController implements Initializable {
         doOperation(FXOperationMode.DELETE);
     }
 
+    /**
+     * Выполняет операции с категорией расходных материалов
+     * @param operationMode Режим операции
+     */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
             FXHelper.showErrorAlert(AppHelper.getCannotAccessOperationText());
@@ -148,6 +179,14 @@ public class CategoriesOfSuppliesController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает результат выполнения операции.
+     *
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param categoryOfSupplies объект категории расходных материалов
+     * @param selectedCategory выбранная CategoriesOfSuppliesFX для удаления
+     */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfSupplies categoryOfSupplies, CategoriesOfSuppliesFX selectedCategory){
         if(exitMode == FXFormExitMode.OK){
             if(operationMode == FXOperationMode.CREATE){
@@ -168,6 +207,10 @@ public class CategoriesOfSuppliesController implements Initializable {
         doRefresh();
     }
 
+
+    /**
+     * Выполняет обновление данных.
+     */
     private void doRefresh(){
         categoriesOfSuppliesFXES.clear();
         searchField.clear();

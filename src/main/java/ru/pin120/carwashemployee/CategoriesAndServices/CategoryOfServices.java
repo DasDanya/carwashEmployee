@@ -8,11 +8,20 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Модель категории услуг
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryOfServices {
+    /**
+     * Название категории
+     */
     private String catName;
+    /**
+     * Список услуг
+     */
     private List<Service> services;
 }

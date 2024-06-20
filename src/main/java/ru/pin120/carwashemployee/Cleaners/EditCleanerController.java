@@ -15,6 +15,7 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Boxes.BoxesRepository;
+import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 import ru.pin120.carwashemployee.Clients.ClientFX;
 import ru.pin120.carwashemployee.FX.FXFormExitMode;
 import ru.pin120.carwashemployee.FX.FXHelper;
@@ -26,6 +27,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о мойщике
+ */
 public class EditCleanerController implements Initializable {
     @FXML
     private Button btCancel;
@@ -59,6 +63,13 @@ public class EditCleanerController implements Initializable {
 
     private BoxesRepository boxesRepository = new BoxesRepository();
     private CleanersRepository cleanersRepository = new CleanersRepository();
+
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -74,6 +85,10 @@ public class EditCleanerController implements Initializable {
         textFieldListeners();
     }
 
+    /**
+     * Настройка слушателей изменений текстовых полей для ограничения длины ввода.
+     * Поля, которые превышают максимально допустимую длину, будут возвращены к предыдущему значению.
+     */
     private void textFieldListeners(){
         surnameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -109,11 +124,17 @@ public class EditCleanerController implements Initializable {
         });
     }
 
-
+    /**
+     * Заполнение элементов выпадающего списка статусов мойщика.
+     */
     private void fillingComboBoxes() {
         statusComboBox.getItems().setAll(CleanerStatus.values());
     }
 
+    /**
+     * Настройка конвертера для выпадающего списка статусов мойщика.
+     * Конвертер используется для преобразования объекта CleanerStatus в строку и обратно.
+     */
     private void setConvertersForComboBoxes() {
         statusComboBox.setConverter(new StringConverter<CleanerStatus>() {
             @Override
@@ -128,6 +149,9 @@ public class EditCleanerController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает всплывающие подсказки для кнопок
+     */
     private void settingTooltipForButtons() {
         loadImageButton.setOnMouseEntered(event -> {
             loadImageButton.setTooltip(new Tooltip(rb.getString("LOAD_PHOTO")));
@@ -137,6 +161,13 @@ public class EditCleanerController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для формы создания, изменения, удаления мойщика.
+     *
+     * @param cleaner Объект {@link Cleaner}, содержащий данные о мойщике.
+     * @param operationMode Режим операции (создание, изменение, удаление).
+     * @param stage Модальное окно, на котором отображается форма.
+     */
     public void setParameters(Cleaner cleaner, FXOperationMode operationMode, Stage stage){
         this.cleaner = cleaner;
         this.operationMode = operationMode;
@@ -174,6 +205,10 @@ public class EditCleanerController implements Initializable {
         closeWindowAction();
     }
 
+    /**
+     * Заполнение компонентов формы данными текущего объекта мойщика.
+     * Заполняются поля фамилии, имени, отчества, номера телефона и выбранного статуса.
+     */
     private void fillingComponents(){
         surnameField.setText(cleaner.getClrSurname());
         nameField.setText(cleaner.getClrName());
@@ -182,6 +217,11 @@ public class EditCleanerController implements Initializable {
         statusComboBox.getSelectionModel().select(cleaner.getClrStatus());
     }
 
+    /**
+     * Обработчик события нажатия кнопки "OK".
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
         if(surnameField.getText() == null || surnameField.getText().isBlank()){
@@ -257,15 +297,30 @@ public class EditCleanerController implements Initializable {
         }
     }
 
+    /**
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     *
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+    /**
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
+    /**
+     * Обработка действия кнопки загрузки изображения.
+     * Открывает диалоговое окно для выбора изображения.
+     * После выбора изображения отображает информацию о выбранном файле в текстовом поле.
+     */
     public void loadImageButtonAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(rb.getString("SELECT_PHOTO"));
@@ -283,10 +338,18 @@ public class EditCleanerController implements Initializable {
         }
     }
 
+    /**
+     * Получение текущей сцены, на которой находится текстовое поле с фамилией.
+     * @return текущая сцена, содержащая текстовое поле с фамилией
+     */
     private Scene getActualScene(){
         return surnameField.getScene();
     }
 
+    /**
+     * Обработка действия кнопки "Посмотреть фотографию".
+     * @param actionEvent событие, вызвавшее действие (нажатие кнопки)
+     */
     public void showImageButtonAction(ActionEvent actionEvent) {
         try {
             FXWindowData fxWindowData = FXHelper.createModalWindow("ru.pin120.carwashemployee.Cleaners.resources.ShowCleanerPhoto", "Cleaners/fxml/ShowCleanerPhoto.fxml", getActualScene());

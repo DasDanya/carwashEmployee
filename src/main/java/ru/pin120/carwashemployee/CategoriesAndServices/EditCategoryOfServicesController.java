@@ -15,6 +15,9 @@ import ru.pin120.carwashemployee.FX.FXOperationMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер редактирования данных о категории услуг
+ */
 public class EditCategoryOfServicesController implements Initializable {
 
     @FXML
@@ -34,6 +37,12 @@ public class EditCategoryOfServicesController implements Initializable {
 
     private CategoriesOfServicesRepository categoriesOfServicesRepository = new CategoriesOfServicesRepository();
 
+    /**
+     * Инициализация контроллера
+     *
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -41,6 +50,9 @@ public class EditCategoryOfServicesController implements Initializable {
         categoryNameFieldTextListener();
     }
 
+    /**
+     * Слушатель для поля ввода названия категории, ограничивает длину вводимого текста.
+     */
     private void categoryNameFieldTextListener(){
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
@@ -51,6 +63,13 @@ public class EditCategoryOfServicesController implements Initializable {
         });
     }
 
+    /**
+     * Устанавливает параметры для формы редактирования категории
+     *
+     * @param categoryOfServices объект категории услуг
+     * @param mode режим операции (создание, удаление)
+     * @param stage (Stage) для отображения формы
+     */
     public void setParameters(CategoryOfServices categoryOfServices, FXOperationMode mode, Stage stage){
         this.categoryOfServices = categoryOfServices;
         this.mode = mode;
@@ -58,9 +77,6 @@ public class EditCategoryOfServicesController implements Initializable {
         switch (mode){
             case CREATE:
                 this.stage.setTitle(rb.getString("CREATE_FORM_TITLE"));
-                break;
-            case EDIT:
-                this.stage.setTitle(rb.getString("EDIT_FORM_TITLE"));
                 break;
             case DELETE:
                 this.stage.setTitle(rb.getString("DELETE_FORM_TITLE"));
@@ -76,6 +92,11 @@ public class EditCategoryOfServicesController implements Initializable {
     }
 
 
+    /**
+     * Обрабатывает нажатие кнопки OK, выполняет операцию в зависимости от режима (создание, удаление).
+     *
+     * @param actionEvent событие нажатия кнопки
+     */
     @FXML
     private void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -93,11 +114,11 @@ public class EditCategoryOfServicesController implements Initializable {
                         categoryOfServices.setCatName(categoryNameField.getText().trim());
                         canExit = categoriesOfServicesRepository.createCategoryOfServices(categoryOfServices);
                         break;
-                    case EDIT:
-                        EditCategoryOrServiceDTO editCategoryOrServiceDTO = new EditCategoryOrServiceDTO(categoryOfServices.getCatName(), categoryNameField.getText().trim());
-                        canExit = categoriesOfServicesRepository.editCategoryOfServices(editCategoryOrServiceDTO);
-                        categoryOfServices.setCatName(categoryNameField.getText().trim());
-                        break;
+//                    case EDIT:
+//                        EditCategoryOrServiceDTO editCategoryOrServiceDTO = new EditCategoryOrServiceDTO(categoryOfServices.getCatName(), categoryNameField.getText().trim());
+//                        canExit = categoriesOfServicesRepository.editCategoryOfServices(editCategoryOrServiceDTO);
+//                        categoryOfServices.setCatName(categoryNameField.getText().trim());
+//                        break;
                     case DELETE:
                         canExit = categoriesOfServicesRepository.deleteCategoryOfServices(categoryOfServices);
                         break;
@@ -118,12 +139,21 @@ public class EditCategoryOfServicesController implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает нажатие кнопки Cancel, закрывает форму.
+     *
+     * @param actionEvent событие нажатия кнопки
+     */
     @FXML
     private void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
         stage.close();
     }
 
+
+    /**
+     * Устанавливает действие при закрытии окна, чтобы задать режим выхода.
+     */
     private void closeWindowAction(){
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }

@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер редактирования данных о пользователе
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ
  */
 public class EditUserController implements Initializable {
 

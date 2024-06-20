@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Позиция прайс-листа
+ * РџРѕР·РёС†РёСЏ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,19 +14,19 @@ import lombok.Setter;
 @Setter
 public class ServiceWithPriceList {
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private String catName;
     /**
-     * Название услуги
+     * РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
      */
     private String servName;
     /**
-     * Стоимость услуги
+     * РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРіРё
      */
     private Integer plPrice;
     /**
-     * Время выполнения услуги
+     * Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ СѓСЃР»СѓРіРё
      */
     private Integer plTime;
 }

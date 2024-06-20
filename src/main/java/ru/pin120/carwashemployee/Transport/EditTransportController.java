@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер редактирования данных о транспорте
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚Рµ
  */
 public class EditTransportController implements Initializable {
 

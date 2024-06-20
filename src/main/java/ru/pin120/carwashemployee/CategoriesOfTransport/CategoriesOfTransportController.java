@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер категорий транспорта
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ РєР°С‚РµРіРѕСЂРёР№ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
  */
 public class CategoriesOfTransportController implements Initializable {
 
@@ -50,10 +50,10 @@ public class CategoriesOfTransportController implements Initializable {
 
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,7 +73,7 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу категорий всеми категориями транспорта
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РєР°С‚РµРіРѕСЂРёР№ РІСЃРµРјРё РєР°С‚РµРіРѕСЂРёСЏРјРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      */
     private void fillingAll(){
         try {
@@ -86,9 +86,9 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList данными о категориях транспорта
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РєР°С‚РµРіРѕСЂРёСЏС… С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      *
-     * @param categoryOfCars список категорий для заполнения
+     * @param categoryOfCars СЃРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
      */
     private void fillingObservableList(List<CategoryOfTransport> categoryOfCars){
         for(CategoryOfTransport category: categoryOfCars){
@@ -98,7 +98,7 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -119,15 +119,15 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){ return categoriesTable.getScene();}
 
     /**
-     * Выполняет операции с категорией транспорта
-     * @param operationMode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РєР°С‚РµРіРѕСЂРёРµР№ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
@@ -172,12 +172,12 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат выполнения операции.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
      *
-     * @param operationMode режим операции
-     * @param exitMode режим выхода из формы
-     * @param categoryOfTransport объект категории транспорта
-     * @param categoryOfTransportFX выбранная CategoryOfTransportFX для изменения или удаления
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param categoryOfTransport РѕР±СЉРµРєС‚ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+     * @param categoryOfTransportFX РІС‹Р±СЂР°РЅРЅР°СЏ CategoryOfTransportFX РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ
      */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfTransport categoryOfTransport, CategoryOfTransportFX categoryOfTransportFX) {
         if(exitMode == FXFormExitMode.OK){
@@ -220,7 +220,7 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Выполняет обновление данных.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
      */
     private void doRefresh(){
         categoryOfTransportFXES.clear();
@@ -242,7 +242,7 @@ public class CategoriesOfTransportController implements Initializable {
     }
 
     /**
-     * Поиск категорий транспорта
+     * РџРѕРёСЃРє РєР°С‚РµРіРѕСЂРёР№ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      */
     private void doSearch(){
         if(searchField.getText() == null || searchField.getText().isBlank()){

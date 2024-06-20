@@ -12,7 +12,7 @@ import java.net.HttpRetryException;
 import java.util.List;
 
 /**
- * Репозиторий категории расходных материалов
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
  */
 public class CategoryOfSuppliesRepository {
 
@@ -24,10 +24,10 @@ public class CategoryOfSuppliesRepository {
     private Gson gson = new Gson();
 
     /**
-     * Получает все категории расходных материалов
+     * РџРѕР»СѓС‡Р°РµС‚ РІСЃРµ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
      *
-     * @return Список объектов {@code CategoryOfSupplies}, содержащий данные о категориях расходных материалов.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfSupplies}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°РЅРЅС‹Рµ Рѕ РєР°С‚РµРіРѕСЂРёСЏС… СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
 
     public List<CategoryOfSupplies> getAll() throws Exception{
@@ -46,11 +46,11 @@ public class CategoryOfSuppliesRepository {
     }
 
     /**
-     * Выполняет поиск категории расходных материалов по указанному названию
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РїРѕРёСЃРє РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РЅР°Р·РІР°РЅРёСЋ
      *
-     * @param csupName Название категории расходных материалов для поиска.
-     * @return Список объектов {@code CategoryOfSupplies}, удовлетворяющих критерию поиска.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param csupName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РґР»СЏ РїРѕРёСЃРєР°.
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfSupplies}, СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‰РёС… РєСЂРёС‚РµСЂРёСЋ РїРѕРёСЃРєР°.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public List<CategoryOfSupplies> search(String csupName) throws Exception{
         Request request = new Request.Builder()
@@ -68,11 +68,11 @@ public class CategoryOfSuppliesRepository {
     }
 
     /**
-     * Создает новую категорию расходных материалов
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РєР°С‚РµРіРѕСЂРёСЋ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
      *
-     * @param categoryOfSupplies Объект {@code CategoryOfSupplies}, который необходимо создать.
-     * @return Созданный объект {@code CategoryOfSupplies}.
-     * @throws Exception Если происходит ошибка HTTP, категория уже существует или проблемы с парсингом JSON.
+     * @param categoryOfSupplies РћР±СЉРµРєС‚ {@code CategoryOfSupplies}, РєРѕС‚РѕСЂС‹Р№ РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕР·РґР°С‚СЊ.
+     * @return РЎРѕР·РґР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@code CategoryOfSupplies}.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP, РєР°С‚РµРіРѕСЂРёСЏ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public CategoryOfSupplies create(CategoryOfSupplies categoryOfSupplies) throws Exception {
         CategoryOfSupplies createdCategory = null;
@@ -102,11 +102,11 @@ public class CategoryOfSuppliesRepository {
     }
 
     /**
-     * Удаляет категорию расходных материалов с указанным названием
+     * РЈРґР°Р»СЏРµС‚ РєР°С‚РµРіРѕСЂРёСЋ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РЅР°Р·РІР°РЅРёРµРј
      *
-     * @param cSupName Название категории расходных материалов для удаления.
-     * @return {@code true}, если категория успешно удалена, {@code false} в противном случае.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param cSupName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.
+     * @return {@code true}, РµСЃР»Рё РєР°С‚РµРіРѕСЂРёСЏ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР°, {@code false} РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public boolean delete(String cSupName) throws Exception {
         boolean successDelete;

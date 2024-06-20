@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Контроллер формы с клиентами
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РєР»РёРµРЅС‚Р°РјРё
  */
 public class ClientsController implements Initializable {
 
@@ -76,10 +76,10 @@ public class ClientsController implements Initializable {
 
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -113,8 +113,8 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Устанавливает слушатель изменений текстового поля для фильтрации ввода телефонного номера.
-     * Метод удаляет все нечисловые символы из введенного значения и обрезает его до максимально допустимой длины,
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РёР·РјРµРЅРµРЅРёР№ С‚РµРєСЃС‚РѕРІРѕРіРѕ РїРѕР»СЏ РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё РІРІРѕРґР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР°.
+     * РњРµС‚РѕРґ СѓРґР°Р»СЏРµС‚ РІСЃРµ РЅРµС‡РёСЃР»РѕРІС‹Рµ СЃРёРјРІРѕР»С‹ РёР· РІРІРµРґРµРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ Рё РѕР±СЂРµР·Р°РµС‚ РµРіРѕ РґРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјРѕР№ РґР»РёРЅС‹,
      */
     private void filterPhoneListener(){
         filterPhoneField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -132,10 +132,10 @@ public class ClientsController implements Initializable {
 
 
     /**
-     * Устанавливает форматтер для Spinner (discountSpinner),
-     * чтобы ограничить ввод только цифрами и контролировать максимальное значение скидки.
-     * Если новое значение введено некорректно или превышает максимально допустимое значение,
-     * ввод не принимается.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„РѕСЂРјР°С‚С‚РµСЂ РґР»СЏ Spinner (discountSpinner),
+     * С‡С‚РѕР±С‹ РѕРіСЂР°РЅРёС‡РёС‚СЊ РІРІРѕРґ С‚РѕР»СЊРєРѕ С†РёС„СЂР°РјРё Рё РєРѕРЅС‚СЂРѕР»РёСЂРѕРІР°С‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРєРёРґРєРё.
+     * Р•СЃР»Рё РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІРІРµРґРµРЅРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ РёР»Рё РїСЂРµРІС‹С€Р°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ,
+     * РІРІРѕРґ РЅРµ РїСЂРёРЅРёРјР°РµС‚СЃСЏ.
      */
     private void setSpinnerFormatter() {
         TextFormatter<Integer> discountFormatter = new TextFormatter<>(change -> {
@@ -152,9 +152,9 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу клиентов (clientsTable), исходя из текущего индекса страницы.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РєР»РёРµРЅС‚РѕРІ (clientsTable), РёСЃС…РѕРґСЏ РёР· С‚РµРєСѓС‰РµРіРѕ РёРЅРґРµРєСЃР° СЃС‚СЂР°РЅРёС†С‹.
      *
-     * @param pageIndex индекс текущей страницы пагинации
+     * @param pageIndex РёРЅРґРµРєСЃ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё
      */
     private void fillingTable(int pageIndex){
         try{
@@ -176,9 +176,9 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList данными о клиентах
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РєР»РёРµРЅС‚Р°С…
      *
-     * @param clients список клиентов для заполнения
+     * @param clients СЃРїРёСЃРѕРє РєР»РёРµРЅС‚РѕРІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
      */
     private void fillingObservableList(List<Client> clients) {
         for(Client client: clients){
@@ -188,8 +188,8 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
-     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЏ РёР·РјРµРЅРµРЅРёСЏ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё (pagination).
+     * РџСЂРё РёР·РјРµРЅРµРЅРёРё С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РІС‹Р·С‹РІР°РµС‚ РјРµС‚РѕРґ fillingTable РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РЅРѕРІРѕР№ СЃС‚СЂР°РЅРёС†С‹.
      */
     private void pageIndexListener(){
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
@@ -198,7 +198,7 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void setTooltipForButton() {
         createButton.setOnMouseEntered(event->{
@@ -228,9 +228,9 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){
         return clientsTable.getScene();
@@ -249,8 +249,8 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Выполняет операции с клиентом
-     * @param operationMode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РєР»РёРµРЅС‚РѕРј
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         Client client = null;
@@ -292,11 +292,11 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат выполнения операции.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
      *
-     * @param operationMode режим операции
-     * @param exitMode режим выхода из формы
-     * @param client объект клиента
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param client РѕР±СЉРµРєС‚ РєР»РёРµРЅС‚Р°
      */
     private void doResult(FXFormExitMode exitMode, FXOperationMode operationMode, Client client) {
         if(exitMode == FXFormExitMode.OK){
@@ -335,7 +335,7 @@ public class ClientsController implements Initializable {
     }
 
     /**
-     * Выполняет обновление данных.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
      */
     private void doRefresh(){
         filterSurnameField.clear();

@@ -4,7 +4,7 @@ import lombok.*;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
 /**
- * Модель транспорта
+ * РњРѕРґРµР»СЊ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
  */
 @AllArgsConstructor
 @NoArgsConstructor

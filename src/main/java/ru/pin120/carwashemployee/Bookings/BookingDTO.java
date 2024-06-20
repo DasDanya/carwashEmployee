@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * DTO заказа
+ * DTO Р·Р°РєР°Р·Р°
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,35 +21,35 @@ import java.util.List;
 @Setter
 public class BookingDTO {
     /**
-     * id заказа
+     * id Р·Р°РєР°Р·Р°
      */
     private String bkId;
     /**
-     * статус
+     * СЃС‚Р°С‚СѓСЃ
      */
     private BookingStatus bkStatus;
     /**
-     * время начала
+     * РІСЂРµРјСЏ РЅР°С‡Р°Р»Р°
      */
     private LocalDateTime bkStartTime;
     /**
-     * время окончания
+     * РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
      */
     private LocalDateTime bkEndTime;
     /**
-     * бокс, в котором выполняется заказ
+     * Р±РѕРєСЃ, РІ РєРѕС‚РѕСЂРѕРј РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°РєР°Р·
      */
     private Box box;
     /**
-     * мойщик,выполняющий заказ
+     * РјРѕР№С‰РёРє,РІС‹РїРѕР»РЅСЏСЋС‰РёР№ Р·Р°РєР°Р·
      */
     private Cleaner cleaner;
     /**
-     * транспорт клиента
+     * С‚СЂР°РЅСЃРїРѕСЂС‚ РєР»РёРµРЅС‚Р°
      */
     private ClientsTransport clientTransport;
     /**
-     * список услуг с их стоимостью и временем выполнения
+     * СЃРїРёСЃРѕРє СѓСЃР»СѓРі СЃ РёС… СЃС‚РѕРёРјРѕСЃС‚СЊСЋ Рё РІСЂРµРјРµРЅРµРј РІС‹РїРѕР»РЅРµРЅРёСЏ
      */
     private List<ServiceWithPriceList> services;
 }

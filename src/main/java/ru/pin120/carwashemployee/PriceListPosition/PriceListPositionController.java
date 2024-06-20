@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Контроллер формы с позиций прайс-листа
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
  */
 public class PriceListPositionController implements Initializable {
 
@@ -75,10 +75,10 @@ public class PriceListPositionController implements Initializable {
 
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,9 +99,9 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Инициализирует панель фильтрации.
-     * Устанавливает форматеры для спиннеров, заполняет элементы ComboBox операторами и
-     * настраивает контекстные меню для текстовых полей.
+     * РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РїР°РЅРµР»СЊ С„РёР»СЊС‚СЂР°С†РёРё.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„РѕСЂРјР°С‚РµСЂС‹ РґР»СЏ СЃРїРёРЅРЅРµСЂРѕРІ, Р·Р°РїРѕР»РЅСЏРµС‚ СЌР»РµРјРµРЅС‚С‹ ComboBox РѕРїРµСЂР°С‚РѕСЂР°РјРё Рё
+     * РЅР°СЃС‚СЂР°РёРІР°РµС‚ РєРѕРЅС‚РµРєСЃС‚РЅС‹Рµ РјРµРЅСЋ РґР»СЏ С‚РµРєСЃС‚РѕРІС‹С… РїРѕР»РµР№.
      */
     private void initFilterPanel(){
         setSpinnersFormatters();
@@ -116,8 +116,8 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Устанавливает форматеры для спиннеров фильтрации.
-     * Форматеры ограничивают ввод только цифрами и проверяют, чтобы введенные значения не превышали установленные пределы.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„РѕСЂРјР°С‚РµСЂС‹ РґР»СЏ СЃРїРёРЅРЅРµСЂРѕРІ С„РёР»СЊС‚СЂР°С†РёРё.
+     * Р¤РѕСЂРјР°С‚РµСЂС‹ РѕРіСЂР°РЅРёС‡РёРІР°СЋС‚ РІРІРѕРґ С‚РѕР»СЊРєРѕ С†РёС„СЂР°РјРё Рё РїСЂРѕРІРµСЂСЏСЋС‚, С‡С‚РѕР±С‹ РІРІРµРґРµРЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РЅРµ РїСЂРµРІС‹С€Р°Р»Рё СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рµ РїСЂРµРґРµР»С‹.
      */
     private void setSpinnersFormatters(){
         filterPriceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,PriceListPositionFX.MAX_PRICE,0,50));
@@ -149,7 +149,7 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу позиций прайс-листа всеми доступными позициями.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р° РІСЃРµРјРё РґРѕСЃС‚СѓРїРЅС‹РјРё РїРѕР·РёС†РёСЏРјРё.
      */
     private void fillingAll(){
         try{
@@ -164,9 +164,9 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList данными о позициях прайс-листа
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РїРѕР·РёС†РёСЏС… РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
      *
-     * @param priceListPositions список транспортных средств для заполнения
+     * @param priceListPositions СЃРїРёСЃРѕРє С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹С… СЃСЂРµРґСЃС‚РІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
      */
     private void fillingObservableList(List<PriceListPosition> priceListPositions){
         for(PriceListPosition priceListPosition : priceListPositions){
@@ -176,10 +176,10 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Устанавливает параметры услуги и модального окна.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ СѓСЃР»СѓРіРё Рё РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР°.
      *
-     * @param serviceName  название услуги
-     * @param modalStage  модальное окно, тип Stage.
+     * @param serviceName  РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
+     * @param modalStage  РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ, С‚РёРї Stage.
      */
     public void setParameters(String serviceName, Stage modalStage) {
         this.serviceName = serviceName;
@@ -191,7 +191,7 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void setTooltipForButton(){
         createButton.setOnMouseEntered(event->{
@@ -212,9 +212,9 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){
         return priceListTable.getScene();
@@ -233,8 +233,8 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Выполняет операции с позицией прайс-листа
-     * @param operationMode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РїРѕР·РёС†РёРµР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
@@ -289,11 +289,11 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат выполнения операции.
-     * @param operationMode режим операции
-     * @param exitMode режим выхода из формы
-     * @param priceListPosition объект позиции прайс-листа
-     * @param selectedPriceListPositionFX выбранный PriceListPositionFX для изменения или удаления
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param priceListPosition РѕР±СЉРµРєС‚ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+     * @param selectedPriceListPositionFX РІС‹Р±СЂР°РЅРЅС‹Р№ PriceListPositionFX РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ
      */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, PriceListPosition priceListPosition, PriceListPositionFX selectedPriceListPositionFX) {
         if(exitMode == FXFormExitMode.OK){
@@ -327,7 +327,7 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Выполняет обновление данных.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
      */
     private void doRefresh(){
         priceListPositionFXES.clear();
@@ -351,8 +351,8 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Устанавливает действие на событие закрытия окна.
-     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР° СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "Р’С‹С…РѕРґ" РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
@@ -363,7 +363,7 @@ public class PriceListPositionController implements Initializable {
     }
 
     /**
-     * Поиск позиций прайс-листа
+     * РџРѕРёСЃРє РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
      */
     private void doSearch(){
         try {

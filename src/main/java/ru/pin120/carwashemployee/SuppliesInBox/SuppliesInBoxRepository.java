@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Репозиторий расходных материалов в боксе
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РІ Р±РѕРєСЃРµ
  */
 public class SuppliesInBoxRepository {
 

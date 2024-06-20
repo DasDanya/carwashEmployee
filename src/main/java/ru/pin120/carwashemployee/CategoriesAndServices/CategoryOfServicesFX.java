@@ -5,15 +5,15 @@ import javafx.beans.property.StringProperty;
 import lombok.NoArgsConstructor;
 
 /**
- * FX представление категории услуг
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРі
  */
 @NoArgsConstructor
 public class CategoryOfServicesFX {
 
     public static final int MAX_LENGTH_CATEGORY_NAME = 30;
-    public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
+    public static final String REGEX = "^[a-zA-ZР°-СЏРђ-РЇС‘РЃ0-9 -]+$";
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private StringProperty name;
 

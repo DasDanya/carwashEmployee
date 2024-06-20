@@ -7,7 +7,7 @@ import ru.pin120.carwashemployee.AppHelper;
 import java.time.LocalTime;
 
 /**
- * FX представление рабочих дней
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СЂР°Р±РѕС‡РёС… РґРЅРµР№
  */
 public class WorkScheduleFX {
 

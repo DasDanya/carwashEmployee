@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * DTO добавления расходного материала
+ * DTO РґРѕР±Р°РІР»РµРЅРёСЏ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
  */
 @AllArgsConstructor
 @NoArgsConstructor

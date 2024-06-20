@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Êîíòðîëëåð äëÿ ïðèâÿçêè óñëóã ê êàòåãîðèè
+ * ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€ Ð´Ð»Ñ Ð¿Ñ€Ð¸Ð²ÑÐ·ÐºÐ¸ ÑƒÑÐ»ÑƒÐ³ Ðº ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸
  */
 public class BindWithCategoryController implements Initializable {
 
@@ -41,10 +41,10 @@ public class BindWithCategoryController implements Initializable {
 
 
     /**
-     * Èíèöèàëèçàöèÿ êîíòðîëëåðà
+     * Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ð°
      *
-     * @param url URL ðàñïîëîæåíèÿ FXML ôàéëà
-     * @param resourceBundle Íàáîð ðåñóðñîâ äëÿ ëîêàëèçàöèè
+     * @param url URL Ñ€Ð°ÑÐ¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ FXML Ñ„Ð°Ð¹Ð»Ð°
+     * @param resourceBundle ÐÐ°Ð±Ð¾Ñ€ Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð² Ð´Ð»Ñ Ð»Ð¾ÐºÐ°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,12 +52,12 @@ public class BindWithCategoryController implements Initializable {
     }
 
     /**
-     * Óñòàíàâëèâàåò ïàðàìåòðû äëÿ òåêóùåãî îêíà.
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð´Ð»Ñ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ð¾ÐºÐ½Ð°.
      *
-     * @param stage          òåêóùåå îêíî (Stage)
-     * @param bindMode       ðåæèì ïðèâÿçêè (BindWithCategoryMode)
-     * @param currentCategory òåêóùàÿ êàòåãîðèÿ
-     * @param parameter      ïàðàìåòð äëÿ ïðèâÿçêè
+     * @param stage          Ñ‚ÐµÐºÑƒÑ‰ÐµÐµ Ð¾ÐºÐ½Ð¾ (Stage)
+     * @param bindMode       Ñ€ÐµÐ¶Ð¸Ð¼ Ð¿Ñ€Ð¸Ð²ÑÐ·ÐºÐ¸ (BindWithCategoryMode)
+     * @param currentCategory Ñ‚ÐµÐºÑƒÑ‰Ð°Ñ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ñ
+     * @param parameter      Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð´Ð»Ñ Ð¿Ñ€Ð¸Ð²ÑÐ·ÐºÐ¸
      */
     public void setParameters(Stage stage, BindWithCategoryMode bindMode, String currentCategory,String parameter){
         parentStage = stage;
@@ -88,9 +88,9 @@ public class BindWithCategoryController implements Initializable {
     }
 
     /**
-     * Îáðàáàòûâàåò äåéñòâèå ïðè íàæàòèè êíîïêè "OK".
+     * ÐžÐ±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð¿Ñ€Ð¸ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ð¸ ÐºÐ½Ð¾Ð¿ÐºÐ¸ "OK".
      *
-     * @param actionEvent ñîáûòèå äåéñòâèÿ
+     * @param actionEvent ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -112,9 +112,9 @@ public class BindWithCategoryController implements Initializable {
     }
 
     /**
-     * Îáðàáàòûâàåò äåéñòâèå ïðè íàæàòèè êíîïêè "Îòìåíà".
+     * ÐžÐ±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð¿Ñ€Ð¸ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ð¸ ÐºÐ½Ð¾Ð¿ÐºÐ¸ "ÐžÑ‚Ð¼ÐµÐ½Ð°".
      *
-     * @param actionEvent ñîáûòèå äåéñòâèÿ
+     * @param actionEvent ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
@@ -122,7 +122,7 @@ public class BindWithCategoryController implements Initializable {
     }
 
     /**
-     * Óñòàíàâëèâàåò äåéñòâèå ïðè çàêðûòèè îêíà.
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð¿Ñ€Ð¸ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ð¸ Ð¾ÐºÐ½Ð°.
      */
     private void closeWindowAction(){
         parentStage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);

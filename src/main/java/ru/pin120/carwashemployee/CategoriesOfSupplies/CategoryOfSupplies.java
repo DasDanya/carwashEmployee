@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.CategoriesOfSupplies;
 import lombok.*;
 
 /**
- * Модель категории расходных материалов
+ * РњРѕРґРµР»СЊ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,11 +12,11 @@ import lombok.*;
 @ToString
 public class CategoryOfSupplies {
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private String csupName;
     /**
-     * Единица измерения
+     * Р•РґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
      */
     private UnitOfMeasure unit;
 }

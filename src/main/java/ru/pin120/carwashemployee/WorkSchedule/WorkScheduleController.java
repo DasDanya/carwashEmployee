@@ -27,7 +27,7 @@ import javafx.util.Callback;
 import ru.pin120.carwashemployee.FX.FXWindowData;
 
 /**
- * Контроллер формы с рабочими днями
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ СЂР°Р±РѕС‡РёРјРё РґРЅСЏРјРё
  */
 public class WorkScheduleController implements Initializable {
     @FXML
@@ -266,7 +266,7 @@ public class WorkScheduleController implements Initializable {
                 boolean selected = cleanerDTO.getWorkSchedules().stream().anyMatch(ws -> ws.getWsWorkDay().getDayOfMonth() == finalDay);
                 settingUpDisplayOfDays(workScheduleFX, finalDay, disabled, selected);
             }
-            // для месяцев, у которых количество дней < 31
+            // РґР»СЏ РјРµСЃСЏС†РµРІ, Сѓ РєРѕС‚РѕСЂС‹С… РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ < 31
             for(int remainDays = daysInMonth + 1; remainDays <= 31; remainDays++){
                 settingUpDisplayOfDays(workScheduleFX,remainDays,true, false);
             }
@@ -407,7 +407,7 @@ public class WorkScheduleController implements Initializable {
                 workScheduleFX.getDay31().setSelected(selected);
                 break;
             default:
-                throw new IllegalArgumentException("Неверный день: " + day);
+                throw new IllegalArgumentException("РќРµРІРµСЂРЅС‹Р№ РґРµРЅСЊ: " + day);
         }
     }
 
@@ -486,7 +486,7 @@ public class WorkScheduleController implements Initializable {
                         .findFirst()
                         .orElse(null);
 
-                if(!check.isSelected() && workSchedule != null){ // Если день отжали (при инициализации была галка)
+                if(!check.isSelected() && workSchedule != null){ // Р•СЃР»Рё РґРµРЅСЊ РѕС‚Р¶Р°Р»Рё (РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё Р±С‹Р»Р° РіР°Р»РєР°)
                    deleted.add(workSchedule);
                 }
 
@@ -513,7 +513,7 @@ public class WorkScheduleController implements Initializable {
                         .orElse(null);
 
                 LocalDate date = LocalDate.of(today.getYear(), today.getMonth(), finalDay);
-                if(check.isSelected() && workSchedule == null) { // Если день выбрали (при инициализации не было галки)
+                if(check.isSelected() && workSchedule == null) { // Р•СЃР»Рё РґРµРЅСЊ РІС‹Р±СЂР°Р»Рё (РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РЅРµ Р±С‹Р»Рѕ РіР°Р»РєРё)
                     CleanerDTO cleanerInCreatedList = getByBoxIdAndDayInWorkSchedule(created, deleted, finalDay);
                     if (checkExistingWorkingDay(cleanerInCreatedList, date)) {
                         return;

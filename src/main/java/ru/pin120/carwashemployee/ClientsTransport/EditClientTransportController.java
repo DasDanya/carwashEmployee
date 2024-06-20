@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер редактирования данных о транспорте клиента
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚Рµ РєР»РёРµРЅС‚Р°
  */
 public class EditClientTransportController implements Initializable {
 
@@ -67,10 +67,10 @@ public class EditClientTransportController implements Initializable {
     List<Transport> transports;
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,8 +92,8 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
-     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЏ РёР·РјРµРЅРµРЅРёСЏ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё (pagination).
+     * РџСЂРё РёР·РјРµРЅРµРЅРёРё С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РІС‹Р·С‹РІР°РµС‚ РјРµС‚РѕРґ fillingTable РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РЅРѕРІРѕР№ СЃС‚СЂР°РЅРёС†С‹.
      */
     private void pageIndexListener(){
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
@@ -102,9 +102,9 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу транспорта (transportsTable), исходя из текущего индекса страницы.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ С‚СЂР°РЅСЃРїРѕСЂС‚Р° (transportsTable), РёСЃС…РѕРґСЏ РёР· С‚РµРєСѓС‰РµРіРѕ РёРЅРґРµРєСЃР° СЃС‚СЂР°РЅРёС†С‹.
      *
-     * @param pageIndex индекс текущей страницы пагинации
+     * @param pageIndex РёРЅРґРµРєСЃ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё
      */
     private void fillingTable(int pageIndex){
         try{
@@ -131,7 +131,7 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающую подсказку для кнопки
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰СѓСЋ РїРѕРґСЃРєР°Р·РєСѓ РґР»СЏ РєРЅРѕРїРєРё
      */
     private void setTooltipForButton() {
         searchButton.setOnMouseEntered(event->{
@@ -140,8 +140,8 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Проверяет длину введенного значения и предотвращает ввод более длинных номеров,
-     * чем максимально допустимая длина для государственного номера транспортного средства.
+     * РџСЂРѕРІРµСЂСЏРµС‚ РґР»РёРЅСѓ РІРІРµРґРµРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ Рё РїСЂРµРґРѕС‚РІСЂР°С‰Р°РµС‚ РІРІРѕРґ Р±РѕР»РµРµ РґР»РёРЅРЅС‹С… РЅРѕРјРµСЂРѕРІ,
+     * С‡РµРј РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјР°СЏ РґР»РёРЅР° РґР»СЏ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР°.
      */
     private void stateNumberFieldListener() {
         stateNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -154,13 +154,13 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает параметры для окна создания, редактирования или удаления транспорта клиента.
-     * В зависимости от режима операции (создание, редактирование или удаление),
-     * устанавливает заголовок окна и настраивает соответствующие компоненты интерфейса.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ РѕРєРЅР° СЃРѕР·РґР°РЅРёСЏ, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°.
+     * Р’ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂРµР¶РёРјР° РѕРїРµСЂР°С†РёРё (СЃРѕР·РґР°РЅРёРµ, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РёР»Рё СѓРґР°Р»РµРЅРёРµ),
+     * СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РіРѕР»РѕРІРѕРє РѕРєРЅР° Рё РЅР°СЃС‚СЂР°РёРІР°РµС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РёРЅС‚РµСЂС„РµР№СЃР°.
      *
-     * @param clientsTransport объект типа ClientsTransport, представляющий информацию о транспорте клиента
-     * @param operationMode режим операции (CREATE, EDIT или DELETE)
-     * @param modalStage модальное окно
+     * @param clientsTransport РѕР±СЉРµРєС‚ С‚РёРїР° ClientsTransport, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚Рµ РєР»РёРµРЅС‚Р°
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё (CREATE, EDIT РёР»Рё DELETE)
+     * @param modalStage РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ
      */
     public void setParameters(ClientsTransport clientsTransport, FXOperationMode operationMode, Stage modalStage) {
         this.clientsTransport = clientsTransport;
@@ -195,9 +195,9 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Заполняет компоненты интерфейса данными о транспорте клиента для редактирования или удаления.
-     * Устанавливает значения полей государственного номера транспорта, марки, модели и категории транспорта.
-     * Также заполняет таблицу транспорта
+     * Р—Р°РїРѕР»РЅСЏРµС‚ РєРѕРјРїРѕРЅРµРЅС‚С‹ РёРЅС‚РµСЂС„РµР№СЃР° РґР°РЅРЅС‹РјРё Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚Рµ РєР»РёРµРЅС‚Р° РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёСЏ РїРѕР»РµР№ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° С‚СЂР°РЅСЃРїРѕСЂС‚Р°, РјР°СЂРєРё, РјРѕРґРµР»Рё Рё РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * РўР°РєР¶Рµ Р·Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      */
     private void fillingComponents() {
         stateNumberField.setText(clientsTransport.getClTrStateNumber());
@@ -220,9 +220,9 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Обработчик события нажатия кнопки "OK".
+     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "OK".
      *
-     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "OK".
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -277,20 +277,20 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Проверяет корректность государственного номера транспортного средства
-     * в зависимости от категории транспорта.
+     * РџСЂРѕРІРµСЂСЏРµС‚ РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР°
+     * РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
      *
-     * Мотоциклы, квадроциклы и тракторы должны соответствовать шаблону MOTO_AGR_REGEX.
-     * Автомобили должны соответствовать шаблону CAR_REGEX.
-     * В случае некорректного номера выводится сообщение об ошибке с соответствующим текстом.
+     * РњРѕС‚РѕС†РёРєР»С‹, РєРІР°РґСЂРѕС†РёРєР»С‹ Рё С‚СЂР°РєС‚РѕСЂС‹ РґРѕР»Р¶РЅС‹ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ С€Р°Р±Р»РѕРЅСѓ MOTO_AGR_REGEX.
+     * РђРІС‚РѕРјРѕР±РёР»Рё РґРѕР»Р¶РЅС‹ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ С€Р°Р±Р»РѕРЅСѓ CAR_REGEX.
+     * Р’ СЃР»СѓС‡Р°Рµ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРіРѕ РЅРѕРјРµСЂР° РІС‹РІРѕРґРёС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ СЃ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРј С‚РµРєСЃС‚РѕРј.
      *
-     * @param transportFX объект типа TransportFX, содержащий информацию о транспортном средстве
-     * @param stateNumber государственный номер транспортного средства для проверки
-     * @return true, если государственный номер корректен; в противном случае false
+     * @param transportFX РѕР±СЉРµРєС‚ С‚РёРїР° TransportFX, СЃРѕРґРµСЂР¶Р°С‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРј СЃСЂРµРґСЃС‚РІРµ
+     * @param stateNumber РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅС‹Р№ РЅРѕРјРµСЂ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР° РґР»СЏ РїСЂРѕРІРµСЂРєРё
+     * @return true, РµСЃР»Рё РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅС‹Р№ РЅРѕРјРµСЂ РєРѕСЂСЂРµРєС‚РµРЅ; РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ false
      */
     private boolean isValidStateNumber(TransportFX transportFX, String stateNumber) {
         boolean validStateNumber = true;
-        if (transportFX.getTrCategory().toLowerCase().contains("мотоцикл") || transportFX.getTrCategory().toLowerCase().contains("квадроцикл") || transportFX.getTrCategory().toLowerCase().contains("трактор")) {
+        if (transportFX.getTrCategory().toLowerCase().contains("РјРѕС‚РѕС†РёРєР»") || transportFX.getTrCategory().toLowerCase().contains("РєРІР°РґСЂРѕС†РёРєР»") || transportFX.getTrCategory().toLowerCase().contains("С‚СЂР°РєС‚РѕСЂ")) {
             if (!stateNumber.matches(ClientsTransportFX.MOTO_AGR_REGEX)) {
                 validStateNumber = false;
                 FXHelper.showErrorAlert(rb.getString("NOT_VALID_MOTO_AGR"));
@@ -304,10 +304,10 @@ public class EditClientTransportController implements Initializable {
 
 
     /**
-     * Обработчик события нажатия кнопки "Отмена".
-     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° CANCEL Рё Р·Р°РєСЂС‹РІР°РµС‚ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ.
      *
-     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
@@ -315,8 +315,8 @@ public class EditClientTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает действие на событие закрытия окна.
-     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР° СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "Р’С‹С…РѕРґ" РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);

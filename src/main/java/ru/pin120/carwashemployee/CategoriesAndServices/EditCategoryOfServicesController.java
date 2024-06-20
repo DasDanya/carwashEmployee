@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Êîíòðîëëåð ðåäàêòèðîâàíèÿ äàííûõ î êàòåãîðèè óñëóã
+ * ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸ ÑƒÑÐ»ÑƒÐ³
  */
 public class EditCategoryOfServicesController implements Initializable {
 
@@ -38,10 +38,10 @@ public class EditCategoryOfServicesController implements Initializable {
     private CategoriesOfServicesRepository categoriesOfServicesRepository = new CategoriesOfServicesRepository();
 
     /**
-     * Èíèöèàëèçàöèÿ êîíòðîëëåðà
+     * Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ð°
      *
-     * @param url URL ðàñïîëîæåíèÿ FXML ôàéëà
-     * @param resourceBundle Íàáîð ðåñóðñîâ äëÿ ëîêàëèçàöèè
+     * @param url URL Ñ€Ð°ÑÐ¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ FXML Ñ„Ð°Ð¹Ð»Ð°
+     * @param resourceBundle ÐÐ°Ð±Ð¾Ñ€ Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð² Ð´Ð»Ñ Ð»Ð¾ÐºÐ°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,7 +51,7 @@ public class EditCategoryOfServicesController implements Initializable {
     }
 
     /**
-     * Ñëóøàòåëü äëÿ ïîëÿ ââîäà íàçâàíèÿ êàòåãîðèè, îãðàíè÷èâàåò äëèíó ââîäèìîãî òåêñòà.
+     * Ð¡Ð»ÑƒÑˆÐ°Ñ‚ÐµÐ»ÑŒ Ð´Ð»Ñ Ð¿Ð¾Ð»Ñ Ð²Ð²Ð¾Ð´Ð° Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ñ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸, Ð¾Ð³Ñ€Ð°Ð½Ð¸Ñ‡Ð¸Ð²Ð°ÐµÑ‚ Ð´Ð»Ð¸Ð½Ñƒ Ð²Ð²Ð¾Ð´Ð¸Ð¼Ð¾Ð³Ð¾ Ñ‚ÐµÐºÑÑ‚Ð°.
      */
     private void categoryNameFieldTextListener(){
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -64,11 +64,11 @@ public class EditCategoryOfServicesController implements Initializable {
     }
 
     /**
-     * Óñòàíàâëèâàåò ïàðàìåòðû äëÿ ôîðìû ðåäàêòèðîâàíèÿ êàòåãîðèè
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð´Ð»Ñ Ñ„Ð¾Ñ€Ð¼Ñ‹ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸
      *
-     * @param categoryOfServices îáúåêò êàòåãîðèè óñëóã
-     * @param mode ðåæèì îïåðàöèè (ñîçäàíèå, óäàëåíèå)
-     * @param stage (Stage) äëÿ îòîáðàæåíèÿ ôîðìû
+     * @param categoryOfServices Ð¾Ð±ÑŠÐµÐºÑ‚ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸ ÑƒÑÐ»ÑƒÐ³
+     * @param mode Ñ€ÐµÐ¶Ð¸Ð¼ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¸ (ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ, ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ)
+     * @param stage (Stage) Ð´Ð»Ñ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ñ„Ð¾Ñ€Ð¼Ñ‹
      */
     public void setParameters(CategoryOfServices categoryOfServices, FXOperationMode mode, Stage stage){
         this.categoryOfServices = categoryOfServices;
@@ -93,9 +93,9 @@ public class EditCategoryOfServicesController implements Initializable {
 
 
     /**
-     * Îáðàáàòûâàåò íàæàòèå êíîïêè OK, âûïîëíÿåò îïåðàöèþ â çàâèñèìîñòè îò ðåæèìà (ñîçäàíèå, óäàëåíèå).
+     * ÐžÐ±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ðµ ÐºÐ½Ð¾Ð¿ÐºÐ¸ OK, Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ€ÐµÐ¶Ð¸Ð¼Ð° (ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ, ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ).
      *
-     * @param actionEvent ñîáûòèå íàæàòèÿ êíîïêè
+     * @param actionEvent ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸
      */
     @FXML
     private void btOKAction(ActionEvent actionEvent) {
@@ -140,9 +140,9 @@ public class EditCategoryOfServicesController implements Initializable {
     }
 
     /**
-     * Îáðàáàòûâàåò íàæàòèå êíîïêè Cancel, çàêðûâàåò ôîðìó.
+     * ÐžÐ±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ðµ ÐºÐ½Ð¾Ð¿ÐºÐ¸ Cancel, Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÑ‚ Ñ„Ð¾Ñ€Ð¼Ñƒ.
      *
-     * @param actionEvent ñîáûòèå íàæàòèÿ êíîïêè
+     * @param actionEvent ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸
      */
     @FXML
     private void btCancelAction(ActionEvent actionEvent) {
@@ -152,7 +152,7 @@ public class EditCategoryOfServicesController implements Initializable {
 
 
     /**
-     * Óñòàíàâëèâàåò äåéñòâèå ïðè çàêðûòèè îêíà, ÷òîáû çàäàòü ðåæèì âûõîäà.
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð¿Ñ€Ð¸ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ð¸ Ð¾ÐºÐ½Ð°, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð·Ð°Ð´Ð°Ñ‚ÑŒ Ñ€ÐµÐ¶Ð¸Ð¼ Ð²Ñ‹Ñ…Ð¾Ð´Ð°.
      */
     private void closeWindowAction(){
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);

@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.Users;
 import lombok.AllArgsConstructor;
 
 /**
- * Враппер пароля
+ * Р’СЂР°РїРїРµСЂ РїР°СЂРѕР»СЏ
  */
 @AllArgsConstructor
 public class PasswordWrapper {

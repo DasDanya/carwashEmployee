@@ -4,7 +4,7 @@ import lombok.*;
 import ru.pin120.carwashemployee.Boxes.Box;
 
 /**
- * Модель мойщика
+ * РњРѕРґРµР»СЊ РјРѕР№С‰РёРєР°
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,31 +14,31 @@ import ru.pin120.carwashemployee.Boxes.Box;
 public class Cleaner {
 
     /**
-     * id мойщика
+     * id РјРѕР№С‰РёРєР°
      */
     private Long clrId;
     /**
-     * Фамилия
+     * Р¤Р°РјРёР»РёСЏ
      */
     private String clrSurname;
     /**
-     * Имя
+     * РРјСЏ
      */
     private String clrName;
     /**
-     * Отчество
+     * РћС‚С‡РµСЃС‚РІРѕ
      */
     private String clrPatronymic;
     /**
-     * Номер телефона
+     * РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
      */
     private String clrPhone;
     /**
-     * Название фотографии
+     * РќР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
      */
     private String clrPhotoName;
     /**
-     * Статус
+     * РЎС‚Р°С‚СѓСЃ
      */
     private CleanerStatus clrStatus;
 }

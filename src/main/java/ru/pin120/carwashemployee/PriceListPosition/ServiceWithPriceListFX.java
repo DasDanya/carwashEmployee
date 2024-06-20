@@ -4,29 +4,29 @@ import javafx.beans.property.*;
 import javafx.scene.control.CheckBox;
 
 /**
- * FX позиции прайс-лист
+ * FX РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚
  */
 public class ServiceWithPriceListFX {
 
     /**
-     * Checkbox, указывающий выбирается ли услуга в заказе
+     * Checkbox, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РІС‹Р±РёСЂР°РµС‚СЃСЏ Р»Рё СѓСЃР»СѓРіР° РІ Р·Р°РєР°Р·Рµ
      */
     private ObjectProperty<CheckBox> select;
 
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private StringProperty catName;
     /**
-     * Название услуги
+     * РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
      */
     private StringProperty servName;
     /**
-     * Стоимость услуги
+     * РЎС‚РѕРёРјРѕСЃС‚СЊ СѓСЃР»СѓРіРё
      */
     private IntegerProperty plPrice;
     /**
-     * Время выполнения
+     * Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
      */
     private IntegerProperty plTime;
 
@@ -71,13 +71,13 @@ public class ServiceWithPriceListFX {
     }
 
     /**
-     * Конструктор для создания объекта ServiceWithPriceListFX
-     * @param select  Checkbox, указывающий выбирается ли услуга в заказе
-     * @param catName Название категории
-     * @param servName Название услуги
-     * @param plPrice Стоимость выполнения
-     * @param plTime Время выполнения
-     * @param selectable Интерфейс, для отслеживания выбора услуги
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° ServiceWithPriceListFX
+     * @param select  Checkbox, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РІС‹Р±РёСЂР°РµС‚СЃСЏ Р»Рё СѓСЃР»СѓРіР° РІ Р·Р°РєР°Р·Рµ
+     * @param catName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * @param servName РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
+     * @param plPrice РЎС‚РѕРёРјРѕСЃС‚СЊ РІС‹РїРѕР»РЅРµРЅРёСЏ
+     * @param plTime Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
+     * @param selectable РРЅС‚РµСЂС„РµР№СЃ, РґР»СЏ РѕС‚СЃР»РµР¶РёРІР°РЅРёСЏ РІС‹Р±РѕСЂР° СѓСЃР»СѓРіРё
      */
     public ServiceWithPriceListFX(CheckBox select, String catName, String servName, Integer plPrice, Integer plTime, ServiceInPriceListSelectable selectable) {
         this.select = new SimpleObjectProperty<>(select);

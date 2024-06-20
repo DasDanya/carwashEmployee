@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер авторизации пользователя
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ Р°РІС‚РѕСЂРёР·Р°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
  */
 public class UserAuthorizationController implements Initializable {
     @FXML

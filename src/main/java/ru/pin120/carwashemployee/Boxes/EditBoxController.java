@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Êîíòðîëëåð ðåäàêòèðîâàíèÿ äàííûõ î áîêñå
+ * ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ Ð±Ð¾ÐºÑÐµ
  */
 public class EditBoxController implements Initializable {
 
@@ -35,10 +35,10 @@ public class EditBoxController implements Initializable {
     private BoxesRepository boxesRepository = new BoxesRepository();
 
     /**
-     * Èíèöèàëèçàöèÿ êîíòðîëëåðà
+     * Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ð°
      *
-     * @param url URL ðàñïîëîæåíèÿ FXML ôàéëà
-     * @param resourceBundle Íàáîð ðåñóðñîâ äëÿ ëîêàëèçàöèè
+     * @param url URL Ñ€Ð°ÑÐ¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ FXML Ñ„Ð°Ð¹Ð»Ð°
+     * @param resourceBundle ÐÐ°Ð±Ð¾Ñ€ Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð² Ð´Ð»Ñ Ð»Ð¾ÐºÐ°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,14 +47,14 @@ public class EditBoxController implements Initializable {
 
 
     /**
-     * Óñòàíàâëèâàåò ïàðàìåòðû äëÿ êîíòðîëëåðà ðåäàêòèðîâàíèÿ áîêñà.
-     * Â çàâèñèìîñòè îò ðåæèìà (ñîçäàíèå, ðåäàêòèðîâàíèå èëè óäàëåíèå),
-     * óñòàíàâëèâàåò çàãîëîâîê îêíà, çàïîëíÿåò êîìáî-áîêñ ñòàòóñà è óñòàíàâëèâàåò
-     * ñîîòâåòñòâóþùèå çíà÷åíèÿ âûáðàííûõ ýëåìåíòîâ êîìáî-áîêñà.
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð´Ð»Ñ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ð° Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð±Ð¾ÐºÑÐ°.
+     * Ð’ Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ€ÐµÐ¶Ð¸Ð¼Ð° (ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ, Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¸Ð»Ð¸ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ),
+     * ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Ð¾ÐºÐ½Ð°, Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ ÐºÐ¾Ð¼Ð±Ð¾-Ð±Ð¾ÐºÑ ÑÑ‚Ð°Ñ‚ÑƒÑÐ° Ð¸ ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚
+     * ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² ÐºÐ¾Ð¼Ð±Ð¾-Ð±Ð¾ÐºÑÐ°.
      *
-     * @param box           Áîêñ, ñ êîòîðûì ïðîâîäèòñÿ îïåðàöèÿ.
-     * @param operationMode Ðåæèì îïåðàöèè (CREATE, EDIT èëè DELETE).
-     * @param stage         Stage, äëÿ êîòîðîé óñòàíàâëèâàþòñÿ ïàðàìåòðû.
+     * @param box           Ð‘Ð¾ÐºÑ, Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼ Ð¿Ñ€Ð¾Ð²Ð¾Ð´Ð¸Ñ‚ÑÑ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ñ.
+     * @param operationMode Ð ÐµÐ¶Ð¸Ð¼ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¸ (CREATE, EDIT Ð¸Ð»Ð¸ DELETE).
+     * @param stage         Stage, Ð´Ð»Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹.
      */
     public void setParameters(Box box, FXOperationMode operationMode, Stage stage){
         this.box = box;
@@ -85,8 +85,8 @@ public class EditBoxController implements Initializable {
     }
 
     /**
-     * Çàïîëíÿåò êîìáî-áîêñ ñòàòóñà çíà÷åíèÿìè èç ïåðå÷èñëåíèÿ BoxStatus.
-     * Êîíâåðòåð óñòàíàâëèâàåò îòîáðàæàåìîå çíà÷åíèå äëÿ êàæäîãî ýëåìåíòà êîìáî-áîêñà.
+     * Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ ÐºÐ¾Ð¼Ð±Ð¾-Ð±Ð¾ÐºÑ ÑÑ‚Ð°Ñ‚ÑƒÑÐ° Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸ÑÐ¼Ð¸ Ð¸Ð· Ð¿ÐµÑ€ÐµÑ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ BoxStatus.
+     * ÐšÐ¾Ð½Ð²ÐµÑ€Ñ‚ÐµÑ€ ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð° ÐºÐ¾Ð¼Ð±Ð¾-Ð±Ð¾ÐºÑÐ°.
      */
     private void fillingStatusComboBox(){
         statusComboBox.getItems().setAll(BoxStatus.values());
@@ -104,8 +104,8 @@ public class EditBoxController implements Initializable {
 
 
     /**
-     * Îáðàáîò÷èê ñîáûòèÿ íàæàòèÿ êíîïêè OK â îêíå ðåäàêòèðîâàíèÿ ÿùèêà.
-     * @param actionEvent Ñîáûòèå íàæàòèÿ êíîïêè OK.
+     * ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸ OK Ð² Ð¾ÐºÐ½Ðµ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ ÑÑ‰Ð¸ÐºÐ°.
+     * @param actionEvent Ð¡Ð¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸ OK.
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -151,10 +151,10 @@ public class EditBoxController implements Initializable {
     }
 
     /**
-     * Îáðàáîò÷èê ñîáûòèÿ íàæàòèÿ êíîïêè Îòìåíà â îêíå ðåäàêòèðîâàíèÿ ÿùèêà.
-     * Óñòàíàâëèâàåò ðåæèì âûõîäà èç ôîðìû êàê CANCEL è çàêðûâàåò îêíî.
+     * ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸ ÐžÑ‚Ð¼ÐµÐ½Ð° Ð² Ð¾ÐºÐ½Ðµ Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ ÑÑ‰Ð¸ÐºÐ°.
+     * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ñ€ÐµÐ¶Ð¸Ð¼ Ð²Ñ‹Ñ…Ð¾Ð´Ð° Ð¸Ð· Ñ„Ð¾Ñ€Ð¼Ñ‹ ÐºÐ°Ðº CANCEL Ð¸ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÑ‚ Ð¾ÐºÐ½Ð¾.
      *
-     * @param actionEvent Ñîáûòèå íàæàòèÿ êíîïêè Îòìåíà.
+     * @param actionEvent Ð¡Ð¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ ÐºÐ½Ð¾Ð¿ÐºÐ¸ ÐžÑ‚Ð¼ÐµÐ½Ð°.
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
@@ -162,7 +162,7 @@ public class EditBoxController implements Initializable {
     }
 
     /**
-     * Åñëè îêíî çàêðûâàåòñÿ, óñòàíàâëèâàåò ðåæèì âûõîäà èç ôîðìû êàê EXIT.
+     * Ð•ÑÐ»Ð¸ Ð¾ÐºÐ½Ð¾ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÑ‚ÑÑ, ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ñ€ÐµÐ¶Ð¸Ð¼ Ð²Ñ‹Ñ…Ð¾Ð´Ð° Ð¸Ð· Ñ„Ð¾Ñ€Ð¼Ñ‹ ÐºÐ°Ðº EXIT.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);

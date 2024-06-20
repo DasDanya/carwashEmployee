@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер формы с боксами
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ Р±РѕРєСЃР°РјРё
  */
 public class BoxesController implements Initializable {
 
@@ -51,10 +51,10 @@ public class BoxesController implements Initializable {
     private ObservableList<BoxFX> boxFXES = FXCollections.observableArrayList();
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,7 +70,7 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу информацией о боксах
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ Р±РѕРєСЃР°С…
      */
     private void fillingAll() {
         try{
@@ -85,9 +85,9 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList объектами типа BoxFX на основе списка объектов Box.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РѕР±СЉРµРєС‚Р°РјРё С‚РёРїР° BoxFX РЅР° РѕСЃРЅРѕРІРµ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ Box.
      *
-     * @param boxes Список объектов Box для заполнения ObservableList.
+     * @param boxes РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ Box РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ ObservableList.
      */
     private void fillingObservableList(List<Box> boxes){
         for(Box box: boxes){
@@ -97,16 +97,16 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену, на которой находится таблица боксов
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ, РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ С‚Р°Р±Р»РёС†Р° Р±РѕРєСЃРѕРІ
      *
-     * @return Текущая сцена, на которой находится таблица боксов
+     * @return РўРµРєСѓС‰Р°СЏ СЃС†РµРЅР°, РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ С‚Р°Р±Р»РёС†Р° Р±РѕРєСЃРѕРІ
      */
     private Scene getActualScene(){
         return boxesTable.getScene();
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -139,9 +139,9 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Выполняет операцию над боксом в зависимости от заданного режима операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёСЋ РЅР°Рґ Р±РѕРєСЃРѕРј РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р·Р°РґР°РЅРЅРѕРіРѕ СЂРµР¶РёРјР° РѕРїРµСЂР°С†РёРё
      *
-     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё (CREATE, EDIT, DELETE).
      */
     private void doOperation(FXOperationMode operationMode){
         Box box = null;
@@ -190,12 +190,12 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат операции над боксом (CREATE, EDIT, DELETE) в зависимости от режима выхода из формы.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РѕРїРµСЂР°С†РёРё РЅР°Рґ Р±РѕРєСЃРѕРј (CREATE, EDIT, DELETE) РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂРµР¶РёРјР° РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹.
      *
-     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
-     * @param exitMode      Режим выхода из формы (OK, CANCEL).
-     * @param box           Объект бокса, над которым выполнялась операция.
-     * @param selectedBoxFX Выбранный объект бокса для редактирования или удаления.
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё (CREATE, EDIT, DELETE).
+     * @param exitMode      Р РµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹ (OK, CANCEL).
+     * @param box           РћР±СЉРµРєС‚ Р±РѕРєСЃР°, РЅР°Рґ РєРѕС‚РѕСЂС‹Рј РІС‹РїРѕР»РЅСЏР»Р°СЃСЊ РѕРїРµСЂР°С†РёСЏ.
+     * @param selectedBoxFX Р’С‹Р±СЂР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ Р±РѕРєСЃР° РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ.
      */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, Box box, BoxFX selectedBoxFX) {
         if(exitMode == FXFormExitMode.OK){
@@ -230,8 +230,8 @@ public class BoxesController implements Initializable {
     }
 
     /**
-     * Очищает ObservableList boxFXES и затем вызывает метод fillingAll() для заполнения таблицы
-     * актуальными данными о боксах.
+     * РћС‡РёС‰Р°РµС‚ ObservableList boxFXES Рё Р·Р°С‚РµРј РІС‹Р·С‹РІР°РµС‚ РјРµС‚РѕРґ fillingAll() РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ С‚Р°Р±Р»РёС†С‹
+     * Р°РєС‚СѓР°Р»СЊРЅС‹РјРё РґР°РЅРЅС‹РјРё Рѕ Р±РѕРєСЃР°С….
      */
     private void doRefresh(){
         boxFXES.clear();

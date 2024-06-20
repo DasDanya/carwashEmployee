@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * DTO пользователя
+ * DTO РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
  */
 @AllArgsConstructor
 @NoArgsConstructor

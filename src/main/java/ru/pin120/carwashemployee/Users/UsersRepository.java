@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Репозиторий пользователя
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
  */
 public class UsersRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/users";

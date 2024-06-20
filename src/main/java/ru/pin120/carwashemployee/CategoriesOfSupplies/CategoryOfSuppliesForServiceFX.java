@@ -7,21 +7,21 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.CheckBox;
 
 /**
- * FX представление привязки категории расходных материалов к услуге
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РїСЂРёРІСЏР·РєРё РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ Рє СѓСЃР»СѓРіРµ
  */
 public class CategoryOfSuppliesForServiceFX {
     /**
-     * Checkbox, указывающий нужна ли привязка
+     * Checkbox, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅСѓР¶РЅР° Р»Рё РїСЂРёРІСЏР·РєР°
      */
     private ObjectProperty<CheckBox> select;
 
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private StringProperty csupName;
 
     /**
-     * Единица измерения
+     * Р•РґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
      */
     private StringProperty unit;
 
@@ -50,10 +50,10 @@ public class CategoryOfSuppliesForServiceFX {
     }
 
     /**
-     * Конструктор для создания объекта CategoryOfSuppliesForServiceFX
-     * @param select  Checkbox, указывающий нужна ли привязка
-     * @param csupName Название категории
-     * @param unit Единица измерения
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° CategoryOfSuppliesForServiceFX
+     * @param select  Checkbox, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅСѓР¶РЅР° Р»Рё РїСЂРёРІСЏР·РєР°
+     * @param csupName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * @param unit Р•РґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
      */
     public CategoryOfSuppliesForServiceFX(CheckBox select, String csupName, UnitOfMeasure unit) {
         this.select = new SimpleObjectProperty<>(select);

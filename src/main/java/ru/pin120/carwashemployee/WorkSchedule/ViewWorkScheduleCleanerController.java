@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер формы, отображающей рабочие дни конкретного мойщика
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РµР№ СЂР°Р±РѕС‡РёРµ РґРЅРё РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РјРѕР№С‰РёРєР°
  */
 public class ViewWorkScheduleCleanerController implements Initializable {
 

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер формы с пользователями
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё
  */
 public class UsersController implements Initializable {
     @FXML

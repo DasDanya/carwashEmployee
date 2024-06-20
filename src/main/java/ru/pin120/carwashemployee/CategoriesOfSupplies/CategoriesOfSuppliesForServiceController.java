@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер привязки категорий расходных материалов к услуге
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ РїСЂРёРІСЏР·РєРё РєР°С‚РµРіРѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ Рє СѓСЃР»СѓРіРµ
  */
 public class CategoriesOfSuppliesForServiceController implements Initializable {
 
@@ -43,10 +43,10 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     private ObservableList<CategoryOfSuppliesForServiceFX> suppliesForServiceFXES = FXCollections.observableArrayList();
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,9 +65,9 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){
         return suppliesForServiceTable.getScene();
@@ -75,10 +75,10 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
 
 
     /**
-     * Настраивает форму для отображения информации о привязки категорий расходных материалов к услуге.
-     * Устанавливает заголовок окна на основе названия услуги, заполняет таблицу с привязками
-     * @param service Услуга, для которой будет устанавливаться привязка
-     * @param stage   Окно JavaFX, на котором будет отображаться форма
+     * РќР°СЃС‚СЂР°РёРІР°РµС‚ С„РѕСЂРјСѓ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїСЂРёРІСЏР·РєРё РєР°С‚РµРіРѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ Рє СѓСЃР»СѓРіРµ.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РіРѕР»РѕРІРѕРє РѕРєРЅР° РЅР° РѕСЃРЅРѕРІРµ РЅР°Р·РІР°РЅРёСЏ СѓСЃР»СѓРіРё, Р·Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ СЃ РїСЂРёРІСЏР·РєР°РјРё
+     * @param service РЈСЃР»СѓРіР°, РґР»СЏ РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµС‚ СѓСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊСЃСЏ РїСЂРёРІСЏР·РєР°
+     * @param stage   РћРєРЅРѕ JavaFX, РЅР° РєРѕС‚РѕСЂРѕРј Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ С„РѕСЂРјР°
      */
     public void settingForm(Service service, Stage stage) {
         this.service = service;
@@ -87,7 +87,7 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу с привязками категорий расходных материалов к услуге
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ СЃ РїСЂРёРІСЏР·РєР°РјРё РєР°С‚РµРіРѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ Рє СѓСЃР»СѓРіРµ
      */
     private void fillingTable(){
         try {
@@ -121,7 +121,7 @@ public class CategoriesOfSuppliesForServiceController implements Initializable {
     }
 
     /**
-     * Выполняет обновление данных.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
      */
     private void doRefresh(){
         try {

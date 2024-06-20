@@ -16,7 +16,7 @@ import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер уменьшения расходного материала в боксе
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СѓРјРµРЅСЊС€РµРЅРёСЏ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р° РІ Р±РѕРєСЃРµ
  */
 public class DecreaseSuppliesInBoxController implements Initializable {
 

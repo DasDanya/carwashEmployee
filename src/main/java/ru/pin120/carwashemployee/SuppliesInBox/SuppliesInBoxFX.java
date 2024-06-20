@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.SuppliesInBox;
 import javafx.beans.property.*;
 
 /**
- * FX представление расходных материалов в боксе
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РІ Р±РѕРєСЃРµ
  */
 public class SuppliesInBoxFX {
 

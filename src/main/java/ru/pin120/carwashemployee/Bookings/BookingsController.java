@@ -35,7 +35,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 /**
- * Контроллер формы с заказами
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ Р·Р°РєР°Р·Р°РјРё
  */
 public class BookingsController implements Initializable {
 
@@ -74,10 +74,10 @@ public class BookingsController implements Initializable {
 
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,7 +104,7 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Добавляет слушатель на таблицу боксов
+     * Р”РѕР±Р°РІР»СЏРµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РЅР° С‚Р°Р±Р»РёС†Сѓ Р±РѕРєСЃРѕРІ
      */
     private void boxesTableSelectModelListener() {
         boxesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
@@ -116,7 +116,7 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Настройка компонента Agenda
+     * РќР°СЃС‚СЂРѕР№РєР° РєРѕРјРїРѕРЅРµРЅС‚Р° Agenda
      */
     private void settingAgenda(){
         agenda.selectedAppointments().addListener((ListChangeListener<Appointment>) change -> {
@@ -135,7 +135,7 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -162,7 +162,7 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Загрузка и установка данных о боксах.
+     * Р—Р°РіСЂСѓР·РєР° Рё СѓСЃС‚Р°РЅРѕРІРєР° РґР°РЅРЅС‹С… Рѕ Р±РѕРєСЃР°С….
      */
     private void setBoxes(){
         try{
@@ -184,7 +184,7 @@ public class BookingsController implements Initializable {
 
 
     /**
-     * Получение заказов выбранного бокса
+     * РџРѕР»СѓС‡РµРЅРёРµ Р·Р°РєР°Р·РѕРІ РІС‹Р±СЂР°РЅРЅРѕРіРѕ Р±РѕРєСЃР°
      */
     private void getBoxBookings(){
         agenda.appointments().clear();
@@ -214,8 +214,8 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Добавление данных о заказе в Agenda
-     * @param booking Заказ
+     * Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ Р·Р°РєР°Р·Рµ РІ Agenda
+     * @param booking Р—Р°РєР°Р·
      */
     private void addAgendaAppointments(Booking booking){
         ClientsTransport clientsTransport = booking.getClientTransport();
@@ -223,7 +223,7 @@ public class BookingsController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
         String summary = String.format(rb.getString("SUMMARY_APPOINTMENT"), booking.getBkId(), booking.getBkStartTime().format(formatter), booking.getBkEndTime().format(formatter), booking.getBkPrice(), clientsTransport.getClTrStateNumber(), client.getClSurname(), client.getClName(), client.getClPhone());
-        //String summary = String.format("Заказ №%s\nТранспорт %s", booking.getBkId(), booking.getClientTransport().getClTrStateNumber());
+        //String summary = String.format("Р—Р°РєР°Р· в„–%s\nРўСЂР°РЅСЃРїРѕСЂС‚ %s", booking.getBkId(), booking.getClientTransport().getClTrStateNumber());
         String groupAgendaColor;
         switch (booking.getBkStatus()){
             case CANCELLED -> groupAgendaColor = "booking-cancelled-by-client";
@@ -240,23 +240,23 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Получение объекта Stage данной формы
-     * @return Объект Stage
+     * РџРѕР»СѓС‡РµРЅРёРµ РѕР±СЉРµРєС‚Р° Stage РґР°РЅРЅРѕР№ С„РѕСЂРјС‹
+     * @return РћР±СЉРµРєС‚ Stage
      */
     private Stage getStage(){
         return (Stage) agenda.getScene().getWindow();
     }
 
     /**
-     * Получение объекта Scene данной формы
-     * @return объект Scene
+     * РџРѕР»СѓС‡РµРЅРёРµ РѕР±СЉРµРєС‚Р° Scene РґР°РЅРЅРѕР№ С„РѕСЂРјС‹
+     * @return РѕР±СЉРµРєС‚ Scene
      */
     private Scene getActualScene(){
         return agenda.getScene();
     }
 
     /**
-     * Прослушиватель календаря
+     * РџСЂРѕСЃР»СѓС€РёРІР°С‚РµР»СЊ РєР°Р»РµРЅРґР°СЂСЏ
      */
     private void calendarListener(){
         calendar.calendarProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -284,36 +284,36 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Обрабатывает действие создания заказа
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ СЃРѕР·РґР°РЅРёСЏ Р·Р°РєР°Р·Р°
      *
-     * @param actionEvent Событие действия
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
      */
     public void createButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.CREATE);
     }
 
     /**
-     * Обрабатывает действие изменения данных о заказе
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РёР·РјРµРЅРµРЅРёСЏ РґР°РЅРЅС‹С… Рѕ Р·Р°РєР°Р·Рµ
      *
-     * @param actionEvent Событие действия.
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
      */
     public void editButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.EDIT);
     }
 
     /**
-     * Обрабатывает действие удаления заказа
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ СѓРґР°Р»РµРЅРёСЏ Р·Р°РєР°Р·Р°
      *
-     * @param actionEvent Событие действия
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
      */
     public void deleteButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.DELETE);
     }
 
     /**
-     * Обрабатывает действие изменения статуса заказа
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РёР·РјРµРЅРµРЅРёСЏ СЃС‚Р°С‚СѓСЃР° Р·Р°РєР°Р·Р°
      *
-     * @param actionEvent Событие действия
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
      */
     public void changeStatusButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.OTHER);
@@ -321,9 +321,9 @@ public class BookingsController implements Initializable {
 
 
     /**
-     * Выполняет операцию с заказом
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёСЋ СЃ Р·Р°РєР°Р·РѕРј
      *
-     * @param operationMode Режим операции
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         boolean canOpenWindow = false;
@@ -460,7 +460,7 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Обновляет данные о заказах
+     * РћР±РЅРѕРІР»СЏРµС‚ РґР°РЅРЅС‹Рµ Рѕ Р·Р°РєР°Р·Р°С…
      */
     private void reloadBookings() {
         selectedAppointment = null;
@@ -473,16 +473,16 @@ public class BookingsController implements Initializable {
 
 
     /**
-     * Обрабатывает действие обновления данных
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РѕР±РЅРѕРІР»РµРЅРёСЏ РґР°РЅРЅС‹С…
      *
-     * @param actionEvent Событие действия.
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
      */
     public void refreshAction(ActionEvent actionEvent) {
         doRefresh();
     }
 
     /**
-     * Выполняет обновление данных
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С…
      */
     private void doRefresh(){
         setBoxes();
@@ -490,18 +490,18 @@ public class BookingsController implements Initializable {
     }
 
     /**
-     * Обрабатывает действие показа заказа
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РїРѕРєР°Р·Р° Р·Р°РєР°Р·Р°
      *
-     * @param actionEvent Событие действия
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
      */
     public void showButtonAction(ActionEvent actionEvent) {
         doOperation(FXOperationMode.SHOW);
     }
 
     /**
-     * Обрабатывает действие нажатия на кнопку открытия табличного представления
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР°Р¶Р°С‚РёСЏ РЅР° РєРЅРѕРїРєСѓ РѕС‚РєСЂС‹С‚РёСЏ С‚Р°Р±Р»РёС‡РЅРѕРіРѕ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ
      *
-     * @param actionEvent Событие действия
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
      */
     public void showTableButtonAction(ActionEvent actionEvent) {
         try {

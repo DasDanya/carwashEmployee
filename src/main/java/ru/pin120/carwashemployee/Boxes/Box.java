@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.Boxes;
 import lombok.*;
 
 /**
- * Модель бокса
+ * РњРѕРґРµР»СЊ Р±РѕРєСЃР°
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,11 +13,11 @@ import lombok.*;
 public class Box {
 
     /**
-     * Номер бокса
+     * РќРѕРјРµСЂ Р±РѕРєСЃР°
      */
     private Long boxId;
     /**
-     * Статус бокса
+     * РЎС‚Р°С‚СѓСЃ Р±РѕРєСЃР°
      */
     private BoxStatus boxStatus;
 }

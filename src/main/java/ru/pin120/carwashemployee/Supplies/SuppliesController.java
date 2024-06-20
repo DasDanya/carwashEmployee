@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Контроллер формы с расходными материалами
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ СЂР°СЃС…РѕРґРЅС‹РјРё РјР°С‚РµСЂРёР°Р»Р°РјРё
  */
 public class SuppliesController implements Initializable {
     @FXML
@@ -70,10 +70,10 @@ public class SuppliesController implements Initializable {
     private Integer filterCount = null;
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,9 +105,9 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу расходных материалов (suppliesTable), исходя из текущего индекса страницы.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ (suppliesTable), РёСЃС…РѕРґСЏ РёР· С‚РµРєСѓС‰РµРіРѕ РёРЅРґРµРєСЃР° СЃС‚СЂР°РЅРёС†С‹.
      *
-     * @param pageIndex индекс текущей страницы пагинации
+     * @param pageIndex РёРЅРґРµРєСЃ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё
      */
     private void fillingTable(int pageIndex) {
         try{
@@ -130,7 +130,7 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList данными о расходных материалах
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»Р°С…
      */
     private void fillingObservableList() {
         for(Supply supply: supplies){
@@ -141,7 +141,7 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Настраивает filterCountSpinner с соответствующей фабрикой значений и текстовым форматтером.
+     * РќР°СЃС‚СЂР°РёРІР°РµС‚ filterCountSpinner СЃ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµР№ С„Р°Р±СЂРёРєРѕР№ Р·РЅР°С‡РµРЅРёР№ Рё С‚РµРєСЃС‚РѕРІС‹Рј С„РѕСЂРјР°С‚С‚РµСЂРѕРј.
      */
     private void settingCountSpinner() {
         filterCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,0,1));
@@ -158,8 +158,8 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Устанавливает слушателя изменения текущей страницы пагинации (pagination).
-     * При изменении текущей страницы вызывает метод fillingTable для загрузки данных новой страницы.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЏ РёР·РјРµРЅРµРЅРёСЏ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РїР°РіРёРЅР°С†РёРё (pagination).
+     * РџСЂРё РёР·РјРµРЅРµРЅРёРё С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹ РІС‹Р·С‹РІР°РµС‚ РјРµС‚РѕРґ fillingTable РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РЅРѕРІРѕР№ СЃС‚СЂР°РЅРёС†С‹.
      */
     private void pageIndexListener() {
         pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
@@ -168,16 +168,16 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){
         return suppliesTable.getScene();
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void setTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -219,8 +219,8 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Выполняет операции с расходным материалом
-     * @param operationMode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ СЂР°СЃС…РѕРґРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         Supply supply = null;
@@ -259,11 +259,11 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат выполнения операции.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
      *
-     * @param operationMode режим операции
-     * @param exitMode режим выхода из формы
-     * @param supply объект расходного материала
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param supply РѕР±СЉРµРєС‚ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
      */
     private void doResult(FXFormExitMode exitMode, FXOperationMode operationMode, Supply supply) {
         if(exitMode == FXFormExitMode.OK){
@@ -301,7 +301,7 @@ public class SuppliesController implements Initializable {
     }
 
     /**
-     * Обновление данных
+     * РћР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С…
      */
     private void doRefresh(){
         filterNameField.clear();

@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер формы с транспортом
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ С‚СЂР°РЅСЃРїРѕСЂС‚РѕРј
  */
 public class TransportController implements Initializable {
 

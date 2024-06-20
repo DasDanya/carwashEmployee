@@ -17,7 +17,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * Репозиторий рабочего дня
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ СЂР°Р±РѕС‡РµРіРѕ РґРЅСЏ
  */
 public class WorkScheduleRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/workSchedule";

@@ -1,7 +1,7 @@
 package ru.pin120.carwashemployee.SuppliesInBox;
 
 /**
- * Перечисление операций уменьшения расходного материала в боксе
+ * РџРµСЂРµС‡РёСЃР»РµРЅРёРµ РѕРїРµСЂР°С†РёР№ СѓРјРµРЅСЊС€РµРЅРёСЏ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р° РІ Р±РѕРєСЃРµ
  */
 public enum DecreaseSuppliesInBoxStatus {
     DECREASE,

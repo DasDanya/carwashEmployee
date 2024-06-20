@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Контроллер формы с расходными материалами в боксе
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ СЂР°СЃС…РѕРґРЅС‹РјРё РјР°С‚РµСЂРёР°Р»Р°РјРё РІ Р±РѕРєСЃРµ
  */
 public class SuppliesInBoxController implements Initializable {
 

@@ -4,16 +4,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * FX представление категории расходных материалов
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
  */
 public class CategoriesOfSuppliesFX {
 
     /**
-     * Название категории
+     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
      */
     private StringProperty csupName;
     /**
-     * Единица измерения
+     * Р•РґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
      */
     private StringProperty unit;
 
@@ -34,9 +34,9 @@ public class CategoriesOfSuppliesFX {
     }
 
     /**
-     * Конструктор для создания объекта CategoriesOfSuppliesFX
-     * @param csupName Название категории
-     * @param unit Единица измерения
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° CategoriesOfSuppliesFX
+     * @param csupName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * @param unit Р•РґРёРЅРёС†Р° РёР·РјРµСЂРµРЅРёСЏ
      */
     public CategoriesOfSuppliesFX(String csupName, UnitOfMeasure unit) {
         this.csupName = new SimpleStringProperty(csupName);

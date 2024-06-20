@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер формы с категориями расходных материалов
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РєР°С‚РµРіРѕСЂРёСЏРјРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
  */
 public class CategoriesOfSuppliesController implements Initializable {
 
@@ -49,10 +49,10 @@ public class CategoriesOfSuppliesController implements Initializable {
 
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,7 +69,7 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Заполняет таблицу категорий всеми категориями расходных материалов
+     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РєР°С‚РµРіРѕСЂРёР№ РІСЃРµРјРё РєР°С‚РµРіРѕСЂРёСЏРјРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
      */
     private void fillingAll() {
         try{
@@ -86,9 +86,9 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Заполняет ObservableList данными о категориях расходных материалов
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РєР°С‚РµРіРѕСЂРёСЏС… СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
      *
-     * @param categories список категорий для заполнения
+     * @param categories СЃРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
      */
     private void fillingObservableList(List<CategoryOfSupplies> categories){
         categoriesOfSuppliesFXES.clear();
@@ -99,7 +99,7 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -117,9 +117,9 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){
         return categoriesTable.getScene();
@@ -134,8 +134,8 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Выполняет операции с категорией расходных материалов
-     * @param operationMode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РєР°С‚РµРіРѕСЂРёРµР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode operationMode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
@@ -180,12 +180,12 @@ public class CategoriesOfSuppliesController implements Initializable {
     }
 
     /**
-     * Обрабатывает результат выполнения операции.
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
      *
-     * @param operationMode режим операции
-     * @param exitMode режим выхода из формы
-     * @param categoryOfSupplies объект категории расходных материалов
-     * @param selectedCategory выбранная CategoriesOfSuppliesFX для удаления
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param categoryOfSupplies РѕР±СЉРµРєС‚ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
+     * @param selectedCategory РІС‹Р±СЂР°РЅРЅР°СЏ CategoriesOfSuppliesFX РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
      */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfSupplies categoryOfSupplies, CategoriesOfSuppliesFX selectedCategory){
         if(exitMode == FXFormExitMode.OK){
@@ -209,7 +209,7 @@ public class CategoriesOfSuppliesController implements Initializable {
 
 
     /**
-     * Выполняет обновление данных.
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
      */
     private void doRefresh(){
         categoriesOfSuppliesFXES.clear();

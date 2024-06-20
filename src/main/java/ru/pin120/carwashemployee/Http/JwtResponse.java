@@ -7,7 +7,7 @@ import lombok.Setter;
 import ru.pin120.carwashemployee.Users.UserDTO;
 
 /**
- * Класс с информацией о клиенте и JWT токене
+ * РљР»Р°СЃСЃ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ РєР»РёРµРЅС‚Рµ Рё JWT С‚РѕРєРµРЅРµ
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,16 +15,16 @@ import ru.pin120.carwashemployee.Users.UserDTO;
 @Setter
 public class JwtResponse {
     /**
-     * Схема аутентификации
+     * РЎС…РµРјР° Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё
      */
     private String type;
     /**
-     * JWT токен
+     * JWT С‚РѕРєРµРЅ
      */
     private String token;
 
     /**
-     * Данные о пользователе
+     * Р”Р°РЅРЅС‹Рµ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ
      */
     private UserDTO userDTO;
 }

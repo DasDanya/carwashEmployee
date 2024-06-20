@@ -9,7 +9,7 @@ import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoryOfSupplies;
 import java.util.List;
 
 /**
- * Модель услуги
+ * РњРѕРґРµР»СЊ СѓСЃР»СѓРіРё
  */
 @Getter
 @Setter
@@ -18,17 +18,17 @@ import java.util.List;
 public class Service {
 
     /**
-     * Название услуги
+     * РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
      */
     private String servName;
     /**
-     * Список категорий расходных материалов, необходимых для выполнения услуги
+     * РЎРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ, РЅРµРѕР±С…РѕРґРёРјС‹С… РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ СѓСЃР»СѓРіРё
      */
     List<CategoryOfSupplies> categoriesOfSupplies;
 
     /**
-     * Конструктор для создания объекта Service
-     * @param servName Название услуги
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° Service
+     * @param servName РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
      */
     public Service(String servName) {
         this.servName = servName;

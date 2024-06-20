@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 /**
- * Модель рабочего дня
+ * РњРѕРґРµР»СЊ СЂР°Р±РѕС‡РµРіРѕ РґРЅСЏ
  */
 @AllArgsConstructor
 @NoArgsConstructor

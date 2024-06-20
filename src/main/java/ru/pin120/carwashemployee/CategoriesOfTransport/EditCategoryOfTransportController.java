@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Контроллер редактирования данных о категории транспорта
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
  */
 public class EditCategoryOfTransportController implements Initializable {
 
@@ -41,10 +41,10 @@ public class EditCategoryOfTransportController implements Initializable {
     private CategoryOfTransportRepository categoryOfTransportRepository = new CategoryOfTransportRepository();
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,8 +54,8 @@ public class EditCategoryOfTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает слушатель изменений текста для поля названия категории.
-     * Проверяет длину введенного значения и обрезает его до максимально допустимой длины, если необходимо.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РёР·РјРµРЅРµРЅРёР№ С‚РµРєСЃС‚Р° РґР»СЏ РїРѕР»СЏ РЅР°Р·РІР°РЅРёСЏ РєР°С‚РµРіРѕСЂРёРё.
+     * РџСЂРѕРІРµСЂСЏРµС‚ РґР»РёРЅСѓ РІРІРµРґРµРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ Рё РѕР±СЂРµР·Р°РµС‚ РµРіРѕ РґРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјРѕР№ РґР»РёРЅС‹, РµСЃР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ.
      */
     private void categoryNameFieldTextListener() {
         categoryNameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -68,11 +68,11 @@ public class EditCategoryOfTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает параметры для формы создания, изменения, удаления категории транспорта.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ С„РѕСЂРјС‹ СЃРѕР·РґР°РЅРёСЏ, РёР·РјРµРЅРµРЅРёСЏ, СѓРґР°Р»РµРЅРёСЏ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
      *
-     * @param categoryOfTransport Объект {@link CategoryOfTransport}, содержащий данные о категории транспорта.
-     * @param operationMode Режим операции (создание, изменение, удаление).
-     * @param stage Модальное окно, на котором отображается форма.
+     * @param categoryOfTransport РћР±СЉРµРєС‚ {@link CategoryOfTransport}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°РЅРЅС‹Рµ Рѕ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё (СЃРѕР·РґР°РЅРёРµ, РёР·РјРµРЅРµРЅРёРµ, СѓРґР°Р»РµРЅРёРµ).
+     * @param stage РњРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ, РЅР° РєРѕС‚РѕСЂРѕРј РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ С„РѕСЂРјР°.
      */
     public void setParameters(CategoryOfTransport categoryOfTransport, FXOperationMode operationMode, Stage stage){
         this.categoryOfTransport = categoryOfTransport;
@@ -99,17 +99,17 @@ public class EditCategoryOfTransportController implements Initializable {
     }
 
     /**
-     * Устанавливает действие на событие закрытия окна.
-     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР° СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°.
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "Р’С‹С…РѕРґ" РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
     /**
-     * Обработчик события нажатия кнопки "OK".
+     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "OK".
      *
-     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "OK".
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -166,10 +166,10 @@ public class EditCategoryOfTransportController implements Initializable {
     }
 
     /**
-     * Обработчик события нажатия кнопки "Отмена".
-     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
+     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° CANCEL Рё Р·Р°РєСЂС‹РІР°РµС‚ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ.
      *
-     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
+     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;

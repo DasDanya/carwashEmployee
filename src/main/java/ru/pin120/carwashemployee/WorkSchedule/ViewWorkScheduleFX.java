@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * FX представление рабочего дня
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СЂР°Р±РѕС‡РµРіРѕ РґРЅСЏ
  */
 public class ViewWorkScheduleFX {
 

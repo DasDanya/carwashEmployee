@@ -10,7 +10,7 @@ import ru.pin120.carwashemployee.Cleaners.Cleaner;
 import java.time.LocalDate;
 
 /**
- * DTO рабочих дней
+ * DTO СЂР°Р±РѕС‡РёС… РґРЅРµР№
  */
 @AllArgsConstructor
 @NoArgsConstructor

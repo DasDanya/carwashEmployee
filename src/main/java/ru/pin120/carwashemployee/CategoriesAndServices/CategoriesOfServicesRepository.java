@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * Репозиторий категории услуг
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРі
  */
 public class CategoriesOfServicesRepository {
 
@@ -56,10 +56,10 @@ public class CategoriesOfServicesRepository {
     }
 
     /**
-     * Получает список всех названий категорий.
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РЅР°Р·РІР°РЅРёР№ РєР°С‚РµРіРѕСЂРёР№.
      *
-     * @return список названий категорий
-     * @throws Exception если произошла ошибка при выполнении запроса
+     * @return СЃРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ РєР°С‚РµРіРѕСЂРёР№
+     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
      */
     public List<String> getCategoriesName() throws Exception{
         Request request = new Request.Builder()
@@ -77,11 +77,11 @@ public class CategoriesOfServicesRepository {
     }
 
     /**
-     * Получает список названий категорий, соответствующих заданному параметру.
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ РєР°С‚РµРіРѕСЂРёР№, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РґР°РЅРЅРѕРјСѓ РїР°СЂР°РјРµС‚СЂСѓ.
      *
-     * @param parameter параметр поиска
-     * @return список названий категорий
-     * @throws Exception если произошла ошибка при выполнении запроса
+     * @param parameter РїР°СЂР°РјРµС‚СЂ РїРѕРёСЃРєР°
+     * @return СЃРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ РєР°С‚РµРіРѕСЂРёР№
+     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
      */
     public List<String> getCategoriesNameByParameter(String parameter) throws Exception {
         //parameter = URLEncoder.encode(parameter, "UTF-8");
@@ -100,11 +100,11 @@ public class CategoriesOfServicesRepository {
     }
 
     /**
-     * Создает новую категорию услуг
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РєР°С‚РµРіРѕСЂРёСЋ СѓСЃР»СѓРі
      *
-     * @param categoryOfServices объект категории услуг
-     * @return true, если создание прошло успешно, иначе false
-     * @throws Exception если произошла ошибка при выполнении запроса
+     * @param categoryOfServices РѕР±СЉРµРєС‚ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРі
+     * @return true, РµСЃР»Рё СЃРѕР·РґР°РЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ, РёРЅР°С‡Рµ false
+     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
      */
     public boolean createCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception{
         boolean successCreate;
@@ -155,10 +155,10 @@ public class CategoriesOfServicesRepository {
     }
 
     /**
-     * Удаляет категорию
-     * @param categoryOfServices объект категории услуг
-     * @return true, если удаление прошло успешно, иначе false
-     * @throws Exception если произошла ошибка при выполнении запроса
+     * РЈРґР°Р»СЏРµС‚ РєР°С‚РµРіРѕСЂРёСЋ
+     * @param categoryOfServices РѕР±СЉРµРєС‚ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРі
+     * @return true, РµСЃР»Рё СѓРґР°Р»РµРЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ, РёРЅР°С‡Рµ false
+     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
      */
     public boolean deleteCategoryOfServices(CategoryOfServices categoryOfServices) throws Exception {
         boolean successDelete;

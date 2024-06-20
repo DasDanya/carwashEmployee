@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * Репозиторий категории транспорта
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
  */
 public class CategoryOfTransportRepository {
 
@@ -27,10 +27,10 @@ public class CategoryOfTransportRepository {
     private Gson gson = new Gson();
 
     /**
-     * Получает все категории транспорта
+     * РџРѕР»СѓС‡Р°РµС‚ РІСЃРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      *
-     * @return Список объектов {@code CategoryOfTransport}, содержащий данные о категориях транспорта.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfTransport}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°РЅРЅС‹Рµ Рѕ РєР°С‚РµРіРѕСЂРёСЏС… С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public List<CategoryOfTransport> getAll() throws Exception {
         Request request = new Request.Builder()
@@ -48,11 +48,11 @@ public class CategoryOfTransportRepository {
     }
 
     /**
-     * Получает категории транспорта, для которых не установлена стоимость и время выполнения определенной услуги
+     * РџРѕР»СѓС‡Р°РµС‚ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°, РґР»СЏ РєРѕС‚РѕСЂС‹С… РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° СЃС‚РѕРёРјРѕСЃС‚СЊ Рё РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ СѓСЃР»СѓРіРё
      *
-     * @param servName Название услуги, для которой необходимо получить категории транспорта.
-     * @return Список объектов {@code CategoryOfTransport}, удовлетворяющих условиям запроса.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param servName РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё, РґР»СЏ РєРѕС‚РѕСЂРѕР№ РЅРµРѕР±С…РѕРґРёРјРѕ РїРѕР»СѓС‡РёС‚СЊ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfTransport}, СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‰РёС… СѓСЃР»РѕРІРёСЏРј Р·Р°РїСЂРѕСЃР°.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public List<CategoryOfTransport> getCategoriesOfTransportWithoutPriceAndTime(String servName) throws Exception {
         //servName = URLEncoder.encode(servName, "UTF-8");
@@ -71,13 +71,13 @@ public class CategoryOfTransportRepository {
     }
 
     /**
-     * Получает доступные категории транспорта для указанного транспорта
+     * РџРѕР»СѓС‡Р°РµС‚ РґРѕСЃС‚СѓРїРЅС‹Рµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р° РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      *
-     * @param transportMark Марка транспорта.
-     * @param transportModel Модель транспорта.
-     * @param trId Идентификатор транспорта (может быть {@code null}).
-     * @return Список объектов {@code CategoryOfTransport}, доступных для указанного транспорта.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param transportMark РњР°СЂРєР° С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @param transportModel РњРѕРґРµР»СЊ С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @param trId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚СЂР°РЅСЃРїРѕСЂС‚Р° (РјРѕР¶РµС‚ Р±С‹С‚СЊ {@code null}).
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfTransport}, РґРѕСЃС‚СѓРїРЅС‹С… РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public List<CategoryOfTransport> getAvailableCategoriesForTransport(String transportMark, String transportModel, Long trId) throws Exception {
         String partOfUrl;
@@ -102,11 +102,11 @@ public class CategoryOfTransportRepository {
 
 
     /**
-     * Создает новую категорию транспорта
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РєР°С‚РµРіРѕСЂРёСЋ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      *
-     * @param categoryOfTransport Объект {@code CategoryOfTransport}, который необходимо создать.
-     * @return Созданный объект {@code CategoryOfTransport}.
-     * @throws Exception Если происходит ошибка HTTP, категория уже существует или проблемы с парсингом JSON.
+     * @param categoryOfTransport РћР±СЉРµРєС‚ {@code CategoryOfTransport}, РєРѕС‚РѕСЂС‹Р№ РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕР·РґР°С‚СЊ.
+     * @return РЎРѕР·РґР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@code CategoryOfTransport}.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP, РєР°С‚РµРіРѕСЂРёСЏ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public CategoryOfTransport createCategoryOfTransport(CategoryOfTransport categoryOfTransport) throws Exception {
         CategoryOfTransport createdCategory = null;
@@ -136,11 +136,11 @@ public class CategoryOfTransportRepository {
     }
 
     /**
-     * Изменяет данные о существующей категории транспорта
+     * РР·РјРµРЅСЏРµС‚ РґР°РЅРЅС‹Рµ Рѕ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµР№ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      *
-     * @param categoryOfTransport Объект {@code CategoryOfTransport}, данные которого необходимо изменить.
-     * @return Измененный объект {@code CategoryOfTransport}.
-     * @throws Exception Если происходит ошибка HTTP, категория не существует или проблемы с парсингом JSON.
+     * @param categoryOfTransport РћР±СЉРµРєС‚ {@code CategoryOfTransport}, РґР°РЅРЅС‹Рµ РєРѕС‚РѕСЂРѕРіРѕ РЅРµРѕР±С…РѕРґРёРјРѕ РёР·РјРµРЅРёС‚СЊ.
+     * @return РР·РјРµРЅРµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@code CategoryOfTransport}.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP, РєР°С‚РµРіРѕСЂРёСЏ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public CategoryOfTransport editCategoryOfTransport(CategoryOfTransport categoryOfTransport) throws Exception {
         CategoryOfTransport editedCategory = null;
@@ -170,11 +170,11 @@ public class CategoryOfTransportRepository {
     }
 
     /**
-     * Удаляет категорию транспорта с указанным id
+     * РЈРґР°Р»СЏРµС‚ РєР°С‚РµРіРѕСЂРёСЋ С‚СЂР°РЅСЃРїРѕСЂС‚Р° СЃ СѓРєР°Р·Р°РЅРЅС‹Рј id
      *
-     * @param id id категории транспорта для удаления.
-     * @return {@code true}, если категория успешно удалена, {@code false} в противном случае.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param id id РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.
+     * @return {@code true}, РµСЃР»Рё РєР°С‚РµРіРѕСЂРёСЏ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР°, {@code false} РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public boolean deleteCategoryOfTransport(Long id) throws Exception {
         boolean successDelete;
@@ -199,11 +199,11 @@ public class CategoryOfTransportRepository {
     }
 
     /**
-     * Получает категории транспорта по указанному названию
+     * РџРѕР»СѓС‡Р°РµС‚ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р° РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РЅР°Р·РІР°РЅРёСЋ
      *
-     * @param parameter Название категории транспорта для поиска.
-     * @return Список объектов {@code CategoryOfTransport}, удовлетворяющих критерию поиска.
-     * @throws Exception Если происходит ошибка HTTP или проблемы с парсингом JSON.
+     * @param parameter РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р° РґР»СЏ РїРѕРёСЃРєР°.
+     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@code CategoryOfTransport}, СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‰РёС… РєСЂРёС‚РµСЂРёСЋ РїРѕРёСЃРєР°.
+     * @throws Exception Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° HTTP РёР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїР°СЂСЃРёРЅРіРѕРј JSON.
      */
     public List<CategoryOfTransport> getCategoriesOfTransportByCatTrName(String parameter) throws Exception {
         Request request = new Request.Builder()

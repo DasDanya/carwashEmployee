@@ -6,32 +6,32 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * FX представление транспорта клиента
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°
  */
 public class ClientsTransportFX {
 
     public static final int MAX_STATE_NUMBER_LENGTH = 9;
-    public static final String MOTO_AGR_REGEX="^\\d{4}(?<!0000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$";
-    public static final String CAR_REGEX = "^[АВЕКМНОРСТУХ]\\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$";
+    public static final String MOTO_AGR_REGEX="^\\d{4}(?<!0000)[РђР’Р•РљРњРќРћР РЎРўРЈРҐ]{2}\\d{2,3}$";
+    public static final String CAR_REGEX = "^[РђР’Р•РљРњРќРћР РЎРўРЈРҐ]\\d{3}(?<!000)[РђР’Р•РљРњРќРћР РЎРўРЈРҐ]{2}\\d{2,3}$";
 
     /**
-     * id транспорта клиента
+     * id С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°
      */
     private LongProperty clTrId;
     /**
-     * Госномер транспорта
+     * Р“РѕСЃРЅРѕРјРµСЂ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
      */
     private StringProperty clTrStateNumber;
     /**
-     * Марка
+     * РњР°СЂРєР°
      */
     private StringProperty clTrMark;
     /**
-     * Модель
+     * РњРѕРґРµР»СЊ
      */
     private StringProperty clTrModel;
     /**
-     * Категория
+     * РљР°С‚РµРіРѕСЂРёСЏ
      */
     private StringProperty clTrCategory;
 
@@ -92,12 +92,12 @@ public class ClientsTransportFX {
     }
 
     /**
-     * Конструктор для создания объекта ClientsTransportFX
-     * @param clTrId id транспорта клиента
-     * @param clTrMark марка
-     * @param clTrModel модель
-     * @param clTrCategory категория
-     * @param clTrStateNumber госномер
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° ClientsTransportFX
+     * @param clTrId id С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°
+     * @param clTrMark РјР°СЂРєР°
+     * @param clTrModel РјРѕРґРµР»СЊ
+     * @param clTrCategory РєР°С‚РµРіРѕСЂРёСЏ
+     * @param clTrStateNumber РіРѕСЃРЅРѕРјРµСЂ
      */
     public ClientsTransportFX(Long clTrId, String clTrMark, String clTrModel, String clTrCategory, String clTrStateNumber) {
         this.clTrId = new SimpleLongProperty(clTrId);

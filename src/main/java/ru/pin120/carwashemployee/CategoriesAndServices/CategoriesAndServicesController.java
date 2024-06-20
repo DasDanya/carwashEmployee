@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Контроллер формы с категориями и услугами автомойки
+ * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РєР°С‚РµРіРѕСЂРёСЏРјРё Рё СѓСЃР»СѓРіР°РјРё Р°РІС‚РѕРјРѕР№РєРё
  */
 public class CategoriesAndServicesController implements Initializable {
 
@@ -69,25 +69,25 @@ public class CategoriesAndServicesController implements Initializable {
     String lastSearchedService = "";
 
     /**
-     * Инициализация контроллера
+     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
      *
-     * @param url URL расположения FXML файла
-     * @param resourceBundle Набор ресурсов для локализации
+     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
+     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
-        //привязываем ширину столбцов к ширине таблицы
+        //РїСЂРёРІСЏР·С‹РІР°РµРј С€РёСЂРёРЅСѓ СЃС‚РѕР»Р±С†РѕРІ Рє С€РёСЂРёРЅРµ С‚Р°Р±Р»РёС†С‹
         categoryNameColumn.prefWidthProperty().bind(categoriesTable.widthProperty());
         serviceNameColumn.prefWidthProperty().bind(servicesTable.widthProperty());
 
-        // инициализация таблицы
+        // РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚Р°Р±Р»РёС†С‹
         categoryNameColumn.setCellValueFactory(c -> c.getValue().nameProperty());
         serviceNameColumn.setCellValueFactory(s->s.getValue().nameProperty());
         initFillingObservableLists();
         categoriesTable.getSelectionModel().selectFirst();
 
-        // Устанавливаем заголовки для таблиц
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·Р°РіРѕР»РѕРІРєРё РґР»СЏ С‚Р°Р±Р»РёС†
         //categoriesTable.setPlaceholder(new Label(resourceBundle.getString("CATEGORY_TABLE_TITLE")));
         //servicesTable.setPlaceholder(new Label(resourceBundle.getString("SERVICE_TABLE_TITLE")));
 
@@ -102,7 +102,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Инициализирует списки, используемые для заполнения ObservableLists.
+     * РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ СЃРїРёСЃРєРё, РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ ObservableLists.
      */
     private void initFillingObservableLists(){
         try {
@@ -126,9 +126,9 @@ public class CategoriesAndServicesController implements Initializable {
 
 
     /**
-     * Возвращает текущую сцену (Scene).
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
      *
-     * @return текущая сцена
+     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
      */
     private Scene getActualScene(){ return categoriesTable.getScene();}
 //    private void fillingServicesObservableList(List<Service> servicesOfCertainCategory){
@@ -138,10 +138,10 @@ public class CategoriesAndServicesController implements Initializable {
 //    }
 
     /**
-     * Заполняет ObservableList услугами по имени категории.
+     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList СѓСЃР»СѓРіР°РјРё РїРѕ РёРјРµРЅРё РєР°С‚РµРіРѕСЂРёРё.
      *
-     * @param categoryName имя категории
-     * @throws Exception если возникает ошибка при получении услуг
+     * @param categoryName РёРјСЏ РєР°С‚РµРіРѕСЂРёРё
+     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё СѓСЃР»СѓРі
      */
     private void fillingServicesObservableList(String categoryName) throws Exception {
         servicesOfCategory = serviceRepository.getServicesByCatName(categoryName);
@@ -151,7 +151,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Добавляет слушатель выбранной категории
+     * Р”РѕР±Р°РІР»СЏРµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РІС‹Р±СЂР°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё
      */
     private void categoriesSelectedModelListener(){
         categoriesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -167,7 +167,7 @@ public class CategoriesAndServicesController implements Initializable {
                     fillingServicesObservableList(newSelection.getName());
                     servicesTable.setItems(services);
 
-//                    //проверка
+//                    //РїСЂРѕРІРµСЂРєР°
 //                    for(ServiceFX serviceFX: services){
 //                        if(serviceFX.getName().equals(lastSearchedService)){
 //                            servicesTable.getSelectionModel().select(serviceFX);
@@ -182,7 +182,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Отслеживает фокус на таблицах категорий и услуг.
+     * РћС‚СЃР»РµР¶РёРІР°РµС‚ С„РѕРєСѓСЃ РЅР° С‚Р°Р±Р»РёС†Р°С… РєР°С‚РµРіРѕСЂРёР№ Рё СѓСЃР»СѓРі.
      */
     private void trackingFocusOnTables(){
 
@@ -200,7 +200,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Устанавливает всплывающие подсказки для кнопок
+     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
      */
     private void settingTooltipForButtons(){
         createButton.setOnMouseEntered(event -> {
@@ -245,9 +245,9 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Выполняет операции с категорией или с услугой.
-     * Выполнение операции зависит от таблицы, которая находиться в фокусе
-     * @param mode Режим операции
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РєР°С‚РµРіРѕСЂРёРµР№ РёР»Рё СЃ СѓСЃР»СѓРіРѕР№.
+     * Р’С‹РїРѕР»РЅРµРЅРёРµ РѕРїРµСЂР°С†РёРё Р·Р°РІРёСЃРёС‚ РѕС‚ С‚Р°Р±Р»РёС†С‹, РєРѕС‚РѕСЂР°СЏ РЅР°С…РѕРґРёС‚СЊСЃСЏ РІ С„РѕРєСѓСЃРµ
+     * @param mode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
      */
     private void doOperation(FXOperationMode mode){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
@@ -339,21 +339,21 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Обрабатывает результаты операций с категорией (создание, удаление).
-     * @param operationMode режим операции (создание, удаление)
-     * @param exitMode режим выхода из формы
-     * @param categoryOfServices Категория
-     * @param selectedCategoryOfServicesFX выбранная категория CategoryOfServicesFX для удаления
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚С‹ РѕРїРµСЂР°С†РёР№ СЃ РєР°С‚РµРіРѕСЂРёРµР№ (СЃРѕР·РґР°РЅРёРµ, СѓРґР°Р»РµРЅРёРµ).
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё (СЃРѕР·РґР°РЅРёРµ, СѓРґР°Р»РµРЅРёРµ)
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param categoryOfServices РљР°С‚РµРіРѕСЂРёСЏ
+     * @param selectedCategoryOfServicesFX РІС‹Р±СЂР°РЅРЅР°СЏ РєР°С‚РµРіРѕСЂРёСЏ CategoryOfServicesFX РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
      */
     private void doResultCategoryOfServices(FXOperationMode operationMode, FXFormExitMode exitMode, CategoryOfServices categoryOfServices, CategoryOfServicesFX selectedCategoryOfServicesFX){
         if(exitMode == FXFormExitMode.OK) {
             switch (operationMode) {
                 case CREATE:
                     //if(lastSearchedCategory.isEmpty() || categoryOfServices.getCatName().toLowerCase().contains(lastSearchedCategory.toLowerCase())) {
-                        categoryOfServices.setServices(new ArrayList<>()); // чтобы не ругался на пустой список
+                        categoryOfServices.setServices(new ArrayList<>()); // С‡С‚РѕР±С‹ РЅРµ СЂСѓРіР°Р»СЃСЏ РЅР° РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє
                         CategoryOfServicesFX categoryOfServicesFX = new CategoryOfServicesFX(categoryOfServices.getCatName());
                         categoriesOfServices.add(categoryOfServicesFX);
-                        // сортировка элементов в таблице
+                        // СЃРѕСЂС‚РёСЂРѕРІРєР° СЌР»РµРјРµРЅС‚РѕРІ РІ С‚Р°Р±Р»РёС†Рµ
                         ObservableList<CategoryOfServicesFX> sortedCategories = FXCollections.observableArrayList(categoriesOfServices);
                         sortedCategories.sort(Comparator.comparing(CategoryOfServicesFX::getName, String::compareToIgnoreCase));
                         categoriesOfServices.setAll(sortedCategories);
@@ -379,12 +379,12 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Обрабатывает результаты операций с услугой (создание, удаление).
+     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚С‹ РѕРїРµСЂР°С†РёР№ СЃ СѓСЃР»СѓРіРѕР№ (СЃРѕР·РґР°РЅРёРµ, СѓРґР°Р»РµРЅРёРµ).
      *
-     * @param operationMode режим операции (создание, удаление)
-     * @param exitMode режим выхода из формы
-     * @param serviceDTO объект ServiceDTO, содержащий информацию об услуге
-     * @param selectedServiceFX выбранная услуга ServiceFX для удаления
+     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё (СЃРѕР·РґР°РЅРёРµ, СѓРґР°Р»РµРЅРёРµ)
+     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
+     * @param serviceDTO РѕР±СЉРµРєС‚ ServiceDTO, СЃРѕРґРµСЂР¶Р°С‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СѓСЃР»СѓРіРµ
+     * @param selectedServiceFX РІС‹Р±СЂР°РЅРЅР°СЏ СѓСЃР»СѓРіР° ServiceFX РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
      */
     private void doResultService(FXOperationMode operationMode, FXFormExitMode exitMode, ServiceDTO serviceDTO, ServiceFX selectedServiceFX){
         if(exitMode == FXFormExitMode.OK){
@@ -415,7 +415,7 @@ public class CategoriesAndServicesController implements Initializable {
 
 
     /**
-     * Связывает услугу с категорией
+     * РЎРІСЏР·С‹РІР°РµС‚ СѓСЃР»СѓРіСѓ СЃ РєР°С‚РµРіРѕСЂРёРµР№
      */
     private void bindWithCategory(){
         if(!AppHelper.getUserInfo().get(2).equals(UserRole.OWNER.name())){
@@ -497,7 +497,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Очищает ObservableList категорий и услуг
+     * РћС‡РёС‰Р°РµС‚ ObservableList РєР°С‚РµРіРѕСЂРёР№ Рё СѓСЃР»СѓРі
      */
     private void doClearData(){
         //categoriesTable.setItems(null);
@@ -507,7 +507,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Очищает текстовое поле для поиска и обновляет данные в таблицах
+     * РћС‡РёС‰Р°РµС‚ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ РґР»СЏ РїРѕРёСЃРєР° Рё РѕР±РЅРѕРІР»СЏРµС‚ РґР°РЅРЅС‹Рµ РІ С‚Р°Р±Р»РёС†Р°С…
      */
     private void doRefresh(){
         doClearData();
@@ -538,7 +538,7 @@ public class CategoriesAndServicesController implements Initializable {
     }
 
     /**
-     * Поиск данных
+     * РџРѕРёСЃРє РґР°РЅРЅС‹С…
      */
     private void doSearch(){
         lastSearchedService = "";
@@ -582,7 +582,7 @@ public class CategoriesAndServicesController implements Initializable {
 
                         servicesTable.requestFocus();
 
-                        //устанавливаем фокус на найденную услугу
+                        //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„РѕРєСѓСЃ РЅР° РЅР°Р№РґРµРЅРЅСѓСЋ СѓСЃР»СѓРіСѓ
                         for(ServiceFX serviceFX: services){
                             if(serviceFX.getName().equals(searchParameter)){
                                 servicesTable.getSelectionModel().select(serviceFX);

@@ -8,7 +8,7 @@ import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Supplies.Supply;
 
 /**
- * Модель расходного материала в боксе
+ * РњРѕРґРµР»СЊ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р° РІ Р±РѕРєСЃРµ
  */
 @AllArgsConstructor
 @NoArgsConstructor

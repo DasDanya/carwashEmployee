@@ -1,1 +1,0 @@
-moduleSearchIndex = [{"l":"ru.pin120.carwashemployee"}];updateSearchResults();

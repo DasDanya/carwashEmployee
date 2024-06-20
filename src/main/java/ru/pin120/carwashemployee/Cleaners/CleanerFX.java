@@ -6,44 +6,44 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * FX представление мойщика
+ * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РјРѕР№С‰РёРєР°
  */
 public class CleanerFX {
     public static final int MAX_PHONE_FILLING=10;
     public static final int MAX_SURNAME_LENGTH=50;
     public static final int MAX_NAME_LENGTH=50;
     public static final int MAX_PATRONYMIC_LENGTH=50;
-    public static final String SURNAME_REGEX = "^[А-ЯЁа-яё-]+$";
-    public static final String NAME_REGEX = "^[А-ЯЁа-яё-]+$";
-    public static final String PATRONYMIC_REGEX = "^(|[А-ЯЁа-яё-]+)$";
+    public static final String SURNAME_REGEX = "^[Рђ-РЇРЃР°-СЏС‘-]+$";
+    public static final String NAME_REGEX = "^[Рђ-РЇРЃР°-СЏС‘-]+$";
+    public static final String PATRONYMIC_REGEX = "^(|[Рђ-РЇРЃР°-СЏС‘-]+)$";
 
     /**
-     * id мойщика
+     * id РјРѕР№С‰РёРєР°
      */
     private LongProperty clrId;
 
     /**
-     * Фамилия
+     * Р¤Р°РјРёР»РёСЏ
      */
     private StringProperty clrSurname;
     /**
-     * Имя
+     * РРјСЏ
      */
     private StringProperty clrName;
     /**
-     * Отчество
+     * РћС‚С‡РµСЃС‚РІРѕ
      */
     private StringProperty clrPatronymic;
     /**
-     * Номер телефона
+     * РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
      */
     private StringProperty clrPhone;
     /**
-     * Статус
+     * РЎС‚Р°С‚СѓСЃ
      */
     private StringProperty clrStatus;
     /**
-     * Название фотографии
+     * РќР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
      */
     private StringProperty clrPhotoName;
     //private Long boxIdValue;
@@ -131,14 +131,14 @@ public class CleanerFX {
 
 
     /**
-     * Конструктор для создания объекта CleanerFX
-     * @param clrId id мойщика
-     * @param clrSurname фамилия
-     * @param clrName имя
-     * @param clrPatronymic отчество
-     * @param clrPhone номер телефона
-     * @param clrPhotoName название фотографии
-     * @param clrStatus статус
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° CleanerFX
+     * @param clrId id РјРѕР№С‰РёРєР°
+     * @param clrSurname С„Р°РјРёР»РёСЏ
+     * @param clrName РёРјСЏ
+     * @param clrPatronymic РѕС‚С‡РµСЃС‚РІРѕ
+     * @param clrPhone РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+     * @param clrPhotoName РЅР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
+     * @param clrStatus СЃС‚Р°С‚СѓСЃ
      */
     public CleanerFX(Long clrId, String clrSurname, String clrName, String clrPatronymic, String clrPhone, String clrPhotoName, CleanerStatus clrStatus) {
         this.clrId = new SimpleLongProperty(clrId);

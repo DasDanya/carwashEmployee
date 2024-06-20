@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * DTO с результатом добавления рабочих дней
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -5,6 +5,9 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * FX представление рабочего дня
+ */
 public class ViewWorkScheduleFX {
 
     private LongProperty boxId;

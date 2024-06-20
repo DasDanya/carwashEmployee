@@ -15,6 +15,9 @@ import ru.pin120.carwashemployee.Main.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ *  онтроллер авторизации пользовател€
+ */
 public class UserAuthorizationController implements Initializable {
     @FXML
     private TextField nameField;

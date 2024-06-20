@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ С‚СЂР°РЅСЃРїРѕСЂС‚РѕРј РєР»РёРµРЅС‚Р°
+ * Контроллер формы с транспортом клиента
  */
 public class ClientTransportController implements Initializable {
 
@@ -67,10 +67,10 @@ public class ClientTransportController implements Initializable {
     private ObservableList<ClientsTransportFX> clientsTransportFXES = FXCollections.observableArrayList();
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,8 +96,8 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РґР»РёРЅСѓ РІРІРµРґРµРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ Рё РїСЂРµРґРѕС‚РІСЂР°С‰Р°РµС‚ РІРІРѕРґ Р±РѕР»РµРµ РґР»РёРЅРЅС‹С… РЅРѕРјРµСЂРѕРІ,
-     * С‡РµРј РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјР°СЏ РґР»РёРЅР° РґР»СЏ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРіРѕ РЅРѕРјРµСЂР° С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР°.
+     * Проверяет длину введенного значения и предотвращает ввод более длинных номеров,
+     * чем максимально допустимая длина для государственного номера транспортного средства.
      */
     private void filterStateNumberFieldListener() {
         filterStateNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -111,7 +111,7 @@ public class ClientTransportController implements Initializable {
 
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РґР°РЅРЅС‹РјРё Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹С… СЃСЂРµРґСЃС‚РІР°С… РєР»РёРµРЅС‚Р°
+     * Заполняет таблицу данными о транспортных средствах клиента
      */
     private void fillingAll() {
         try{
@@ -126,9 +126,9 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹С… СЃСЂРµРґСЃС‚РІР°С…
+     * Заполняет ObservableList данными о транспортных средствах
      *
-     * @param clientTransport СЃРїРёСЃРѕРє С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹С… СЃСЂРµРґСЃС‚РІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
+     * @param clientTransport список транспортных средств для заполнения
      */
     private void fillingObservableList(List<ClientsTransport> clientTransport) {
         for(ClientsTransport ct: clientTransport){
@@ -138,16 +138,16 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
+     * Возвращает текущую сцену (Scene).
      *
-     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
+     * @return текущая сцена
      */
     private Scene getActualScene(){
         return clientTransportTable.getScene();
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
+     * Устанавливает всплывающие подсказки для кнопок
      */
     private void setTooltipForButtons() {
         createButton.setOnMouseEntered(event->{
@@ -168,10 +168,10 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РєР»РёРµРЅС‚Р° Рё РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР°.
+     * Устанавливает параметры клиента и модального окна.
      *
-     * @param client      РѕР±СЉРµРєС‚ С‚РёРїР° Client, СЃРѕРґРµСЂР¶Р°С‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР»РёРµРЅС‚Рµ
-     * @param modalStage  РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ, С‚РёРї Stage.
+     * @param client      объект типа Client, содержащий информацию о клиенте
+     * @param modalStage  модальное окно, тип Stage.
      */
     public void setParameters(Client client, Stage modalStage) {
         this.client = client;
@@ -194,8 +194,8 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹Рј СЃСЂРµРґСЃС‚РІРѕРј
-     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * Выполняет операции с транспортным средством
+     * @param operationMode Режим операции
      */
     private void doOperation(FXOperationMode operationMode){
         ClientsTransport clientsTransport = null;
@@ -247,11 +247,11 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
-     * @param ct РѕР±СЉРµРєС‚ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР°
-     * @param selectedClientTransportFX РІС‹Р±СЂР°РЅРЅС‹Р№ ClientsTransportFX РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ
-     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
-     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * Обрабатывает результат выполнения операции.
+     * @param ct объект транспортного средства
+     * @param selectedClientTransportFX выбранный ClientsTransportFX для изменения или удаления
+     * @param exitMode режим выхода из формы
+     * @param operationMode режим операции
      */
     private void doResult(ClientsTransport ct, ClientsTransportFX selectedClientTransportFX, FXFormExitMode exitMode, FXOperationMode operationMode) {
         if(exitMode == FXFormExitMode.OK){
@@ -295,7 +295,7 @@ public class ClientTransportController implements Initializable {
     }
 
     /**
-     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
+     * Выполняет обновление данных.
      */
     private void doRefresh(){
         filterCategoryField.clear();

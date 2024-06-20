@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.Clients;
 import lombok.*;
 
 /**
- * РњРѕРґРµР»СЊ РєР»РёРµРЅС‚Р°
+ * Модель клиента
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,23 +13,23 @@ import lombok.*;
 public class Client {
 
     /**
-     * id РєР»РёРµРЅС‚Р°
+     * id клиента
      */
     private Long clId;
     /**
-     * Р¤Р°РјРёР»РёСЏ
+     * Фамилия
      */
     private String clSurname;
     /**
-     * РРјСЏ
+     * Имя
      */
     private String clName;
     /**
-     * РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+     * Номер телефона
      */
     private String clPhone;
     /**
-     * РЎРєРёРґРєР°
+     * Скидка
      */
     private Integer clDiscount;
 }

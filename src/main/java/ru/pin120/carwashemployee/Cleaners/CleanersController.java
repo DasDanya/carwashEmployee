@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ С„РѕСЂРјС‹ СЃ РјРѕР№С‰РёРєР°РјРё
+ * Контроллер формы с мойщиками
  */
 public class CleanersController implements Initializable {
 
@@ -75,10 +75,10 @@ public class CleanersController implements Initializable {
 
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -106,8 +106,8 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РёР·РјРµРЅРµРЅРёР№ С‚РµРєСЃС‚РѕРІРѕРіРѕ РїРѕР»СЏ РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё РІРІРѕРґР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ РЅРѕРјРµСЂР°.
-     * РњРµС‚РѕРґ СѓРґР°Р»СЏРµС‚ РІСЃРµ РЅРµС‡РёСЃР»РѕРІС‹Рµ СЃРёРјРІРѕР»С‹ РёР· РІРІРµРґРµРЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ Рё РѕР±СЂРµР·Р°РµС‚ РµРіРѕ РґРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјРѕР№ РґР»РёРЅС‹,
+     * Устанавливает слушатель изменений текстового поля для фильтрации ввода телефонного номера.
+     * Метод удаляет все нечисловые символы из введенного значения и обрезает его до максимально допустимой длины,
      */
     private void filterPhoneListener(){
         filterPhoneField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -124,7 +124,7 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РґР°РЅРЅС‹РјРё Рѕ РјРѕР№С‰РёРєР°С…
+     * Заполняет таблицу данными о мойщиках
      */
     private void fillingAll() {
         try{
@@ -141,9 +141,9 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РјРѕР№С‰РёРєР°С…
+     * Заполняет ObservableList данными о мойщиках
      *
-     * @param cleaners СЃРїРёСЃРѕРє РјРѕР№С‰РёРєРѕРІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
+     * @param cleaners список мойщиков для заполнения
      */
     private void fillingObservableList(List<Cleaner> cleaners){
         for(Cleaner cleaner:cleaners){
@@ -154,9 +154,9 @@ public class CleanersController implements Initializable {
 
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РєРѕРЅРІРµСЂС‚РµСЂ РґР»СЏ РєРѕРјР±Рѕ-Р±РѕРєСЃР° СЃС‚Р°С‚СѓСЃРѕРІ РјРѕР№С‰РёРєР°.
-     * РљРѕРЅРІРµСЂС‚РµСЂ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РѕР±СЉРµРєС‚РѕРІ С‚РёРїР° {@code CleanerStatus} РІ СЃС‚СЂРѕРєРѕРІРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё
-     * Рё РѕР±СЂР°С‚РЅРѕ РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё.
+     * Устанавливает конвертер для комбо-бокса статусов мойщика.
+     * Конвертер используется для отображения объектов типа {@code CleanerStatus} в строковом представлении
+     * и обратно при необходимости.
      */
     private void setConvertersForComboBoxes(){
         filterStatusComboBox.setConverter(new StringConverter<CleanerStatus>() {
@@ -172,7 +172,7 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ РєРѕРјР±Рѕ-Р±РѕРєСЃ СЃС‚Р°С‚СѓСЃРѕРІ РјРѕР№С‰РёРєР° Р·РЅР°С‡РµРЅРёСЏРјРё Рё СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІС‹Р±СЂР°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+     * Заполняет комбо-бокс статусов мойщика значениями и устанавливает выбранный элемент по умолчанию.
      */
     private void fillingStatusComboBox(){
         filterStatusComboBox.getItems().setAll(CleanerStatus.values());
@@ -182,7 +182,7 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
+     * Устанавливает всплывающие подсказки для кнопок
      */
     private void settingTooltipForButtons() {
         createButton.setOnMouseEntered(event -> {
@@ -212,9 +212,9 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ (Scene).
+     * Возвращает текущую сцену (Scene).
      *
-     * @return С‚РµРєСѓС‰Р°СЏ СЃС†РµРЅР°
+     * @return текущая сцена
      */
     private Scene getActualScene(){
         return cleanersTable.getScene();
@@ -236,8 +236,8 @@ public class CleanersController implements Initializable {
 
 
     /**
-     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕРїРµСЂР°С†РёРё СЃ РјРѕР№С‰РёРєРѕРј
-     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё
+     * Выполняет операции с мойщиком
+     * @param operationMode Режим операции
      */
     private void doOperation(FXOperationMode operationMode){
         Cleaner cleaner = null;
@@ -280,12 +280,12 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё.
+     * Обрабатывает результат выполнения операции.
      *
-     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё
-     * @param exitMode СЂРµР¶РёРј РІС‹С…РѕРґР° РёР· С„РѕСЂРјС‹
-     * @param cleaner РѕР±СЉРµРєС‚ РјРѕР№С‰РёРєР°
-     * @param selectedCleanerFX РІС‹Р±СЂР°РЅРЅС‹Р№ CleanerFX РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РёР»Рё СѓРґР°Р»РµРЅРёСЏ
+     * @param operationMode режим операции
+     * @param exitMode режим выхода из формы
+     * @param cleaner объект мойщика
+     * @param selectedCleanerFX выбранный CleanerFX для изменения или удаления
      */
     private void doResult(FXOperationMode operationMode, FXFormExitMode exitMode, Cleaner cleaner, CleanerFX selectedCleanerFX) {
         if(exitMode == FXFormExitMode.OK){
@@ -333,7 +333,7 @@ public class CleanersController implements Initializable {
     }
 
     /**
-     * Р’С‹РїРѕР»РЅСЏРµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С….
+     * Выполняет обновление данных.
      */
     private void doRefresh(){
         filterSurnameField.clear();

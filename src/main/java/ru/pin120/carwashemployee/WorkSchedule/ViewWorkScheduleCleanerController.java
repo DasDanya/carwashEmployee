@@ -27,6 +27,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер формы, отображающей рабочие дни конкретного мойщика
+ */
 public class ViewWorkScheduleCleanerController implements Initializable {
 
     @FXML

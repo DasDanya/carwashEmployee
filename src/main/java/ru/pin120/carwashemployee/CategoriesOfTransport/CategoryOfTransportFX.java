@@ -8,21 +8,21 @@ import javafx.beans.property.StringProperty;
 import lombok.NoArgsConstructor;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+ * FX представление категории транспорта
  */
 @NoArgsConstructor
 public class CategoryOfTransportFX {
 
     public static final int MAX_LENGTH_CATEGORY_NAME = 50;
-    public static final String REGEX = "^[a-zA-ZР°-СЏРђ-РЇС‘РЃ0-9 -]+$";
+    public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
 
     /**
-     * id РєР°С‚РµРіРѕСЂРёРё
+     * id категории
      */
     private LongProperty catTrId;
 
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * Название категории
      */
     private StringProperty catTrName;
 
@@ -52,9 +52,9 @@ public class CategoryOfTransportFX {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° CategoryOfTransportFX
-     * @param catTrName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
-     * @param catTrId id РєР°С‚РµРіРѕСЂРёРё
+     * Конструктор для создания объекта CategoryOfTransportFX
+     * @param catTrName Название категории
+     * @param catTrId id категории
      */
     public CategoryOfTransportFX(String catTrName, Long catTrId) {
         this.catTrName = new SimpleStringProperty(catTrName);

@@ -5,7 +5,7 @@ import ru.pin120.carwashemployee.CategoriesAndServices.Service;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
 /**
- * РњРѕРґРµР»СЊ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+ * Модель позиции прайс-листа
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,23 +15,23 @@ import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 public class PriceListPosition {
 
     /**
-     * id РїРѕР·РёС†РёРё
+     * id позиции
      */
     private Long plId;
     /**
-     * СЃС‚РѕРёРјРѕСЃС‚СЊ
+     * стоимость
      */
     private Integer plPrice;
     /**
-     * РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
+     * время выполнения
      */
     private Integer plTime;
     /**
-     * СѓСЃР»СѓРіР°
+     * услуга
      */
     private Service service;
     /**
-     * РєР°С‚РµРіРѕСЂРёСЏ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+     * категория транспорта
      */
     private CategoryOfTransport categoryOfTransport;
 

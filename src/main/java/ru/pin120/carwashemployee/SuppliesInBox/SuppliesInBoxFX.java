@@ -2,6 +2,9 @@ package ru.pin120.carwashemployee.SuppliesInBox;
 
 import javafx.beans.property.*;
 
+/**
+ * FX представление расходных материалов в боксе
+ */
 public class SuppliesInBoxFX {
 
     private LongProperty sibId;

@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С„РѕС‚РѕРіСЂР°С„РёРё РјРѕР№С‰РёРєР°
+ * Контроллер отображения фотографии мойщика
  */
 public class ShowCleanerPhotoController implements Initializable {
     private ResourceBundle rb;
@@ -39,10 +39,10 @@ public class ShowCleanerPhotoController implements Initializable {
     private CleanersRepository cleanersRepository = new CleanersRepository();
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,18 +66,18 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РµРµ РѕРєРЅРѕ (Stage), Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРІСЏР·Р°РЅ СЌР»РµРјРµРЅС‚ photoImageView.
+     * Возвращает текущее окно (Stage), к которому привязан элемент photoImageView.
      *
-     * @return С‚РµРєСѓС‰РµРµ РѕРєРЅРѕ (Stage)
+     * @return текущее окно (Stage)
      */
     private Stage getActualStage(){
         return (Stage) photoImageView.getScene().getWindow();
     }
 
     /**
-     * РћС‚РѕР±СЂР°Р¶Р°РµС‚ РІС‹Р±СЂР°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ СЌР»РµРјРµРЅС‚Рµ photoImageView Рё СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РіРѕР»РѕРІРѕРє С‚РµРєСѓС‰РµРіРѕ РѕРєРЅР°.
+     * Отображает выбранное изображение в элементе photoImageView и устанавливает заголовок текущего окна.
      *
-     * @param selectedPhoto РІС‹Р±СЂР°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
+     * @param selectedPhoto выбранное изображение для отображения
      */
     public void showPhoto(Image selectedPhoto){
         if(selectedPhoto != null){
@@ -90,10 +90,10 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * РћС‚РѕР±СЂР°Р¶Р°РµС‚ РІС‹Р±СЂР°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ СЌР»РµРјРµРЅС‚Рµ photoImageView Рё СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РіРѕР»РѕРІРѕРє С‚РµРєСѓС‰РµРіРѕ РѕРєРЅР°
-     * СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ Р¤РРћ СѓР±РѕСЂС‰РёРєР°.
-     * @param selectedPhoto РІС‹Р±СЂР°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
-     * @param cleaner РѕР±СЉРµРєС‚ Cleaner, СЃРѕРґРµСЂР¶Р°С‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјРѕР№С‰РёРєРµ
+     * Отображает выбранное изображение в элементе photoImageView и устанавливает заголовок текущего окна
+     * с информацией о ФИО уборщика.
+     * @param selectedPhoto выбранное изображение для отображения
+     * @param cleaner объект Cleaner, содержащий информацию о мойщике
      */
     public void showPhoto(Image selectedPhoto, Cleaner cleaner) {
         if(selectedPhoto != null){
@@ -106,10 +106,10 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * РћС‚РѕР±СЂР°Р¶Р°РµС‚ С„РѕС‚РѕРіСЂР°С„РёСЋ РјРѕР№С‰РёРєР° РІ СЌР»РµРјРµРЅС‚Рµ photoImageView
-     * Рё СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РіРѕР»РѕРІРѕРє С‚РµРєСѓС‰РµРіРѕ РѕРєРЅР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ Р¤РРћ СѓР±РѕСЂС‰РёРєР°.
+     * Отображает фотографию мойщика в элементе photoImageView
+     * и устанавливает заголовок текущего окна с информацией о ФИО уборщика.
      *
-     * @param cleaner РѕР±СЉРµРєС‚ Cleaner, СЃРѕРґРµСЂР¶Р°С‰РёР№ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјРѕР№С‰РёРєРµ
+     * @param cleaner объект Cleaner, содержащий информацию о мойщике
      */
     public void showPhoto(Cleaner cleaner){
         try{
@@ -123,10 +123,10 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ "MouseDragged" РґР»СЏ СЌР»РµРјРµРЅС‚Р° AnchorPane.
-     * РџРµСЂРµРјРµС‰Р°РµС‚ РѕРєРЅРѕ (rootAnchorPane) РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РїРµСЂРµРјРµС‰РµРЅРёРµРј РјС‹С€Рё.
+     * Обработчик события "MouseDragged" для элемента AnchorPane.
+     * Перемещает окно (rootAnchorPane) в соответствии с перемещением мыши.
      *
-     * @param mouseEvent СЃРѕР±С‹С‚РёРµ "MouseDragged", РІС‹Р·РІР°РЅРЅРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµРј РјС‹С€Рё
+     * @param mouseEvent событие "MouseDragged", вызванное перемещением мыши
      */
     public void onAnchorPaneMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
@@ -138,10 +138,10 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ "MousePressed" РґР»СЏ СЌР»РµРјРµРЅС‚Р° AnchorPane.
-     * Р—Р°РїРѕРјРёРЅР°РµС‚ РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РјС‹С€Рё РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РїСЂРё РїРµСЂРµРјРµС‰РµРЅРёРё РѕРєРЅР° (rootAnchorPane).
+     * Обработчик события "MousePressed" для элемента AnchorPane.
+     * Запоминает начальные координаты мыши для использования при перемещении окна (rootAnchorPane).
      *
-     * @param mouseEvent СЃРѕР±С‹С‚РёРµ "MousePressed", РІС‹Р·РІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё РјС‹С€Рё
+     * @param mouseEvent событие "MousePressed", вызванное нажатием кнопки мыши
      */
     public void onAnchorPaneMousePressed(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
@@ -151,21 +151,21 @@ public class ShowCleanerPhotoController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РїСЂРѕРєСЂСѓС‚РєРё (ScrollEvent) РґР»СЏ СЌР»РµРјРµРЅС‚Р° AnchorPane (rootAnchorPane).
-     * РњР°СЃС€С‚Р°Р±РёСЂСѓРµС‚ РѕРєРЅРѕ (rootAnchorPane) РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїСЂРѕРєСЂСѓС‚РєРё РјС‹С€Рё.
-     * РџСЂРё РїСЂРѕРєСЂСѓС‚РєРµ РІРІРµСЂС… СѓРІРµР»РёС‡РёРІР°РµС‚ РјР°СЃС€С‚Р°Р±, РїСЂРё РїСЂРѕРєСЂСѓС‚РєРµ РІРЅРёР· СѓРјРµРЅСЊС€Р°РµС‚ РјР°СЃС€С‚Р°Р± (РµСЃР»Рё РјР°СЃС€С‚Р°Р± > 0.5).
+     * Обработчик события прокрутки (ScrollEvent) для элемента AnchorPane (rootAnchorPane).
+     * Масштабирует окно (rootAnchorPane) в зависимости от направления прокрутки мыши.
+     * При прокрутке вверх увеличивает масштаб, при прокрутке вниз уменьшает масштаб (если масштаб > 0.5).
      *
-     * @param scrollEvent СЃРѕР±С‹С‚РёРµ РїСЂРѕРєСЂСѓС‚РєРё (ScrollEvent), РІС‹Р·РІР°РЅРЅРѕРµ РїСЂРѕРєСЂСѓС‚РєРѕР№ РєРѕР»РµСЃР° РјС‹С€Рё
+     * @param scrollEvent событие прокрутки (ScrollEvent), вызванное прокруткой колеса мыши
      */
     public void onScrollingView(ScrollEvent scrollEvent) {
         double deltaY = scrollEvent.getDeltaY();
         if (deltaY > 0) {
-            // РџСЂРѕРєСЂСѓС‚РєР° РІРІРµСЂС…
+            // Прокрутка вверх
             rootAnchorPane.setScaleX(scaleXMultiplyer += 0.05);
             rootAnchorPane.setScaleY(scaleYMultiplyer += 0.05);
 
         } else if (rootAnchorPane.getScaleX() > 0.5) {
-            // РџСЂРѕРєСЂСѓС‚РєР° РІРЅРёР·
+            // Прокрутка вниз
             rootAnchorPane.setScaleX(scaleXMultiplyer -= 0.05);
             rootAnchorPane.setScaleY(scaleYMultiplyer -= 0.05);
         }

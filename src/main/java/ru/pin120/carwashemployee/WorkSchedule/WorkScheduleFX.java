@@ -6,6 +6,9 @@ import ru.pin120.carwashemployee.AppHelper;
 
 import java.time.LocalTime;
 
+/**
+ * FX представление рабочих дней
+ */
 public class WorkScheduleFX {
 
     private LongProperty clrId;

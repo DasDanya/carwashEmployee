@@ -5,12 +5,15 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * FX представление транспорта
+ */
 public class TransportFX {
 
     public static final int MAX_LENGTH_MARK=50;
     public static final int MAX_LENGTH_MODEL=50;
-    public static final String MARK_REGEX = "^[A-Za-zРђ-РЇР°-СЏРЃС‘\\s-]+$";
-    public static final String MODEL_REGEX = "^[A-Za-zРђ-РЇР°-СЏРЃС‘0-9\\s-]+$";
+    public static final String MARK_REGEX = "^[A-Za-zА-Яа-яЁё\\s-]+$";
+    public static final String MODEL_REGEX = "^[A-Za-zА-Яа-яЁё0-9\\s-]+$";
 
     private LongProperty trId;
     private  StringProperty trMark;

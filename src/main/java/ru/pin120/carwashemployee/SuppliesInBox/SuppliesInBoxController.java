@@ -21,6 +21,9 @@ import ru.pin120.carwashemployee.Supplies.SupplyFX;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Контроллер формы с расходными материалами в боксе
+ */
 public class SuppliesInBoxController implements Initializable {
 
     private Long boxId;

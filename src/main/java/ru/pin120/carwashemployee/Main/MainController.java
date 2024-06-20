@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ РіР»Р°РІРЅРѕР№ С„РѕСЂРјС‹ РїСЂРёР»РѕР¶РµРЅРёСЏ
+ * Контроллер главной формы приложения
  */
 public class MainController implements Initializable {
     @FXML
@@ -33,10 +33,10 @@ public class MainController implements Initializable {
     private ResourceBundle rb;
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,17 +47,17 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ С‚РµРєСѓС‰РёР№ Stage
+     * Получает текущий Stage
      *
-     * @return РўРµРєСѓС‰РёР№ Stage.
+     * @return Текущий Stage.
      */
     private Stage getStage(){
         return (Stage) welcomeLabel.getScene().getWindow();
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ Р±РѕРєСЃР°РјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с боксами
+     * @param actionEvent Событие действия
      */
     public void showBoxesMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -73,8 +73,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ Р·Р°РєР°Р·Р°РјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с заказами
+     * @param actionEvent Событие действия
      */
     public void showBookingsMenuItem(ActionEvent actionEvent) {
         try {
@@ -87,8 +87,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РєР»РёРµРЅС‚Р°РјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с клиентами
+     * @param actionEvent Событие действия
      */
     public void showClientsMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -101,8 +101,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РјРѕР№С‰РёРєР°РјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с мойщиками
+     * @param actionEvent Событие действия
      */
     public void showCleanersMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -116,8 +116,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ СЂР°Р±РѕС‡РёРјРё РґРЅСЏРјРё РјРѕР№С‰РёРєРѕРІ
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с рабочими днями мойщиков
+     * @param actionEvent Событие действия
      */
     public void showWorkScheduleMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -130,8 +130,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РєР°С‚РµРіРѕСЂРёСЏРјРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с категориями транспорта
+     * @param actionEvent Событие действия
      */
     public void showCategoryTransportMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -144,8 +144,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ С‚СЂР°РЅСЃРїРѕСЂС‚РѕРј
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с транспортом
+     * @param actionEvent Событие действия
      */
     public void showTransportMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -158,8 +158,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РєР°С‚РµРіРѕСЂРёСЏРјРё Рё СѓСЃР»СѓРіР°РјРё Р°РІС‚РѕРјРѕР№РєРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с категориями и услугами автомойки
+     * @param actionEvent Событие действия
      */
     public void showCategoriesAndServicesMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -172,8 +172,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РєР°С‚РµРіРѕСЂРёСЏРјРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с категориями расходных материалов
+     * @param actionEvent Событие действия
      */
     public void showCategoriesOfSuppliesMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -186,8 +186,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ СЂР°СЃС…РѕРґРЅС‹РјРё РјР°С‚РµСЂРёР°Р»Р°РјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с расходными материалами
+     * @param actionEvent Событие действия
      */
     public void showSuppliesMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -200,8 +200,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РЅР° РјРµРЅСЋ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ
+     * Обработчик нажатия на меню для открытия формы с пользователями
+     * @param actionEvent Событие действия
      */
     public void showUsersMenuItemAction(ActionEvent actionEvent) {
         try {
@@ -219,10 +219,10 @@ public class MainController implements Initializable {
 
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РґРµР№СЃС‚РІРёСЏ РґР»СЏ РІС‹С…РѕРґР° РёР· СѓС‡РµС‚РЅРѕР№ Р·Р°РїРёСЃРё.
-     * Р—Р°РєСЂС‹РІР°РµС‚ РІСЃРµ РѕРєРЅР° Рё РѕС‚РєСЂС‹РІР°РµС‚ РѕРєРЅРѕ Р°РІС‚РѕСЂРёР·Р°С†РёРё.
+     * Обработчик действия для выхода из учетной записи.
+     * Закрывает все окна и открывает окно авторизации.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
+     * @param actionEvent Событие действия.
      */
     public void exitButtonAction(ActionEvent actionEvent) {
         List<Stage> stagesToClose = new ArrayList<>();
@@ -233,7 +233,7 @@ public class MainController implements Initializable {
             stage.close();
         }
 
-        //AppHelper.getUserInfo().clear(); // РѕС‡РёС‰Р°РµРј СЃРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
+        //AppHelper.getUserInfo().clear(); // очищаем список пользователей
         System.out.println(AppHelper.getUserInfo().get(0));
         try {
             FXWindowData fxWindowData = FXHelper.createWindow("ru.pin120.carwashemployee.Users.resources.UserAuthorization", "Users/fxml/UserAuthorization.fxml");

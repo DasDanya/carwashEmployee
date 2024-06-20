@@ -7,6 +7,9 @@ import lombok.Setter;
 import ru.pin120.carwashemployee.Boxes.Box;
 import ru.pin120.carwashemployee.Supplies.Supply;
 
+/**
+ * ћодель расходного материала в боксе
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

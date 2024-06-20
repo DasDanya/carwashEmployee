@@ -5,7 +5,7 @@ import ru.pin120.carwashemployee.Clients.Client;
 import ru.pin120.carwashemployee.Transport.Transport;
 
 /**
- * РњРѕРґРµР»СЊ С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°
+ * Модель транспорта клиента
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,19 +14,19 @@ import ru.pin120.carwashemployee.Transport.Transport;
 @ToString
 public class ClientsTransport {
     /**
-     * id С‚СЂР°РЅСЃРїРѕСЂС‚Р° РєР»РёРµРЅС‚Р°
+     * id транспорта клиента
      */
     private Long clTrId;
     /**
-     * Р“РѕСЃРЅРѕРјРµСЂ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+     * Госномер транспорта
      */
     private String clTrStateNumber;
     /**
-     * РўСЂР°РЅСЃРїРѕСЂС‚
+     * Транспорт
      */
     private Transport transport;
     /**
-     * РљР»РёРµРЅС‚
+     * Клиент
      */
     private Client client;
 }

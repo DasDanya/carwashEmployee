@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * DTO добавления расходного материала
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

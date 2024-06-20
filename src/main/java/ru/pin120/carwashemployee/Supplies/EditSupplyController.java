@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ СЂР°СЃС…РѕРґРЅРѕРј РјР°С‚РµСЂРёР°Р»Рµ
+ * Контроллер редактирования данных о расходном материале
  */
 public class EditSupplyController implements Initializable {
     @FXML
@@ -75,10 +75,10 @@ public class EditSupplyController implements Initializable {
     private File selectedPhoto;
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,7 +102,7 @@ public class EditSupplyController implements Initializable {
 
 
     /**
-     * Р”РѕР±Р°РІР»СЏРµС‚ СЃР»СѓС€Р°С‚РµР»СЏ Рє С‚Р°Р±Р»РёС†Рµ categoriesTable.
+     * Добавляет слушателя к таблице categoriesTable.
      */
     private void tableSelectModelListener() {
         categoriesTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
@@ -111,7 +111,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РєР°С‚РµРіРѕСЂРёР№ РІСЃРµРјРё РєР°С‚РµРіРѕСЂРёСЏРјРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
+     * Заполняет таблицу категорий всеми категориями расходных материалов
      */
     private void fillingAll() {
         try{
@@ -131,9 +131,9 @@ public class EditSupplyController implements Initializable {
 
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РµРєСЃС‚ РґР»СЏ РјРµС‚РєРё measureLabel РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РІС‹Р±СЂР°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё.
+     * Устанавливает текст для метки measureLabel в зависимости от выбранной категории.
      *
-     * @param category РѕР±СЉРµРєС‚ РєР°С‚РµРіРѕСЂРёРё СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ, РґР»СЏ РєРѕС‚РѕСЂРѕР№ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ С‚РµРєСЃС‚
+     * @param category объект категории расходных материалов, для которой устанавливается текст
      */
     private void setMeasureLabelText(CategoriesOfSuppliesFX category){
         if(category != null){
@@ -144,9 +144,9 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ ObservableList РґР°РЅРЅС‹РјРё Рѕ РєР°С‚РµРіРѕСЂРёСЏС… СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ
+     * Заполняет ObservableList данными о категориях расходных материалов
      *
-     * @param categories СЃРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ
+     * @param categories список категорий для заполнения
      */
     private void fillingObservableList(List<CategoryOfSupplies> categories){
         categoriesOfSuppliesFXES.clear();
@@ -157,7 +157,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє
+     * Устанавливает всплывающие подсказки для кнопок
      */
     private void settingTooltipForButtons() {
         loadImageButton.setOnMouseEntered(event -> {
@@ -178,7 +178,7 @@ public class EditSupplyController implements Initializable {
 
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ countSpinner Рё measureSpinner СЃ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРјРё С„РѕСЂРјР°С‚С‚РµСЂР°РјРё.
+     * Настраивает countSpinner и measureSpinner с соответствующими форматтерами.
      */
     private void settingSpinners() {
         int minCountSpinnerValue = operationMode == FXOperationMode.CREATE ? 1 : 0;
@@ -207,7 +207,7 @@ public class EditSupplyController implements Initializable {
 
 
     /**
-     * Р”РѕР±Р°РІР»СЏРµС‚ СЃР»СѓС€Р°С‚РµР»СЏ РґР»СЏ nameField, РєРѕС‚РѕСЂС‹Р№ РѕРіСЂР°РЅРёС‡РёРІР°РµС‚ РґР»РёРЅСѓ С‚РµРєСЃС‚Р° СѓРєР°Р·Р°РЅРЅРѕР№ РґРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РґР»РёРЅС‹.
+     * Добавляет слушателя для nameField, который ограничивает длину текста указанной до максимальной длины.
      */
     private void nameFieldListener() {
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -220,11 +220,11 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°, СЂРµР¶РёРјР° РѕРїРµСЂР°С†РёРё Рё РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР°. РќР°СЃС‚СЂР°РёРІР°РµС‚ РєРѕРјРїРѕРЅРµРЅС‚С‹ С„РѕСЂРјС‹ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂРµР¶РёРјР° РѕРїРµСЂР°С†РёРё (CREATE, EDIT, DELETE).
+     * Устанавливает параметры для текущего расходного материала, режима операции и модального окна. Настраивает компоненты формы в зависимости от режима операции (CREATE, EDIT, DELETE).
      *
-     * @param supply Р Р°СЃС…РѕРґРЅС‹Р№ РјР°С‚РµСЂРёР°Р»
-     * @param operationMode Р РµР¶РёРј РѕРїРµСЂР°С†РёРё (CREATE, EDIT, DELETE).
-     * @param modalStage РњРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ
+     * @param supply Расходный материал
+     * @param operationMode Режим операции (CREATE, EDIT, DELETE).
+     * @param modalStage Модальное окно
      */
     public void setParameters(Supply supply, FXOperationMode operationMode, Stage modalStage) {
         this.supply = supply;
@@ -268,7 +268,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ РєРѕРјРїРѕРЅРµРЅС‚С‹ С„РѕСЂРјС‹ РґР°РЅРЅС‹РјРё С‚РµРєСѓС‰РµРіРѕ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
+     * Заполняет компоненты формы данными текущего расходного материала
      */
     private void fillingComponents(){
         nameField.setText(supply.getSupName());
@@ -281,7 +281,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РґР»СЏ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°, РєРѕС‚РѕСЂРѕРµ РёР·РјРµРЅСЏРµС‚ СЂРµР¶РёРј РІС‹С…РѕРґР° РЅР° EXIT.
+     * Устанавливает действие для закрытия окна, которое изменяет режим выхода на EXIT.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
@@ -292,7 +292,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РџРѕРёСЃРє РґР°РЅРЅС‹С…
+     * Поиск данных
      */
     private void doSearch(){
         if(searchField.getText() == null || searchField.getText().isBlank()){
@@ -353,18 +353,18 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ.
+     * Возвращает текущую сцену.
      *
-     * @return РўРµРєСѓС‰Р°СЏ СЃС†РµРЅР°.
+     * @return Текущая сцена.
      */
     private Scene getActualScene(){
         return categoriesTable.getScene();
     }
 
     /**
-     * РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРµР№СЃС‚РІРёРµ РєРЅРѕРїРєРё OK.
+     * Обрабатывает действие кнопки OK.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
+     * @param actionEvent Событие действия.
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -430,10 +430,10 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° CANCEL Рё Р·Р°РєСЂС‹РІР°РµС‚ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ.
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
@@ -445,7 +445,7 @@ public class EditSupplyController implements Initializable {
     }
 
     /**
-     * РћР±РЅРѕРІР»СЏРµС‚ РґР°РЅРЅС‹Рµ
+     * Обновляет данные
      */
     private void doRefresh(){
         categoriesOfSuppliesFXES.clear();

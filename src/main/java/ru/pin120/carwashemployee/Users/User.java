@@ -2,6 +2,9 @@ package ru.pin120.carwashemployee.Users;
 
 import lombok.*;
 
+/**
+ * Модель пользователя
+ */
 @Getter
 @Setter
 @NoArgsConstructor

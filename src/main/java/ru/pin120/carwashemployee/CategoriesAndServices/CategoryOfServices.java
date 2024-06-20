@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * РњРѕРґРµР»СЊ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРі
+ * Модель категории услуг
  */
 @Getter
 @Setter
@@ -17,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryOfServices {
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * Название категории
      */
     private String catName;
     /**
-     * РЎРїРёСЃРѕРє СѓСЃР»СѓРі
+     * Список услуг
      */
     private List<Service> services;
 }

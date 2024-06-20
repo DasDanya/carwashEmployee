@@ -3,24 +3,24 @@ package ru.pin120.carwashemployee;
 import org.apache.poi.ss.usermodel.*;
 
 /**
- * РЈС‚РёР»РёС‚Р°СЂРЅС‹Р№ РєР»Р°СЃСЃ StyleHelper РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ РјРµС‚РѕРґС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚РёР»РµР№ СЏС‡РµРµРє РІ Excel-РґРѕРєСѓРјРµРЅС‚Р°С….
+ * Утилитарный класс StyleHelper предоставляет методы для создания стилей ячеек в Excel-документах.
  */
 public class StyleHelper {
 
 
     /**
-     * РЎРѕР·РґР°РµС‚ СЃС‚РёР»СЊ РґР»СЏ СЏС‡РµРµРє СЃ Р¶РёСЂРЅС‹Рј С‚РµРєСЃС‚РѕРј.
+     * Создает стиль для ячеек с жирным текстом.
      *
-     * @param workbook   Р Р°Р±РѕС‡Р°СЏ РєРЅРёРіР°, РґР»СЏ РєРѕС‚РѕСЂРѕР№ СЃРѕР·РґР°РµС‚СЃСЏ СЃС‚РёР»СЊ.
-     * @param needBorder Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚СЊ РґРѕР±Р°РІР»РµРЅРёСЏ РіСЂР°РЅРёС†С‹ СЏС‡РµР№РєРё.
-     * @param fontHeight Р’С‹СЃРѕС‚Р° С€СЂРёС„С‚Р° РІ РїСѓРЅРєС‚Р°С….
-     * @return РЎС‚РёР»СЊ СЏС‡РµР№РєРё СЃ Р¶РёСЂРЅС‹Рј С‚РµРєСЃС‚РѕРј.
+     * @param workbook   Рабочая книга, для которой создается стиль.
+     * @param needBorder Флаг, указывающий на необходимость добавления границы ячейки.
+     * @param fontHeight Высота шрифта в пунктах.
+     * @return Стиль ячейки с жирным текстом.
      */
     public static CellStyle createStyleBoldText(Workbook workbook, boolean needBorder, short fontHeight){
-        // РЎРѕР·РґР°РЅРёРµ СЃС‚РёР»СЏ
+        // Создание стиля
         CellStyle style = workbook.createCellStyle();
         if(needBorder){
-            // РЎРѕР·РґР°РЅРёРµ СЂР°РјРєРё
+            // Создание рамки
             style.setBorderBottom(BorderStyle.MEDIUM);
             style.setBorderTop(BorderStyle.MEDIUM);
             style.setBorderLeft(BorderStyle.MEDIUM);
@@ -28,22 +28,22 @@ public class StyleHelper {
             style.setAlignment(HorizontalAlignment.CENTER);
             style.setVerticalAlignment(VerticalAlignment.CENTER);
         }
-        Font font = workbook.createFont(); // РЎРѕР·РґР°РЅРёРµ С€СЂРёС„С‚Р°
-        font.setBold(true); // Р’С‹РґРµР»РµРЅРёРµ С‚РµРєСЃС‚Р°
-        font.setFontHeightInPoints(fontHeight); // РЈСЃС‚Р°РЅРѕРІРєР° СЂР°Р·РјРµСЂР°
-        style.setFont(font);  // РџСЂРёРІСЏР·РєР° С€СЂРёС„С‚Р° Рє СЃС‚РёР»СЋ
+        Font font = workbook.createFont(); // Создание шрифта
+        font.setBold(true); // Выделение текста
+        font.setFontHeightInPoints(fontHeight); // Установка размера
+        style.setFont(font);  // Привязка шрифта к стилю
 
         return style;
     }
 
 
     /**
-     * РЎРѕР·РґР°РµС‚ СЃС‚РёР»СЊ РґР»СЏ СЏС‡РµРµРє СЃ Р¶РёСЂРЅС‹Рј Рё РєСѓСЂСЃРёРІРЅС‹Рј С‚РµРєСЃС‚РѕРј.
+     * Создает стиль для ячеек с жирным и курсивным текстом.
      *
-     * @param workbook   Р Р°Р±РѕС‡Р°СЏ РєРЅРёРіР°, РґР»СЏ РєРѕС‚РѕСЂРѕР№ СЃРѕР·РґР°РµС‚СЃСЏ СЃС‚РёР»СЊ.
-     * @param needBorder Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚СЊ РґРѕР±Р°РІР»РµРЅРёСЏ РіСЂР°РЅРёС†С‹ СЏС‡РµР№РєРё.
-     * @param fontHeight Р’С‹СЃРѕС‚Р° С€СЂРёС„С‚Р° РІ РїСѓРЅРєС‚Р°С….
-     * @return РЎС‚РёР»СЊ СЏС‡РµР№РєРё СЃ Р¶РёСЂРЅС‹Рј Рё РєСѓСЂСЃРёРІРЅС‹Рј С‚РµРєСЃС‚РѕРј.
+     * @param workbook   Рабочая книга, для которой создается стиль.
+     * @param needBorder Флаг, указывающий на необходимость добавления границы ячейки.
+     * @param fontHeight Высота шрифта в пунктах.
+     * @return Стиль ячейки с жирным и курсивным текстом.
      */
     public static CellStyle createStyleBoldItalicText(Workbook workbook, boolean needBorder, short fontHeight){
         CellStyle style = workbook.createCellStyle();
@@ -65,10 +65,10 @@ public class StyleHelper {
     }
 
     /**
-     * РЎРѕР·РґР°РµС‚ СЃС‚РёР»СЊ РґР»СЏ СЏС‡РµРµРє СЃ РіСЂР°РЅРёС†Р°РјРё.
+     * Создает стиль для ячеек с границами.
      *
-     * @param workbook Р Р°Р±РѕС‡Р°СЏ РєРЅРёРіР°, РґР»СЏ РєРѕС‚РѕСЂРѕР№ СЃРѕР·РґР°РµС‚СЃСЏ СЃС‚РёР»СЊ.
-     * @return РЎС‚РёР»СЊ СЏС‡РµР№РєРё СЃ РіСЂР°РЅРёС†Р°РјРё.
+     * @param workbook Рабочая книга, для которой создается стиль.
+     * @return Стиль ячейки с границами.
      */
     public static CellStyle createWithBorder(Workbook workbook){
         CellStyle style = workbook.createCellStyle();

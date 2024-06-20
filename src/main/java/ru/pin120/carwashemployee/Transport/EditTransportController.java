@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ *  онтроллер редактировани€ данных о транспорте
+ */
 public class EditTransportController implements Initializable {
 
     @FXML

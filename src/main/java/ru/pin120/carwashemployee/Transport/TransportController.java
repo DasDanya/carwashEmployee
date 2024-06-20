@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер формы с транспортом
+ */
 public class TransportController implements Initializable {
 
 

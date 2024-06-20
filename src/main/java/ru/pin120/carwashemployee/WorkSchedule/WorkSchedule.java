@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+/**
+ * Модель рабочего дня
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

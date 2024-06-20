@@ -15,6 +15,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий транспорта
+ */
 public class TransportRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/transport";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -44,30 +47,30 @@ public class TransportRepository {
     }
 
     /**
-     * РњРµС‚РѕРґ РґРѕР±Р°РІР»РµРЅРёСЏ С‚СЂР°РЅСЃРїРѕСЂС‚Р°
-     * @param transport РЎРѕР·РґР°РІР°РµРјС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚
-     * @return РЎРѕР·РґР°РЅРЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚ СЃ id
-     * @throws IOException РћС€РёР±РєР° РѕР±СЂР°Р±РѕС‚РєРё РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР°
+     * Метод добавления транспорта
+     * @param transport Создаваемый транспорт
+     * @return Созданный транспорт с id
+     * @throws IOException Ошибка обработки ответа от сервера
      */
     public Transport create(Transport transport) throws IOException {
         Transport createdTransport;
-        String jsonData = gson.toJson(transport); // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РґР°РЅРЅС‹С… РІ JSON
+        String jsonData = gson.toJson(transport); // Преобразование данных в JSON
 
-        RequestBody body = RequestBody.create(JSON, jsonData); // РЎРѕР·РґР°РЅРёРµ С‚РµР»Р° Р·Р°РїСЂРѕСЃР°
+        RequestBody body = RequestBody.create(JSON, jsonData); // Создание тела запроса
 
         Request request = new Request.Builder()
                 .url(url + "/create")
                 .post(body)
-                .build(); // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРѕСЃР°
+                .build(); // Формирование запроса
 
-        Response response = client.newCall(request).execute(); // РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР°
-        String result = response.body().string(); // РџРѕР»СѓС‡РµРЅРёРµ JSON
-        Type type = new TypeToken<Transport>() {}.getType(); // РЈРєР°Р·Р°РЅРёРµ РЅСѓР¶РЅРѕРіРѕ С‚РёРїР° РґР°РЅРЅС‹С…
-        createdTransport = gson.fromJson(result, type); // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІ РЅСѓР¶РЅС‹Р№ С‚РёРї РґР°РЅРЅС‹С…
+        Response response = client.newCall(request).execute(); // Получение ответа от сервера
+        String result = response.body().string(); // Получение JSON
+        Type type = new TypeToken<Transport>() {}.getType(); // Указание нужного типа данных
+        createdTransport = gson.fromJson(result, type); // Преобразование в нужный тип данных
 //        if (response.code() == 200) {
-//            String result = response.body().string(); // РџРѕР»СѓС‡РµРЅРёРµ JSON
-//            Type type = new TypeToken<Transport>() {}.getType(); // РЈРєР°Р·Р°РЅРёРµ РЅСѓР¶РЅРѕРіРѕ С‚РёРїР° РґР°РЅРЅС‹С…
-//            createdTransport = gson.fromJson(result, type); // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІ РЅСѓР¶РЅС‹Р№ С‚РёРї РґР°РЅРЅС‹С…
+//            String result = response.body().string(); // Получение JSON
+//            Type type = new TypeToken<Transport>() {}.getType(); // Указание нужного типа данных
+//            createdTransport = gson.fromJson(result, type); // Преобразование в нужный тип данных
 //        } else {
 //            throw new HttpRetryException(response.body().string(), response.code());
 //        }

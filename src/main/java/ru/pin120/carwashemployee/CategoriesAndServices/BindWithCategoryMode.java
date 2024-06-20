@@ -1,17 +1,17 @@
 package ru.pin120.carwashemployee.CategoriesAndServices;
 
 /**
- * РџРµСЂРµС‡РёСЃР»РµРЅРёРµ СЂРµР¶РёРјР° РїСЂРёРІСЏР·РєРё СѓСЃР»СѓРі
+ * Перечисление режима привязки услуг
  */
 public enum BindWithCategoryMode {
 
     /**
-     * РљР°С‚РµРіРѕСЂРёСЏ
+     * Категория
      */
     CATEGORY,
 
     /**
-     * РЈСЃР»СѓРіР°
+     * Услуга
      */
     SERVICE
 }

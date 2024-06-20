@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * Р РµРїРѕР·РёС‚РѕСЂРёР№ СѓСЃР»СѓРіРё
+ * Репозиторий услуги
  */
 public class ServiceRepository {
 
@@ -31,11 +31,11 @@ public class ServiceRepository {
 
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє СѓСЃР»СѓРі РїРѕ РЅР°РІР·Р°РЅРёСЋ РєР°С‚РµРіРѕСЂРёРё.
+     * Получает список услуг по навзанию категории.
      *
-     * @param catName РЅР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
-     * @return СЃРїРёСЃРѕРє СѓСЃР»СѓРі, РїСЂРёРЅР°РґР»РµР¶Р°С‰РёС… РґР°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param catName название категории
+     * @return список услуг, принадлежащих данной категории
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public List<Service> getServicesByCatName(String catName) throws Exception{
         //catName = URLEncoder.encode(catName, "UTF-8");
@@ -54,11 +54,11 @@ public class ServiceRepository {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СѓСЃР»СѓРіСѓ РїРѕ РµРµ РЅР°Р·РІР°РЅРёСЋ.
+     * Получает услугу по ее названию.
      *
-     * @param servName РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
-     * @return РѕР±СЉРµРєС‚ Service
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param servName название услуги
+     * @return объект Service
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public Service get(String servName) throws Exception{
         Request request = new Request.Builder()
@@ -91,11 +91,11 @@ public class ServiceRepository {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РѕР±СЉРµРєС‚ ServiceDTO РїРѕ РЅР°Р·РІР°РЅРёСЋ СѓСЃР»СѓРіРё.
+     * Получает объект ServiceDTO по названию услуги.
      *
-     * @param servName РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
-     * @return РѕР±СЉРµРєС‚ ServiceDTO
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param servName название услуги
+     * @return объект ServiceDTO
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public ServiceDTO getServiceDTOByServName(String servName) throws Exception{
         //servName = URLEncoder.encode(servName, "UTF-8");
@@ -115,11 +115,11 @@ public class ServiceRepository {
 
 
     /**
-     * РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ СѓСЃР»СѓРіСѓ.
+     * Создает новую услугу.
      *
-     * @param serviceDTO РѕР±СЉРµРєС‚ ServiceDTO, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ РЅРѕРІСѓСЋ СѓСЃР»СѓРіСѓ
-     * @return true, РµСЃР»Рё СѓСЃР»СѓРіР° СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅР°, РёРЅР°С‡Рµ false
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param serviceDTO объект ServiceDTO, представляющий новую услугу
+     * @return true, если услуга успешно создана, иначе false
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public boolean createService(ServiceDTO serviceDTO) throws Exception {
         boolean successCreate;
@@ -147,12 +147,12 @@ public class ServiceRepository {
     }
 
     /**
-     * РџСЂРёРІСЏР·С‹РІР°РµС‚ РІСЃРµ СѓСЃР»СѓРіРё РёР· РѕРґРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё Рє РґСЂСѓРіРѕР№ РєР°С‚РµРіРѕСЂРёРё
+     * Привязывает все услуги из одной категории к другой категории
      *
-     * @param pastCategoryName РЅР°Р·РІР°РЅРёРµ С‚РµРєСѓС‰РµР№ РєР°С‚РµРіРѕСЂРёРё
-     * @param newCategoryName РЅР°Р·РІР°РЅРёРµ РЅРѕРІРѕР№ РєР°С‚РµРіРѕСЂРёРё
-     * @return true, РµСЃР»Рё РїСЂРёРІСЏР·РєР° СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅР°, РёРЅР°С‡Рµ false
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param pastCategoryName название текущей категории
+     * @param newCategoryName название новой категории
+     * @return true, если привязка успешно выполнена, иначе false
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public boolean bindServicesToCategory(String pastCategoryName, String newCategoryName) throws Exception{
         boolean successCreateBind = false;
@@ -180,12 +180,12 @@ public class ServiceRepository {
 
 
     /**
-     * РџСЂРёРІСЏР·С‹РІР°РµС‚ СѓСЃР»СѓРіСѓ Рє РЅРѕРІРѕР№ РєР°С‚РµРіРѕСЂРёРё.
+     * Привязывает услугу к новой категории.
      *
-     * @param servName РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
-     * @param newCategoryName РЅР°Р·РІР°РЅРёРµ РЅРѕРІРѕР№ РєР°С‚РµРіРѕСЂРёРё
-     * @return true, РµСЃР»Рё РїСЂРёРІСЏР·РєР° СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅР°, РёРЅР°С‡Рµ false
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param servName название услуги
+     * @param newCategoryName название новой категории
+     * @return true, если привязка успешно выполнена, иначе false
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public boolean bindServiceToCategory(String servName, String newCategoryName) throws Exception{
         boolean successCreateBind = false;
@@ -212,11 +212,11 @@ public class ServiceRepository {
     }
 
     /**
-     * РЈРґР°Р»СЏРµС‚ СѓСЃР»СѓРіСѓ.
+     * Удаляет услугу.
      *
-     * @param serviceDTO РѕР±СЉРµРєС‚ ServiceDTO, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ СѓСЃР»СѓРіСѓ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
-     * @return true, РµСЃР»Рё СѓСЃР»СѓРіР° СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР°, РёРЅР°С‡Рµ false
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param serviceDTO объект ServiceDTO, представляющий услугу для удаления
+     * @return true, если услуга успешно удалена, иначе false
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public boolean deleteService(ServiceDTO serviceDTO) throws Exception {
         boolean successDelete;
@@ -245,11 +245,11 @@ public class ServiceRepository {
     }
 
     /**
-     * Р РµРґР°РєС‚РёСЂСѓРµС‚ РїСЂРёРІСЏР·РєСѓ РєР°С‚РµРіРѕСЂРёР№ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ Рє СѓСЃР»СѓРіРµ
+     * Редактирует привязку категорий расходных материалов к услуге
      *
-     * @param service РѕР±СЉРµРєС‚ Service, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ СѓСЃР»СѓРіСѓ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
-     * @return РѕР±СЉРµРєС‚ Service СЃ РѕР±РЅРѕРІР»РµРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё
-     * @throws Exception РµСЃР»Рё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР°
+     * @param service объект Service, представляющий услугу для редактирования
+     * @return объект Service с обновленными данными
+     * @throws Exception если возникает ошибка при выполнении HTTP-запроса
      */
     public Service editCategoriesOfSupplies(Service service) throws Exception{
         Service editedService = null;

@@ -2,11 +2,13 @@ package ru.pin120.carwashemployee.Users;
 
 import lombok.Getter;
 
-
+/**
+ * Перечисление ролей пользователя
+ */
 public enum UserRole {
 
-    ADMINISTRATOR("РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ"),
-    OWNER("Р’Р»Р°РґРµР»РµС†");
+    ADMINISTRATOR("Администратор"),
+    OWNER("Владелец");
 
     @Getter
     private final String displayValue;
@@ -21,6 +23,6 @@ public enum UserRole {
                 return role;
             }
         }
-        throw new IllegalArgumentException("РќРµС‚ РєРѕРЅСЃС‚Р°РЅС‚С‹ РїРµСЂРµС‡РёСЃР»РµРЅРёСЏ СЃ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹Рј Р·РЅР°С‡РµРЅРёРµРј " + displayValue);
+        throw new IllegalArgumentException("Нет константы перечисления с отображаемым значением " + displayValue);
     }
 }

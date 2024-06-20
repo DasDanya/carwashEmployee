@@ -5,18 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * DTO РґР»СЏ РїСЂРёРІСЏР·РєРё СѓСЃР»СѓРі Рє РєР°С‚РµРіРѕСЂРёРё
+ * DTO для привязки услуг к категории
  */
 @AllArgsConstructor
 @Getter
 @Setter
 public class BindWithCategoryDTO {
     /**
-     * РџР°СЂР°РјРµС‚СЂ (СѓСЃР»СѓРіР° РёР»Рё РєР°С‚РµРіРѕСЂРёСЏ)
+     * Параметр (услуга или категория)
      */
     private String parameter;
     /**
-     * РљР°С‚РµРіРѕСЂРёСЏ, Рє РєРѕС‚РѕСЂРѕР№ РїСЂРѕРёСЃС…РѕРґРёС‚ РїСЂРёРІСЏР·РєР°
+     * Категория, к которой происходит привязка
      */
     private String catNameToBind;
 }

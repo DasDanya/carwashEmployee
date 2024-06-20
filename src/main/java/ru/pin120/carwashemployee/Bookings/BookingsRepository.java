@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Р РµРїРѕР·РёС‚РѕСЂРёР№ Р·Р°РєР°Р·Р°
+ * Репозиторий заказа
  */
 public class BookingsRepository {
 
@@ -37,19 +37,19 @@ public class BookingsRepository {
 
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє Р·Р°РєР°Р·РѕРІ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ С„РёР»СЊС‚СЂР°С†РёРё РїРѕ СЂР°Р·Р»РёС‡РЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј.
+     * Получает список заказов с возможностью фильтрации по различным параметрам.
      *
-     * @param pageIndex      РРЅРґРµРєСЃ СЃС‚СЂР°РЅРёС†С‹ РґР»СЏ РїР°РіРёРЅР°С†РёРё
-     * @param cleanerId      ID РјРѕР№С‰РёРєР°
-     * @param clientId       ID РєР»РёРµРЅС‚Р°
-     * @param boxId          ID Р±РѕРєСЃР°
-     * @param startInterval  РќР°С‡Р°Р»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param endInterval    РљРѕРЅРµС‡РЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param bookingStatus  РЎС‚Р°С‚СѓСЃ Р·Р°РєР°Р·Р°
-     * @param compareOperator РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґР»СЏ СЃС‚РѕРёРѕРјРѕСЃС‚Рё
-     * @param price          РЎС‚РѕРёРјРѕСЃС‚СЊ
-     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@link Booking}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param pageIndex      Индекс страницы для пагинации
+     * @param cleanerId      ID мойщика
+     * @param clientId       ID клиента
+     * @param boxId          ID бокса
+     * @param startInterval  Начальный интервал времени
+     * @param endInterval    Конечный интервал времени
+     * @param bookingStatus  Статус заказа
+     * @param compareOperator Оператор сравнения для стоиомости
+     * @param price          Стоимость
+     * @return Список объектов {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public List<Booking> get(int pageIndex,Long cleanerId, Long clientId, Long boxId, LocalDateTime startInterval, LocalDateTime endInterval, String bookingStatus, String compareOperator, Integer price) throws Exception {
         if(pageIndex < 0){
@@ -98,18 +98,18 @@ public class BookingsRepository {
 
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏС… СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ С„РёР»СЊС‚СЂР°С†РёРё РїРѕ СЂР°Р·Р»РёС‡РЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
+     * Получает информацию о бронированиях с возможностью фильтрации по различным параметрам
      *
-     * @param cleanerId      ID РјРѕР№С‰РёРєР°
-     * @param clientId       ID РєР»РёРµРЅС‚Р°
-     * @param boxId          ID Р±РѕРєСЃР°
-     * @param startInterval  РќР°С‡Р°Р»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param endInterval    РљРѕРЅРµС‡РЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param bookingStatus  РЎС‚Р°С‚Сѓ
-     * @param compareOperator РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґР»СЏ СЃС‚РѕРёРјРѕСЃС‚Рё
-     * @param price          РЎС‚РѕРёРјРѕСЃС‚СЊ
-     * @return РћР±СЉРµРєС‚ {@link BookingInfoDTO}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param cleanerId      ID мойщика
+     * @param clientId       ID клиента
+     * @param boxId          ID бокса
+     * @param startInterval  Начальный интервал времени
+     * @param endInterval    Конечный интервал времени
+     * @param bookingStatus  Стату
+     * @param compareOperator Оператор сравнения для стоимости
+     * @param price          Стоимость
+     * @return Объект {@link BookingInfoDTO}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public BookingInfoDTO getInfo(Long cleanerId, Long clientId, Long boxId, LocalDateTime startInterval, LocalDateTime endInterval, String bookingStatus, String compareOperator, Integer price) throws Exception {
         String partUrl = "";
@@ -177,13 +177,13 @@ public class BookingsRepository {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЂР°Р±РѕС‚Рµ РјРѕР№С‰РёРєР° Р·Р° РѕРїСЂРµРґРµР»РµРЅРЅС‹Р№ РїРµСЂРёРѕРґ
+     * Получает информацию о работе мойщика за определенный период
      *
-     * @param cleanerId     ID РјРѕР№С‰РёРєР°
-     * @param startInterval РќР°С‡Р°Р»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param endInterval   РљРѕРЅРµС‡РЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @return Map СЃ РєР»СЋС‡Р°РјРё - РґРЅСЏРјРё СЂР°Р±РѕС‚С‹ РјРѕР№С‰РёРєР° {@link LocalDate} Рё Р·РЅР°С‡РµРЅРёСЏРјРё - РґР°РЅРЅС‹РјРё Рѕ СЂР°Р±РѕС‚Рµ РІ СЌС‚РѕС‚ РґРµРЅСЊ {@link BookingInfoDTO}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param cleanerId     ID мойщика
+     * @param startInterval Начальный интервал времени
+     * @param endInterval   Конечный интервал времени
+     * @return Map с ключами - днями работы мойщика {@link LocalDate} и значениями - данными о работе в этот день {@link BookingInfoDTO}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public Map<LocalDate, BookingInfoDTO> getInfoAboutWorkOfCleaner(Long cleanerId, LocalDateTime startInterval, LocalDateTime endInterval) throws Exception{
         String partUrl = "?cleanerId=" + cleanerId;
@@ -209,13 +209,13 @@ public class BookingsRepository {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє Р·Р°РєР°Р·РѕРІ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ Р±РѕРєСЃР° Р·Р° СѓРєР°Р·Р°РЅРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
+     * Получает список заказов для конкретного бокса за указанный интервал времени
      *
-     * @param startInterval РќР°С‡Р°Р»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param endInterval   РљРѕРЅРµС‡РЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё
-     * @param boxId         ID Р±РѕРєСЃР°.
-     * @return РЎРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ {@link Booking}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param startInterval Начальный интервал времени
+     * @param endInterval   Конечный интервал времени
+     * @param boxId         ID бокса.
+     * @return Список объектов {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public List<Booking> getBoxBookings(LocalDateTime startInterval, LocalDateTime endInterval, Long boxId) throws Exception{
         String partUrl = "?startInterval=" + startInterval;
@@ -237,11 +237,11 @@ public class BookingsRepository {
     }
 
     /**
-     * РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ Р·Р°РєР°Р·
+     * Создает новый заказ
      *
-     * @param bookingDTO РћР±СЉРµРєС‚ {@link BookingDTO}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°РЅРЅС‹Рµ РЅРѕРІРѕРіРѕ Р·Р°РєР°Р·Р°
-     * @return РЎРѕР·РґР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@link Booking}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий данные нового заказа
+     * @return Созданный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public Booking create(BookingDTO bookingDTO) throws Exception {
         Booking createdBooking = null;
@@ -268,11 +268,11 @@ public class BookingsRepository {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РЅРѕРІС‹Р№ СЃС‚Р°С‚СѓСЃ РґР»СЏ Р·Р°РєР°Р·Р°
+     * Устанавливает новый статус для заказа
      *
-     * @param bookingDTO РћР±СЉРµРєС‚ {@link BookingDTO}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°РЅРЅС‹Рµ Рѕ Р·Р°РєР°Р·Рµ СЃ РЅРѕРІС‹Рј СЃС‚Р°С‚СѓСЃРѕРј.
-     * @return РћР±РЅРѕРІР»РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@link Booking}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий данные о заказе с новым статусом.
+     * @return Обновленный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса
      */
     public Booking setNewStatus(BookingDTO bookingDTO) throws Exception {
         Booking editedBooking = null;
@@ -299,11 +299,11 @@ public class BookingsRepository {
     }
 
     /**
-     * Р РµРґР°РєС‚РёСЂСѓРµС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ Р·Р°РєР°Р·
+     * Редактирует существующий заказ
      *
-     * @param bookingDTO РћР±СЉРµРєС‚ {@link BookingDTO}, СЃРѕРґРµСЂР¶Р°С‰РёР№ РѕР±РЅРѕРІР»РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Р·Р°РєР°Р·Р°
-     * @return РћР±РЅРѕРІР»РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ {@link Booking}.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°.
+     * @param bookingDTO Объект {@link BookingDTO}, содержащий обновленные данные заказа
+     * @return Обновленный объект {@link Booking}.
+     * @throws Exception если произошла ошибка при выполнении запроса.
      */
     public Booking edit(BookingDTO bookingDTO) throws Exception {
         Booking editedBooking = null;
@@ -330,11 +330,11 @@ public class BookingsRepository {
     }
 
     /**
-     * РЈРґР°Р»СЏРµС‚ Р·Р°РєР°Р· РїРѕ РµРіРѕ ID
+     * Удаляет заказ по его ID
      *
-     * @param id ID Р·Р°РєР°Р·Р°
-     * @return true, РµСЃР»Рё Р·Р°РєР°Р· СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ, РёРЅР°С‡Рµ false
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°.
+     * @param id ID заказа
+     * @return true, если заказ успешно удален, иначе false
+     * @throws Exception если произошла ошибка при выполнении запроса.
      */
     public boolean delete(String id) throws Exception {
         boolean successDelete;

@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.CategoriesOfTransport;
 import lombok.*;
 
 /**
- * РњРѕРґРµР»СЊ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+ * Модель категории транспорта
  */
 @AllArgsConstructor
 @Getter
@@ -13,11 +13,11 @@ import lombok.*;
 public class CategoryOfTransport {
 
     /**
-     * id РєР°С‚РµРіРѕСЂРёРё
+     * id категории
      */
     private Long catTrId;
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * Название категории
      */
     private String catTrName;
 }

@@ -12,7 +12,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * Р РµРїРѕР·РёС‚РѕСЂРёР№ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+ * Репозиторий позиции прайс-листа
  */
 public class PriceListPositionRepository {
 
@@ -24,11 +24,11 @@ public class PriceListPositionRepository {
     private Gson gson = new Gson();
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р° РїРѕ РЅР°Р·РІР°РЅРёСЋ СѓСЃР»СѓРіРё.
+     * Получает список позиций прайс-листа по названию услуги.
      *
-     * @param servName РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
-     * @return СЃРїРёСЃРѕРє РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°, СЃРІСЏР·Р°РЅРЅС‹С… СЃ СѓРєР°Р·Р°РЅРЅРѕР№ СѓСЃР»СѓРіРѕР№.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param servName название услуги для фильтрации позиций прайс-листа.
+     * @return список позиций прайс-листа, связанных с указанной услугой.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public List<PriceListPosition> getByServName(String servName) throws Exception {
         Request request = new Request.Builder()
@@ -46,11 +46,11 @@ public class PriceListPositionRepository {
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє СѓСЃР»СѓРі СЃ РїСЂР°Р№СЃ-Р»РёСЃС‚РѕРј РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
+     * Получает список услуг с прайс-листом для указанной категории транспорта.
      *
-     * @param catTrId id РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
-     * @return СЃРїРёСЃРѕРє СѓСЃР»СѓРі СЃ РїСЂР°Р№СЃ-Р»РёСЃС‚РѕРј, СЃРІСЏР·Р°РЅРЅС‹С… СЃ СѓРєР°Р·Р°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРµР№ С‚СЂР°РЅСЃРїРѕСЂС‚Р°.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param catTrId id категории транспорта.
+     * @return список услуг с прайс-листом, связанных с указанной категорией транспорта.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public List<ServiceWithPriceList> getCategoryOfTransportPriceList(Long catTrId) throws Exception {
         Request request = new Request.Builder()
@@ -69,11 +69,11 @@ public class PriceListPositionRepository {
 
 
     /**
-     * РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РїРѕР·РёС†РёСЋ РІ РїСЂР°Р№СЃ-Р»РёСЃС‚Рµ
+     * Создает новую позицию в прайс-листе
      *
-     * @param priceListPosition РѕР±СЉРµРєС‚ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
-     * @return СЃРѕР·РґР°РЅРЅР°СЏ РїРѕР·РёС†РёСЏ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param priceListPosition объект позиции прайс-листа для создания.
+     * @return созданная позиция прайс-листа.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public PriceListPosition createPriceListPosition(PriceListPosition priceListPosition) throws Exception {
         PriceListPosition createdPriceListPosition = null;
@@ -103,11 +103,11 @@ public class PriceListPositionRepository {
     }
 
     /**
-     * Р РµРґР°РєС‚РёСЂСѓРµС‚ РїРѕР·РёС†РёСЋ РІ РїСЂР°Р№СЃ-Р»РёСЃС‚Рµ.
+     * Редактирует позицию в прайс-листе.
      *
-     * @param priceListPosition РѕР±СЉРµРєС‚ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р° СЃ РЅРѕРІС‹РјРё РґР°РЅРЅС‹РјРё РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.
-     * @return РѕС‚СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРЅР°СЏ РїРѕР·РёС†РёСЏ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param priceListPosition объект позиции прайс-листа с новыми данными для редактирования.
+     * @return отредактированная позиция прайс-листа.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public PriceListPosition editPriceListPositionPriceAndTime(PriceListPosition priceListPosition) throws Exception {
         PriceListPosition editedPriceListPosition = null;
@@ -135,11 +135,11 @@ public class PriceListPositionRepository {
     }
 
     /**
-     * РЈРґР°Р»СЏРµС‚ РїРѕР·РёС†РёСЋ РІ РїСЂР°Р№СЃ-Р»РёСЃС‚Рµ РїРѕ РµС‘ id.
+     * Удаляет позицию в прайс-листе по её id.
      *
-     * @param plId id РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.
-     * @return {@code true}, РµСЃР»Рё СѓРґР°Р»РµРЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ; {@code false} РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param plId id позиции прайс-листа для удаления.
+     * @return {@code true}, если удаление прошло успешно; {@code false} в противном случае.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public boolean deletePriceListPosition(Long plId) throws Exception {
         boolean successDelete;
@@ -165,16 +165,16 @@ public class PriceListPositionRepository {
 
 
     /**
-     * РџРѕРёСЃРє РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р° РїРѕ СЂР°Р·Р»РёС‡РЅС‹Рј РєСЂРёС‚РµСЂРёСЏРј
+     * Поиск позиций прайс-листа по различным критериям
      *
-     * @param servName РЅР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
-     * @param catTrName РЅР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
-     * @param priceOperator РѕРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґР»СЏ СЃС‚РѕРёРјРѕСЃС‚Рё
-     * @param price СЃС‚РѕРёРјРѕСЃС‚СЊ РІС‹РїРѕР»РЅРµРЅРёСЏ
-     * @param timeOperator РѕРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґР»СЏ РІСЂРµРјРµРЅРё
-     * @param time РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
-     * @return СЃРїРёСЃРѕРє РїРѕР·РёС†РёР№ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… РєСЂРёС‚РµСЂРёСЏРј РїРѕРёСЃРєР°.
-     * @throws Exception РµСЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё HTTP-Р·Р°РїСЂРѕСЃР° РёР»Рё РѕР±СЂР°Р±РѕС‚РєРµ РґР°РЅРЅС‹С….
+     * @param servName название услуги
+     * @param catTrName название категории транспорта
+     * @param priceOperator оператор сравнения для стоимости
+     * @param price стоимость выполнения
+     * @param timeOperator оператор сравнения для времени
+     * @param time время выполнения
+     * @return список позиций прайс-листа, соответствующих критериям поиска.
+     * @throws Exception если происходит ошибка при выполнении HTTP-запроса или обработке данных.
      */
     public List<PriceListPosition> searchPriceListPosition(String servName, String catTrName, String priceOperator, Integer price, String timeOperator, Integer time) throws Exception {
         String parameter = "?servName=" + servName;

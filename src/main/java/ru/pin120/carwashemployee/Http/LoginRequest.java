@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Р—Р°РїСЂРѕСЃ РЅР° Р°РІС‚РѕСЂРёР·Р°С†РёСЋ
+ * Запрос на авторизацию
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,12 +14,12 @@ import lombok.Setter;
 @Setter
 public class LoginRequest {
     /**
-     * РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+     * Имя пользователя
      */
     private String username;
 
     /**
-     * РџР°СЂРѕР»СЊ
+     * Пароль
      */
     private String password;
 }

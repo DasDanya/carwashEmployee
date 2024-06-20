@@ -15,6 +15,9 @@ import java.net.URL;
 import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер уменьшения расходного материала в боксе
+ */
 public class DecreaseSuppliesInBoxController implements Initializable {
 
     public Spinner<Integer> countSpinner;

@@ -8,23 +8,23 @@ import java.time.format.DateTimeFormatter;
 
 
 /**
- * Р РµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃРѕРІ JsonSerializer Рё JsonDeserializer РґР»СЏ РѕР±СЉРµРєС‚РѕРІ С‚РёРїР° LocalDate,
- * РѕР±РµСЃРїРµС‡РёРІР°СЋС‰Р°СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёСЋ Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёСЋ LocalDate РІ/РёР· С„РѕСЂРјР°С‚Р° JSON.
+ * Реализация интерфейсов JsonSerializer и JsonDeserializer для объектов типа LocalDate,
+ * обеспечивающая сериализацию и десериализацию LocalDate в/из формата JSON.
  */
 public class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
 
     /**
-     * Р¤РѕСЂРјР°С‚С‚РµСЂ РґР°С‚С‹ Рё РІСЂРµРјРµРЅРё РґР»СЏ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚РѕРІ С‚РёРїР° LocalDate РІ СЃС‚СЂРѕРєРѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ ISO-8601.
+     * Форматтер даты и времени для форматирования объектов типа LocalDate в строковое представление ISO-8601.
      */
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
     /**
-     * РЎРµСЂРёР°Р»РёР·СѓРµС‚ РѕР±СЉРµРєС‚ С‚РёРїР° LocalDate РІ JsonElement.
+     * Сериализует объект типа LocalDate в JsonElement.
      *
-     * @param src       РћР±СЉРµРєС‚ С‚РёРїР° LocalDate РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё.
-     * @param typeOfSrc РўРёРї РёСЃС…РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° (РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РґР°РЅРЅРѕРј РєРѕРЅС‚РµРєСЃС‚Рµ).
-     * @param context   РљРѕРЅС‚РµРєСЃС‚ СЃРµСЂРёР°Р»РёР·Р°С†РёРё.
-     * @return РЎРµСЂРёР°Р»РёР·РѕРІР°РЅРЅС‹Р№ JsonElement, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ РѕР±СЉРµРєС‚ LocalDate.
+     * @param src       Объект типа LocalDate для сериализации.
+     * @param typeOfSrc Тип исходного объекта (не используется в данном контексте).
+     * @param context   Контекст сериализации.
+     * @return Сериализованный JsonElement, представляющий объект LocalDate.
      */
     @Override
     public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
@@ -32,13 +32,13 @@ public class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserial
     }
 
     /**
-     * Р”РµСЃРµСЂРёР°Р»РёР·СѓРµС‚ JsonElement РІ РѕР±СЉРµРєС‚ С‚РёРїР° LocalDate.
+     * Десериализует JsonElement в объект типа LocalDate.
      *
-     * @param json     JsonElement, СЃРѕРґРµСЂР¶Р°С‰РёР№ РґР°С‚Сѓ РІ РІРёРґРµ СЃС‚СЂРѕРєРё.
-     * @param typeOfT  РўРёРї С†РµР»РµРІРѕРіРѕ РѕР±СЉРµРєС‚Р° (РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РґР°РЅРЅРѕРј РєРѕРЅС‚РµРєСЃС‚Рµ).
-     * @param context  РљРѕРЅС‚РµРєСЃС‚ РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё.
-     * @return Р”РµСЃРµСЂРёР°Р»РёР·РѕРІР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ С‚РёРїР° LocalDate.
-     * @throws JsonParseException Р•СЃР»Рё JSON СЃС‚СЂРѕРєСѓ РЅРµ СѓРґР°РµС‚СЃСЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ РІ LocalDate.
+     * @param json     JsonElement, содержащий дату в виде строки.
+     * @param typeOfT  Тип целевого объекта (не используется в данном контексте).
+     * @param context  Контекст десериализации.
+     * @return Десериализованный объект типа LocalDate.
+     * @throws JsonParseException Если JSON строку не удается преобразовать в LocalDate.
      */
     @Override
     public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

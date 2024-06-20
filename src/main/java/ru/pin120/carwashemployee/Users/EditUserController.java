@@ -18,6 +18,9 @@ import ru.pin120.carwashemployee.Http.RegisterRequest;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ *  онтроллер редактировани€ данных о пользователе
+ */
 public class EditUserController implements Initializable {
 
     private final String NAME_REGEX="^[a-zA-Z0-9]{5,}$";

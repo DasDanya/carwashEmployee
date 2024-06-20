@@ -6,16 +6,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ Р±РѕРєСЃР°
+ * FX представление бокса
  */
 public class BoxFX {
 
     /**
-     * id Р±РѕРєСЃР°
+     * id бокса
      */
     private LongProperty boxId;
     /**
-     * РЎС‚Р°С‚СѓСЃ Р±РѕРєСЃР°
+     * Статус бокса
      */
     private StringProperty boxStatus;
 
@@ -41,10 +41,10 @@ public class BoxFX {
 
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° BoxFX.
+     * Конструктор для создания объекта BoxFX.
      *
-     * @param boxId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р±РѕРєСЃР°.
-     * @param boxStatus РЎС‚Р°С‚СѓСЃ Р±РѕРєСЃР° РІ РІРёРґРµ СЃС‚СЂРѕРєРё, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РµР№ РµРіРѕ РѕС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ.
+     * @param boxId Идентификатор бокса.
+     * @param boxStatus Статус бокса в виде строки, представляющей его отображаемое значение.
      */
     public BoxFX(Long boxId, BoxStatus boxStatus) {
         this.boxId = new SimpleLongProperty(boxId);

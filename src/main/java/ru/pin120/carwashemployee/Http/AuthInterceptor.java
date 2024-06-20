@@ -9,16 +9,16 @@ import ru.pin120.carwashemployee.AppHelper;
 import java.io.IOException;
 
 /**
- * РљР»Р°СЃСЃ AuthInterceptor СЂРµР°Р»РёР·СѓРµС‚ РёРЅС‚РµСЂС„РµР№СЃ Interceptor Рё РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р·Р°РіРѕР»РѕРІРѕРє Р°РІС‚РѕСЂРёР·Р°С†РёРё JWT С‚РѕРєРµРЅ
+ * Класс AuthInterceptor реализует интерфейс Interceptor и предназначен для добавления в заголовок авторизации JWT токен
  */
 public class AuthInterceptor implements Interceptor {
 
     /**
-     * РџРµСЂРµС…РІР°С‚С‹РІР°РµС‚ Рё РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ С†РµРїРѕС‡РєСѓ Р·Р°РїСЂРѕСЃР°, РґРѕР±Р°РІР»СЏСЏ Р·Р°РіРѕР»РѕРІРѕРє "Authorization" СЃ JWT С‚РѕРєРµРЅРѕРј
+     * Перехватывает и обрабатывает цепочку запроса, добавляя заголовок "Authorization" с JWT токеном
      *
-     * @param chain Р¦РµРїРѕС‡РєР° Р·Р°РїСЂРѕСЃР°
-     * @return РћС‚РІРµС‚ РѕС‚ СЃРµСЂРІРµСЂР°
-     * @throws IOException Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РІРІРѕРґР°-РІС‹РІРѕРґР° РІРѕ РІСЂРµРјСЏ РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїСЂРѕСЃР°.
+     * @param chain Цепочка запроса
+     * @return Ответ от сервера
+     * @throws IOException Если происходит ошибка ввода-вывода во время обработки запроса.
      */
     @Override
     public Response intercept( Chain chain) throws IOException {

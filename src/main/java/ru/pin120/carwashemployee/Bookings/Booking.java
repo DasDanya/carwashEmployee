@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * РњРѕРґРµР»СЊ Р·Р°РєР°Р·Р°
+ * Модель заказа
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,39 +20,39 @@ import java.util.List;
 public class Booking {
 
     /**
-     * id Р·Р°РєР°Р·Р°
+     * id заказа
      */
     private String bkId;
     /**
-     * РІСЂРµРјСЏ РЅР°С‡Р°Р»Р°
+     * время начала
      */
     private LocalDateTime bkStartTime;
     /**
-     * РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * время окончания
      */
     private LocalDateTime bkEndTime;
     /**
-     * СЃС‚РѕРёРјРѕСЃС‚СЊ
+     * стоимость
      */
     private Integer bkPrice;
     /**
-     * СЃС‚Р°С‚СѓСЃ
+     * статус
      */
     private BookingStatus bkStatus;
     /**
-     * Р±РѕРєСЃ, РІ РєРѕС‚РѕСЂРѕРј РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°РєР°Р·
+     * бокс, в котором выполняется заказ
      */
     private Box box;
     /**
-     * РјРѕР№С‰РёРє, РІС‹РїРѕР»РЅСЏСЋС‰РёР№ Р·Р°РєР°Р·
+     * мойщик, выполняющий заказ
      */
     private Cleaner cleaner;
     /**
-     * С‚СЂР°РЅСЃРїРѕСЂС‚ РєР»РёРµРЅС‚Р°
+     * транспорт клиента
      */
     private ClientsTransport clientTransport;
     /**
-     * СЃРїРёСЃРѕРє СѓСЃР»СѓРі
+     * список услуг
      */
     private List<Service> services;
 

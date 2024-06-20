@@ -3,6 +3,9 @@ package ru.pin120.carwashemployee.Transport;
 import lombok.*;
 import ru.pin120.carwashemployee.CategoriesOfTransport.CategoryOfTransport;
 
+/**
+ * Модель транспорта
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

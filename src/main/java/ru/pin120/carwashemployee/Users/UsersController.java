@@ -23,6 +23,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Контроллер формы с пользователями
+ */
 public class UsersController implements Initializable {
     @FXML
     private Button createButton;

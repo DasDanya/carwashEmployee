@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+ * Контроллер редактирования данных о позиции прайс-листа
  */
 public class EditPriceListPositionController implements Initializable {
 
@@ -52,10 +52,10 @@ public class EditPriceListPositionController implements Initializable {
     private PriceListPositionRepository priceListPositionRepository = new PriceListPositionRepository();
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,9 +81,9 @@ public class EditPriceListPositionController implements Initializable {
 
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„РѕСЂРјР°С‚РµСЂС‹ РґР»СЏ СЃРїРёРЅРЅРµСЂРѕРІ.
-     * Р¤РѕСЂРјР°С‚РµСЂ РґР»СЏ СЃРїРёРЅРЅРµСЂР° СЃС‚РѕРёРјРѕСЃС‚Рё РїРѕР·РІРѕР»СЏРµС‚ РІРІРѕРґРёС‚СЊ С‚РѕР»СЊРєРѕ С†РёС„СЂС‹ Рё РѕРіСЂР°РЅРёС‡РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЃС‚РѕРёРјРѕСЃС‚Рё.
-     * Р¤РѕСЂРјР°С‚РµСЂ РґР»СЏ СЃРїРёРЅРЅРµСЂР° РІСЂРµРјРµРЅРё РїРѕР·РІРѕР»СЏРµС‚ РІРІРѕРґРёС‚СЊ С‚РѕР»СЊРєРѕ С†РёС„СЂС‹ Рё РѕРіСЂР°РЅРёС‡РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ РІСЂРµРјРµРЅРё СЂР°Р±РѕС‚С‹.
+     * Устанавливает форматеры для спиннеров.
+     * Форматер для спиннера стоимости позволяет вводить только цифры и ограничивает значение максимальной стоимости.
+     * Форматер для спиннера времени позволяет вводить только цифры и ограничивает значение максимального времени работы.
      */
     private void setSpinnersFormatters(){
         TextFormatter<Integer> priceFormatter = new TextFormatter<>(change -> {
@@ -112,10 +112,10 @@ public class EditPriceListPositionController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
+     * Устанавливает параметры для редактирования позиции прайс-листа.
      *
-     * @param priceListPosition РїРѕР·РёС†РёСЏ РїСЂР°Р№СЃ-Р»РёСЃС‚Р°, РєРѕС‚РѕСЂСѓСЋ РЅСѓР¶РЅРѕ СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ.
-     * @param operationMode СЂРµР¶РёРј РѕРїРµСЂР°С†РёРё (СЃРѕР·РґР°РЅРёРµ, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ, СѓРґР°Р»РµРЅРёРµ).
+     * @param priceListPosition позиция прайс-листа, которую нужно редактировать.
+     * @param operationMode режим операции (создание, редактирование, удаление).
      * @param stage Stage.
      */
     public void setParameters(PriceListPosition priceListPosition, FXOperationMode operationMode, Stage stage){
@@ -151,7 +151,7 @@ public class EditPriceListPositionController implements Initializable {
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ РєРѕРјРїРѕРЅРµРЅС‚С‹ РґР°РЅРЅС‹РјРё С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
+     * Заполняет компоненты данными текущей позиции прайс-листа.
      */
     private void fillingComponents(){
         priceSpinner.getValueFactory().setValue(priceListPosition.getPlPrice());
@@ -160,7 +160,7 @@ public class EditPriceListPositionController implements Initializable {
     }
 
     /**
-     * РљРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ РѕР±СЉРµРєС‚С‹ CategoryOfTransport РІ СЃС‚СЂРѕРєРё РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РІ ComboBox.
+     * Конвертирует объекты CategoryOfTransport в строки для отображения в ComboBox.
      */
     private void convertCategoryOfTransportToString(){
         transportCategoryComboBox.setConverter(new StringConverter<CategoryOfTransport>() {
@@ -183,7 +183,7 @@ public class EditPriceListPositionController implements Initializable {
 
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ ComboBox РєР°С‚РµРіРѕСЂРёСЏРјРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°, РґР»СЏ РєРѕС‚РѕСЂС‹С… РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° СЃС‚РѕРёРјРѕСЃС‚СЊ Рё РІСЂРµРјСЏ.
+     * Заполняет ComboBox категориями транспорта, для которых не установлена стоимость и время.
      */
     private void fillingTransportCategory(){
         try{
@@ -195,8 +195,8 @@ public class EditPriceListPositionController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР° СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°.
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "Р’С‹С…РѕРґ" РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
@@ -204,9 +204,9 @@ public class EditPriceListPositionController implements Initializable {
 
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "OK".
+     * Обработчик события нажатия кнопки "OK".
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "OK".
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -265,10 +265,10 @@ public class EditPriceListPositionController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° CANCEL Рё Р·Р°РєСЂС‹РІР°РµС‚ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ.
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;

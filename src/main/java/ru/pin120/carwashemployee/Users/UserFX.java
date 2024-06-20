@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * FX представление пользователя
+ */
 public class UserFX {
     private LongProperty usId;
     private StringProperty usName;

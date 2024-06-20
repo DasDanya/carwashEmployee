@@ -7,7 +7,7 @@ import ru.pin120.carwashemployee.WorkSchedule.WorkSchedule;
 import java.util.List;
 
 /**
- * DTO РјРѕР№С‰РёРєР°
+ * DTO мойщика
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,35 +16,35 @@ import java.util.List;
 @ToString
 public class CleanerDTO {
     /**
-     * id РјРѕР№С‰РёРєР°
+     * id мойщика
      */
     private Long clrId;
     /**
-     * Р¤Р°РјРёР»РёСЏ
+     * Фамилия
      */
     private String clrSurname;
     /**
-     * РРјСЏ
+     * Имя
      */
     private String clrName;
     /**
-     * РћС‚С‡РµСЃС‚РІРѕ
+     * Отчество
      */
     private String clrPatronymic;
     /**
-     * РќРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+     * Номер телефона
      */
     private String clrPhone;
     /**
-     * РЎС‚Р°С‚СѓСЃ
+     * Статус
      */
     private CleanerStatus clrStatus;
     /**
-     * Р‘РѕРєСЃ
+     * Бокс
      */
     private Box box;
     /**
-     * РЎРїРёСЃРѕРє СЂР°Р±РѕС‡РёС… РґРЅРµР№
+     * Список рабочих дней
      */
     private List<WorkSchedule> workSchedules;
 

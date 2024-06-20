@@ -3,166 +3,166 @@ package ru.pin120.carwashemployee.Bookings;
 import javafx.beans.property.*;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ Р·Р°РєР°Р·Р°
+ * FX представление заказа
  */
 public class BookingFX {
 
     /**
-     * id Р·Р°РєР°Р·Р°
+     * id заказа
      */
     private StringProperty bkId;
 
     /**
-     * РІСЂРµРјСЏ РЅР°С‡Р°Р»Р°
+     * время начала
      */
     private StringProperty startTime;
 
     /**
-     * РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * время окончания
      */
     private StringProperty endTime;
 
     /**
-     * СЃС‚Р°С‚СѓСЃ
+     * статус
      */
     private StringProperty status;
 
     /**
-     * СЃС‚РѕРёРјРѕСЃС‚СЊ
+     * стоимость
      */
     private IntegerProperty price;
 
     /**
-     * Р±РѕРєСЃ
+     * бокс
      */
     private LongProperty box;
 
     /**
-     * РјРѕР№С‰РёРє, РІС‹РїРѕР»РЅСЏСЋС‰РёР№ Р·Р°РєР°Р·
+     * мойщик, выполняющий заказ
      */
     private StringProperty cleaner;
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ id Р·Р°РєР°Р·Р°
+     * Получает id заказа
      *
-     * @return id Р·Р°РєР°Р·Р°
+     * @return id заказа
      */
     public String getBkId() {
         return bkId.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ id Р·Р°РєР°Р·Р°
+     * Свойство id заказа
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ СѓРЅРёРєР°Р»СЊРЅРѕРіРѕ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°
+     * @return Свойство уникального идентификатора
      */
     public StringProperty bkIdProperty() {
         return bkId;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РІСЂРµРјСЏ РЅР°С‡Р°Р»Р°
+     * Получает время начала
      *
-     * @return Р’СЂРµРјСЏ РЅР°С‡Р°Р»Р°
+     * @return Время начала
      */
     public String getStartTime() {
         return startTime.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ РІСЂРµРјРµРЅРё РЅР°С‡Р°Р»Р°
+     * Свойство времени начала
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ РІСЂРµРјРµРЅРё РЅР°С‡Р°Р»Р°
+     * @return Свойство времени начала
      */
     public StringProperty startTimeProperty() {
         return startTime;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * Получает время окончания
      *
-     * @return Р’СЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * @return Время окончания
      */
     public String getEndTime() {
         return endTime.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ РІСЂРµРјРµРЅРё РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * Свойство времени окончания
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ РІСЂРµРјРµРЅРё РѕРєРѕРЅС‡Р°РЅРёСЏ
+     * @return Свойство времени окончания
      */
     public StringProperty endTimeProperty() {
         return endTime;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃС‚Р°С‚СѓСЃ
+     * Получает статус
      *
-     * @return РЎС‚Р°С‚СѓСЃ
+     * @return Статус
      */
     public String getStatus() {
         return status.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ СЃС‚Р°С‚СѓСЃР°
+     * Свойство статуса
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ СЃС‚Р°С‚СѓСЃР°
+     * @return Свойство статуса
      */
     public StringProperty statusProperty() {
         return status;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ СЃС‚РѕРёРјРѕСЃС‚СЊ
+     * Получает стоимость
      *
-     * @return РЎС‚РѕРёРјРѕСЃС‚СЊ
+     * @return Стоимость
      */
     public int getPrice() {
         return price.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ СЃС‚РѕРёРјРѕСЃС‚Рё
+     * Свойство стоимости
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ СЃС‚РѕРёРјРѕСЃС‚Рё
+     * @return Свойство стоимости
      */
     public IntegerProperty priceProperty() {
         return price;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ Р±РѕРєСЃ, РІ РєРѕС‚РѕСЂРѕРј РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°РєР°Р·
+     * Получает бокс, в котором выполняется заказ
      *
-     * @return Р‘РѕРєСЃ, РІ РєРѕС‚РѕСЂРѕРј РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°РєР°Р·
+     * @return Бокс, в котором выполняется заказ
      */
     public long getBox() {
         return box.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ Р±РѕРєСЃР°
+     * Свойство бокса
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ Р±РѕРєСЃР°
+     * @return Свойство бокса
      */
     public LongProperty boxProperty() {
         return box;
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РјРѕР№С‰РёРєР°, РІС‹РїРѕР»РЅСЏСЋС‰РµРіРѕ Р·Р°РєР°Р·
+     * Получает мойщика, выполняющего заказ
      *
-     * @return РњРѕР№С‰РёРє
+     * @return Мойщик
      */
     public String getCleaner() {
         return cleaner.get();
     }
 
     /**
-     * РЎРІРѕР№СЃС‚РІРѕ РјРѕР№С‰РёРєР°, РІС‹РїРѕР»РЅСЏСЋС‰РµРіРѕ Р·Р°РєР°Р·
+     * Свойство мойщика, выполняющего заказ
      *
-     * @return РЎРІРѕР№СЃС‚РІРѕ РјРѕР№С‰РёРєР°, РІС‹РїРѕР»РЅСЏСЋС‰РµРіРѕ Р·Р°РєР°Р·
+     * @return Свойство мойщика, выполняющего заказ
      */
     public StringProperty cleanerProperty() {
         return cleaner;
@@ -170,15 +170,15 @@ public class BookingFX {
 
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° BookingFX
+     * Конструктор для создания объекта BookingFX
      *
-     * @param bkId      id Р·Р°РєР°Р·Р°
-     * @param startTime Р’СЂРµРјСЏ РЅР°С‡Р°Р»Р°
-     * @param endTime   Р’СЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ
-     * @param status    РЎС‚Р°С‚СѓСЃ
-     * @param price     РЎС‚РѕРёРјРѕСЃС‚СЊ
-     * @param box       Р‘РѕРєСЃ
-     * @param cleaner   РњРѕР№С‰РёРє
+     * @param bkId      id заказа
+     * @param startTime Время начала
+     * @param endTime   Время окончания
+     * @param status    Статус
+     * @param price     Стоимость
+     * @param box       Бокс
+     * @param cleaner   Мойщик
      */
     public BookingFX(String bkId, String startTime, String endTime, String status, Integer price, Long box, String cleaner) {
         this.bkId = new SimpleStringProperty(bkId);

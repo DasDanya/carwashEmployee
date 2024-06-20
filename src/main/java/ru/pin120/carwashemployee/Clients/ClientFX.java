@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.Clients;
 import javafx.beans.property.*;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РєР»РёРµРЅС‚Р°
+ * FX представление клиента
  */
 public class ClientFX {
 
@@ -11,27 +11,27 @@ public class ClientFX {
     public static final int MAX_PHONE_FILLING=10;
     public static final int MAX_SURNAME_LENGTH=50;
     public static final int MAX_NAME_LENGTH=50;
-    public static final String SURNAME_REGEX = "^[Рђ-РЇРЃР°-СЏС‘-]+$";
-    public static final String NAME_REGEX = "^[Рђ-РЇРЃР°-СЏС‘-]+$";
+    public static final String SURNAME_REGEX = "^[А-ЯЁа-яё-]+$";
+    public static final String NAME_REGEX = "^[А-ЯЁа-яё-]+$";
 
     /**
-     * id РєР»РёРµРЅС‚Р°
+     * id клиента
      */
     private LongProperty clId;
     /**
-     * С„Р°РјРёР»РёСЏ
+     * фамилия
      */
     private StringProperty clSurname;
     /**
-     * РёРјСЏ
+     * имя
      */
     private StringProperty clName;
     /**
-     * РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+     * номер телефона
      */
     private StringProperty clPhone;
     /**
-     * СЃРєРёРґРєР°
+     * скидка
      */
     private IntegerProperty clDiscount;
 
@@ -77,12 +77,12 @@ public class ClientFX {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° ClientFX
-     * @param clId id РєР»РёРµРЅС‚Р°
-     * @param clSurname С„Р°РјРёР»РёСЏ
-     * @param clName РёРјСЏ
-     * @param clPhone РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
-     * @param clDiscount СЃРєРёРґРєР°
+     * Конструктор для создания объекта ClientFX
+     * @param clId id клиента
+     * @param clSurname фамилия
+     * @param clName имя
+     * @param clPhone номер телефона
+     * @param clDiscount скидка
      */
     public ClientFX(Long clId, String clSurname, String clName, String clPhone, Integer clDiscount) {
         this.clId = new SimpleLongProperty(clId);

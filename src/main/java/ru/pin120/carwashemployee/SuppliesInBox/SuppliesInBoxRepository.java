@@ -15,6 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий расходных материалов в боксе
+ */
 public class SuppliesInBoxRepository {
 
     private static final String url = AppHelper.getCarWashAPI() + "/suppliesInBox";

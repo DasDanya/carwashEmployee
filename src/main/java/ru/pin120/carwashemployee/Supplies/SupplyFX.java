@@ -3,33 +3,33 @@ package ru.pin120.carwashemployee.Supplies;
 import javafx.beans.property.*;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
+ * FX представление расходного материала
  */
 public class SupplyFX {
 
     public static final int MAX_LENGTH_NAME=50;
     /**
-     * id СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
+     * id расходного материала
      */
     private LongProperty supId;
     /**
-     * РќР°Р·РІР°РЅРёРµ
+     * Название
      */
     private StringProperty supName;
     /**
-     * РљР°С‚РµРіРѕСЂРёСЏ
+     * Категория
      */
     private StringProperty supCategory;
     /**
-     * РљРѕР»РёС‡РµСЃС‚РІРѕ/РѕР±СЉС‘Рј РµРґРёРЅРёС†С‹
+     * Количество/объём единицы
      */
     private StringProperty supMeasure;
     /**
-     * РќР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
+     * Название фотографии
      */
     private StringProperty supPhotoName;
     /**
-     * РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+     * Общее количество
      */
     private IntegerProperty supCount;
 
@@ -87,13 +87,13 @@ public class SupplyFX {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° SupplyFX
-     * @param supId id СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
-     * @param supName РЅР°Р·РІР°РЅРёРµ
-     * @param supCategory РєР°С‚РµРіРѕСЂРёСЏ
-     * @param supMeasure РєРѕР»РёС‡РµСЃС‚РІРѕ/РѕР±СЉС‘Рј РµРґРёРЅРёС†С‹
-     * @param supPhotoName РЅР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
-     * @param supCount РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+     * Конструктор для создания объекта SupplyFX
+     * @param supId id расходного материала
+     * @param supName название
+     * @param supCategory категория
+     * @param supMeasure количество/объём единицы
+     * @param supPhotoName название фотографии
+     * @param supCount общее количество
      */
     public SupplyFX(Long supId, String supName, String supCategory, String supMeasure, String supPhotoName, Integer supCount) {
         this.supId = new SimpleLongProperty(supId);

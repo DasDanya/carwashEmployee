@@ -24,6 +24,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий пользователя
+ */
 public class UsersRepository {
     private static final String url = AppHelper.getCarWashAPI() + "/users";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");

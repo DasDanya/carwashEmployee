@@ -6,16 +6,16 @@ import javafx.beans.property.StringProperty;
 import lombok.NoArgsConstructor;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СѓСЃР»СѓРіРё
+ * FX представление услуги
  */
 @NoArgsConstructor
 public class ServiceFX {
 
     public static final int MAX_LENGTH_SERVICE_NAME = 30;
-    public static final String REGEX = "^[a-zA-ZР°-СЏРђ-РЇС‘РЃ0-9 -]+$";
+    public static final String REGEX = "^[a-zA-Zа-яА-ЯёЁ0-9 -]+$";
 
     /**
-     * РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
+     * Название услуги
      */
     private StringProperty name;
 //    private StringProperty catName;
@@ -37,8 +37,8 @@ public class ServiceFX {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° ServiceFX
-     * @param name РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
+     * Конструктор для создания объекта ServiceFX
+     * @param name Название услуги
      */
     public ServiceFX(String name) {
         this.name = new SimpleStringProperty(name);

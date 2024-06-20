@@ -9,21 +9,21 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * РђРґР°РїС‚РµСЂ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё РѕР±СЉРµРєС‚РѕРІ С‚РёРїР° LocalTime РІ С„РѕСЂРјР°С‚ JSON Рё РѕР±СЂР°С‚РЅРѕ.
+ * Адаптер для сериализации и десериализации объектов типа LocalTime в формат JSON и обратно.
  */
 public class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
     /**
-     * Р¤РѕСЂРјР°С‚С‚РµСЂ РІСЂРµРјРµРЅРё РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ LocalTime РІ СЃС‚СЂРѕРєСѓ РІ С„РѕСЂРјР°С‚Рµ "HH:mm".
+     * Форматтер времени для преобразования LocalTime в строку в формате "HH:mm".
      */
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
-     * Р—Р°РїРёСЃС‹РІР°РµС‚ РѕР±СЉРµРєС‚ С‚РёРїР° LocalTime РІ С„РѕСЂРјР°С‚ JSON.
+     * Записывает объект типа LocalTime в формат JSON.
      *
-     * @param jsonWriter РџРёСЃР°С‚РµР»СЊ JSON.
-     * @param localTime  РћР±СЉРµРєС‚ С‚РёРїР° LocalTime РґР»СЏ Р·Р°РїРёСЃРё.
-     * @throws IOException Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РІРІРѕРґР°-РІС‹РІРѕРґР° РїСЂРё Р·Р°РїРёСЃРё РІ JSON.
+     * @param jsonWriter Писатель JSON.
+     * @param localTime  Объект типа LocalTime для записи.
+     * @throws IOException Если происходит ошибка ввода-вывода при записи в JSON.
      */
 
     @Override
@@ -32,11 +32,11 @@ public class LocalTimeAdapter extends TypeAdapter<LocalTime> {
     }
 
     /**
-     * РЎС‡РёС‚С‹РІР°РµС‚ РѕР±СЉРµРєС‚ С‚РёРїР° LocalTime РёР· С„РѕСЂРјР°С‚Р° JSON.
+     * Считывает объект типа LocalTime из формата JSON.
      *
-     * @param jsonReader Р§РёС‚Р°С‚РµР»СЊ JSON.
-     * @return Р”РµСЃРµСЂРёР°Р»РёР·РѕРІР°РЅРЅС‹Р№ РѕР±СЉРµРєС‚ С‚РёРїР° LocalTime.
-     * @throws IOException Р•СЃР»Рё РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС€РёР±РєР° РІРІРѕРґР°-РІС‹РІРѕРґР° РїСЂРё С‡С‚РµРЅРёРё РёР· JSON.
+     * @param jsonReader Читатель JSON.
+     * @return Десериализованный объект типа LocalTime.
+     * @throws IOException Если происходит ошибка ввода-вывода при чтении из JSON.
      */
     @Override
     public LocalTime read(JsonReader jsonReader) throws IOException {

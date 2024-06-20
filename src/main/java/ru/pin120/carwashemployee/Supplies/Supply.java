@@ -4,7 +4,7 @@ import lombok.*;
 import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoryOfSupplies;
 
 /**
- * РњРѕРґРµР»СЊ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
+ * Модель расходного материала
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,27 +14,27 @@ import ru.pin120.carwashemployee.CategoriesOfSupplies.CategoryOfSupplies;
 public class Supply {
 
     /**
-     * id СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
+     * id расходного материала
      */
     private Long supId;
     /**
-     * РќР°Р·РІР°РЅРёРµ
+     * Название
      */
     private String supName;
     /**
-     * РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+     * Общее количество
      */
     private int supCount;
     /**
-     * РљРѕР»РёС‡РµСЃС‚РІРѕ/РѕР±СЉС‘Рј РµРґРёРЅРёС†С‹
+     * Количество/объём единицы
      */
     private int supMeasure;
     /**
-     * РќР°Р·РІР°РЅРёРµ С„РѕС‚РѕРіСЂР°С„РёРё
+     * Название фотографии
      */
     private String supPhotoName;
     /**
-     * РљР°С‚РµРіРѕСЂРёСЏ
+     * Категория
      */
     private CategoryOfSupplies category;
 }

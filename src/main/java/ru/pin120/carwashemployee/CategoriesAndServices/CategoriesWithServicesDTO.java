@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DTO РєР°С‚РµРіРѕСЂРёРё РІРјРµСЃС‚Рµ СЃ СѓСЃР»СѓРіР°РјРё
+ * DTO категории вместе с услугами
  */
 @Getter
 @Setter
@@ -19,11 +19,11 @@ import java.util.List;
 public class CategoriesWithServicesDTO {
 
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё
+     * Название категории
      */
     private String categoryName;
     /**
-     * РЎРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ СѓСЃР»СѓРі РґР°РЅРЅРѕР№ РєР°С‚РµРіРѕСЂРёРё
+     * Список названий услуг данной категории
      */
     private ArrayList<String> servicesOfCategory;
 

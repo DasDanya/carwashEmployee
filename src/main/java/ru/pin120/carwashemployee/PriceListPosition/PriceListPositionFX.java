@@ -3,7 +3,7 @@ package ru.pin120.carwashemployee.PriceListPosition;
 import javafx.beans.property.*;
 
 /**
- * FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РїРѕР·РёС†РёРё РїСЂР°Р№СЃ-Р»РёСЃС‚Р°
+ * FX представление позиции прайс-листа
  */
 public class PriceListPositionFX {
 
@@ -11,21 +11,21 @@ public class PriceListPositionFX {
     public static final int MAX_TIME=1440;
 
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
+     * Название категории транспорта
      */
     private StringProperty catTrName;
     /**
-     * Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
+     * Время выполнения
      */
     private IntegerProperty time;
 
     /**
-     * РЎС‚РѕРёРјРѕСЃС‚СЊ
+     * Стоимость
      */
     private IntegerProperty price;
 
     /**
-     * id РїРѕР·РёС†РёРё
+     * id позиции
      */
     private LongProperty id;
 
@@ -70,11 +70,11 @@ public class PriceListPositionFX {
     }
 
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° PriceListPositionFX
-     * @param catTrName РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё С‚СЂР°РЅСЃРїРѕСЂС‚Р°
-     * @param price РЎС‚РѕРёРјРѕСЃС‚СЊ
-     * @param time Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
-     * @param id id РїРѕР·РёС†РёРё
+     * Конструктор для создания объекта PriceListPositionFX
+     * @param catTrName Название категории транспорта
+     * @param price Стоимость
+     * @param time Время выполнения
+     * @param id id позиции
      */
     public PriceListPositionFX(String catTrName, Integer price, Integer time, Long id){
         this.catTrName = new SimpleStringProperty(catTrName);

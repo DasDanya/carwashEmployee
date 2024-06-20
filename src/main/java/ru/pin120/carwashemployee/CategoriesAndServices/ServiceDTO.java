@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * DTO СѓСЃР»СѓРіРё
+ * DTO услуги
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,11 +15,11 @@ import lombok.Setter;
 public class ServiceDTO {
 
     /**
-     * РќР°Р·РІР°РЅРёРµ СѓСЃР»СѓРіРё
+     * Название услуги
      */
     private String servName;
     /**
-     * РќР°Р·РІР°РЅРёРµ РєР°С‚РµРіРѕСЂРёРё СѓСЃР»СѓРіРё
+     * Название категории услуги
      */
     private String catName;
 }

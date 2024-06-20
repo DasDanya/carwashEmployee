@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ РґРѕР±Р°РІР»РµРЅРёСЏ СЂР°СЃС…РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р° РІ Р±РѕРєСЃ
+ * Контроллер добавления расходного материала в бокс
  */
 public class AddSupplyInBoxController implements Initializable {
     @FXML
@@ -44,10 +44,10 @@ public class AddSupplyInBoxController implements Initializable {
     private Supply supply;
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,9 +57,9 @@ public class AddSupplyInBoxController implements Initializable {
 
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ СЃРїРёРЅРЅРµСЂ РґР»СЏ РІС‹Р±РѕСЂР° РєРѕР»РёС‡РµСЃС‚РІР° СЃ Р·Р°РґР°РЅРЅС‹Рј РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј.
+     * Настраивает спиннер для выбора количества с заданным максимальным значением.
      *
-     * @param maxValue РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ СЃРїРёРЅРЅРµСЂР°.
+     * @param maxValue максимальное значение для спиннера.
      */
     private void settingCountSpinner(int maxValue) {
         countSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maxValue,0,1));
@@ -77,9 +77,9 @@ public class AddSupplyInBoxController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ С„РѕСЂРјС‹ РґРѕР±Р°РІР»РµРЅРёСЏ СЂР°СЃС…РѕРґРЅС‹С… РјР°С‚РµСЂРёР°Р»РѕРІ РІ Р±РѕРєСЃ
+     * Устанавливает параметры для формы добавления расходных материалов в бокс
      *
-     * @param supply СЂР°СЃС…РѕРґРЅС‹Р№ РјР°С‚РµСЂРёР°Р»
+     * @param supply расходный материал
      * @param stage Stage.
      */
     public void setParameters(Supply supply, Stage stage) {
@@ -94,15 +94,15 @@ public class AddSupplyInBoxController implements Initializable {
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµР№СЃС‚РІРёРµ РЅР° СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°.
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "Р’С‹С…РѕРґ" РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
+     * Устанавливает действие на событие закрытия окна.
+     * Устанавливает режим завершения формы на "Выход" при закрытии окна пользователем.
      */
     private void closeWindowAction() {
         stage.setOnCloseRequest(event -> exitMode = FXFormExitMode.EXIT);
     }
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ ComboBox РґР»СЏ РІС‹Р±РѕСЂР° Р±РѕРєСЃРѕРІ (boxes).
+     * Настраивает ComboBox для выбора боксов (boxes).
      */
     private void settingBoxesComboBox(){
         try{
@@ -140,9 +140,9 @@ public class AddSupplyInBoxController implements Initializable {
 
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "OK".
+     * Обработчик события нажатия кнопки "OK".
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "OK".
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "OK".
      */
     public void btOKAction(ActionEvent actionEvent) {
         if(countSpinner.getValue() == 0){
@@ -168,10 +168,10 @@ public class AddSupplyInBoxController implements Initializable {
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° CANCEL Рё Р·Р°РєСЂС‹РІР°РµС‚ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ.
+     * Обработчик события нажатия кнопки "Отмена".
+     * Устанавливает режим завершения формы на CANCEL и закрывает модальное окно.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ, РёРЅРёС†РёРёСЂРѕРІР°РЅРЅРѕРµ РЅР°Р¶Р°С‚РёРµРј РєРЅРѕРїРєРё "РћС‚РјРµРЅР°".
+     * @param actionEvent Событие действия, инициированное нажатием кнопки "Отмена".
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;

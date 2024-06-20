@@ -6,17 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * РљР»Р°СЃСЃ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ РЅРѕРІРѕРіРѕ РѕРєРЅР°
+ * Класс для открытия нового окна
  */
 @AllArgsConstructor
 @Getter
 public class FXWindowData {
     /**
-     * Р—Р°РіСЂСѓР·С‡РёРє FXML
+     * Загрузчик FXML
      */
     private FXMLLoader loader;
     /**
-     * РЎРѕР·РґР°РЅРЅРѕРµ РѕРєРЅРѕ
+     * Созданное окно
      */
     private Stage modalStage;
 }

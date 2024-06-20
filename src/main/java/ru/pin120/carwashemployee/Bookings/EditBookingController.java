@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР°РЅРЅС‹С… Рѕ Р·Р°РєР°Р·Рµ
+ * Контроллер редактирования данных о заказе
  */
 public class EditBookingController implements Initializable, ServiceInPriceListSelectable {
 
@@ -113,10 +113,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     private LocalDateTime selectedDate;
 
     /**
-     * РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+     * Инициализация контроллера
      *
-     * @param url URL СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ FXML С„Р°Р№Р»Р°
-     * @param resourceBundle РќР°Р±РѕСЂ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ Р»РѕРєР°Р»РёР·Р°С†РёРё
+     * @param url URL расположения FXML файла
+     * @param resourceBundle Набор ресурсов для локализации
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -146,7 +146,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ РєРѕРЅРІРµСЂС‚РµСЂ РґР»СЏ ComboBox, С‡С‚РѕР±С‹ РїСЂР°РІРёР»СЊРЅРѕ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ Рё РїСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°С‚СЊ РѕР±СЉРµРєС‚С‹ С‚РёРїР° Box
+     * Настраивает конвертер для ComboBox, чтобы правильно отображать и преобразовывать объекты типа Box
      */
     private void converterBoxesInComboBox(){
         boxesComboBox.setConverter(new StringConverter<Box>() {
@@ -167,8 +167,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РґР»СЏ РїРѕР»СЏ РІРІРѕРґР° РіРѕСЃРЅРѕРјРµСЂР° Р°РІС‚Рѕ
-     * РћРіСЂР°РЅРёС‡РёРІР°РµС‚ РґР»РёРЅСѓ РІРІРѕРґРёРјРѕРіРѕ С‚РµРєСЃС‚Р° РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РґРѕРїСѓСЃС‚РёРјРѕР№ РґР»РёРЅРѕР№
+     * Устанавливает слушатель для поля ввода госномера авто
+     * Ограничивает длину вводимого текста максимальной допустимой длиной
      */
     private void searchClTransportFieldListener() {
         searchClTransportField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -182,7 +182,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё РґР»СЏ РєРЅРѕРїРѕРє РїСЂРё РЅР°РІРµРґРµРЅРёРё РјС‹С€Рё
+     * Устанавливает всплывающие подсказки для кнопок при наведении мыши
      */
     private void setTooltipForButtons() {
         searchClrTransportButton.setOnMouseEntered(event -> {
@@ -197,12 +197,12 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ С„РѕСЂРјСѓ РЅР° РѕСЃРЅРѕРІРµ РІС‹Р±СЂР°РЅРЅРѕР№ РґР°С‚С‹, СЂРµР¶РёРјР° РѕРїРµСЂР°С†РёРё, СЃС†РµРЅС‹ Рё Р·Р°РєР°Р·Р°
+     * Настраивает форму на основе выбранной даты, режима операции, сцены и заказа
      *
-     * @param selectedDate  Р’С‹Р±СЂР°РЅРЅР°СЏ РґР°С‚Р°
-     * @param operationMode Р РµР¶РёРј СЂР°Р±РѕС‚С‹ (СЃРѕР·РґР°РЅРёРµ, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ, РїСЂРѕСЃРјРѕС‚СЂ Рё С‚.Рґ.)
-     * @param stage         Stage, СЃРІСЏР·Р°РЅРЅР°СЏ СЃ С‚РµРєСѓС‰РµР№ С„РѕСЂРјРѕР№
-     * @param booking       Р—Р°РєР°Р·
+     * @param selectedDate  Выбранная дата
+     * @param operationMode Режим работы (создание, редактирование, просмотр и т.д.)
+     * @param stage         Stage, связанная с текущей формой
+     * @param booking       Заказ
      */
     public void settingForm(LocalDateTime selectedDate, FXOperationMode operationMode, Stage stage, Booking booking){
         this.selectedDate = selectedDate;
@@ -299,9 +299,9 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р·Р°РєР°Р·Рµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РєРѕРјРїРѕРЅРµРЅС‚С‹
+     * Устанавливает информацию о заказе в соответствующие компоненты
      *
-     * @param booking Р—Р°РєР°Р·
+     * @param booking Заказ
      */
     private void setLabelBookingInfo(Booking booking){
         LocalTime bookingEndTime = LocalTime.of(booking.getBkEndTime().getHour(), booking.getBkEndTime().getMinute());
@@ -310,8 +310,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ РѕСЃРЅРѕРІРЅС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РґР°РЅРЅС‹РјРё РёР· Р·Р°РєР°Р·Р°.
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РІСЂРµРјСЏ Рё РґР°С‚Сѓ РЅР°С‡Р°Р»Р° Р·Р°РєР°Р·Р°, Р° С‚Р°РєР¶Рµ Р·Р°РїРѕР»РЅСЏРµС‚ ComboBox
+     * Заполняет основные компоненты данными из заказа.
+     * Устанавливает время и дату начала заказа, а также заполняет ComboBox
      */
     private void generalFillingComponents(){
         bookingStartTimeField.setLocalTime(LocalTime.of(booking.getBkStartTime().getHour(), booking.getBkStartTime().getMinute()));
@@ -326,10 +326,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІРѕР·РјРѕР¶РЅС‹С… СЃС‚Р°С‚СѓСЃРѕРІ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏ РЅР° РѕСЃРЅРѕРІРµ С‚РµРєСѓС‰РµРіРѕ СЃС‚Р°С‚СѓСЃР°
+     * Возвращает список возможных статусов бронирования на основе текущего статуса
      *
-     * @param booking Р—Р°РєР°Р·
-     * @return РЎРїРёСЃРѕРє РІРѕР·РјРѕР¶РЅС‹С… СЃС‚Р°С‚СѓСЃРѕРІ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏ.
+     * @param booking Заказ
+     * @return Список возможных статусов бронирования.
      */
     private List<BookingStatus> getBookingStatuses(Booking booking) {
         List<BookingStatus> bookingStatuses = new ArrayList<>();
@@ -344,7 +344,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р—Р°РїСЂРµС‰Р°РµС‚ РёР·РјРµРЅРµРЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ С„РѕСЂРјС‹, СѓСЃС‚Р°РЅР°РІР»РёРІР°СЏ РёС… РІ СЂРµР¶РёРј С‚РѕР»СЊРєРѕ РґР»СЏ С‡С‚РµРЅРёСЏ РёР»Рё РѕС‚РєР»СЋС‡РµРЅРёСЏ
+     * Запрещает изменение компонентов формы, устанавливая их в режим только для чтения или отключения
      */
     private void prohibitChangingComponents(){
         showServicesInBooking();
@@ -356,7 +356,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р Р°Р·СЂРµС€Р°РµС‚ РёР·РјРµРЅРµРЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ С„РѕСЂРјС‹, СѓСЃС‚Р°РЅР°РІР»РёРІР°СЏ РёС… РІ СЂРµР¶РёРј СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РёР»Рё РІРєР»СЋС‡РµРЅРёСЏ.
+     * Разрешает изменение компонентов формы, устанавливая их в режим редактирования или включения.
      */
     private void allowComponentChanges(){
         showServicesInBooking();
@@ -368,8 +368,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РґР»СЏ ComboBox СЃС‚Р°С‚СѓСЃРѕРІ Р·Р°РєР°Р·Р°.
-     * РР·РјРµРЅСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ РЅР° РѕСЃРЅРѕРІРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЃС‚Р°С‚СѓСЃР°
+     * Устанавливает слушатель для ComboBox статусов заказа.
+     * Изменяет доступность компонентов на основе выбранного статуса
      */
     private void statusComboBoxListener(){
         statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -382,8 +382,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РћС‚РѕР±СЂР°Р¶Р°РµС‚ СѓСЃР»СѓРіРё, СЃРІСЏР·Р°РЅРЅС‹Рµ СЃ С‚РµРєСѓС‰РёРј Р·Р°РєР°Р·РѕРј.
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ Р·РЅР°С‡РµРЅРёСЏ РІ РєРѕРјРїРѕРЅРµРЅС‚С‹ С„РѕСЂРјС‹.
+     * Отображает услуги, связанные с текущим заказом.
+     * Устанавливает соответствующие значения в компоненты формы.
      */
     private void showServicesInBooking(){
         searchClTransportField.setText(booking.getClientTransport().getClTrStateNumber());
@@ -406,7 +406,7 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * Р—Р°РїРѕР»РЅСЏРµС‚ ComboBox "boxesComboBox" РІСЃРµРјРё Р±РѕРєСЃР°РјРё.
+     * Заполняет ComboBox "boxesComboBox" всеми боксами.
      */
     private void fillingBoxesComboBox(){
         try {
@@ -418,10 +418,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ Spinner РґР»СЏ РІС‹Р±РѕСЂР° РІСЂРµРјРµРЅРё РЅР°С‡Р°Р»Р° Р·Р°РєР°Р·Р°.
-     * РћРіСЂР°РЅРёС‡РёРІР°РµС‚ РІРІРѕРґРёРјРѕРµ РІСЂРµРјСЏ СЂР°РјРєР°РјРё СЂР°Р±РѕС‡РµРіРѕ РІСЂРµРјРµРЅРё.
+     * Настраивает Spinner для выбора времени начала заказа.
+     * Ограничивает вводимое время рамками рабочего времени.
      *
-     * @param startTime Р’СЂРµРјСЏ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ.
+     * @param startTime Время для сравнения.
      */
     private void settingTimeSpinner(LocalTime startTime){
         bookingStartTimeField.setParseErrorCallback(throwable -> null);
@@ -436,8 +436,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ ComboBox РґР»СЏ РІС‹Р±РѕСЂР° СЃС‚Р°С‚СѓСЃР° Р·Р°РєР°Р·Р° СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РєРѕРЅРІРµСЂС‚РµСЂР°.
-     * РљРѕРЅРІРµСЂС‚РµСЂ РїСЂРµРѕР±СЂР°Р·СѓРµС‚ СЃС‚Р°С‚СѓСЃ РІ СЃС‚СЂРѕРєСѓ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ.
+     * Настраивает ComboBox для выбора статуса заказа с использованием конвертера.
+     * Конвертер преобразует статус в строку для отображения.
      */
     private void settingBookingStatusComboBox(){
         statusComboBox.setConverter(new StringConverter<BookingStatus>() {
@@ -458,8 +458,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р’С‹РїРѕР»РЅСЏРµС‚ РїРѕРёСЃРє С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР° РєР»РёРµРЅС‚Р° РїРѕ РµРіРѕ РіРѕСЃСѓРґР°СЂСЃС‚РІРµРЅРЅРѕРјСѓ РЅРѕРјРµСЂСѓ.
-     * РћС‚РѕР±СЂР°Р¶Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚С‹ РІ С‚Р°Р±Р»РёС†Рµ.
+     * Выполняет поиск транспортного средства клиента по его государственному номеру.
+     * Отображает результаты в таблице.
      */
     private void searchClientTransport(){
         if(searchClTransportField.getText() == null || searchClTransportField.getText().isBlank()){
@@ -502,8 +502,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * РќР°СЃС‚СЂР°РёРІР°РµС‚ СЃР»СѓС€Р°С‚РµР»СЊ РёР·РјРµРЅРµРЅРёСЏ РІС‹Р±РѕСЂР° РІ С‚Р°Р±Р»РёС†Рµ С‚СЂР°РЅСЃРїРѕСЂС‚РЅС‹С… СЃСЂРµРґСЃС‚РІ РєР»РёРµРЅС‚РѕРІ.
-     * РћР±РЅРѕРІР»СЏРµС‚ СЃРїРёСЃРѕРє СѓСЃР»СѓРі.
+     * Настраивает слушатель изменения выбора в таблице транспортных средств клиентов.
+     * Обновляет список услуг.
      */
     private void tableSelectModelListener() {
         clientTransportTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
@@ -546,10 +546,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РџРѕР»СѓС‡Р°РµС‚ РІС‹Р±СЂР°РЅРЅРѕРµ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРµ СЃСЂРµРґСЃС‚РІРѕ РєР»РёРµРЅС‚Р° РїРѕ РµРіРѕ id
+     * Получает выбранное транспортное средство клиента по его id
      *
-     * @param transportFX FX РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР° РєР»РёРµРЅС‚Р°
-     * @return РћР±СЉРµРєС‚ С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРіРѕ СЃСЂРµРґСЃС‚РІР° РєР»РёРµРЅС‚Р°
+     * @param transportFX FX представление транспортного средства клиента
+     * @return Объект транспортного средства клиента
      */
     private ClientsTransport getSelectedClientTransport(ClientsTransportFX transportFX){
         return clientsTransportList.stream()
@@ -584,11 +584,11 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РёР·РјРµРЅРµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ С„Р»Р°Р¶РєР° СѓСЃР»СѓРіРё.
-     * РћР±РЅРѕРІР»СЏРµС‚ РѕР±С‰СѓСЋ С†РµРЅСѓ Рё РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РєР°Р·Р°.
+     * Обработчик изменения состояния флажка услуги.
+     * Обновляет общую цену и время выполнения заказа.
      *
-     * @param service РЈСЃР»СѓРіР° СЃРѕ СЃС‚РѕРёРјРѕСЃС‚СЊСЋ Рё РІСЂРµРјРµРЅРµРј РІС‹РїРѕР»РЅРµРЅРёСЏ
-     * @param isNowSelected РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ С„Р»Р°Р¶РєР° (РІС‹Р±СЂР°РЅ РёР»Рё РЅРµС‚).
+     * @param service Услуга со стоимостью и временем выполнения
+     * @param isNowSelected Текущее состояние флажка (выбран или нет).
      */
     @Override
     public void onCheckBoxChanged(ServiceWithPriceListFX service, boolean isNowSelected) {
@@ -606,9 +606,9 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ РѕР±С‰СѓСЋ СЃС‚РѕРёРјРѕСЃС‚СЊ Р·Р°РєР°Р·Р° СЃ СѓС‡РµС‚РѕРј СЃРєРёРґРєРё РєР»РёРµРЅС‚Р°.
+     * Рассчитывает общую стоимость заказа с учетом скидки клиента.
      *
-     * @return РћР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р·Р°РєР°Р·Р° СЃ СѓС‡РµС‚РѕРј СЃРєРёРґРєРё.
+     * @return Общая стоимость заказа с учетом скидки.
      */
     private int getPriceWithDiscount(){
         double discountedPrice = price * (1 - (selectedClientTransport.getClient().getClDiscount() / 100.0));
@@ -617,16 +617,16 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РµРєСЃС‚ Р»РµР№Р±Р»Сѓ СЃС‚РѕРёРјРѕСЃС‚Рё
+     * Устанавливает текст лейблу стоимости
      *
-     * @param pr РЎС‚РѕРёРјРѕСЃС‚СЊ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
+     * @param pr Стоимость для отображения
      */
     private void setPriceLabelText(int pr){
         priceLabel.setText(String.format(rb.getString("PRICE_LABEL"), pr));
     }
 
     /**
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РµРєСЃС‚ Р»РµР№Р±Р»Сѓ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ
+     * Устанавливает текст лейблу времени выполнения
      */
     private void setTimeExecuteLabelText(){
         LocalTime totalExecuteTime = bookingStartTimeField.getLocalTime().withSecond(0).withNano(0).plusMinutes(timeExecute);
@@ -634,9 +634,9 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РџСЂРѕРІРµСЂСЏРµС‚, РїСЂРµРІС‹С€Р°РµС‚ Р»Рё РѕР±С‰РµРµ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р»РёРјРёС‚ СЂР°Р±РѕС‡РµРіРѕ РІСЂРµРјРµРЅРё.
+     * Проверяет, превышает ли общее время выполнения лимит рабочего времени.
      *
-     * @return true, РµСЃР»Рё РІСЂРµРјСЏ РїСЂРµРІС‹С€Р°РµС‚ Р»РёРјРёС‚, РёРЅР°С‡Рµ false.
+     * @return true, если время превышает лимит, иначе false.
      */
     private boolean timeLimitIsExceeding(){
         LocalDateTime maxTime = LocalDateTime.of(bookingStartDatePicker.getValue(), AppHelper.getEndWorkTime());
@@ -647,10 +647,10 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё РћРљ.
-     * Р’С‹РїРѕР»РЅСЏРµС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РґРµР№СЃС‚РІРёСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂРµР¶РёРјР° СЂР°Р±РѕС‚С‹ (СЃРѕР·РґР°РЅРёРµ, СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ, РїСЂРѕСЃРјРѕС‚СЂ Рё С‚.Рґ.).
+     * Обработчик нажатия кнопки ОК.
+     * Выполняет соответствующие действия в зависимости от режима работы (создание, редактирование, просмотр и т.д.).
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
+     * @param actionEvent Событие действия.
      */
     public void btOKAction(ActionEvent actionEvent) {
         boolean canExit = false;
@@ -769,8 +769,8 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * РЎРѕР·РґР°РµС‚ РѕР±СЉРµРєС‚ DTO (Data Transfer Object) РґР»СЏ Р·Р°РєР°Р·Р° РЅР° РѕСЃРЅРѕРІРµ С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р° Booking.
-     * @return DTO РѕР±СЉРµРєС‚ Р·Р°РєР°Р·Р°
+     * Создает объект DTO (Data Transfer Object) для заказа на основе текущего объекта Booking.
+     * @return DTO объект заказа
      */
     private BookingDTO getBookingDTOFromBooking(){
         BookingDTO bookingDTO = new BookingDTO();
@@ -785,11 +785,11 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
     }
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІС‹Р±СЂР°РЅРЅС‹С… СѓСЃР»СѓРі РёР· РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
-     * РџРµСЂРµР±РёСЂР°РµС‚ СЃРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ ServiceWithPriceListFX Рё РґРѕР±Р°РІР»СЏРµС‚ РІ СЃРїРёСЃРѕРє СѓСЃР»СѓРі С‚Рµ,
-     * РґР»СЏ РєРѕС‚РѕСЂС‹С… С„Р»Р°Р¶РѕРє РІС‹Р±РѕСЂР° СѓСЃС‚Р°РЅРѕРІР»РµРЅ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ "РІС‹Р±СЂР°РЅ".
+     * Возвращает список выбранных услуг из прайс-листа.
+     * Перебирает список объектов ServiceWithPriceListFX и добавляет в список услуг те,
+     * для которых флажок выбора установлен в состояние "выбран".
      *
-     * @return РЎРїРёСЃРѕРє РІС‹Р±СЂР°РЅРЅС‹С… СѓСЃР»СѓРі РёР· РїСЂР°Р№СЃ-Р»РёСЃС‚Р°.
+     * @return Список выбранных услуг из прайс-листа.
      */
     private List<ServiceWithPriceList> getListSelectedServices(){
         List<ServiceWithPriceList> services = new ArrayList<>();
@@ -804,21 +804,21 @@ public class EditBookingController implements Initializable, ServiceInPriceListS
 
 
     /**
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ LocalDateTime СЃ РѕР±РЅСѓР»РµРЅРЅС‹РјРё СЃРµРєСѓРЅРґР°РјРё Рё РЅР°РЅРѕСЃРµРєСѓРЅРґР°РјРё,
-     * РёСЃРїРѕР»СЊР·СѓСЏ РїРµСЂРµРґР°РЅРЅСѓСЋ LocalDateTime.
+     * Возвращает LocalDateTime с обнуленными секундами и наносекундами,
+     * используя переданную LocalDateTime.
      *
-     * @param localDateTime РСЃС…РѕРґРЅС‹Р№ LocalDateTime.
-     * @return LocalDateTime СЃ РѕР±РЅСѓР»РµРЅРЅС‹РјРё СЃРµРєСѓРЅРґР°РјРё Рё РЅР°РЅРѕСЃРµРєСѓРЅРґР°РјРё.
+     * @param localDateTime Исходный LocalDateTime.
+     * @return LocalDateTime с обнуленными секундами и наносекундами.
      */
     private LocalDateTime getLocalDateTimeWithHoursAndMinutes(LocalDateTime localDateTime){
         return localDateTime.withSecond(0).withNano(0);
     }
 
     /**
-     * РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё РѕС‚РјРµРЅС‹.
-     * РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂРµР¶РёРј Р·Р°РІРµСЂС€РµРЅРёСЏ С„РѕСЂРјС‹ РЅР° "РћС‚РјРµРЅР°" Рё Р·Р°РєСЂС‹РІР°РµС‚ РѕРєРЅРѕ.
+     * Обработчик нажатия кнопки отмены.
+     * Устанавливает режим завершения формы на "Отмена" и закрывает окно.
      *
-     * @param actionEvent РЎРѕР±С‹С‚РёРµ РґРµР№СЃС‚РІРёСЏ.
+     * @param actionEvent Событие действия.
      */
     public void btCancelAction(ActionEvent actionEvent) {
         exitMode = FXFormExitMode.CANCEL;
